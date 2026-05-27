@@ -20,3 +20,4 @@ All files are in place. Here is a summary of everything accomplished:
 **New result:** A state-dependent quadratic sharpening of the Fannes inequality for states near the maximally mixed state:
 $$2\varepsilon^2 \leq S(\mathbf{1}/d) - S(\sigma) \leq 2d\varepsilon^2$$
 proved using Pinsker's inequality and the identity $S(\sigma\|\mathbf{1}/d) = \log d - S(\sigma)$. Numerically confirmed to $<5\%$ error for $\varepsilon \leq 0.1$.
+You've hit your session limit · resets 1:50am (Europe/Prague)
