@@ -1,6 +1,8 @@
 # KS — Working Rules
 
-Read `tasks.md` in this folder to find what to work on.
+Read `tasks.md` in this folder to find what to work on. Also read `notes.md` — it contains Mateo's latest directions, focus areas, and strategy hints for this session. These override general task priorities.
+
+- At the very start of `Output.tex` in the active subfolder, include a section titled `\section*{Session Notes}` that reproduces the content of `notes.md` verbatim as a LaTeX comment block or formatted note, followed by a brief statement of what you intend to focus on this session based on those notes. If `Output.tex` already exists and already has a Session Notes section, update it to reflect the current `notes.md`.
 
 - All equations are written in LaTeX. Never skip steps — every derivation must be written out in full detail.
 - For computation, use SageMath, NumPy, SciPy, or similar. Numerical verification of analytical results is encouraged.
