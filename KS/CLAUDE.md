@@ -1,8 +1,6 @@
 # KS — Working Rules
 
-Read `tasks.md` in this folder to find what to work on. Also read `notes.md` — it contains Mateo's latest directions, focus areas, and strategy hints for this session. These override general task priorities.
-
-- At the very start of `Output.tex` in the active subfolder, include a section titled `\section*{Session Notes}` that reproduces the content of `notes.md` verbatim as a LaTeX comment block or formatted note, followed by a brief statement of what you intend to focus on this session based on those notes. If `Output.tex` already exists and already has a Session Notes section, update it to reflect the current `notes.md`.
+Read `tasks.md` in this folder to find what to work on.
 
 - All equations are written in LaTeX. Never skip steps — every derivation must be written out in full detail.
 - For computation, use SageMath, NumPy, SciPy, or similar. Numerical verification of analytical results is encouraged.
@@ -14,5 +12,6 @@ Read `tasks.md` in this folder to find what to work on. Also read `notes.md` —
 - Keep a running `progress.md` in the active subfolder. Update it briefly after each significant step (a definition pinned down, a proof step completed, a dead end hit). This is your checkpoint file — it must reflect the current state of understanding at all times.
 - Before finishing each session, write a `summary.md` in the subfolder you worked in. It should describe what was attempted, what was established, and — if the approach is exhausted — why it is a dead end.
 - All LaTeX output files must be named or marked `Output` (e.g. `Output.tex`) inside the relevant subfolder.
+- Each `Output.tex` begins with a `\section*{Notes}` written by Mateo. Read it carefully before working — it contains directions, focus areas, and strategy hints that override general priorities. Never delete or modify this section. Append all your work below it.
 - You may use any PDF files found in this folder or any of its subfolders as reference material.
 - You may also use online resources — especially arXiv, Scholarpedia, and Wikipedia.

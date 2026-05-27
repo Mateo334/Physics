@@ -57,9 +57,46 @@ Previous session complete. New session starting 2026-05-27.
 - Plan: add Sections 16-19 to Output.tex covering GK entropy, OTOC, AFL-GK comparison,
   new rigorous results.
 
-### Step 6 — New sections being written (in progress)
-Plan for new sections:
-- Sec 16: GK quantum KS entropy (setup, main formula, additivity)
-- Sec 17: OTOC matrix, quantum Lyapunov exponents, GK-Pesin relation
-- Sec 18: AFL vs GK comparison (table, semiclassical equivalence, Ehrenfest obstruction)
-- Sec 19: New result — shift automorphism OTOC = 0 despite h_AFL > 0; implications for quantum Pesin
+### Step 6 — New sections COMPLETE
+
+Sections added to Output.tex (now 1926 lines, 48 theorem environments):
+
+**Sec 16 (GK quantum KS entropy):**
+- Setup: H = H₀ + noise coupling
+- Main GK formula: Tr{ρ²(t)} = det[1 + (ε²τ/ℏ²)A]^{-1/2} (with derivation outline)
+- Additivity proved (block-diagonal A structure)
+- Semiclassical limit → classical KS (citing GK Sec IV)
+
+**Sec 17 (OTOC matrix and GK-Pesin relation):**
+- OTOC definition: C_ω(A,B;n) = ω([A_n,B]†[A_n,B])
+- Lemma: OTOC bounded in finite dimensions, λ_L ≤ 0
+- OTOC matrix: Â_{αβ}(t) = ⟨φ₀|[x^α(t),ρ₀][x^β(t),ρ₀]|φ₀⟩
+- Quantum Lyapunov exponents: λᵢ = (1/t) ln σᵢ(Â(t))
+- Theorem (GK Pesin): h̄_KS^{(2)} = Σ_{λᵢ>0} λᵢ — FULL PROOF via Minkowski inequality
+  + Matrix Determinant Lemma + exponential dominance argument
+- Remark: Ehrenfest obstruction (valid only for t < t_E)
+
+**Sec 18 (AFL vs GK comparison):**
+- Comparison table (6 rows)
+- Theorem (semiclassical equivalence): lim h_AFL = lim h_KS^{(2)} = h_KS^cl
+- Corollary: AFL-Pesin in semiclassical limit
+- Proposition (Ehrenfest obstruction): finite-dim → AFL=0, GK>0 only for t<t_E
+
+**Sec 19 (NEW RESULT — shift OTOC = 0):**
+- Theorem: shift automorphism → [Θ^n(A),B]=0 for n>k, so OTOC=0 for all large n
+- Corollary: butterfly velocity v_B = -∞ for shift
+- Theorem (AFL-Pesin BREAKDOWN): h_AFL = s(ω)+log d > 0, sum of positive λ_L = 0
+  → quantum Pesin FAILS for shift automorphism
+- Physical diagnosis: information production ≠ sensitivity (Bernoulli shift analogy)
+- Proposition: necessary conditions for quantum Pesin to hold
+- Conjecture: quantum Pesin for chaotic spin chains (in thermodynamic+semiclassical limit)
+
+All environments balanced (48 theorem-like, 26 equations, etc).
+Bibliography extended with 6 new entries (GK2021, MSS2016, SZ1994, Hosur2016, LR1972).
+
+### Current state
+Output.tex complete and structurally verified. Approach still not exhausted.
+Next directions:
+- CNT entropy comparison
+- Numerical verification of OTOC growth and AFL for random unitary circuits
+- Concrete model where quantum Pesin holds (SYK, random circuits)
