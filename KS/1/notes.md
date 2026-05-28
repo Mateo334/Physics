@@ -1,3 +1,4 @@
-Try to visualize all matrices used in latex so i know how they look like. Not numbers but use symbols that you have defined.
-Also try to use the AF entropy for the limiting procedure of the coarse grainings and look how different types of coarse grainings behave. 
-There are a few papers on this topic, Šafránek's papers are closely connected to this topic. 
+show if the corrected afl entropy really does fulfill the conjecture for the quantum Pesin theorem ,ie. for systems such as the free fermion chains, qubit systems.
+try to sketch a conjecture for the general quantum (not semiclassical limit) case for the Pesin theorem and outline the difficulties or the steps needed.
+Try to reconcile this fact: the AFL entropy is defined via OPUs (measurements), while λ_L is defined via operator growth; a direct analytic link between them requires new tools, possibly via the Goldfriend–Kurchan formalism or quantum ergodic theory.
+Try to focus on infinite dimensional systems for the correspondence later on, since only then, the AFL is nonzero
