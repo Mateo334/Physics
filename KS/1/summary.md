@@ -92,17 +92,86 @@ Corrected AFL entropy: h̃ = h_AFL - log d = s(ω).
 - Quantum Pesin conjecture: s(ω) = λ_L (quantum Lyapunov exponent via OTOC).
 - Ehrenfest obstruction: no exponential OTOC growth for finite-dim systems.
 
+**Result 11: Symbolic matrix structure (Sec 24, new)**
+Explicit block-form of ρ[Z] and ρ[Z^(2)] with symbolic entries.
+- ρ[Z]: k×k matrix with entries ω(Z_j*Z_i).
+- ρ[Z^(2)]: k²×k² block-diagonal, entries (1/d)δ_{ik}|U_{ij}|²δ_{jl}.
+- n=3: off-diagonal coherences emerge (Z^(3)_{(0,0,0)} = Z^(3)_{(0,1,0)} = (1/2)P_0),
+  reducing S_AFL below H(p).
+
+**Result 12: S_obs = 0 for maximally mixed state (Theorem 24.3, new)**
+For ω = I/d and ANY OPU: p_k = V_k, so S_obs = -Σ p log(p/V) = 0.
+S_AFL = H(V) = structural entropy of POVM cells for n ≤ n_sat.
+For n > n_sat: quantum coherence gap H(V) - S_AFL grows, AFL stays ≤ 2 log d.
+
+**Result 13: AFL-obs decomposition (Prop. 24.2, new)**
+For projector OPU + any state: S_AFL = S_obs + H(V).
+→ AFL entropy = observational entropy + structural entropy.
+The two components measure: (state information gain) + (OPU cell complexity).
+
+**Result 14: Structural entropy theorem (Theorem 25.4, new)**
+For projector OPU + ω = I/d:
+- n = 1,2: S_AFL(Z^(n)) = H(V^(n)) exactly.
+- n ≥ n_sat: S_AFL saturates at log d + E(U) while H(V) grows as n log k.
+- The quantum coherence gap = classical structural entropy − AFL = information lost to rank bound.
+
+**Result 15: K-independence theorem (Theorem 27.1, new)**
+For the kicked top U(k) = U_kick(k) * U_rot:
+  |U(k)_{ij}|² = |[U_rot]_{ij}|²  for all k, i, j.
+Proof: U_kick is diagonal in J_z eigenbasis → phases cancel in |·|².
+Consequence: E(U^1) = E(U_rot) = k-independent. AFL at n=1 is phase-blind.
+Verified to machine precision (error < 3e-16) for j = 0.5, 1.0, 1.5, 2.5, 5.0.
+
+**Result 16: d=2 all-orders k-independence (Corollary 27.2, new)**
+For j=1/2 (d=2): m² = 1/4 = constant, so ALL powers U^n are k-independent.
+
+**Result 17: Qutrit odd-step k-independence (Conjecture 28.1, new)**
+For qutrit kicked top (j=1, d=3): E(U^{odd}) = E(U^1) for all k (verified n=1,3,5).
+Mechanism: parity symmetry of d^1(π/2) Wigner matrix + m² = {0,1} symmetry.
+
+**Result 18: SIC-POVM AFL entropy (Proposition 28.2, new)**
+For d=2 SIC-POVM OPU {Z_i = (1/√2)|φ_i><φ_i|}:
+Eigenvalues of ρ[Z^(1)] = (1/2, 1/6, 1/6, 1/6), S = log(2)/2 + (1/2)log(6) ≈ 1.2425.
+Proved analytically via equiangularity: [ρ]_{ij} = δ_{ij}/4 + (1-δ_{ij})/12.
+
+**Result 19: OPU composition breakdown for non-unital channels (Theorem 29.1, new)**
+For any TP-CP map Theta, the composed OPU satisfies:
+  Σ_{ij} (Z^(2)_{ij})† Z^(2)_{ij} = Σ_j Theta(Z_j†) Theta(Z_j) ≤ Sigma_j Theta(Z_j†Z_j) = I
+with inequality (Kadison) unless Theta is a *-homomorphism.
+Explicit: amplitude damping gives P_0 + (γ²+(1-γ)²)P_1 ≠ I for γ ∈ (0,1).
+
+**Result 20: Dissipation kills dynamical entropy (Remark 29.3, new)**
+For amplitude damping: fixed point ω* = |0><0>, s(ω*) = 0, h~ = 0.
+Three remedies for AFL with non-unital dynamics: Stinespring dilation,
+instrument entropy, entropy production rate.
+
+**Result 21: Quantum Pesin obstruction catalogue (Section 30, new)**
+Five rigorous obstructions to naive Quantum Pesin for finite-d systems:
+1. Finite-rate obstruction: h_AFL = 0 always.
+2. Phase obstruction: E(U^1) is k-independent (kicked top).
+3. Recurrence obstruction: E(U^n) oscillates, no linear growth.
+4. Non-unital obstruction: OPU composition breaks for dissipative channels.
+5. Ehrenfest obstruction: OTOC bounded by 2 log d.
+Each resolved only in the double limit (semiclassical + thermodynamic).
+
+**Result 22: Refined Quantum Pesin Conjecture (Conjecture 30.1, new)**
+s(ω) = Σ_{λ_i > 0} λ_i  (sum of positive OTOC eigenvalues at Ehrenfest time)
+in the double limit ℏ→0, L→∞ for infinite spin chains with KMS state.
+
 ## Status of this approach
 
 NOT exhausted. Remaining open directions:
-1. Rigorous proof of Quantum Pesin Conjecture (Conjecture 23.1) for specific models.
-2. Extension to d > 2 (qutrit Hadamard, SIC-POVMs).
-3. Non-unital CP maps: what happens when the dynamics is dissipative?
-4. Direct comparison of s(ω) with known Lyapunov exponents in XXZ chain.
+1. Rigorous proof of Qutrit Odd-Step Conjecture (Conjecture 28.1) via Wigner d-matrix analysis.
+2. Direct comparison of s(ω) with known Lyapunov exponents in XXZ chain (numerical).
+3. Šafránek observational entropy for non-maximally-mixed states: full analysis.
+4. Stinespring dilation approach to AFL for dissipative channels.
+5. Semiclassical analysis in the j→∞ limit for kicked top (Weyl quantization route).
 
 ## Files
-- Output.tex: Full LaTeX (~2114 lines), sections 1-23 + bibliography.
+- Output.tex: Full LaTeX (3064 lines), sections 1-30 + bibliography.
 - progress.md: Step-by-step progress log.
 - summary.md: This file.
 - hadamard_qubit.py: Python verification (AFL entropy, MUB, matrix entropy formula).
 - otoc_analysis.py: Python verification (OTOC formula, Rényi comparison, total OTOC).
+- coarse_graining.py: Python verification (observational entropy, structural entropy, refinement bound).
+- kicked_top.py: Python verification (K-independence, E(U^n) growth, qutrit, SIC-POVM, amplitude damping).

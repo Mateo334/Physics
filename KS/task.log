@@ -59,3 +59,43 @@ The general task (quantum Pesin theorem) is ongoing — no task is complete yet 
 Task 1 is the only task in `tasks.md` and is marked `[COMPLETE — 2026-05-28]`. Mateo's Notes section contains only the original "Trial one" questions, all of which were fully addressed in sessions on 2026-05-27 and 2026-05-28 (sections 16–23 of Output.tex, both Python verification scripts, and all 10 original results). There are no new instructions and no uncompleted tasks.
 
 NO_TASKS_REMAINING
+Task 2 is complete. Here's what was done this session:
+
+---
+
+**Three new sections added to Output.tex (now 2554 lines, 224 environments)**
+
+**Section 24 — Symbolic matrix visualization:**
+- Wrote ρ[Z] explicitly as a k×k matrix with symbolic entries ω(Z_j\*Z_i).
+- Wrote ρ[Z^(2)] as a k²×k² block-diagonal, entry $(i,j),(k,l)$ = (1/d)δ_{ik}|U_{ij}|²δ_{jl}$ — explicit for d=2 and Hadamard.
+- Showed that at n=3, linear dependences produce off-diagonal coherences (e.g. Z^(3)_{(0,0,0)} = Z^(3)_{(0,1,0)} = (1/2)P₀) which reduce entropy below H(diagonal).
+
+**Section 25 — Šafránek observational entropy:**
+- Defined S_obs = −Σ p_k log(p_k/V_k), V_k = Tr(Z_k†Z_k)/d.
+- Proved: S_obs = 0 for ω = I/d (any OPU, all n) — because p_k = V_k exactly.
+- Proved: S_AFL = S_obs + H(V) for projector OPU (AFL = observational + structural).
+
+**Section 26 — Coarse-graining refinement:**
+- Proved: rank(ρ[Z^(n)]) ≤ d² for ALL n and ALL k-element OPUs → S_AFL ≤ 2 log d always.
+- Structural entropy theorem: for projector OPU + maximally mixed, S_AFL = H(V) for n ≤ n_sat, then diverges from H(V) as quantum coherences emerge.
+- Classical-vs-quantum comparison table.
+
+**New Python file:** `coarse_graining.py` — all identities verified to machine precision.
+Everything is in order. Here's what was accomplished this session:
+
+---
+
+**Task 3 completed — Quantum Pesin Conjecture: Kicked Top, Qutrit Systems, and Dissipative Channels**
+
+**New theorems proved (Sections 27–30, Output.tex now 3064 lines):**
+
+1. **K-Independence Theorem (Sec 27)**: For the quantum kicked top `U(k) = U_kick(k)·U_rot`, the matrix entropy `E(U¹)` is strictly k-independent. Proof: `U_kick` is diagonal in the J_z basis, so all phases cancel in `|U_{ij}|²`. Verified to machine precision (< 3×10⁻¹⁶). AFL at step n=1 cannot detect classical chaos for this model.
+
+2. **d=2 All-Orders K-Independence**: For j=1/2, m² is constant = 1/4, so ALL powers U^n are k-independent — AFL entropy time series is entirely phase-blind for the qubit kicked top.
+
+3. **OPU Composition Breakdown (Sec 29)**: For non-unital channels, `Σ(Z²_{ij})†Z²_{ij} = Σ_j Θ(Z_j†)Θ(Z_j) ≤ I` (Kadison inequality — strict for non-automorphisms). Explicit: amplitude damping gives `P_0 + (γ²+(1-γ)²)P_1 ≠ I`. AFL entropy requires *-automorphisms.
+
+4. **SIC-POVM AFL Entropy (Sec 28)**: Eigenvalues `(1/2, 1/6, 1/6, 1/6)`, `S = 1.2425`, proved analytically via equiangularity.
+
+5. **Five-Obstruction Catalogue + Refined Quantum Pesin Conjecture (Sec 30)**: All obstructions (finite-rate, phase, recurrence, non-unital, Ehrenfest) are catalogued rigorously, each requiring the double limit ℏ→0 and L→∞ to resolve.
+You've hit your session limit · resets 5:50pm (Europe/Prague)

@@ -186,3 +186,119 @@ Key analytical results (all verified to machine precision):
 
 Output.tex now 2114 lines. All environments balanced (179 begin = 179 end).
 \conjecture theorem environment added to preamble.
+
+## Session: 2026-05-28 (Task 2)
+
+### Step 14 — Addressed Mateo's notes.md
+Three new directions from notes.md:
+1. Visualize all matrices symbolically (no numbers, use defined symbols)
+2. Use AFL entropy for the limiting procedure of coarse-grainings
+3. Connect to Šafránek's papers on observational entropy
+
+### Step 15 — Python verification: coarse_graining.py
+Key results (all verified to machine precision):
+- For projector OPU + ω = I/d: p_k = V_k always → S_obs = 0 (all n).
+- For n=1,2: S_AFL = H(V) (structural entropy of cells).
+- For n≥3: S_AFL saturates at log(d²) = 2 log d; H(V) grows unboundedly.
+- Quantum coherence gap: H(V) - S_AFL = information destroyed by operator linear dependences.
+- Rank bound: rank(ρ[Z^(n)]) ≤ d² for ALL n, ALL k-element OPUs (verified k=2,4,8).
+- Matrix entropy formula verified for all 5 rotation angles.
+
+### Step 16 — Sections 24-26 written to Output.tex
+- Sec 24: Symbolic matrix visualization
+  - ρ[Z] as k×k matrix with entries ω(Z_j* Z_i) (Eq. rho1_display)
+  - ρ[Z^(2)] as k²×k² block-diagonal matrix (Eq. rho2_block, rho2_blocks)
+  - Explicit d=2 form with |U_ij|² entries (Eq. rho2_d2)
+  - Hadamard: ρ[Z^(2)] = (1/4)I_4 (Eq. rho2_hadamard)
+  - n=3 off-diagonal coherences: Z^(3)_{(0,0,0)} = Z^(3)_{(0,1,0)} = (1/2)P_0
+  - Block structure summary remark
+
+- Sec 25: Šafránek observational entropy
+  - Definition: S_obs = -Σ p_k log(p_k/V_k), V_k = Tr(Z_k^†Z_k)/d
+  - Decomposition: S_obs = H(p) - H(V) (Prop. obs_decomp)
+  - Theorem: S_obs = 0 for ω = I/d (all OPUs, all n)
+  - AFL-obs comparison table (4 quantities)
+  - Prop.: S_AFL = H(p) for projector OPU n=1,2; quantum gap for n≥3
+  - Numerical table (Table obs_comparison)
+
+- Sec 26: Coarse-graining refinement
+  - Refinement ordering definition
+  - Theorem: rank ≤ d² always → S_AFL ≤ 2 log d always
+  - Structural entropy theorem (3 parts: n=1,2; general; saturation)
+  - Classical vs quantum comparison table (5 rows)
+  - Šafránek hierarchy remark
+  - Reply to Mateo's notes remark
+
+Output.tex now 2554 lines. All 224 environments balanced.
+Bibliography extended with safranek2019, safranek2021.
+
+## Session: 2026-05-28 (Task 3 — Quantum Pesin, Kicked Top)
+
+### Step 17 — Python code: kicked_top.py COMPLETE
+Key results:
+
+**Theorem (K-independence): PROVED**
+For U(k) = U_kick(k) * U_rot with U_kick = exp(-i(k/2j)J_z²) diagonal:
+  |U(k)_{ij}|² = |[U_rot]_{ij}|²  for all k, all j, all i,j.
+Verified to machine precision (max error < 3e-16).
+Consequence: E(U^1) = E(U_rot) = k-independent. AFL at n=1 does NOT detect chaos.
+
+**E(U^n) for n ≥ 2: k-DEPENDENT**
+For d=11 (j=5): E(U^n) oscillates with no monotone growth. Quantum recurrence prevents
+convergence to log(d). Max scrambling not approached even for large chaotic k.
+
+**Qutrit d=3: odd-step k-independence**
+E(U^{odd}) = E(U^1) = 0.92420 for ALL k values (numerical observation).
+E(U^{even}) is k-dependent and small (near-integrable at step 2).
+Mechanism: periodicity of |[U^n]_{ij}|² for odd n in d=3.
+
+**SIC-POVM (d=2):**
+Z_i = (1/√2)|φ_i><φ_i|, i=0..3. OPU condition verified (error < 5e-16).
+S(ρ[Z^1]) = 1.242, eigenvalues = (1/6, 1/6, 1/6, 1/2).
+Interpretation: SIC-POVM AFL entropy is between log(2) and log(4); uniform + spike structure.
+
+**Amplitude damping (non-unital):**
+For projector OPU + amplitude damping Kraus, the OPU composition property BREAKS:
+sum_{ij} Z^(2)_{ij}^† Z^(2)_{ij} = P_0 + (γ²+(1-γ)²)P_1 ≠ I for γ ≠ 0, 1.
+AFL entropy is not well-defined for non-unital channels via the standard composition.
+Fixed point: |0><0> → s(ω) = 0 → h~ = 0 (dissipation kills dynamical entropy).
+
+### Step 18 — Sections 27-30 written to Output.tex COMPLETE
+
+- Sec 27: Kicked top analysis
+  - Theorem (K-independence): |U(k)_{ij}|² = |U_rot_{ij}|² for all k — proved rigorously
+  - Corollary: d=2 case — ALL powers U^n are k-independent
+  - E(U^n) for n ≥ 2 is k-dependent (Proposition 27.3)
+  - Table: E(U^n) for d=11, n=1..20, k=0.5..6.0
+  - Remark: quantum recurrence obstruction prevents E(U^n)/n → λ_L
+
+- Sec 28: Qutrit and SIC-POVMs
+  - Qutrit table: E(U^{odd}) = E(U^1) for all k (numerical observation)
+  - Conjecture (qutrit odd-step k-independence): proved sketch via Wigner d-matrix symmetry
+  - SIC-POVM OPU (d=2): eigenvalues (1/2, 1/6, 1/6, 1/6) proved analytically
+  - S_SIC = 1.2425, between log(2) and log(4)
+
+- Sec 29: Non-unital channels
+  - Theorem: OPU composition requires automorphisms (proved via Kadison inequality)
+  - Proposition: amplitude damping breaks OPU condition (explicit: P_0+(γ²+(1-γ)²)P_1 ≠ I)
+  - Three remedies: Stinespring dilation, instrument entropy, entropy production rate
+  - Remark: fixed point |0><0> → s(ω*) = 0 → dissipation kills dynamical entropy
+
+- Sec 30: Synthesis
+  - Table: what AFL quantities detect/miss
+  - Refined Quantum Pesin Conjecture (double limit: semiclassical + thermodynamic)
+  - Obstruction catalogue: 5 rigorous obstructions with their resolutions
+  - Reply to Mateo: integrability detected by corrected AFL s(ω) < log(d)
+
+Output.tex now 3064 lines. All 276 environments balanced (276 begin = 276 end).
+Bibliography extended with haake1987, haake2010, ruelle1978.
+
+### Current state
+Task 3 (Quantum Pesin Kicked Top) in progress. Sections 27-30 written.
+Subtasks completed:
+[x] K-independence theorem proved and verified
+[x] E(U^n) growth studied
+[x] Qutrit and SIC-POVM analysis
+[x] Non-unital channel OPU breakdown proved
+[x] Synthesis section with refined conjecture
+Remaining: update summary.md, mark task complete.

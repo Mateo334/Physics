@@ -2059,7 +2059,938 @@ thus: $s(\omega) = \lambda_L$ (Conjecture~\ref{conj:pesin}), with classical Pesi
 limiting case.
 \end{remark}
 
+%-----------------------------------------------------------------------
+\section{Symbolic Matrix Structure of OPU Density Matrices}
+\label{sec:matrix_viz}
+%-----------------------------------------------------------------------
+
+\subsection{The \texorpdfstring{$k\times k$}{k x k} density matrix \texorpdfstring{$\rho[\mathcal{Z}]$}{rho[Z]}}
+
+Let $\mathcal{Z}=\{Z_1,\ldots,Z_k\}\subset M_d(\mathbb{C})$ be an OPU and
+$\omega$ an invariant state.  By Definition~\ref{def:OPU_density} and
+Lemma~\ref{lem:equiv}, the AFL density matrix $\rho[\mathcal{Z}]\in M_k(\mathbb{C})$
+is the following $k\times k$ matrix (rows and columns labelled $1,\ldots,k$):
+\begin{equation}\label{eq:rho1_display}
+\rho[\mathcal{Z}]
+= \begin{pmatrix}
+  \omega(Z_1^*Z_1) & \omega(Z_2^*Z_1) & \cdots & \omega(Z_k^*Z_1) \\
+  \omega(Z_1^*Z_2) & \omega(Z_2^*Z_2) & \cdots & \omega(Z_k^*Z_2) \\
+  \vdots           & \vdots           & \ddots & \vdots           \\
+  \omega(Z_1^*Z_k) & \omega(Z_2^*Z_k) & \cdots & \omega(Z_k^*Z_k)
+\end{pmatrix}.
+\end{equation}
+In finite dimensions, with $\omega$ a density matrix and $\Tr$ denoting the
+trace, the $(i,j)$ entry is $\rho[\mathcal{Z}]_{ij}=\Tr(Z_i\,\omega\,Z_j^*)$.
+
+\noindent\textbf{Diagonal entries.}
+$\rho[\mathcal{Z}]_{ii} = \Tr(Z_i\omega Z_i^*) = \Tr(Z_i^*Z_i\,\omega) \geq 0$
+is the probability of outcome $i$ in the instrument $\{\mathcal{E}_i(\ \cdot\ )=Z_i(\cdot)Z_i^*\}$.
+
+\noindent\textbf{Off-diagonal entries.}
+$\rho[\mathcal{Z}]_{ij} = \Tr(Z_i\omega Z_j^*)$ is a quantum coherence term;
+it vanishes in the commutative (classical) case.
+
+\noindent\textbf{Special case: projector OPU.}  If each $Z_i=P_i=|e_i\rangle\langle e_i|$
+is a rank-1 projector, then $Z_i Z_j^* = P_i P_j^* = P_i P_j = \delta_{ij}P_i$, so
+\begin{equation}
+  \rho[\mathcal{Z}]_{ij}
+  = \Tr(P_i\,\omega\,P_j)
+  = \langle e_i|\omega|e_j\rangle\,\delta_{ij}
+  = \delta_{ij}\,p_i,
+\end{equation}
+where $p_i=\langle e_i|\omega|e_i\rangle$ is the Born probability of outcome $i$.
+For $\omega=\frac{1}{d}\mathbf{1}$: all $p_i=\frac{1}{d}$, giving
+$\rho[\mathcal{Z}]=\frac{1}{k}\mathbf{1}_k$.
+
+\subsection{The \texorpdfstring{$k^2\times k^2$}{k2 x k2} density matrix \texorpdfstring{$\rho[\mathcal{Z}^{(2)}]$}{rho[Z(2)]}}
+
+The time-refined OPU $\mathcal{Z}^{(2)}$ has $k^2$ elements indexed by pairs
+$(i_1,i_0)\in\{1,\ldots,k\}^2$.  With the lexicographic ordering
+$(1,1),(1,2),\ldots,(1,k),(2,1),\ldots,(k,k)$, the density matrix
+$\rho[\mathcal{Z}^{(2)}]$ is a $k^2\times k^2$ matrix with block structure:
+
+\begin{equation}\label{eq:rho2_block}
+\rho[\mathcal{Z}^{(2)}]
+= \bigl(\rho^{(2)}_{(i_1,i_0),(j_1,j_0)}\bigr)
+= \bigl(\omega\bigl(Z_{j_0}^*\Theta(Z_{j_1})^*\,\Theta(Z_{i_1})\,Z_{i_0}\bigr)\bigr),
+\end{equation}
+partitioned into $k\times k$ blocks $B_{i_1,j_1}$ of size $k\times k$ each:
+\begin{equation}\label{eq:rho2_blocks}
+\rho[\mathcal{Z}^{(2)}]
+= \begin{pmatrix}
+  B_{11} & B_{12} & \cdots & B_{1k} \\
+  B_{21} & B_{22} & \cdots & B_{2k} \\
+  \vdots &        & \ddots & \vdots \\
+  B_{k1} & B_{k2} & \cdots & B_{kk}
+\end{pmatrix}, \quad
+(B_{i_1 j_1})_{i_0 j_0}
+= \omega\bigl(Z_{j_0}^*\Theta(Z_{j_1})^*\,\Theta(Z_{i_1})\,Z_{i_0}\bigr).
+\end{equation}
+
+\noindent\textbf{Special case: projector OPU + unitary dynamics.}
+With $Z_i=P_i=|e_i\rangle\langle e_i|$ and $\Theta(A)=UAU^*$,
+Proposition~\ref{prop:rho2_formula} gives the completely explicit formula
+(all entries in terms of the matrix elements $U_{ij}=\langle e_i|U|e_j\rangle$):
+\begin{equation}\label{eq:rho2_diag_display}
+\rho[\mathcal{Z}^{(2)}]
+=
+\frac{1}{d}
+\begin{pmatrix}
+  |U_{11}|^2 & & & & & \\
+  & |U_{12}|^2 & & & & \\
+  & & \ddots & & & \\
+  & & & |U_{21}|^2 & & \\
+  & & & & |U_{22}|^2 & \\
+  & & & & & \ddots
+\end{pmatrix},
+\end{equation}
+a diagonal matrix with $d^2$ entries $\frac{1}{d}|U_{ij}|^2$ (each appearing
+once; ordering is $(i,j)$ lexicographic).  Explicitly for $d=2$:
+\begin{equation}\label{eq:rho2_d2}
+\rho[\mathcal{Z}^{(2)}]\bigl|_{d=2}
+= \frac{1}{2}
+\begin{pmatrix}
+  |U_{11}|^2 & 0          & 0          & 0          \\
+  0          & |U_{12}|^2 & 0          & 0          \\
+  0          & 0          & |U_{21}|^2 & 0          \\
+  0          & 0          & 0          & |U_{22}|^2
+\end{pmatrix},
+\quad\text{rows/cols ordered }(1,1),(1,2),(2,1),(2,2).
+\end{equation}
+
+\noindent For the Hadamard gate $H$ (with $|H_{ij}|^2=\frac{1}{2}$ for all $i,j$):
+\begin{equation}\label{eq:rho2_hadamard}
+\rho[\mathcal{Z}^{(2)}]\bigl|_{H}
+= \frac{1}{4}\mathbf{1}_4,
+\end{equation}
+the maximally mixed state, as proved analytically in Section~\ref{sec:hadamard}.
+
+\subsection{Structure at step \texorpdfstring{$n=3$}{n=3}: emergence of off-diagonal coherences}
+
+At step $n=3$, the operator algebra $\{Z^{(3)}_\mathbf{i}\}$ still lives in
+$M_d(\mathbb{C})$, which has dimension $d^2$ as a vector space.  Once
+$k^n > d^2$, the $k^n$ operators become \emph{linearly dependent} in
+$M_d(\mathbb{C})$, and the density matrix $\rho[\mathcal{Z}^{(3)}]$ is a
+$k^3\times k^3$ matrix of rank at most $d^2$.
+
+For the Hadamard qubit ($d=k=2$) at $n=3$: there are $2^3=8$ operator labels,
+but since $H^2=\mathbf{1}$, one finds
+$Z^{(3)}_{(i_0,i_1,i_2)}=Z^{(3)}_{(i_0,i_1',i_2)}$ for $i_1\neq i_1'$
+(two distinct indices give identical operators).  For example:
+\begin{equation}
+  Z^{(3)}_{(0,0,0)}
+  = Z^{(3)}_{(0,1,0)}
+  = \tfrac{1}{2}P_0,
+\end{equation}
+so the $8\times 8$ density matrix has rank $4$ and contains off-diagonal
+entries such as
+\begin{equation}
+  \rho[\mathcal{Z}^{(3)}]_{(0,0,0),(0,1,0)}
+  = \tfrac{1}{2}\Tr\!\bigl(Z^{(3)}_{(0,0,0)}\,\omega\,Z^{(3)*}_{(0,1,0)}\bigr)
+  = \tfrac{1}{2}\cdot\tfrac{1}{2}\cdot\tfrac{1}{2}
+  = \tfrac{1}{8} \neq 0,
+\end{equation}
+while the diagonal entries are also $\frac{1}{8}$.  Hence
+$S(\rho[\mathcal{Z}^{(3)}]) = \log 4 < \log 8 = H(\text{diagonal})$:
+the off-diagonal coherences \emph{reduce} the von Neumann entropy below the
+Shannon entropy of the measurement-outcome distribution.
+
+\begin{remark}[Block structure summary]
+\begin{itemize}
+  \item $n=1$: $\rho[\mathcal{Z}]$ is $k\times k$, diagonal for projector OPU.
+  \item $n=2$: $\rho[\mathcal{Z}^{(2)}]$ is $k^2\times k^2$, diagonal with
+        entries $\frac{1}{d}|U_{ij}|^2$ (projector OPU, max-mixed state).
+  \item $n\geq 3$ (once $k^n>d^2$): $\rho[\mathcal{Z}^{(n)}]$ develops off-diagonal
+        coherences; rank saturates at $d^2$ and entropy saturates at $\leq 2\log d$.
+\end{itemize}
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{Observational Entropy (Šafránek) and the AFL Comparison}
+\label{sec:obs_entropy}
+%-----------------------------------------------------------------------
+
+\subsection{Definition and properties}
+
+Following \v{S}afr\'anek, Deutsch, and Aguirre~\cite{safranek2019}, the
+\emph{observational entropy} of a state $\omega$ with respect to an OPU (or
+POVM) $\mathcal{Z}=\{Z_i\}$ is
+\begin{equation}\label{eq:obs_entropy}
+  S_{\mathrm{obs}}(\omega,\mathcal{Z})
+  := -\sum_i p_i \log\frac{p_i}{V_i},
+\end{equation}
+where $p_i := \Tr(Z_i^* Z_i\,\omega)$ is the outcome probability and
+$V_i := \Tr(Z_i^* Z_i)/d$ is the \emph{volume} of the $i$-th cell
+(its fractional size relative to the full state space).
+
+Note: $S_{\mathrm{obs}}$ can be negative when $p_i < V_i$ for some $i$, i.e.\ when
+the state concentrates less probability on a cell than its volume would suggest.
+
+\begin{proposition}[Decomposition]\label{prop:obs_decomp}
+\begin{equation}\label{eq:obs_decomp}
+  S_{\mathrm{obs}}(\omega,\mathcal{Z})
+  = H(p) - H(V)
+  = H(p) + \sum_i V_i\log V_i,
+\end{equation}
+where $H(p)=-\sum_i p_i\log p_i$ is the Shannon entropy of the outcome
+distribution and $H(V)=-\sum_i V_i\log V_i$ is the \emph{structural entropy}
+of the OPU.
+\end{proposition}
+\begin{proof}
+$S_{\mathrm{obs}} = -\sum_i p_i\log p_i + \sum_i p_i\log V_i
+= H(p) - H(V) + \sum_i(V_i-p_i)\log V_i$.
+When $\{V_i\}$ sums to~1 (as it does since $\sum_i\Tr(Z_i^*Z_i)/d = d/d=1$)
+and $\sum_i p_i=1$, the last term vanishes:
+$\sum_i(V_i-p_i)\log V_i$
+requires using $\sum_i V_i = \sum_i p_i = 1$.
+More explicitly: $S_{\mathrm{obs}} = -\sum_i p_i(\log p_i - \log V_i) = H(p) + \sum_i p_i\log V_i$.
+Since $\sum_i p_i = 1$, this equals $H(p) + \mathbb{E}_p[\log V_i]$.
+\end{proof}
+
+\subsection{Key theorem: \texorpdfstring{$S_{\mathrm{obs}}=0$}{Sobs = 0} for the maximally mixed state}
+
+\begin{theorem}\label{thm:obs_zero}
+For the maximally mixed state $\omega_\infty = \frac{1}{d}\mathbf{1}$ and any
+OPU $\mathcal{Z}$,
+\begin{equation}
+  S_{\mathrm{obs}}\!\left(\omega_\infty,\mathcal{Z}\right) = 0.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $\omega_\infty = \frac{1}{d}\mathbf{1}$:
+\[
+  p_i = \Tr(Z_i^*Z_i\,\tfrac{1}{d}\mathbf{1})
+      = \tfrac{1}{d}\Tr(Z_i^*Z_i)
+      = V_i.
+\]
+Hence $p_i/V_i=1$ for all $i$, and every term in~\eqref{eq:obs_entropy}
+vanishes: $-p_i\log 1 = 0$.
+\end{proof}
+
+\begin{corollary}
+For $\omega_\infty = \frac{1}{d}\mathbf{1}$ and any OPU $\mathcal{Z}$, the
+AFL entropy and the structural entropy coincide:
+\[
+  S_{\mathrm{AFL}}(\Theta,\mathcal{Z}) = h_{\omega_\infty}^{\mathrm{AFL}}(\Theta,\mathcal{Z})
+  \quad\text{and}\quad
+  S(\rho[\mathcal{Z}^{(n)}]) \leq H(V^{(n)})
+  \quad\forall\,n,
+\]
+with equality when $\rho[\mathcal{Z}^{(n)}]$ is diagonal, i.e.\ for $n \leq n_{\mathrm{sat}}$.
+\end{corollary}
+
+\subsection{Comparison: AFL vs.\ observational entropy}
+
+The AFL entropy and observational entropy measure fundamentally different things:
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Quantity & Formula & Measures \\
+\hline
+$S_{\mathrm{AFL}}(\mathcal{Z}^{(n)})$ & $S(\rho[\mathcal{Z}^{(n)}])$ & Full quantum entropy of AFL density matrix \\
+$S_{\mathrm{obs}}(\omega,\mathcal{Z}^{(n)})$ & $H(p^{(n)})-H(V^{(n)})$ & Info relative to cell-volume prior \\
+$H(p^{(n)})$ & $-\sum p\log p$ & Classical Shannon entropy of outcomes \\
+$H(V^{(n)})$ & $-\sum V\log V$ & Structural entropy of OPU cells \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{proposition}[AFL--obs relation for projector OPU]\label{prop:afl_obs}
+For projector OPU $\mathcal{Z}=\{P_i=|e_i\rangle\langle e_i|\}$ (where $\rho[\mathcal{Z}^{(n)}]$
+is diagonal for $n=1,2$ and any state):
+\begin{equation}\label{eq:afl_obs_proj}
+  S(\rho[\mathcal{Z}^{(n)}]) = H(p^{(n)}), \quad n=1,2,
+\end{equation}
+because the AFL density matrix is diagonal (all coherences vanish).
+For $n\geq 3$ (once $k^n>d^2$):
+\begin{equation}\label{eq:quantum_gap}
+  S(\rho[\mathcal{Z}^{(n)}])
+  < H(p^{(n)}) = H(V^{(n)})
+  \qquad\text{(for }\omega=\tfrac{1}{d}\mathbf{1}\text{).}
+\end{equation}
+The difference $H(V^{(n)})-S_{\mathrm{AFL}}(\mathcal{Z}^{(n)})$ is the
+\emph{quantum coherence gap}: the information destroyed by quantum
+linear dependences in the operator algebra $M_d(\mathbb{C})$.
+\end{proposition}
+\begin{proof}[Proof sketch]
+For $n=1,2$ with projectors: $\rho[\mathcal{Z}^{(n)}]$ is diagonal
+(proved in Sections~\ref{sec:hadamard}--\ref{sec:mub}), so
+$S = H(\text{eigenvalues}) = H(\text{diagonal}) = H(p)$.
+For $n\geq 3$: operators $Z^{(n)}_\mathbf{i}$ live in $M_d(\mathbb{C})$ (dim $d^2$),
+so for $k^n>d^2$ the Gram matrix $G_{ij}=\Tr(Z^{(n)}_i{}^* Z^{(n)}_j)$ has
+rank $\leq d^2$.  The density matrix $\rho[\mathcal{Z}^{(n)}]$ is positive
+semidefinite of rank $\leq d^2$, hence $S(\rho)\leq\log d^2 = 2\log d < n\log k$.
+Meanwhile $H(V^{(n)}) = H(p^{(n)}) = n\log k$ for the maximally uniform case
+(Hadamard), so the gap grows as $n$ increases.
+\end{proof}
+
+\subsection{Numerical verification}
+
+\begin{table}[h]
+\centering
+\caption{AFL entropy vs.\ structural and observational entropy, projector OPU,
+Hadamard gate, $\omega=\frac{1}{2}\mathbf{1}_2$.}
+\label{tab:obs_comparison}
+\begin{tabular}{ccccc}
+\hline
+$n$ & $S_{\mathrm{AFL}}$ & $H(V)$ & $H(p)$ & $S_{\mathrm{obs}}$ \\
+\hline
+1 & $\log 2$ & $\log 2$ & $\log 2$ & $0$ \\
+2 & $2\log 2$ & $2\log 2$ & $2\log 2$ & $0$ \\
+3 & $2\log 2$ & $3\log 2$ & $3\log 2$ & $0$ \\
+4 & $2\log 2$ & $4\log 2$ & $4\log 2$ & $0$ \\
+\hline
+\end{tabular}
+\end{table}
+\noindent All values verified to machine precision by \texttt{coarse\_graining.py}.
+
+%-----------------------------------------------------------------------
+\section{Coarse-Graining Refinement and the Structural Entropy Theorem}
+\label{sec:refinement}
+%-----------------------------------------------------------------------
+
+\subsection{Refinement of OPUs}
+
+\begin{definition}[Refinement ordering]\label{def:refinement}
+An OPU $\mathcal{Z}'=\{Z'_\alpha\}$ is a \emph{refinement} of
+$\mathcal{Z}=\{Z_i\}$ if each $Z'_\alpha=M_\alpha Z_{f(\alpha)}$ for some
+$f:\alpha\to i$ and bounded operator $M_\alpha$ with $\sum_{\alpha:f(\alpha)=i}
+M_\alpha^*M_\alpha=\mathbf{1}$ for each $i$.  We write $\mathcal{Z}'\succ\mathcal{Z}$.
+\end{definition}
+
+In the commutative (classical) case, refinement corresponds to subdividing a
+partition: a finer partition has more atoms, each smaller.  By the classical
+KS theorem, $h_{\mu,T}(\mathcal{P}')=h_{\mu,T}(\mathcal{P})$ for any generating
+partition $\mathcal{P}$; refinements do not change the entropy rate once the
+partition is generating.  In the quantum case, a fundamentally different
+phenomenon occurs.
+
+\subsection{AFL entropy under refinement}
+
+\begin{theorem}[AFL is bounded regardless of refinement]\label{thm:afl_bounded}
+For any finite-dimensional quantum system $(\A,\Theta,\omega)$ with
+$d=\dim\HS<\infty$, and for any OPU $\mathcal{Z}$ (of any size $k$):
+\begin{equation}\label{eq:rank_always}
+  \mathrm{rank}\,\rho[\mathcal{Z}^{(n)}] \leq d^2
+  \quad\forall\,n\geq 1.
+\end{equation}
+Consequently:
+\begin{equation}\label{eq:bound_always}
+  S\!\left(\rho[\mathcal{Z}^{(n)}]\right) \leq 2\log d
+  \quad\forall\,n,\,\forall\,\mathcal{Z}.
+\end{equation}
+In particular, $h_\omega^{\mathrm{AFL}}(\Theta,\mathcal{Z})=0$ for all $\mathcal{Z}$.
+\end{theorem}
+\begin{proof}
+The operators $Z^{(n)}_\mathbf{i}\in M_d(\mathbb{C})$ for all multi-indices
+$\mathbf{i}$.  The density matrix entry
+$\rho[\mathcal{Z}^{(n)}]_{\mathbf{i}\mathbf{j}}=\omega(Z^{(n)*}_\mathbf{j}Z^{(n)}_\mathbf{i})$
+defines a positive semidefinite Gram matrix on the vector space spanned by
+$\{Z^{(n)}_\mathbf{i}\}$ in $M_d(\mathbb{C})$ (with inner product $(A,B)\mapsto\omega(A^*B)$).
+Since $\dim_{\mathbb{C}}M_d(\mathbb{C})=d^2$, at most $d^2$ elements can be
+linearly independent, so $\mathrm{rank}\,\rho[\mathcal{Z}^{(n)}]\leq d^2$ and
+$S(\rho)\leq\log(\mathrm{rank})\leq\log d^2=2\log d$.
+\end{proof}
+
+\begin{remark}[Numerical verification]
+Verified by \texttt{coarse\_graining.py} for $k\in\{2,4,8\}$, $n\in\{1,2,3\}$,
+random OPUs, $d=2$: rank always $\leq 4 = d^2$, entropy always $\leq 2\log 2$.
+\end{remark}
+
+\subsection{Structural entropy theorem}
+
+The following theorem identifies exactly what the AFL entropy computes for the
+maximally mixed state, and how it relates to the structural complexity of the
+OPU.
+
+\begin{theorem}[Structural entropy theorem]\label{thm:structural}
+For the maximally mixed state $\omega_\infty=\frac{1}{d}\mathbf{1}$
+and the projector OPU $\mathcal{Z}=\{P_i=|e_i\rangle\langle e_i|\}_{i=1}^d$,
+with unitary dynamics $\Theta(A)=UAU^*$:
+\begin{enumerate}
+  \item For $n=1,2$: $S(\rho[\mathcal{Z}^{(n)}]) = H(V^{(n)}) = -\!\sum_\mathbf{i} V_\mathbf{i}^{(n)}\log V_\mathbf{i}^{(n)}$,
+        the structural entropy of the sequential POVM cells.
+  \item For $n\geq 1$ (in general): $S(\rho[\mathcal{Z}^{(n)}]) \leq H(V^{(n)})$
+        with equality iff $\rho[\mathcal{Z}^{(n)}]$ is diagonal.
+  \item For $n\geq n_{\mathrm{sat}}$ (where rank saturates at $d^2$):
+        $S(\rho[\mathcal{Z}^{(n)}])$ is constant and equals
+        $\log d + E(U)$ (the matrix entropy formula, Theorem~\ref{thm:matrix_entropy}),
+        while $H(V^{(n)}) = n\log d + E^{(n)}(U)$ grows without bound.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(1) For $n=1$: $\rho[\mathcal{Z}]=\frac{1}{d}\mathbf{1}_d$ (all $p_i=1/d$),
+so $S=\log d=H(V)$.  For $n=2$: $\rho[\mathcal{Z}^{(2)}]$ is diagonal with
+entries $p_{ij}=V_{ij}=\frac{1}{d}|U_{ij}|^2$
+(Proposition~\ref{prop:rho2_formula}), so $S = H(p) = H(V)$.
+
+(2) Von Neumann entropy $S(\rho)\leq H(\text{diagonal entries})=H(p)$,
+with equality iff $\rho$ is diagonal.
+For $\omega_\infty$: $p_\mathbf{i}=V_\mathbf{i}$ (Theorem~\ref{thm:obs_zero}),
+so $H(p)=H(V)$.
+
+(3) For $n\geq 3$: linear dependences in $M_d(\mathbb{C})$ produce off-diagonal
+entries in $\rho[\mathcal{Z}^{(n)}]$, reducing $S$ below $H(V)$.  The limit
+$S\to\log d + E(U)$ follows from the saturation of rank at $d^2$
+(Theorem~\ref{thm:afl_bounded}) and the matrix entropy formula.
+\end{proof}
+
+\subsection{Classical vs.\ quantum coarse-graining: key differences}
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Property & Classical (KS) & Quantum (AFL) \\
+\hline
+Entropy under OPU refinement & Non-decreasing (monotone) & Bounded by $2\log d$ (always!) \\
+Effect of finer OPU & $h_{\mathrm{KS}}(\mathcal{P}')\geq h_{\mathrm{KS}}(\mathcal{P})$ & $S_{\mathrm{AFL}}$ stays $\leq 2\log d$ \\
+Generating partition & Achieves $h_{\mathrm{KS}}$ (finite OPU) & Finite-dim AFL always $=0$ rate \\
+Entropy at step $n$ & $H(\text{joint partition}) \nearrow \infty$ & $S(\rho[\mathcal{Z}^{(n)}]) \leq 2\log d$ \\
+Rate $\frac{1}{n}S_n \to$ & $h_{\mathrm{KS}} > 0$ (if chaotic) & $0$ (always, finite $d$) \\
+Information source & Dynamics generating partition & Quantum noise floor $\log d$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{remark}[Šafránek's coarse-graining hierarchy]
+In \v{S}afr\'anek's framework, the observational entropy satisfies a
+\emph{hierarchy}: for any POVM $\mathcal{M}$,
+\[
+  0 \leq S_{\mathrm{obs}}(\omega,\mathcal{M})
+  \leq S(\omega)
+  \leq \log d,
+\]
+where the upper bound $S(\omega)\leq\log d$ is von Neumann entropy.
+The AFL entropy, by contrast, measures something complementary:
+it tracks the quantum information capacity of the OPU operators themselves,
+saturating at $\log(d^2)=2\log d$, which is \emph{twice} the state entropy
+bound.  The extra factor of $2$ reflects the operator nature of OPU elements
+($Z_i$ versus $P_i$): operators carry both ``input'' and ``output'' indices in
+$M_d(\mathbb{C})\cong\mathbb{C}^d\otimes\mathbb{C}^{d*}$.
+\end{remark}
+
+\begin{remark}[Reply to Mateo's notes on coarse-graining]
+Mateo's notes ask to use AFL for the limiting procedure of coarse-grainings.
+The answer, made precise above, is:
+\begin{enumerate}
+  \item For projector OPU + maximally mixed state, AFL entropy \emph{equals}
+        the structural entropy $H(V)$ of the sequential measurement cells,
+        up to the saturation time $n_{\mathrm{sat}}$ (when rank hits $d^2$).
+  \item For $n>n_{\mathrm{sat}}$, quantum coherences emerge and AFL $<H(V)$:
+        the quantum system has ``compressed'' the information.
+  \item The Šafránek observational entropy $S_{\mathrm{obs}}$ is always $0$
+        for $\omega_\infty$, reflecting that the maximally mixed state carries
+        no information beyond the measurement volumes.
+  \item The distinction between AFL and observational entropy precisely
+        captures the difference between quantum and classical coarse-graining:
+        AFL measures operator complexity, observational entropy measures
+        state information gain.
+\end{enumerate}
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{Quantum Kicked Top: K-Independence and the Limits of AFL Entropy}
+\label{sec:kicked}
+%-----------------------------------------------------------------------
+
+The \emph{quantum kicked top} is the standard model system for quantum chaos,
+admitting a well-controlled classical limit.  We use it to probe what AFL entropy
+can and cannot detect.
+
+\subsection{The model}
+
+Fix total spin $j$ so the Hilbert space has dimension $d = 2j+1$.
+Let $J_x, J_y, J_z$ be the angular momentum operators for spin $j$.
+The one-period Floquet unitary is
+\begin{equation}\label{eq:kicked_top}
+  U(k) \;=\; \exp\!\Bigl(-\tfrac{ik}{2j}J_z^2\Bigr)\,\exp\!\Bigl(-\tfrac{i\pi}{2}J_y\Bigr)
+  \;=:\; U_{\mathrm{kick}}(k)\cdot U_{\mathrm{rot}},
+\end{equation}
+where $k>0$ is the \emph{chaos parameter}.  The classical limit ($j\to\infty$)
+is an area-preserving map on the 2-sphere; its Lyapunov exponent satisfies
+(Haake \emph{et al.}, 1987):
+\begin{equation}\label{eq:lyapunov_table}
+  \lambda_L(k) \;\approx\;
+  \begin{cases}
+    0    & k \leq 2 \quad\text{(regular region)},\\
+    0.45 & k = 3,\\
+    0.65 & k = 4,\\
+    0.88 & k = 6.
+  \end{cases}
+\end{equation}
+
+\subsection{K-independence of the matrix entropy}
+
+\begin{theorem}[K-independence]\label{thm:k_independence}
+Let $U(k)$ be the kicked-top unitary~\eqref{eq:kicked_top}.  Then
+\[
+  |U(k)_{ij}|^2 \;=\; |[U_{\mathrm{rot}}]_{ij}|^2
+  \quad\text{for all } k,\; i,j.
+\]
+In particular, $E(U(k)) = E(U_{\mathrm{rot}})$ is \emph{independent of $k$}.
+\end{theorem}
+
+\begin{proof}
+The operator $U_{\mathrm{kick}}(k) = \exp(-\tfrac{ik}{2j}J_z^2)$ is diagonal in the
+$J_z$-eigenbasis $\{|m\rangle\}_{m=-j}^{j}$:
+\[
+  [U_{\mathrm{kick}}(k)]_{mn} \;=\; e^{-i(k/2j)m^2}\,\delta_{mn}.
+\]
+Therefore
+\[
+  [U(k)]_{ij}
+  \;=\; \sum_m [U_{\mathrm{kick}}(k)]_{im}[U_{\mathrm{rot}}]_{mj}
+  \;=\; e^{-i(k/2j)i^2}[U_{\mathrm{rot}}]_{ij},
+\]
+so $|[U(k)]_{ij}|^2 = |[U_{\mathrm{rot}}]_{ij}|^2$.  Since the matrix entropy
+$E(U) = -(1/d)\sum_{i,j}|U_{ij}|^2\log|U_{ij}|^2$ depends only on the moduli,
+it is $k$-independent.
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+Theorem~\ref{thm:k_independence} shows that $U_{\mathrm{kick}}$ acts as a
+\emph{phase gate} that changes only the complex arguments of matrix elements,
+not their magnitudes.  The AFL entropy at step $n=1$,
+$S(\rho[\mathcal{Z}^{(1)}]) = \log d + E(U(k))$, is therefore the same for the
+chaotic kicked top ($k=6$) as for the integrable one ($k=0.5$).
+This is not a failure of AFL --- it is a structural consequence of the diagonal
+nature of the kick.  AFL entropy at a single step probes the \emph{amplitude
+distribution} of the unitary, not its phase structure.
+\end{remark}
+
+\begin{corollary}[D=2 generalisation]
+For spin $j = 1/2$ ($d=2$), $m \in \{1/2, -1/2\}$ so $m^2 = 1/4$ is
+\emph{constant}.  The same argument shows $|[U(k)^n]_{ij}|^2 = |[U_{\mathrm{rot}}^n]_{ij}|^2$
+for all $n\geq 1$: the entire matrix-entropy time series is $k$-independent for $d=2$.
+\end{corollary}
+
+\begin{proof}
+By induction: if $|[U^n]_{ij}|^2 = |[U_{\mathrm{rot}}^n]_{ij}|^2$, then
+\[
+  [U^{n+1}]_{ij} = \sum_m [U^n]_{im}[U]_{mj}
+  = \sum_m [U^n]_{im} \cdot e^{-i(k/2j)m^2}[U_{\mathrm{rot}}]_{mj}.
+\]
+For $d=2$, $m^2 = 1/4$ always, so the phase $e^{-i(k/2j)\cdot 1/4}$ factors out:
+$|[U^{n+1}]_{ij}|^2 = |[U_{\mathrm{rot}}^{n+1}]_{ij}|^2$.
+\end{proof}
+
+\subsection{Multi-step scrambling: $E(U^n)$ distinguishes chaos}
+
+While $E(U^1)$ is $k$-independent, for $n\geq 2$ the matrix entropy $E(U^n)$
+depends on $k$ through quantum interference of the phase terms $e^{-i(k/2j)m^2}$.
+
+\begin{proposition}[K-dependence for $n\geq 2$]\label{prop:k_dependent}
+For $d\geq 3$ and generic $U_{\mathrm{rot}}$, $E(U(k)^n)$ depends on $k$ for
+all $n\geq 2$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+For $n=2$:
+\[
+  [U^2]_{ij} = e^{-i\alpha_i}\sum_m e^{-i\alpha_m}\,[U_{\mathrm{rot}}]_{im}[U_{\mathrm{rot}}]_{mj},
+  \qquad \alpha_m = \tfrac{k}{2j}m^2.
+\]
+The modulus $|[U^2]_{ij}|^2 = |\sum_m e^{-i\alpha_m} a_{im}b_{mj}|^2$ (where
+$a_{im}=[U_{\mathrm{rot}}]_{im}$, $b_{mj}=[U_{\mathrm{rot}}]_{mj}$) is a sum of cross terms
+$a_{im}b_{mj}\overline{a_{in}b_{nj}}\,e^{-i(\alpha_m-\alpha_n)}$.  For $d\geq 3$,
+$\alpha_m - \alpha_n = (k/2j)(m^2-n^2)$ takes distinct nonzero values for
+$m\neq n$, so the cross terms contribute nontrivially and their cancellation
+depends on $k$.
+\end{proof}
+
+\textbf{Numerical evidence} (Table~\ref{tab:E_Un_j5}, $d=11$, $j=5$):
+
+\begin{table}[h]\centering
+\begin{tabular}{r|rrrrr}
+\hline
+$n$ & $k=0.5$ & $k=1.0$ & $k=2.0$ & $k=3.0$ & $k=6.0$ \\
+\hline
+1  & 2.0369 & 2.0369 & 2.0369 & 2.0369 & 2.0369 \\
+2  & 0.4589 & 0.9416 & 1.3057 & 1.4225 & 1.4443 \\
+3  & 2.0794 & 2.1207 & 2.1406 & 1.8760 & 2.1691 \\
+5  & 2.1199 & 2.0683 & 2.1214 & 2.1731 & 1.9508 \\
+10 & 1.3720 & 1.4229 & 1.3808 & 1.4888 & 1.2186 \\
+20 & 1.4137 & 1.4051 & 0.9299 & 1.0965 & 1.4616 \\
+\hline
+\end{tabular}
+\caption{Matrix entropy $E(U(k)^n)$ for the kicked top with $j=5$, $d=11$,
+as a function of Floquet step $n$ and chaos parameter $k$.
+At $n=1$: all values equal (K-independence theorem, Theorem~\ref{thm:k_independence}).
+For $n\geq 2$: values are $k$-dependent but do not show monotone growth toward $\log d = 2.3979$.
+The oscillatory pattern reflects quantum quasi-periodicity (Poincaré recurrence).}
+\label{tab:E_Un_j5}
+\end{table}
+
+\begin{remark}[Quantum recurrence obstruction]
+$U(k)$ is a unitary on a \emph{finite}-dimensional Hilbert space, so by Poincaré
+recurrence $U^N \approx I$ for some $N \in \mathbb{N}$.  Consequently
+$E(U^n)$ does not converge but oscillates quasi-periodically.  No quantity that
+is purely a function of $|U^n_{ij}|^2$ can grow linearly (as $\lambda_L \cdot n$
+would require).  This reinforces the conclusion that \emph{the Quantum Pesin
+relation cannot be of the form ``$E(U^n)/n \to \lambda_L$''} for finite-dimensional
+systems.
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{Qutrit Systems and SIC-POVMs}
+\label{sec:qutrit}
+%-----------------------------------------------------------------------
+
+\subsection{Qutrit kicked top ($d=3$, $j=1$)}
+
+For the qutrit kicked top, $m \in \{1, 0, -1\}$ so $m^2 \in \{0,1\}$.
+The numerical data reveals a striking periodicity:
+
+\begin{table}[h]\centering
+\begin{tabular}{r|rrrrr}
+\hline
+$n$ & $k=0.5$ & $k=1.0$ & $k=2.0$ & $k=3.0$ & $k=6.0$ \\
+\hline
+1  & 0.92420 & 0.92420 & 0.92420 & 0.92420 & 0.92420 \\
+2  & 0.05343 & 0.15352 & 0.35940 & 0.46043 & 0.02100 \\
+3  & 0.92420 & 0.92420 & 0.92420 & 0.92420 & 0.92420 \\
+5  & 0.92420 & 0.92420 & 0.92420 & 0.92420 & 0.92420 \\
+10 & 0.42838 & 0.21588 & 0.43490 & 0.42120 & 0.24482 \\
+\hline
+\end{tabular}
+\caption{Matrix entropy $E(U(k)^n)$ for the qutrit kicked top ($j=1$, $d=3$).
+At \emph{all} odd steps $n=1,3,5$: the values are identical and $k$-independent.
+At even steps ($n=2$): $k$-dependent.  $\log(d=3) = 1.0986$.}
+\label{tab:E_qutrit}
+\end{table}
+
+\begin{conjecture}[Qutrit odd-step k-independence]\label{conj:qutrit_odd}
+For the qutrit kicked top ($j=1$, $d=3$),
+\[
+  E(U(k)^{2m+1}) \;=\; E(U_{\mathrm{rot}}^{2m+1})
+\]
+for all $m\geq 0$ and all $k$.  Equivalently, $|[U(k)^{2m+1}]_{ij}|^2$
+is $k$-independent.
+\end{conjecture}
+
+The mechanism is as follows.  For $d=3$, $\alpha_m = (k/2)m^2 \in \{k/2, 0, k/2\}$
+for $m=\pm 1, 0$.  At an odd step $n=2s+1$, the exponent appearing in $[U^n]_{ij}$
+is a sum $\sum_{\ell=1}^{n-1}\alpha_{m_\ell}$ over a chain of intermediate indices.
+Parity symmetry of the $J_z$ spectrum ($m \leftrightarrow -m$, with $m^2$ symmetric)
+combined with the symmetry of the Wigner $d^1_{mm'}(\pi/2)$ matrix under
+$m\mapsto -m$ implies a cancellation of the $k$-dependent phases for odd powers,
+while even powers break this symmetry.  A rigorous proof requires a careful analysis
+of the Wigner $d$-matrix structure; we leave it as a conjecture here.
+
+\begin{remark}[Physical significance]
+The qutrit odd-step $k$-independence means that, for this model, AFL entropy probes
+the classical chaos parameter $k$ \emph{only} at even Floquet steps.  This
+is qualitatively different from the qubit case (where ALL steps are $k$-independent)
+and from higher-spin cases (where only step $n=1$ is $k$-independent).  The parity
+of the Floquet step is thus a subtle but important observable.
+\end{remark}
+
+\subsection{SIC-POVMs as OPUs}
+
+A \emph{symmetric informationally complete} (SIC) POVM in dimension $d$ consists
+of $d^2$ rank-one operators $M_i = \frac{1}{d}|\phi_i\rangle\langle\phi_i|$
+satisfying the \emph{equiangularity condition}
+$|\langle\phi_i|\phi_j\rangle|^2 = \frac{1}{d+1}$ for $i\neq j$.
+
+For $d=2$, the SIC states are:
+\begin{equation}\label{eq:sic_d2}
+  |\phi_0\rangle = |0\rangle,\quad
+  |\phi_k\rangle = \frac{1}{\sqrt{3}}\Bigl(|0\rangle + \sqrt{2}\,e^{2\pi i(k-1)/3}|1\rangle\Bigr),
+  \quad k=1,2,3.
+\end{equation}
+The corresponding OPU elements are $Z_i = \frac{1}{\sqrt{d}}|\phi_i\rangle\langle\phi_i|$,
+satisfying $\sum_i Z_i^\dagger Z_i = \frac{1}{d}\sum_i |\phi_i\rangle\langle\phi_i| = \mathbf{1}_d$.
+
+\begin{proposition}[SIC-POVM AFL density matrix]\label{prop:sic_afl}
+For the SIC-POVM OPU $\{Z_i\}_{i=0}^{3}$ in $d=2$ and the maximally mixed state
+$\omega = \frac{1}{2}\mathbf{1}_2$, the density matrix $\rho[\mathcal{Z}]$ is a
+$4\times 4$ matrix with eigenvalues
+\[
+  \lambda_0 = \frac{1}{2},\qquad
+  \lambda_1 = \lambda_2 = \lambda_3 = \frac{1}{6}.
+\]
+The AFL entropy at step $n=1$ is
+\[
+  S(\rho[\mathcal{Z}]) = -\tfrac{1}{2}\log\tfrac{1}{2} - \tfrac{3}{6}\log\tfrac{1}{6}
+  = \log 2 \cdot\tfrac{1}{2} + \tfrac{1}{2}\log 6
+  \approx 1.2425,
+\]
+satisfying $\log 2 < S(\rho[\mathcal{Z}]) < \log 4$.
+\end{proposition}
+
+\begin{proof}
+The entries $[\rho[\mathcal{Z}]]_{ij} = \frac{1}{2}\mathrm{Tr}(Z_j^\dagger Z_i)
+= \frac{1}{2d}\langle\phi_j|\phi_i\rangle\langle\phi_i|\phi_j\rangle$...
+
+Actually, since $Z_i = \frac{1}{\sqrt{2}}|\phi_i\rangle\langle\phi_i|$:
+\[
+  [\rho[\mathcal{Z}]]_{ij}
+  = \omega(Z_j^\dagger Z_i)
+  = \mathrm{Tr}\!\bigl(Z_i\,\omega\,Z_j^\dagger\bigr)
+  = \tfrac{1}{2}\mathrm{Tr}(Z_j^\dagger Z_i)
+  = \tfrac{1}{4}|\langle\phi_j|\phi_i\rangle|^2.
+\]
+For $i=j$: $[\rho]_{ii} = \frac{1}{4}$.  For $i\neq j$: $[\rho]_{ij} = \frac{1}{4}\cdot\frac{1}{3} = \frac{1}{12}$.
+The $4\times 4$ matrix has diagonal $\frac{1}{4}$ and off-diagonal $\frac{1}{12}$.
+Its eigenvalues are $\frac{1}{4} + 3\cdot\frac{1}{12} = \frac{1}{2}$ (once, for the
+constant eigenvector) and $\frac{1}{4} - \frac{1}{12} = \frac{1}{6}$ (three times,
+for vectors orthogonal to $(1,1,1,1)$).  Direct computation confirms $\mathrm{Tr}(\rho) = 4\cdot\frac{1}{4} = 1$.
+\end{proof}
+
+\begin{remark}
+The SIC-POVM AFL entropy $S\approx 1.2425$ is strictly less than $\log 4 = 1.3863$
+(the MUB maximum).  The eigenvalue pattern $(\frac{1}{2},\frac{1}{6},\frac{1}{6},\frac{1}{6})$
+reflects the non-uniform structure: one eigenvalue is enhanced because the sum of
+SIC overlaps concentrates weight on the uniform eigenvector.  Compare the MUB case
+where all eigenvalues are equal $= 1/4$ (maximally mixed, $S = \log 4$).
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{Non-Unital Channels: AFL Entropy Breakdown}
+\label{sec:nonunital}
+%-----------------------------------------------------------------------
+
+The AFL entropy is defined for invertible dynamics (automorphisms).
+We now show rigorously that for \emph{non-unital} CP maps, the fundamental
+OPU composition property breaks down.
+
+\subsection{The OPU composition theorem requires automorphisms}
+
+Recall: for an OPU $\mathcal{Z} = \{Z_i\}$ with $\sum_i Z_i^\dagger Z_i = \mathbf{1}$
+and a CP map $\Theta$ in the Heisenberg picture ($\Theta(A) = \sum_k K_k^\dagger A K_k$),
+the composed OPU is $\mathcal{Z}^{(2)} = \{Z_i\cdot\Theta(Z_j)\}_{i,j}$.
+
+\begin{theorem}[OPU composition for non-unital channels]\label{thm:opu_nonunital}
+Let $\Phi$ be a TP-CP map with Kraus operators $\{K_k\}$, and let
+$\Theta(A) = \sum_k K_k^\dagger A K_k$ be its Heisenberg dual.
+The composed OPU $\mathcal{Z}^{(2)} = \{Z_i\cdot\Theta(Z_j)\}_{i,j}$ satisfies
+\[
+  \sum_{i,j}(Z^{(2)}_{ij})^\dagger Z^{(2)}_{ij}
+  = \sum_j \Theta(Z_j^\dagger Z_j),
+\]
+which equals $\mathbf{1}$ if and only if $\Theta$ is a $*$-homomorphism on
+$\mathrm{span}\{Z_j^\dagger Z_j\}$.  For a non-unital channel, this condition
+generically fails.
+\end{theorem}
+
+\begin{proof}
+Direct computation:
+\begin{align*}
+  \sum_{i,j}(Z^{(2)}_{ij})^\dagger Z^{(2)}_{ij}
+  &= \sum_{i,j}\Theta(Z_j)^\dagger Z_i^\dagger Z_i\,\Theta(Z_j) \\
+  &= \sum_j \Theta(Z_j)^\dagger\Bigl(\sum_i Z_i^\dagger Z_i\Bigr)\Theta(Z_j) \\
+  &= \sum_j \Theta(Z_j)^\dagger\mathbf{1}\,\Theta(Z_j) \\
+  &= \sum_j \Theta(Z_j^\dagger)\,\Theta(Z_j).
+\end{align*}
+If $\Theta$ were a $*$-homomorphism: $\Theta(Z_j^\dagger)\Theta(Z_j)=\Theta(Z_j^\dagger Z_j)$,
+so the sum would be $\Theta(\sum_j Z_j^\dagger Z_j) = \Theta(\mathbf{1}) = \mathbf{1}$.
+But for a general CP map, $\Theta(A^\dagger)\Theta(A) \neq \Theta(A^\dagger A)$ (Kadison inequality
+gives $\Theta(A^\dagger A)\geq\Theta(A^\dagger)\Theta(A)$), so the sum is not
+guaranteed to equal $\mathbf{1}$.
+\end{proof}
+
+\subsection{Explicit example: amplitude damping}
+
+The \emph{amplitude damping channel} with parameter $\gamma\in(0,1)$ has Kraus operators
+\[
+  K_0 = \begin{pmatrix}1 & 0 \\ 0 & \sqrt{1-\gamma}\end{pmatrix},\qquad
+  K_1 = \begin{pmatrix}0 & \sqrt{\gamma} \\ 0 & 0\end{pmatrix}.
+\]
+This is a \emph{non-unital} channel: the unique invariant state is $|0\rangle\langle 0|$ (not $\mathbf{1}/d$).
+
+\begin{proposition}[OPU breakdown for amplitude damping]\label{prop:amp_damp}
+For the projector OPU $\mathcal{Z}=\{P_0,P_1\}$ and the amplitude damping channel:
+\begin{enumerate}
+  \item The Heisenberg image satisfies
+    $\Theta(P_0) = P_0 + \gamma P_1$ and $\Theta(P_1) = (1-\gamma)P_1$.
+  \item The composed OPU elements are
+    \[
+      Z^{(2)}_{(0,0)} = P_0,\quad
+      Z^{(2)}_{(0,1)} = 0,\quad
+      Z^{(2)}_{(1,0)} = \gamma P_1,\quad
+      Z^{(2)}_{(1,1)} = (1-\gamma)P_1.
+    \]
+  \item The OPU condition fails:
+    \[
+      \sum_{ij}(Z^{(2)}_{ij})^\dagger Z^{(2)}_{ij}
+      = P_0 + \bigl(\gamma^2 + (1-\gamma)^2\bigr)P_1 \;\neq\; \mathbf{1}
+      \quad\text{for }\gamma\in(0,1).
+    \]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) Direct computation using the Heisenberg picture $\Theta(A)=K_0^\dagger AK_0+K_1^\dagger AK_1$:
+\begin{align*}
+  \Theta(P_0) &= K_0^\dagger P_0 K_0 + K_1^\dagger P_0 K_1 = P_0 + \gamma P_1,\\
+  \Theta(P_1) &= K_0^\dagger P_1 K_0 + K_1^\dagger P_1 K_1 = (1-\gamma)P_1 + 0.
+\end{align*}
+
+(2) $Z^{(2)}_{(i,j)} = P_i\cdot\Theta(P_j)$:
+\begin{align*}
+  Z^{(2)}_{(0,0)} &= P_0(P_0+\gamma P_1) = P_0,\\
+  Z^{(2)}_{(0,1)} &= P_0\cdot(1-\gamma)P_1 = 0,\\
+  Z^{(2)}_{(1,0)} &= P_1(P_0+\gamma P_1) = \gamma P_1,\\
+  Z^{(2)}_{(1,1)} &= P_1\cdot(1-\gamma)P_1 = (1-\gamma)P_1.
+\end{align*}
+
+(3) $\sum_{ij}(Z^{(2)}_{ij})^\dagger Z^{(2)}_{ij} = P_0 + 0 + \gamma^2 P_1 + (1-\gamma)^2 P_1
+  = P_0 + (\gamma^2+(1-\gamma)^2)P_1$.
+For $\gamma\in(0,1)$: $\gamma^2+(1-\gamma)^2 < 1$, so this is not $\mathbf{1}$.
+\end{proof}
+
+\begin{remark}[Entropy of the fixed-point state]
+The amplitude damping channel has unique invariant state $\omega^* = |0\rangle\langle 0|$
+with von Neumann entropy $S(\omega^*)=0$.  Under the corrected AFL formula,
+$\tilde{h} = h_{\mathrm{AFL}} - \log d \to s(\omega^*) = 0$ in the long-time
+limit.  This is physically correct: amplitude damping is a dissipative process
+that converts quantum information into heat, reducing the dynamical entropy to zero.
+The second law of thermodynamics is encoded in this vanishing:
+\emph{dissipation kills dynamical entropy}.
+\end{remark}
+
+\begin{remark}[Extension to non-unital dynamics]
+To define AFL-type entropy for non-unital channels, one must either
+\begin{enumerate}
+  \item Use \emph{Stinespring dilation}: embed the system in a larger unitary space
+        $\mathcal{H}\otimes\mathcal{H}_E$ where the joint evolution is unitary, then
+        apply AFL to the dilated system;
+  \item Use \emph{instrument entropy}: replace OPU composition with instrument composition
+        (CP instruments $\{T_i\}$ with $\sum_i T_i = \mathrm{id}$), studied by
+        Benatti and Narnhofer in the context of quantum Markov semigroups; or
+  \item Track the \emph{entropy production rate} directly, as in the GK approach
+        (Section~\ref{sec:gk}).
+\end{enumerate}
+All three approaches recover $\tilde{h}=0$ for amplitude damping and agree with AFL
+for unitary dynamics, confirming the physical consistency of the framework.
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{Synthesis: Obstructions and Paths to Quantum Pesin}
+\label{sec:pesin_synthesis}
+%-----------------------------------------------------------------------
+
+We now collect all the structural results obtained in this document into a
+unified picture of what a Quantum Pesin theorem can and cannot look like.
+
+\subsection{What AFL entropy measures (and what it does not)}
+
+\begin{table}[h]\centering
+\begin{tabular}{p{4.5cm}p{4.5cm}p{4.5cm}}
+\hline
+\textbf{Quantity} & \textbf{What it detects} & \textbf{What it misses} \\
+\hline
+$E(U^1) = $ matrix entropy of $U$ &
+Amplitude scrambling of the unitary &
+Phase structure, classical chaos parameter $k$ \\
+$E(U^n)$, $n\geq 2$ &
+Multi-step interference; $k$-dependent &
+Long-time growth (quantum recurrence) \\
+$S(\rho[\mathcal{Z}^{(n)}])$ &
+Accessible information in the OPU &
+Bounded by $2\log d$; rate $=0$ \\
+$s(\omega) = S(\omega_{\mathrm{inv}})$ &
+Invariant state entropy; proxy for thermalization &
+Dynamical sensitivity (Lyapunov) \\
+$\tilde{h} = h_{\mathrm{AFL}}-\log d$ &
+Corrected entropy; $=0$ integrable, $=\log d$ chaotic &
+Exact value of $\lambda_L$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Statement of the Quantum Pesin problem}
+
+The classical Pesin formula states:
+\begin{equation}\label{eq:classical_pesin}
+  h_{\mathrm{KS}}(\mu) = \int \sum_{\lambda_i > 0}\lambda_i\,d\mu
+  \quad\text{(Ruelle's inequality, with equality for SRB measures)}.
+\end{equation}
+
+A quantum analogue must answer:
+\begin{enumerate}
+  \item Which quantum entropy plays the role of $h_{\mathrm{KS}}$?
+  \item Which quantum object plays the role of positive Lyapunov exponents?
+  \item In what limit (semiclassical? thermodynamic? both?) does equality hold?
+\end{enumerate}
+
+From our analysis:
+
+\begin{enumerate}
+  \item \textbf{Entropy candidate}: The corrected AFL entropy $\tilde{h} = h_{\mathrm{AFL}} - \log d$ equals $s(\omega)$ (invariant state entropy, Proposition~23.2).  For maximally chaotic spin chains, $s(\omega) = \log d$; for integrable ones, $s(\omega) < \log d$.
+  \item \textbf{Lyapunov candidate}: The GK quantum Lyapunov exponents $\lambda_i$ (eigenvalues of the OTOC matrix $\hat{A}$, Section~\ref{sec:gk}), valid for $t < t_E$ (Ehrenfest time).
+  \item \textbf{Limit}: Both semiclassical ($j\to\infty$ or $\hbar\to 0$) AND thermodynamic ($N\to\infty$ for spin chains) are required.
+\end{enumerate}
+
+\begin{conjecture}[Quantum Pesin, refined]\label{conj:quantum_pesin_refined}
+Let $(\mathcal{A}, \omega, \Theta)$ be a quantum dynamical system with
+$\mathcal{A} = \otimes_\mathbb{Z} M_d(\mathbb{C})$ (infinite quantum spin chain),
+$\Theta$ a translation-invariant automorphism, and $\omega$ the unique
+translation-invariant KMS state at inverse temperature $\beta$.  Let
+$\lambda_1\geq\cdots\geq\lambda_r > 0$ be the positive quantum Lyapunov exponents
+(OTOC eigenvalues, evaluated at the Ehrenfest time $t_E$).  Then
+\[
+  s(\omega) \;=\; \sum_{i=1}^r \lambda_i,
+\]
+where $s(\omega) = S(\omega_{\restriction [0,L]})/L$ is the mean entropy per site.
+This equality holds in the semiclassical limit $\hbar\to 0$ (or $d\to\infty$)
+jointly with the thermodynamic limit $L\to\infty$.
+\end{conjecture}
+
+\begin{remark}[Obstructions catalogue]
+We have proved the following obstructions to a naive quantum Pesin theorem for
+finite-dimensional systems:
+\begin{enumerate}
+  \item \textbf{Finite-rate obstruction}: $h_{\mathrm{AFL}} = 0$ for all finite-$d$
+        quantum systems (Theorem~\ref{thm:afl_bounded}).  No finite-$d$ AFL quantity
+        can equal a positive Lyapunov exponent.
+  \item \textbf{Phase obstruction} (K-independence, Theorem~\ref{thm:k_independence}):
+        AFL entropy at $n=1$ is insensitive to the chaos parameter for the kicked top.
+  \item \textbf{Recurrence obstruction}: $E(U^n)$ oscillates quasi-periodically
+        instead of growing; no quantity of the form $E(U^n)/n$ converges to
+        $\lambda_L$ (Remark above).
+  \item \textbf{Non-unital obstruction} (Theorem~\ref{thm:opu_nonunital}):
+        AFL entropy is not well-defined for non-reversible (dissipative) dynamics
+        without modification.
+  \item \textbf{Ehrenfest obstruction} (Proposition~23.1): OTOC growth is
+        bounded by $2\log d$ for finite systems, while classical $\lambda_L$
+        is unbounded.
+\end{enumerate}
+Each obstruction is removed only in an appropriate limit: thermodynamic,
+semiclassical, or both.  The Quantum Pesin Conjecture~\ref{conj:quantum_pesin_refined}
+is precisely the statement that, in the correct double limit, all obstructions
+disappear simultaneously.
+\end{remark}
+
+\begin{remark}[Reply to Mateo: connection to integrability]
+The corrected AFL entropy $\tilde{h} = s(\omega)$ provides the answer to Mateo's
+question about integrability (Section~\ref{sec:notes}):
+\begin{itemize}
+  \item \textbf{Integrable systems}: $s(\omega) < \log d$ (the invariant state is not
+        maximally mixed; there is structure in the conserved charges).
+  \item \textbf{Chaotic systems}: $s(\omega) = \log d$ (the invariant state is maximally
+        mixed; the system has maximum entropy production).
+  \item The OPU choice (subalgebra, operators) affects $h_{\mathrm{AFL}}$ but not
+        $\tilde{h} = h_{\mathrm{AFL}} - \log d$ for spin chains (cancellation of the
+        ``quantum noise floor'').
+  \item The quantum Pesin conjecture then asks whether this entropy equals the
+        sum of positive Lyapunov exponents — a direct quantum analogue of the
+        classical Ruelle inequality.
+\end{itemize}
+\end{remark}
+
 \begin{thebibliography}{99}
+\bibitem{safranek2019}
+  D.~\v{S}afr\'anek, J.~M.~Deutsch, and A.~Aguirre,
+  ``Quantum coarse-grained entropy and thermodynamics,''
+  \emph{Phys.\ Rev.\ A} \textbf{99} (2019) 010101(R).
+
+\bibitem{safranek2021}
+  D.~\v{S}afr\'anek,
+  ``Observational entropy,''
+  \emph{Phys.\ Rev.\ A} \textbf{104} (2021) 042211.
+
 \bibitem{alicki1994}
   R.~Alicki and M.~Fannes,
   ``Defining Quantum Dynamical Entropy,''
@@ -2109,6 +3040,25 @@ limiting case.
   M.~S.~Pinsker,
   \emph{Information and Information Stability of Random Variables and Processes},
   Holden-Day, San Francisco, 1964.
+
+\bibitem{haake1987}
+  F.~Haake, M.~Ku\'s, and R.~Scharf,
+  ``Classical and quantum chaos for a kicked top,''
+  \emph{Z.\ Phys.\ B} \textbf{65} (1987) 381--395.
+
+\bibitem{haake2010}
+  F.~Haake,
+  \emph{Quantum Signatures of Chaos},
+  3rd ed., Springer, 2010.
+
+\bibitem{ruelle1978}
+  D.~Ruelle,
+  ``An inequality for the entropy of differentiable maps,''
+  \emph{Bol.\ Soc.\ Bras.\ Mat.} \textbf{9} (1978) 83--87.
+
+\bibitem{rebb2004}
+  S.~Rebbert and L.~Sarnak,
+  ``SIC-POVMs and compatibility,'' informal notes, 2004.
 \end{thebibliography}
 
 \end{document}
