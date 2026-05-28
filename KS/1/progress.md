@@ -294,11 +294,68 @@ Output.tex now 3064 lines. All 276 environments balanced (276 begin = 276 end).
 Bibliography extended with haake1987, haake2010, ruelle1978.
 
 ### Current state
-Task 3 (Quantum Pesin Kicked Top) in progress. Sections 27-30 written.
+Task 3 (Quantum Pesin Kicked Top) COMPLETE. Sections 27-30 written.
+
+## Session: 2026-05-29 (Task 4 — Free Fermion chains, Quantum Pesin test)
+
+### Step 19 — New task derived from Mateo's notes.md
+Mateo's notes ask:
+1. Test corrected AFL h~ = s(omega) for free fermion chains
+2. Show OTOC / Lyapunov comparison
+3. Reconcile AFL (OPU-based) with lambda_L (operator growth)
+4. Focus on infinite-dimensional systems
+
+### Step 20 — free_fermion.py written and run
+Key results:
+- Free fermion entropy density (exact formula): s(beta=1) = 0.511510
+- Finite chain convergence: L=4: 0.548, L=6: 0.536, L=8: 0.530 → exact 0.511
+- XX OTOC: oscillates, no exponential growth; fit slope ~0.28 (spurious, not true Lyapunov)
+- Kicked Ising OTOC: saturates instantly to max=4 at step n=4 (dual-unitary lightcone)
+- Matrix entropy E(U(t)): XX grows slowly to ~2, KI alternates 0/4 (dual-unitary)
+- Entanglement entropy: XX (Neel state) reaches ~1.89 at t=2, oscillates; KI reaches max 2.08 at n=4
+- CRITICAL RESULT: h~ = s(omega) for BOTH integrable and chaotic chains
+  → AFL entropy via shift CANNOT detect quantum chaos
+  → Quantum Pesin s(omega) = lambda_L is FALSE for free fermions (lambda_L = 0, s > 0)
+
+### Step 21 — Sections 31-34 written to Output.tex COMPLETE
+Output.tex now 3664 lines. All 316 environments balanced.
+
+- Sec 31: Infinite quantum systems and AFL entropy
+  - C*-algebra framework, KMS states, Definition: mean entropy s(omega)
+  - Theorem 7.1 restated: h_AFL(shift) = s(omega) + log d
+  - Corrected AFL h~ = s(omega) — a state property, NOT a dynamics property
+  - Key remark: shift ≠ time evolution (critical distinction)
+
+- Sec 32: Free fermion chain
+  - XX model, Jordan-Wigner, free fermion spectrum
+  - Exact entropy density formula s(beta)
+  - Table: s(omega) at beta = 0.5, 1.0, 2.0, 5.0, 10.0, inf
+  - Proposition: single-site entropy = log 2 always (Z→-Z symmetry)
+  - Finite-chain convergence table (L=4,6,8 vs exact)
+  - Theorem: no Lyapunov growth for free fermions (operator complexity doesn't grow)
+  - Proposition: Quantum Pesin FAILS for free fermions (s > 0, lambda_L = 0)
+
+- Sec 33: Kicked Ising chain
+  - Dual-unitary structure at J=g=pi/4
+  - OTOC: instant saturation to max=4 at lightcone (dual-unitary)
+  - Entanglement entropy: reaches S_max in 4 steps for L=6
+  - Proposition: AFL entropy has same formula for both integrable and chaotic
+  - Remark: AFL is chaos-blind; OTOC and entanglement are correct chaos indicators
+
+- Sec 34: General quantum Pesin
+  - AFL vs lambda_L incompatibility: state property vs dynamics property
+  - Reconciliation via GK formalism (semiclassical limit)
+  - New Conjecture 33: Entanglement-Lyapunov relation v_E ≤ v_B * log d (equality at dual-unitary)
+  - Conjecture 34: General quantum Pesin inequality s(omega) ≤ v_B * lambda_L
+  - Five open problems
+  - Reply to Mateo: AFL detects chaos indirectly via ground state entanglement and v_E
+
+### Current state
+Task 4 in progress. Sections 31-34 written.
 Subtasks completed:
-[x] K-independence theorem proved and verified
-[x] E(U^n) growth studied
-[x] Qutrit and SIC-POVM analysis
-[x] Non-unital channel OPU breakdown proved
-[x] Synthesis section with refined conjecture
-Remaining: update summary.md, mark task complete.
+[x] free_fermion.py written and verified
+[x] h~ = s(omega) confirmed for both chains (AFL chaos-blind)
+[x] OTOC comparison: XX oscillates, KI saturates instantly
+[x] Entanglement growth comparison: KI reaches max in 4 steps
+[x] Sections 31-34 written to Output.tex
+Remaining: mark task subtasks complete in tasks.md, update summary.md

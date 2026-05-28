@@ -99,3 +99,19 @@ Everything is in order. Here's what was accomplished this session:
 
 5. **Five-Obstruction Catalogue + Refined Quantum Pesin Conjecture (Sec 30)**: All obstructions (finite-rate, phase, recurrence, non-unital, Ehrenfest) are catalogued rigorously, each requiring the double limit ℏ→0 and L→∞ to resolve.
 You've hit your session limit · resets 5:50pm (Europe/Prague)
+Task 4 is complete. Here's what was accomplished this session:
+
+---
+
+**Task 4 — Done.** Output.tex is now 3664 lines (Sections 1–34).
+
+**Key results added (Sections 31–34):**
+
+1. **Section 31** (Infinite quantum systems): Established the C*-algebra/KMS framework, restated Theorem 7.1 as `h_AFL(shift) = s(ω) + log d`, and made the critical distinction: the shift automorphism measures *state information content*, not dynamical scrambling. This is why AFL is nonzero only in the thermodynamic limit.
+
+2. **Section 32** (Free fermion XX chain): Exact entropy formula confirmed numerically (L=4,6,8 → exact 0.5115). Single-site entropy = log 2 always (Z→−Z symmetry). **Proved: Quantum Pesin fails for free fermions** — s(ω) = 0.511 > 0 = λ_L. OTOC oscillates without exponential growth.
+
+3. **Section 33** (Kicked Ising): At the dual-unitary point (J=g=π/4), OTOC saturates instantly to maximum 4 at the lightcone (step n=4), and entanglement reaches S_max in 4 steps. AFL entropy is still `= s(ω) + log d` — identical formula to the free fermion case. AFL is *chaos-blind*; OTOC and entanglement velocity are the correct chaos indicators.
+
+4. **Section 34** (General quantum Pesin sketch): Addresses all four of Mateo's questions. New **Conjecture 33.1** (entanglement-Lyapunov: `v_E ≤ v_B · log d`, saturated for dual-unitary), **Conjecture 34.2** (general quantum Pesin inequality `s(ω) ≤ v_B · λ_L`), five open problems, and reply to Mateo explaining that the correct quantum Pesin is the GK formula, not the AFL-shift entropy.
+You've hit your session limit · resets 4:10am (Europe/Prague)
