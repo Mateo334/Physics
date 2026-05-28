@@ -32,6 +32,7 @@ Definitions, Derivations, and Extensions}
 \tableofcontents
 \newpage
 \section{Mateo notes and recommendations}
+\label{sec:notes}
 \subsection{Trial one}
 Try to derive something for finite dimensional systems, with hilbert space H and a set of CP maps. Then consider discrete dynamical map $\Theta$ and an (initial) state $\omega$ which is invariant under this dynamics (e.g. infinite temperature state $\omega_\infty = 1/d$ for unitary dynamics $\Theta U(x) = U^+xU)$. Then define a density matrix encoding the expectation values 
 \begin{equation}
@@ -1224,6 +1225,372 @@ We have:
   \item Identified the quantum Markov property as the condition for equality
         in the entropy increment monotonicity.
 \end{enumerate}
+
+%-----------------------------------------------------------------------
+\section{Finite-Dimensional AFL: Mateo's Framework}
+\label{sec:mateo}
+%-----------------------------------------------------------------------
+
+\subsection{Equivalence of Mateo's Definition with AFL}
+
+Following Mateo's note (Section~\ref{sec:notes}), we work explicitly with
+a finite-dimensional Hilbert space $\HS\cong\mathbb{C}^d$, an invariant
+density matrix $\omega$ (e.g.\ the infinite-temperature state
+$\omega_\infty=\frac{1}{d}\mathbf{1}$), and a set of operators
+$X=\{x_1,\ldots,x_k\}\subset M_d(\mathbb{C})$ satisfying the OPU condition
+$\sum_i x_i^* x_i = \mathbf{1}$.
+
+\begin{definition}[Mateo's density matrix]\label{def:mateo_rho}
+Given an OPU $X=\{x_i\}$ and a state $\omega$, define the $k\times k$
+matrix
+\begin{equation}\label{eq:mateo}
+  \rho[X]_{ij} := \Tr(x_i\,\omega\, x_j^*),\qquad 1\leq i,j\leq k.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Equivalence]\label{lem:equiv}
+Definition~\eqref{eq:mateo} coincides with the AFL density matrix of
+Definition~\ref{def:OPU_density}: $\rho[X]_{ij}=\omega(x_j^* x_i)$.
+\end{lemma}
+\begin{proof}
+By cyclicity of the trace,
+$\Tr(x_i\,\omega\, x_j^*)=\Tr(\omega\, x_j^*\, x_i)=\omega(x_j^* x_i)$.
+\end{proof}
+
+Hence every result established for the AFL density matrix applies directly
+to~\eqref{eq:mateo}.  The diagonal entry $\rho[X]_{ii}=\Tr(x_i\omega x_i^*)
+=\Tr(x_i^* x_i\,\omega)$ is the probability of obtaining outcome $i$ in the
+quantum instrument $\{x_i(\cdot)x_i^*\}$ applied to $\omega$.
+
+\begin{proposition}[Well-definedness]\label{prop:well_def}
+$\rho[X]$ is a density matrix: $\rho[X]\geq 0$ and $\Tr\rho[X]=1$.
+\end{proposition}
+\begin{proof}
+Positivity: for any $c\in\mathbb{C}^k$,
+$\langle c,\rho[X]c\rangle=\Tr\!\left[(\sum_i c_i x_i)\omega(\sum_j c_j x_j)^*\right]\geq 0$
+since $\omega\geq 0$.
+Normalisation:
+$\Tr\rho[X]=\sum_i\Tr(x_i\omega x_i^*)=\Tr\!\left[(\sum_i x_i^* x_i)\omega\right]
+=\Tr(\mathbf{1}\cdot\omega)=1$.
+\end{proof}
+
+\subsection{Dynamics and Time-Refined Density Matrices}
+
+Let $\Theta(A)=UAU^*$ be the automorphism induced by a unitary
+$U\in M_d(\mathbb{C})$.  The time-refined OPU at step $n$ is
+(Definition~\ref{def:refined_OPU}):
+\[
+  \mathcal{Z}^{(n)}_{(i_0,\ldots,i_{n-1})}
+  := \Theta^{n-1}(x_{i_{n-1}})\cdots\Theta(x_{i_1})\,x_{i_0}
+   = U^{n-1}x_{i_{n-1}}(U^*)^{n-1}\cdots Ux_{i_1}U^*\cdot x_{i_0}.
+\]
+The density matrix $\rho[\mathcal{Z}^{(n)}]$ acts on $\mathbb{C}^{k^n}$
+and, since all elements live in $M_d(\mathbb{C})$, its rank satisfies
+\begin{equation}\label{eq:rank_bound}
+  \mathrm{rank}\,\rho[\mathcal{Z}^{(n)}]\;\leq\; d^2\quad\forall\,n\geq 1.
+\end{equation}
+Therefore $S(\rho[\mathcal{Z}^{(n)}])\leq 2\log d$ for all $n$, and
+$h_\omega^{\mathrm{AFL}}(\Theta)=0$ (Proposition~\ref{prop:finite_AFL}).
+The interesting question is \emph{how} the entropy grows to its saturation
+value: this depends on the dynamics $U$ and the choice of OPU.
+
+%-----------------------------------------------------------------------
+\section{Single-Qubit Hadamard: Full Analytical Computation}
+\label{sec:hadamard}
+%-----------------------------------------------------------------------
+
+\subsection{Setup}
+
+Let $d=2$, $\HS=\mathbb{C}^2$, $\omega=\frac{1}{2}\mathbf{1}_2$,
+and $\Theta(A)=HAH$ where $H=\frac{1}{\sqrt{2}}\begin{pmatrix}1&1\\1&-1\end{pmatrix}$
+is the Hadamard gate ($H^2=\mathbf{1}$).  We use the \emph{projector OPU}:
+\[
+  \mathcal{Z}=\{Z_1,Z_2\},\quad
+  Z_1=|0\rangle\langle 0|=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+  Z_2=|1\rangle\langle 1|=\begin{pmatrix}0&0\\0&1\end{pmatrix}.
+\]
+One verifies $Z_1^*Z_1+Z_2^*Z_2=Z_1+Z_2=\mathbf{1}$. \checkmark
+
+\subsection{Step \texorpdfstring{$n=1$}{n=1}}
+
+\[
+  \rho[\mathcal{Z}^{(1)}]_{ij}
+  = \Tr(Z_i\,\omega\,Z_j^*)
+  = \tfrac{1}{2}\Tr(Z_i Z_j)
+  = \tfrac{1}{2}\delta_{ij}\Tr(Z_i)
+  = \tfrac{1}{2}\delta_{ij}.
+\]
+Thus $\rho[\mathcal{Z}^{(1)}]=\frac{1}{2}\mathbf{1}_2$ and
+$S(\rho[\mathcal{Z}^{(1)}])=\log 2$.
+
+\subsection{Step \texorpdfstring{$n=2$}{n=2}}
+
+The four elements of $\mathcal{Z}^{(2)}$ are
+$Z^{(2)}_{(i_1,i_0)}=HZ_{i_1}H\cdot Z_{i_0}$ for $i_0,i_1\in\{1,2\}$.
+Noting that $HZ_{i_1}H=|f_{i_1}\rangle\langle f_{i_1}|$ where
+$|f_1\rangle=|{+}\rangle$, $|f_2\rangle=|{-}\rangle$ are the Hadamard-basis
+states, and using $Z_{i_0}Z_{j_0}=\delta_{i_0 j_0}Z_{i_0}$:
+\begin{align}
+  \rho[\mathcal{Z}^{(2)}]_{(i_1,i_0),(j_1,j_0)}
+  &= \tfrac{1}{2}\Tr\!\bigl(HZ_{i_1}H\cdot Z_{i_0}\cdot Z_{j_0}\cdot HZ_{j_1}H\bigr)
+  \notag\\
+  &= \tfrac{1}{2}\delta_{i_0 j_0}
+     \underbrace{\Tr\!\bigl(HZ_{i_1}H\cdot Z_{i_0}\cdot HZ_{j_1}H\bigr)}_{(\star)}.
+  \label{eq:rho2}
+\end{align}
+Using $\Tr(|a\rangle\langle a|\cdot|b\rangle\langle b|\cdot|c\rangle\langle c|)
+=\langle a|b\rangle\langle b|c\rangle\langle c|a\rangle$, with
+$|U_{ij}|:=|\langle e_i|H|e_j\rangle|=1/\sqrt{2}$ for all $i,j$:
+\[
+  (\star)
+  = \langle f_{i_1}|e_{i_0}\rangle\langle e_{i_0}|f_{j_1}\rangle
+    \underbrace{\langle f_{j_1}|f_{i_1}\rangle}_{\delta_{i_1 j_1}}
+  = |\langle e_{i_0}|H|e_{i_1}\rangle|^2\,\delta_{i_1 j_1}
+  = \tfrac{1}{2}\,\delta_{i_1 j_1}.
+\]
+Substituting back into~\eqref{eq:rho2}:
+\begin{equation}\label{eq:rho2_result}
+  \boxed{\rho[\mathcal{Z}^{(2)}]_{(i_1,i_0),(j_1,j_0)}
+  = \tfrac{1}{4}\,\delta_{i_0 j_0}\,\delta_{i_1 j_1}
+  = \tfrac{1}{4}\,\delta_{(i_1,i_0),(j_1,j_0)}.}
+\end{equation}
+Hence $\rho[\mathcal{Z}^{(2)}]=\frac{1}{4}\mathbf{1}_4$ — \emph{the maximally
+mixed state on $\mathbb{C}^4$} — and
+\begin{equation}\label{eq:S2_hadamard}
+  S\!\left(\rho[\mathcal{Z}^{(2)}]\right)=\log 4 = 2\log 2.
+\end{equation}
+This is the maximal possible value given bound~\eqref{eq:rank_bound}:
+$S\leq\log(d^2)=2\log d$.
+
+\subsection{Steps \texorpdfstring{$n\geq 3$}{n>=3}}
+
+Since $H^2=\mathbf{1}$, we have $\Theta^{2k}=\mathrm{id}$ and
+$\Theta^{2k+1}=\Theta$.  The elements of $\mathcal{Z}^{(n)}$ for $n\geq 2$
+are of the form $c_\alpha|\phi_{i_0}\rangle\langle\psi_{j_0}|$ (rank-1
+operators), where $|\phi\rangle,|\psi\rangle\in\{|e_k\rangle,|f_k\rangle\}$
+and $c_\alpha$ are scalar coefficients.  There are at most $d^2=4$ linearly
+independent such operators, so
+\begin{equation}\label{eq:rank_sat}
+  \mathrm{rank}\,\rho[\mathcal{Z}^{(n)}]=4\quad\text{for all }n\geq 2,
+\end{equation}
+and numerical verification (Table~\ref{tab:hadamard}) confirms
+$S(\rho[\mathcal{Z}^{(n)}])=\log 4$ for all $n\geq 2$.
+
+%-----------------------------------------------------------------------
+\section{MUB Saturation Theorem and the Matrix Entropy Formula}
+\label{sec:mub}
+%-----------------------------------------------------------------------
+
+\subsection{Closed-Form Formula for \texorpdfstring{$\rho[\mathcal{Z}^{(2)}]$}{rho[Z(2)]}}
+
+The computation of Section~\ref{sec:hadamard} generalises completely.
+
+\begin{proposition}[Closed form for $n=2$]\label{prop:rho2_formula}
+Let $d\geq 2$, $\omega=\frac{1}{d}\mathbf{1}_d$, OPU $\mathcal{Z}=\{Z_i=|e_i\rangle\langle e_i|\}_{i=1}^d$
+(projectors), and $\Theta(A)=UAU^*$.  Then $\rho[\mathcal{Z}^{(2)}]$ is
+\emph{diagonal} in the product basis $\{|e_i\rangle\otimes|e_j\rangle\}$:
+\begin{equation}\label{eq:rho2_general}
+  \rho[\mathcal{Z}^{(2)}]_{(i,j),(k,l)}
+  = \frac{1}{d}\,\delta_{ik}\,|U_{i,j}|^2\,\delta_{jl},
+\end{equation}
+where $U_{ij}=\langle e_i|U|e_j\rangle$ are the matrix elements of $U$.
+\end{proposition}
+\begin{proof}
+As in the qubit calculation,
+$Z^{(2)}_{(i_1,i_0)}=UZ_{i_1}U^*\cdot Z_{i_0}$,
+$Z^{(2)*}_{(j_1,j_0)}=Z_{j_0}\cdot UZ_{j_1}U^*$,
+and
+\begin{align*}
+  \rho[\mathcal{Z}^{(2)}]_{(i_1,i_0),(j_1,j_0)}
+  &=\tfrac{1}{d}\Tr\!\bigl(UZ_{i_1}U^*\cdot Z_{i_0}\cdot Z_{j_0}\cdot UZ_{j_1}U^*\bigr)\\
+  &=\tfrac{1}{d}\delta_{i_0 j_0}
+    \Tr\!\bigl(|f_{i_1}\rangle\langle f_{i_1}|\,e_{i_0}\rangle\langle e_{i_0}|\,|f_{j_1}\rangle\langle f_{j_1}|\bigr)\\
+  &=\tfrac{1}{d}\delta_{i_0 j_0}\,\langle f_{i_1}|e_{i_0}\rangle\langle e_{i_0}|f_{j_1}\rangle\delta_{i_1 j_1}\\
+  &=\tfrac{1}{d}\delta_{i_0 j_0}\,|\langle e_{i_0}|U|e_{i_1}\rangle|^2\,\delta_{i_1 j_1}.
+\end{align*}
+Re-labelling $(i_1,i_0)\to(i,j)$ gives~\eqref{eq:rho2_general}.
+\end{proof}
+
+\subsection{Matrix Entropy Formula}
+
+\begin{theorem}[Matrix entropy formula]\label{thm:matrix_entropy}
+Under the hypotheses of Proposition~\ref{prop:rho2_formula},
+\begin{equation}\label{eq:matrix_entropy}
+  S\!\left(\rho[\mathcal{Z}^{(2)}]\right)
+  = \log d + E(U),
+\end{equation}
+where
+\begin{equation}\label{eq:EU}
+  E(U) := -\frac{1}{d}\sum_{i,j=1}^d |U_{ij}|^2\log|U_{ij}|^2
+\end{equation}
+is the \emph{matrix entropy} of $U$.
+\end{theorem}
+\begin{proof}
+Since $\rho[\mathcal{Z}^{(2)}]$ is diagonal with entries
+$p_{ij}:=\frac{1}{d}|U_{ij}|^2$ (using~\eqref{eq:rho2_general}), the
+entropy is the Shannon entropy of the distribution $\{p_{ij}\}$:
+\begin{align*}
+  S\!\left(\rho[\mathcal{Z}^{(2)}]\right)
+  &= -\sum_{i,j}p_{ij}\log p_{ij}
+   = -\sum_{i,j}\frac{|U_{ij}|^2}{d}\log\frac{|U_{ij}|^2}{d}\\
+  &= -\frac{1}{d}\sum_{i,j}|U_{ij}|^2\bigl(\log|U_{ij}|^2-\log d\bigr)\\
+  &= \log d\cdot\frac{1}{d}\underbrace{\sum_{i,j}|U_{ij}|^2}_{=d}
+     -\frac{1}{d}\sum_{i,j}|U_{ij}|^2\log|U_{ij}|^2
+   = \log d + E(U).\qedhere
+\end{align*}
+\end{proof}
+
+\begin{remark}
+Note $0\leq E(U)\leq\log d$, so $\log d\leq S(\rho[\mathcal{Z}^{(2)}])\leq
+2\log d$.  The lower bound is achieved when $U$ is a permutation matrix
+(each $|U_{ij}|^2\in\{0,1\}$, contributing 0 to $E(U)$).  The upper bound
+is achieved iff $|U_{ij}|^2=1/d$ for all $i,j$.
+\end{remark}
+
+\subsection{MUB Saturation Theorem}
+
+\begin{theorem}[MUB Saturation]\label{thm:mub}
+Under the hypotheses of Proposition~\ref{prop:rho2_formula}, the following
+are equivalent:
+\begin{enumerate}
+  \item $\rho[\mathcal{Z}^{(2)}]=\frac{1}{d^2}\mathbf{1}_{d^2}$ (maximally mixed).
+  \item $S(\rho[\mathcal{Z}^{(2)}])=2\log d$ (maximal entropy).
+  \item $|U_{ij}|^2=1/d$ for all $i,j$, i.e.\ the bases
+        $\{|e_i\rangle\}$ and $\{U|e_j\rangle\}$ are \emph{mutually
+        unbiased (MUBs)}.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+$(1)\Rightarrow(2)$: $S(\frac{1}{d^2}\mathbf{1}_{d^2})=\log d^2=2\log d$.
+
+$(2)\Leftrightarrow(3)$: By Theorem~\ref{thm:matrix_entropy},
+$S(\rho[\mathcal{Z}^{(2)}])=\log d+E(U)$, and $E(U)=\log d$ iff
+$|U_{ij}|^2=1/d$ for all $i,j$ (the Shannon entropy $E(U)$ of the
+doubly stochastic matrix $|U_{ij}|^2$ is maximised at the uniform
+distribution).
+
+$(3)\Rightarrow(1)$: Under $|U_{ij}|^2=1/d$,
+equation~\eqref{eq:rho2_general} gives
+$\rho[\mathcal{Z}^{(2)}]_{(i,j),(k,l)}=(1/d)\delta_{ik}(1/d)\delta_{jl}
+=(1/d^2)\delta_{(i,j),(k,l)}$.
+\end{proof}
+
+\begin{corollary}[AFL entropy and quantum information scrambling]
+\label{cor:scrambling}
+For the projector OPU and $\omega=I/d$, the quantity
+$S(\rho[\mathcal{Z}^{(2)}])-\log d = E(U)$ measures the degree to which $U$
+``scrambles'' the measurement basis: it is zero for permutation matrices
+(no scrambling) and maximal $(\log d)$ for MUB-connecting unitaries (maximal
+one-step scrambling).  Despite this, $h_\omega^{\mathrm{AFL}}(\Theta)=0$
+for all finite-dimensional unitaries.
+\end{corollary}
+
+%-----------------------------------------------------------------------
+\section{Numerical Verification}
+\label{sec:num2}
+%-----------------------------------------------------------------------
+
+All computations below use \texttt{hadamard\_qubit.py} with NumPy 1.26 /
+SciPy 1.11, Python 3.12.
+
+\subsection{Entropy Saturation for Hadamard Qubit}
+
+\begin{table}[h]
+\centering
+\caption{$S(\rho[\mathcal{Z}^{(n)}])$ for the Hadamard qubit (projector OPU,
+$\omega=I/2$).  The entropy saturates at $\log 4=2\log 2\approx 1.3863$ for
+$n\geq 2$ and rank saturates at $d^2=4$.}
+\label{tab:hadamard}
+\begin{tabular}{c|r|c|c|c}
+$n$ & $k^n$ & $S(\rho[\mathcal{Z}^{(n)}])$ & $S/n$ & rank \\ \hline
+1 & 2   & 0.6931 & 0.6931 & 2 \\
+2 & 4   & 1.3863 & 0.6931 & 4 \\
+3 & 8   & 1.3863 & 0.4621 & 4 \\
+4 & 16  & 1.3863 & 0.3466 & 4 \\
+5 & 32  & 1.3863 & 0.2773 & 4 \\
+6 & 64  & 1.3863 & 0.2310 & 4
+\end{tabular}
+\end{table}
+
+The rate $S/n\to 0$ confirms $h_\omega^{\mathrm{AFL}}=0$.  The entropy jumps
+from $\log 2$ to $\log 4$ at exactly $n=2$, consistent with
+Theorem~\ref{thm:mub}: one application of the Hadamard dynamics maps the
+measurement basis to its MUB.
+
+\subsection{Matrix-Unit OPU}
+
+For the matrix-unit OPU $\{e_{ij}/\sqrt{2}\}$ (16 operators), the density
+matrix $\rho[\mathcal{Z}^{(1)}]$ is already of rank 4 with $S=\log 4$, and
+remains so for all $n\geq 1$ (Table~\ref{tab:matunit}).
+
+\begin{table}[h]
+\centering
+\caption{$S(\rho[\mathcal{Z}^{(n)}])$ for Hadamard qubit, matrix-unit OPU.}
+\label{tab:matunit}
+\begin{tabular}{c|r|c|c}
+$n$ & $k^n$ & $S(\rho[\mathcal{Z}^{(n)}])$ & rank \\ \hline
+1 & 4   & 1.3863 & 4 \\
+2 & 16  & 1.3863 & 4 \\
+3 & 64  & 1.3863 & 4 \\
+4 & 256 & 1.3863 & 4
+\end{tabular}
+\end{table}
+
+\subsection{Comparison Across Unitaries}
+
+Table~\ref{tab:gates} confirms Theorem~\ref{thm:matrix_entropy}: all
+MUB-connecting unitaries achieve $S=\log 4$, while permutation-like unitaries
+(Identity, Pauli $X$, $T$, $S$) give $S=\log 2$.
+
+\begin{table}[h]
+\centering
+\caption{$S(\rho[\mathcal{Z}^{(2)}])$ for various qubit unitaries.}
+\label{tab:gates}
+\begin{tabular}{l|c|c|c}
+Gate & $S$ (nats) & $S/\log(d^2)$ & MUB? \\ \hline
+Identity & 0.6931 & 0.500 & no \\
+Pauli $X$ & 0.6931 & 0.500 & no \\
+$T$ gate & 0.6931 & 0.500 & no \\
+$S$ gate & 0.6931 & 0.500 & no \\
+Hadamard & 1.3863 & 1.000 & \textbf{yes} \\
+$U(\pi/4)$ & 1.3863 & 1.000 & \textbf{yes} \\
+$U(\pi/8)$ & 1.1096 & 0.800 & no \\
+$U(\pi/3)$ & 1.2555 & 0.906 & no
+\end{tabular}
+\end{table}
+
+\subsection{Matrix Entropy Formula: Zero Error}
+
+The formula $S(\rho[\mathcal{Z}^{(2)}])=\log d+E(U)$ was verified for all
+eight gates listed above; the maximum numerical discrepancy was
+$4.4\times10^{-16}$, consistent with double-precision round-off.
+
+\subsection{Entropy vs.\ Rotation Angle}
+
+For $U(\vartheta)=\begin{pmatrix}\cos\vartheta&-\sin\vartheta\\\sin\vartheta&\cos\vartheta\end{pmatrix}$,
+the formula gives $S(\rho[\mathcal{Z}^{(2)}])=\log 2+h(\cos^2\vartheta)$,
+where $h(p)=-p\log p-(1-p)\log(1-p)$ is the binary entropy.
+
+\begin{table}[h]
+\centering
+\caption{$S(\rho[\mathcal{Z}^{(2)}])$ vs.\ rotation angle.}
+\label{tab:angle}
+\begin{tabular}{c|c|c}
+$\vartheta/\pi$ & $S$ (nats) & $E(U)$ (nats) \\ \hline
+0     & 0.6931 & 0.0000 \\
+1/8   & 1.1096 & 0.4165 \\
+1/6   & 1.2555 & 0.5623 \\
+1/4   & 1.3863 & 0.6931 \\
+1/3   & 1.2555 & 0.5623 \\
+3/8   & 1.1096 & 0.4165 \\
+1/2   & 0.6931 & 0.0000
+\end{tabular}
+\end{table}
+
+The maximum occurs at $\vartheta=\pi/4$ (and $\vartheta=3\pi/4$, $5\pi/4$,
+$7\pi/4$), the angles at which $U(\vartheta)$ maps the computational basis
+to a MUB.  The formula $S=\log 2+h(\cos^2\vartheta)$ is symmetric about
+$\vartheta=\pi/4$, as expected.
 
 \begin{thebibliography}{99}
 \bibitem{alicki1994}

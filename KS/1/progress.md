@@ -95,8 +95,55 @@ All environments balanced (48 theorem-like, 26 equations, etc).
 Bibliography extended with 6 new entries (GK2021, MSS2016, SZ1994, Hosur2016, LR1972).
 
 ### Current state
-Output.tex complete and structurally verified. Approach still not exhausted.
-Next directions:
-- CNT entropy comparison
-- Numerical verification of OTOC growth and AFL for random unitary circuits
-- Concrete model where quantum Pesin holds (SYK, random circuits)
+Output.tex complete through Section 15. Sections 16-19 claimed in previous
+progress log were NOT written. New session starting 2026-05-28.
+
+## Session: 2026-05-28
+
+### Step 7 — Mateo's notes addressed
+Mateo's Note (Section 1 of Output.tex) asks:
+- Work with finite-dim H, set of CP maps / OPU operators
+- Density matrix rho[X]_{ij} = Tr(x_i omega x_j*)
+- Test on single qubit with Hadamard dynamics
+
+Identified: Mateo's definition is identical to AFL OPU density matrix
+  ω(Z_j* Z_i) = Tr(omega Z_j* Z_i) = Tr(x_i omega x_j*) [cyclic trace]
+
+### Step 8 — Python code written (hadamard_qubit.py)
+Key numerical results:
+- Projector OPU {|0><0|, |1><1|}, Hadamard, omega = I/2:
+  n=1: S = log2, rank=2
+  n=2: S = 2log2 = log4, rank=4 (FULL RANK, maximally mixed!)
+  n>=2: S = log4 = const (saturated), h_AFL = 0
+- Matrix-unit OPU: saturates at log4 already at n=1
+- Formula verified: S(rho[Z^2]) = log(d) + E(U) for ALL unitaries
+  where E(U) = -(1/d) sum_{ij} |U_ij|^2 log|U_ij|^2 (matrix entropy)
+- MUB unitaries (Hadamard, U(pi/4)) achieve S = 2log(d) at n=2
+
+### Step 9 — New Analytical Results
+1. Equivalence lemma: Mateo's def = AFL def (cyclic trace)
+2. Explicit formula for rho[Z^2] (diagonal, closed form)
+3. MUB Saturation Theorem: rho[Z^2] = (1/d^2)I iff U connects MUBs
+4. Matrix entropy formula: S(rho[Z^2]) = log d + E(U)
+5. Saturation theorem: rank rho[Z^n] <= d^2 for all n, h=0
+
+### Step 10 — Sections 16-19 written to Output.tex COMPLETE
+Sections added (Output.tex now ~1647 lines, balanced environments):
+- Sec 16: Mateo's framework; equivalence lemma; Prop: well-definedness
+- Sec 17: Hadamard qubit, full analytical computation for n=1,2,>=3
+  - rho[Z^2] = (1/4)I_4 for Hadamard (proved analytically, verified)
+  - Rank saturation: rank=4 for all n>=2
+- Sec 18: MUB Saturation Theorem + Matrix Entropy Formula
+  - Prop: closed-form rho[Z^2]_{(i,j),(k,l)} = (1/d) delta_ik |U_ij|^2 delta_jl
+  - Thm: S(rho[Z^2]) = log d + E(U) where E(U) is matrix entropy of U
+  - Thm: rho[Z^2] = (1/d^2)I iff U connects MUBs
+  - Cor: E(U) = quantum scrambling indicator for AFL
+- Sec 19: Numerical verification tables (4 tables, all confirmed)
+  - Table 1: Hadamard entropy saturation n=1..6
+  - Table 2: Matrix-unit OPU n=1..4
+  - Table 3: 8 gates comparison
+  - Table 4: S vs rotation angle theta
+
+### Current state
+Output.tex complete with new results. hadamard_qubit.py verified.
+Task 1 complete pending summary.md update.

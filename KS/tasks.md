@@ -3,7 +3,7 @@
 - Your goal is to derive a quantum version of Pesin theorem. 
 - If not possible, focus on the study of these various entropies and its connection to chaos via OTOC, Quantum lyapunov exponents, POVM, density matrices, subspaces and others. 
 - In the latex file, mateo will write regularly in the first section what the next step should be, what you should refine, etc. You are encouraged to reply to this if it was too difficult, or impossible or incorrect. 
-## Task 1 — Alicki-Fannes Entropy
+## Task 1 — Alicki-Fannes Entropy [COMPLETE — 2026-05-28]
 Study and work through the Alicki-Fannes (AF) entropy inequality in full detail:
 
 - Reproduce all derivations step by step in LaTeX, without skipping any steps.

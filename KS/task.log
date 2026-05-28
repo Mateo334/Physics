@@ -21,3 +21,27 @@ All files are in place. Here is a summary of everything accomplished:
 $$2\varepsilon^2 \leq S(\mathbf{1}/d) - S(\sigma) \leq 2d\varepsilon^2$$
 proved using Pinsker's inequality and the identity $S(\sigma\|\mathbf{1}/d) = \log d - S(\sigma)$. Numerically confirmed to $<5\%$ error for $\varepsilon \leq 0.1$.
 You've hit your session limit · resets 1:50am (Europe/Prague)
+Task 1 is now complete. Here is what was done this session:
+
+**New results added to `1/Output.tex` (Sections 16–19):**
+
+1. **Equivalence Lemma** — Mateo's definition ρ[X]_{ij} = Tr(x_i ω x_j*) is identical to the AFL density matrix by cyclicity of trace.
+
+2. **Closed-form formula for ρ[Z^(2)]** — For projector OPU {|e_i⟩⟨e_i|}, ω = I/d, and Θ(A) = UAU*:
+   ```
+   ρ[Z^(2)]_{(i,j),(k,l)} = (1/d) δ_{ik} |U_{ij}|² δ_{jl}
+   ```
+   The matrix is diagonal with an explicit closed form.
+
+3. **Matrix Entropy Formula (new theorem):**
+   ```
+   S(ρ[Z^(2)]) = log d + E(U)
+   ```
+   where E(U) = −(1/d) Σ_{i,j} |U_{ij}|² log|U_{ij}|² is the matrix entropy. Verified numerically to machine precision for 8 gates.
+
+4. **MUB Saturation Theorem (new theorem):** ρ[Z^(2)] is the maximally mixed state (1/d²)I if and only if U maps the measurement basis to a mutually unbiased basis. Equivalently, S(ρ[Z^(2)]) = 2 log d iff U is a MUB-connector.
+
+5. **Numerical verification** (4 tables) — Hadamard qubit saturates at rank d² = 4 after exactly n = 2 steps; permutation-like gates (I, X, T, S) give zero scrambling; S vs angle formula S = log 2 + h(cos²θ) confirmed.
+Task 1 is already marked complete in tasks.md, and the Output.tex contains all the work from both sessions (sections 1–19, bibliography). There are no uncompleted tasks in tasks.md.
+
+NO_TASKS_REMAINING
