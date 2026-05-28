@@ -34,11 +34,15 @@ Definitions, Derivations, and Extensions}
 \section{Mateo notes and recommendations}
 \label{sec:notes}
 \subsection{Trial one}
-Try to derive something for finite dimensional systems, with hilbert space H and a set of CP maps. Then consider discrete dynamical map $\Theta$ and an (initial) state $\omega$ which is invariant under this dynamics (e.g. infinite temperature state $\omega_\infty = 1/d$ for unitary dynamics $\Theta U(x) = U^+xU)$. Then define a density matrix encoding the expectation values 
-\begin{equation}
-    \rho[X]_{ij} = tr(x_i\omega x_j^*),
-\end{equation}
-and from this you can easily define the dynamical entropy. Test it on various systems, for various operators and see how it behaves. Start with single qubit with the dynamics being the hadamard. 
+Some question we should ponder
+\begin{itemize}
+    \item How should M be chosen and why should there be an optimization over partitions chosen from M?
+    \item X is a set of instruments. How is this different to the projections involved in the coarse-graining notion of (multi-)macrostates?
+    \item Is there a way to amend these definitions to connect to integrability (and ignore/subtract the inherent uncertainty in quantum mechanics)?
+    \item Classically for KS entropy, no supremum over partitions is actually necessary, as long as the chosen partition is‘generating’ (Theorem 1 from scholarpedia). Is there some quantum version of this?
+\end{itemize}
+Write out the general density matrix in components and the matrix corresponding to the joint coarse-graining. Try to compute an easy one, say one joint coarse graining (may need to diagonalize the matrix) and then generalize it. \\
+There are various arbitrary choices in the AF definition, for ex. the subalgebra, the OPU... these should be somehow a natural choice. Study how important are these changes, how a simple system would change. 
 %-----------------------------------------------------------------------
 \section{Introduction}
 %-----------------------------------------------------------------------
