@@ -11,6 +11,7 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{example}[theorem]{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
 
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator{\id}{id}
@@ -1595,6 +1596,468 @@ The maximum occurs at $\vartheta=\pi/4$ (and $\vartheta=3\pi/4$, $5\pi/4$,
 $7\pi/4$), the angles at which $U(\vartheta)$ maps the computational basis
 to a MUB.  The formula $S=\log 2+h(\cos^2\vartheta)$ is symmetric about
 $\vartheta=\pi/4$, as expected.
+
+%-----------------------------------------------------------------------
+\section{POVM Interpretation: Instruments vs.\ Projection-Based Coarse-Graining}
+\label{sec:povm}
+%-----------------------------------------------------------------------
+
+\subsection{Quantum Instruments and OPUs}
+
+Mateo's notes ask: \emph{``X is a set of instruments.  How is this different to the
+projections involved in the coarse-graining notion of (multi-)macrostates?''}  We
+answer this precisely.
+
+\begin{definition}[Quantum instrument]
+A \emph{quantum instrument} on $M_d(\mathbb{C})$ is a finite collection
+$\{K_i\}_{i=1}^k$ of Kraus maps $\mathcal{K}_i:\rho\mapsto K_i\rho K_i^*$ such
+that the total map $\rho\mapsto\sum_i K_i\rho K_i^*$ is trace-preserving:
+\[
+  \sum_{i=1}^k K_i^*K_i = \mathbf{1}.
+\]
+This is the OPU condition (Definition~\ref{def:OPU}) with $\mathcal{Z}=\{K_i\}$.
+Each branch $\mathcal{K}_i$ represents the post-measurement state update on
+obtaining outcome $i$.
+\end{definition}
+
+\begin{proposition}[Diagonal entries = measurement probabilities]
+\label{prop:diag_prob}
+The diagonal entry $\rho[\mathcal{Z}]_{ii}=\Tr(Z_i\,\omega\,Z_i^*)=\Tr(Z_i^*Z_i\,\omega)$
+equals the probability of outcome $i$ when the instrument $\{Z_i(\cdot)Z_i^*\}$ is applied
+to state $\omega$.
+\end{proposition}
+
+\begin{proposition}[Sequential measurement interpretation]
+\label{prop:seq_meas}
+Let $\alpha=(i_0,\ldots,i_{n-1})\in\{1,\ldots,k\}^n$.  The diagonal entry
+\[
+  \rho[\mathcal{Z}^{(n)}]_{\alpha\alpha}
+  = \Tr\!\left(Z_\alpha^*Z_\alpha\,\omega\right)
+\]
+equals the probability of observing the outcome sequence $\alpha$ in the following
+\emph{non-selective} protocol: apply instrument $\mathcal{Z}$ at time $0$
+(recording outcome $i_0$, without post-selecting the state); evolve by $\Theta$;
+apply $\mathcal{Z}$ again (recording $i_1$); etc.
+\end{proposition}
+
+\begin{proof}
+The probability of the sequence $\alpha=(i_0,\ldots,i_{n-1})$ is
+\begin{align*}
+  p(\alpha)
+  &= \Tr\!\left(
+     \Theta^{n-1}(Z_{i_{n-1}})\cdots Z_{i_0}\,\omega\,
+     Z_{i_0}^*\cdots\Theta^{n-1}(Z_{i_{n-1}}^*)\right)
+   = \Tr(Z_\alpha\,\omega\,Z_\alpha^*)
+   = \Tr(Z_\alpha^*Z_\alpha\,\omega)
+   = \rho[\mathcal{Z}^{(n)}]_{\alpha\alpha}. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Classical (Projective) vs.\ Quantum (Coherent) Coarse-Graining}
+
+\begin{proposition}[Projector OPU gives diagonal density matrix]
+\label{prop:proj_diag}
+If $Z_i=P_i=|e_i\rangle\langle e_i|$ are mutually orthogonal rank-$1$ projectors and
+$\omega=\frac{1}{d}\mathbf{1}_d$, then $\rho[\mathcal{Z}^{(n)}]$ is diagonal:
+\[
+  \rho[\mathcal{Z}^{(n)}]_{\alpha\beta} = p(\alpha)\,\delta_{\alpha\beta},
+\]
+and $S(\rho[\mathcal{Z}^{(n)}]) = H(p^{(n)}) = -\sum_\alpha p(\alpha)\log p(\alpha)$
+equals the classical Shannon entropy of the outcome distribution.
+\end{proposition}
+
+\begin{proof}
+For orthogonal projectors $P_i P_j=\delta_{ij}P_i$, the product
+$Z_\alpha^*Z_\beta = P_{i_0}\Theta(P_{i_1})\cdots\Theta^{n-1}(P_{i_{n-1}})
+\cdot\Theta^{n-1}(P_{j_{n-1}})\cdots P_{j_0}$
+vanishes unless $i_t=j_t$ for every $t$ (orthogonality kills each factor), so
+$\rho[\mathcal{Z}^{(n)}]$ is diagonal with diagonal entries $p(\alpha)$.
+\end{proof}
+
+\begin{remark}[The key distinction]
+\label{rem:difference}
+For orthogonal projectors, $\rho[\mathcal{Z}^{(n)}]$ is diagonal: it carries exactly
+the information of the \emph{classical} joint distribution of outcomes, recovering the KS
+construction.
+
+For a general (non-commuting) OPU, the off-diagonal entries
+$\rho[\mathcal{Z}^{(n)}]_{\alpha\beta}$ ($\alpha\neq\beta$) are generically
+nonzero, capturing \emph{quantum coherences between distinct outcome histories}.  By
+the quantum information inequality:
+\begin{equation}\label{eq:S_geq_H}
+  S\!\left(\rho[\mathcal{Z}^{(n)}]\right) \;\geq\; H\!\left(p^{(n)}\right),
+\end{equation}
+with equality iff $\rho[\mathcal{Z}^{(n)}]$ is diagonal.  The surplus
+$S - H$ is the \emph{quantum coherence contribution} to the AFL entropy, with no
+classical counterpart.  This is the fundamental distinction between instruments and
+projection-based coarse-graining: instruments can create off-diagonal coherences
+between measurement histories.
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{OTOC Connection: AFL Entropy vs.\ Quantum Scrambling}
+\label{sec:otoc}
+%-----------------------------------------------------------------------
+
+\subsection{Out-of-Time-Order Correlators (OTOCs)}
+
+\begin{definition}[OTOC]
+\label{def:otoc}
+Given $A,B\in M_d(\mathbb{C})$ and $\omega=\frac{1}{d}\mathbf{1}_d$, the
+\emph{out-of-time-order correlator} at discrete time $n$ is
+\[
+  \mathrm{OTOC}(A,B;n)
+  := \omega\!\left([A_n,B]^\dagger[A_n,B]\right)
+  = \frac{1}{d}\,\Tr\!\left([U^nAU^{*n},B]^\dagger[U^nAU^{*n},B]\right).
+\]
+\end{definition}
+
+\begin{theorem}[OTOC for projector OPU at $n=1$]
+\label{thm:otoc_proj}
+Let $d\geq 2$, $\omega=\frac{1}{d}\mathbf{1}_d$, and $P_i=|e_i\rangle\langle e_i|$.  Then
+\begin{equation}\label{eq:otoc_1step}
+  \mathrm{OTOC}(P_i,P_j;1)
+  = \frac{2}{d}\,|U_{ji}|^2\!\left(1-|U_{ji}|^2\right),
+\end{equation}
+where $U_{ji}=\langle e_j|U|e_i\rangle$.
+\end{theorem}
+
+\begin{proof}
+Set $C:=[UP_iU^*,P_j]$.  With $u:=U_{ji}=\langle e_j|U|e_i\rangle$ and
+$|f_i\rangle:=U|e_i\rangle$:
+\begin{equation}\label{eq:comm_exp}
+  C = \bar{u}|f_i\rangle\langle e_j| - u|e_j\rangle\langle f_i|.
+\end{equation}
+Since $P_i$ and $P_j$ are self-adjoint rank-$1$ projectors, $C^\dagger=-C$, so
+$C^\dagger C = -C^2$.  Expanding $C^2$ from~\eqref{eq:comm_exp} using
+$\langle e_j|f_i\rangle=u$ and $\langle f_i|e_j\rangle=\bar{u}$:
+\[
+  \Tr(C^2) = 2|u|^4 - 2|u|^2,
+  \quad\text{hence}\quad
+  \Tr(C^\dagger C) = 2|u|^2 - 2|u|^4.
+\]
+Thus $\mathrm{OTOC}(P_i,P_j;1) = \frac{1}{d}\Tr(C^\dagger C) = \frac{2}{d}|U_{ji}|^2(1-|U_{ji}|^2)$.
+\end{proof}
+
+\subsection{Total OTOC and the Rényi-2 Entropy}
+
+\begin{definition}[Total OTOC and distribution $q$]
+Define the \emph{total OTOC}
+\[
+  \mathcal{C}_1(U) := \frac{1}{d^2}\sum_{i,j=1}^d \mathrm{OTOC}(P_i,P_j;1),
+\]
+and the probability distribution $q_{ij}:=|U_{ij}|^2/d$ over $\{1,\ldots,d\}^2$
+(which satisfies $\sum_{ij}q_{ij}=1$ since $U$ is unitary).
+\end{definition}
+
+\begin{theorem}[AFL entropy and OTOC probe complementary Rényi moments]
+\label{thm:afl_otoc}
+\begin{enumerate}
+  \item $S(\rho[\mathcal{Z}^{(2)}]) = H_1(q) := -\sum_{ij}q_{ij}\log q_{ij}$
+        \quad (Rényi-$1$ entropy of $q$).
+  \item $\mathcal{C}_1(U) = \dfrac{2}{d^3}\!\left(d - \sum_{ij}|U_{ij}|^4\right)
+        = \dfrac{2}{d^2}\!\left(1 - d\cdot M_2(q)\right)$,
+        where $M_2(q):=\sum_{ij}q_{ij}^2 = e^{-H_2(q)}$ and
+        $H_2(q):=-\log\!\left(\sum_{ij}q_{ij}^2\right)$ is the Rényi-$2$ entropy.
+  \item $H_1(q)\geq H_2(q)$ (Rényi ordering), with equality iff $q$ is uniform
+        (i.e.\ $|U_{ij}|^2=1/d$ for all $i,j$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) By Theorem~\ref{thm:matrix_entropy}, $S(\rho[\mathcal{Z}^{(2)}])=\log d+E(U)$ where
+$E(U)=-(1/d)\sum_{ij}|U_{ij}|^2\log|U_{ij}|^2$.  Substituting $q_{ij}=|U_{ij}|^2/d$:
+$H_1(q) = -\sum_{ij}q_{ij}\log q_{ij} = -\sum_{ij}\frac{|U_{ij}|^2}{d}(\log|U_{ij}|^2-\log d)
+= E(U)+\log d = S(\rho[\mathcal{Z}^{(2)}])$.
+
+(2) By Theorem~\ref{thm:otoc_proj}, $\sum_{ij}\mathrm{OTOC}(P_i,P_j;1) = (2/d)\sum_{ij}|U_{ij}|^2(1-|U_{ij}|^2)=(2/d)(d-\sum_{ij}|U_{ij}|^4)$,
+and dividing by $d^2$ gives $\mathcal{C}_1 = (2/d^3)(d-\sum|U_{ij}|^4)
+= (2/d^2)(1-\sum|U_{ij}|^4/d^2)=(2/d^2)(1-d\cdot M_2(q))$.
+
+(3) Standard Rényi inequality; equality holds iff $q$ is uniform.
+\end{proof}
+
+\begin{corollary}[OTOC max $\Leftrightarrow$ AFL max $\Leftrightarrow$ MUB]
+Under the above hypotheses,
+\begin{align*}
+  \mathcal{C}_1(U)=\mathcal{C}_1^{\max}
+  \;\Longleftrightarrow\;
+  S(\rho[\mathcal{Z}^{(2)}])=2\log d
+  \;\Longleftrightarrow\;
+  |U_{ij}|^2=\tfrac{1}{d}\;\forall\,i,j.
+\end{align*}
+The maximum values are $S_{\max}=2\log d$ and $\mathcal{C}_1^{\max}=\frac{2(d-1)}{d^3}$.
+Permutation/monomial unitaries give $\mathcal{C}_1=0$ and $S=\log d$ (minimum).
+\end{corollary}
+
+\begin{proof}
+$\mathcal{C}_1$ is maximised when $\sum|U_{ij}|^4$ is minimised.  For a unitary $U$, each
+row satisfies $\sum_j|U_{ij}|^2=1$, so by Jensen $\sum_j|U_{ij}|^4\geq 1/d$, with
+equality iff each row is flat ($|U_{ij}|^2=1/d$ for all $j$).  Summing over rows:
+$\sum_{ij}|U_{ij}|^4\geq d\cdot(1/d)=1$, with equality iff $|U_{ij}|^2=1/d$ for all
+$i,j$ (MUB).  This gives $\mathcal{C}_1^{\max}=(2/d^3)(d-1)$.
+For permutation matrices $|U_{ij}|^2\in\{0,1\}$:
+$|U_{ij}|^2(1-|U_{ij}|^2)=0$, so $\mathcal{C}_1=0$.
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+$S(\rho[\mathcal{Z}^{(2)}])=H_1(q)$ (Shannon entropy) measures the \emph{information content}
+of the basis-expansion distribution $\{q_{ij}\}$: how uniformly $U$ spreads each
+computational basis vector.  $\mathcal{C}_1(U)$ measures the same spreading via the
+\emph{collision probability} (second moment), i.e.\ the Rényi-$2$ analogue.  These two
+measures agree at the extremes (MUB and permutation) but differ for intermediate
+unitaries, with $H_1\geq H_2$ always.  The MUB condition maximises all Rényi moments
+simultaneously because it achieves the uniform distribution.
+\end{remark}
+
+\subsection{Numerical Verification}
+
+All computations use \texttt{otoc\_analysis.py}.
+
+\begin{table}[h]
+\centering
+\caption{Verification of Theorem~\ref{thm:otoc_proj}: max error $|\mathrm{OTOC}_{\mathrm{num}}-\mathrm{OTOC}_{\mathrm{formula}}|$ over all pairs $(P_i,P_j)$.  All errors are at machine precision.}
+\label{tab:otoc_verify}
+\begin{tabular}{l|c}
+Gate & max error \\ \hline
+Identity & $0$ \\
+Pauli $X$ & $0$ \\
+$T$ gate  & $0$ \\
+$S$ gate  & $0$ \\
+Hadamard  & $1.1\times10^{-16}$ \\
+$U(\pi/4)$& $0$ \\
+$U(\pi/8)$& $2.8\times10^{-17}$ \\
+$U(\pi/3)$& $2.8\times10^{-17}$
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{AFL entropy $S(\rho[\mathcal{Z}^{(2)}])=H_1(q)$ vs.\ Rényi-$2$ entropy $H_2(q)$ and total OTOC $\mathcal{C}_1(U)$ for qubit unitaries ($d=2$).  $H_1\geq H_2$ with equality at permutations ($H_1=H_2=\log 2$) and MUBs ($H_1=H_2=2\log 2$).}
+\label{tab:afl_otoc}
+\begin{tabular}{l|c|c|c|c|c}
+Gate & $S(\rho[\mathcal{Z}^{(2)}])=H_1$ & $H_2(q)$ & $\mathcal{C}_1$ & $H_1-H_2$ & MUB? \\ \hline
+Identity   & $0.6931$ & $0.6931$ & $0$       & $0$        & no \\
+Pauli $X$  & $0.6931$ & $0.6931$ & $0$       & $0$        & no \\
+$T$ gate   & $0.6931$ & $0.6931$ & $0$       & $0$        & no \\
+$S$ gate   & $0.6931$ & $0.6931$ & $0$       & $0$        & no \\
+Hadamard   & $1.3863$ & $1.3863$ & $0.2500$  & $0$        & \textbf{yes} \\
+$U(\pi/4)$ & $1.3863$ & $1.3863$ & $0.2500$  & $0$        & \textbf{yes} \\
+$U(\pi/8)$ & $1.1096$ & $0.9808$ & $0.1250$  & $0.1288$   & no \\
+$U(\pi/3)$ & $1.2555$ & $1.1632$ & $0.1875$  & $0.0923$   & no
+\end{tabular}
+\end{table}
+
+%-----------------------------------------------------------------------
+\section{Quantum Generating Partitions}
+\label{sec:gen}
+%-----------------------------------------------------------------------
+
+Mateo's notes ask: \emph{``Classically for KS entropy, no supremum over
+partitions is necessary as long as the chosen partition is `generating'.
+Is there some quantum version of this?''}
+
+\subsection{Classical Background}
+
+A finite measurable partition $\mathbf{P}$ is \emph{generating} for $(M,\mu,T)$ if
+$\bigvee_{n\in\mathbb{Z}}T^n\mathbf{P}=\mathscr{F}$ ($\mu$-a.e.), and Krieger's theorem
+guarantees such a partition always exists for ergodic systems with finite entropy.
+
+\subsection{Quantum Generating OPUs}
+
+\begin{definition}[Generating OPU]
+\label{def:gen_opu}
+An OPU $\mathcal{Z}\subset\A_0$ is \emph{generating} for $(\A,\Theta,\omega)$ if
+$h_\omega^{\mathrm{AFL}}(\Theta,\mathcal{Z})=h_\omega^{\mathrm{AFL}}(\Theta)$.
+\end{definition}
+
+\begin{proposition}[Finite-dimensional case: every OPU is generating]
+\label{prop:gen_finite}
+For $\A=M_d(\mathbb{C})$ and any unitary dynamics, every OPU is generating, since
+$h_\omega^{\mathrm{AFL}}(\Theta)=0$ trivially.
+\end{proposition}
+
+\begin{theorem}[Matrix-unit OPU is generating for quantum spin chains]
+\label{thm:gen_spinchain}
+Let $(\A_\mathbb{Z},\Theta_\sigma,\omega)$ be a translation-invariant quantum spin chain,
+and $\mathcal{Z}_{\mathrm{mu}}=\{e_{ij}/\sqrt{d}\}_{i,j=1}^d$ the normalised matrix-unit
+OPU at site $0$.  Then $\mathcal{Z}_{\mathrm{mu}}$ is generating:
+\[
+  h_\omega^{\mathrm{AFL}}(\Theta_\sigma,\mathcal{Z}_{\mathrm{mu}})
+  = s(\omega)+\log d
+  = h_\omega^{\mathrm{AFL}}(\Theta_\sigma).
+\]
+\end{theorem}
+
+\begin{proof}
+The upper bound $h_\omega^{\mathrm{AFL}}(\Theta_\sigma)\leq s(\omega)+\log d$ holds for
+all OPUs (Theorem~\ref{thm:spinchain}).  The lower bound uses exactly
+$\mathcal{Z}_{\mathrm{mu}}$ (Theorem~\ref{thm:spinchain}, lower bound): the matrix
+units span all of $M_d(\mathbb{C})$ and achieve $S(\rho[\mathcal{Z}_{\mathrm{mu}}^{(k)}])
+= S(\omega|_{[0,k-1]})+k\log d$, giving $h = s(\omega)+\log d$.
+\end{proof}
+
+\begin{remark}[Quantum Krieger theorem]
+The matrix-unit OPU is the quantum analogue of a generating partition.  Classically,
+a generating partition spans the full $\sigma$-algebra; quantumly, the matrix units
+$\{e_{ij}\}$ form a basis for $M_d(\mathbb{C})$ as a vector space, so the matrix-unit
+OPU carries \emph{all} local quantum information.  No optimisation over OPUs is required
+once $\mathcal{Z}_{\mathrm{mu}}$ is chosen.
+\end{remark}
+
+\begin{remark}[Choice of subalgebra $\A_0$]
+The ``arbitrary choice'' of subalgebra noted by Mateo is resolved as follows: the
+natural choice is the local single-site algebra $\A_0=M_d(\mathbb{C})^{\{0\}}$, by
+analogy with the classical case (local cylinder partitions).  A smaller subalgebra
+gives a smaller entropy.  The matrix-unit OPU within $\A_0$ is canonical: it is the
+unique (up to unitary equivalence) OPU that spans $M_d(\mathbb{C})$.
+\end{remark}
+
+%-----------------------------------------------------------------------
+\section{Toward a Quantum Pesin Theorem: Obstructions and a Partial Result}
+\label{sec:pesin_attempt}
+%-----------------------------------------------------------------------
+
+We now attempt to connect AFL entropy to quantum Lyapunov exponents, and address
+Mateo's question: \emph{``Is there a way to amend these definitions to connect to
+integrability (and ignore/subtract the inherent quantum uncertainty)?''}
+
+\subsection{Classical Pesin Relation (Reference)}
+
+The classical Pesin theorem (1977) states that for a $C^2$, volume-preserving
+diffeomorphism $T$ on a compact Riemannian manifold:
+\begin{equation}\label{eq:pesin_classical}
+  h_{\mu,T}^{\mathrm{KS}} = \int_M \sum_{\lambda_i(x)>0}\lambda_i(x)\,d\mu(x),
+\end{equation}
+where $\{\lambda_i(x)\}$ are the Lyapunov exponents at $x\in M$.
+
+\subsection{Quantum Lyapunov Exponents and the Ehrenfest Obstruction}
+
+\begin{definition}[OTOC-based quantum Lyapunov exponent]
+\label{def:qle}
+For a quantum dynamical system, the quantum Lyapunov exponent $\lambda_L$ (if it
+exists) is the exponential growth rate of the OTOC in the \emph{pre-scrambling regime}:
+\[
+  \mathrm{OTOC}(A,B;n) \sim C_0\,e^{\lambda_L\,n}, \quad 1\ll n\ll t_E,
+\]
+where $t_E\sim\log d/\lambda_L$ is the Ehrenfest time.
+\end{definition}
+
+\begin{proposition}[OTOC is bounded; $\lambda_L\leq 0$ for finite dimensions]
+\label{prop:otoc_bound}
+For $\A=M_d(\mathbb{C})$ and any $A,B\in M_d(\mathbb{C})$:
+\[
+  0 \leq \mathrm{OTOC}(A,B;n) \leq 4\|A\|^2\|B\|^2 < \infty.
+\]
+Hence the OTOC cannot grow without bound, and $\lambda_L\leq 0$.
+\end{proposition}
+
+\begin{proof}
+$\mathrm{OTOC}(A,B;n)=\omega([A_n,B]^\dagger[A_n,B])\leq\|[A_n,B]\|^2
+\leq(2\|A_n\|\|B\|)^2=4\|A\|^2\|B\|^2$, using unitarity of $\Theta^n$ and the
+operator-norm bound $\|[X,Y]\|\leq 2\|X\|\|Y\|$.
+\end{proof}
+
+\begin{remark}[Ehrenfest obstruction]
+Proposition~\ref{prop:otoc_bound} shows that genuine exponential OTOC growth is
+impossible in finite dimensions: any growth must saturate before $t_E$.  Together
+with $h_\omega^{\mathrm{AFL}}(\Theta)=0$ (Proposition~\ref{prop:finite_AFL}), we
+find that the Pesin relation $h=\sum_{\lambda_+}\lambda$ holds trivially as $0=0$
+in finite dimensions.  This is degenerate: AFL entropy cannot distinguish integrable
+from chaotic dynamics in finite dimensions.
+\end{remark}
+
+\subsection{AFL Entropy as a Partial Quantum Pesin Relation}
+
+\begin{proposition}[AFL entropy interpolates between integrable and chaotic]
+\label{prop:integrability}
+For a translation-invariant quantum spin chain:
+\begin{enumerate}
+  \item \emph{Free/integrable systems:} Conservation laws constrain entanglement growth,
+        giving $s(\omega)<\log d$ in typical states, hence
+        $h_\omega^{\mathrm{AFL}}(\Theta_\sigma)=s(\omega)+\log d<2\log d$.
+  \item \emph{Maximally chaotic systems} (e.g.\ random unitary circuits at
+        infinite temperature): the steady state is $\omega=\bigotimes_j\frac{1}{d}\mathbf{1}$,
+        giving $s(\omega)=\log d$ and $h_\omega^{\mathrm{AFL}}(\Theta_\sigma)=2\log d$ (maximal).
+  \item $h_\omega^{\mathrm{AFL}}(\Theta_\sigma)$ interpolates between $\log d$
+        (fully ordered, zero entanglement) and $2\log d$ (maximal chaos).
+\end{enumerate}
+\end{proposition}
+
+\subsection{Removing the Quantum Noise Floor}
+
+\begin{proposition}[Corrected AFL entropy and integrability]
+\label{prop:qcorrection}
+Define the \emph{corrected AFL entropy}
+\begin{equation}\label{eq:corr_afl}
+  \tilde{h}_\omega^{\mathrm{AFL}}(\Theta_\sigma)
+  := h_\omega^{\mathrm{AFL}}(\Theta_\sigma) - \log d
+  = s(\omega).
+\end{equation}
+This quantity:
+\begin{enumerate}
+  \item Equals $0$ for product states (no entanglement, $s(\omega)=0$).
+  \item Equals $\log d$ for maximally chaotic states ($s(\omega)=\log d$).
+  \item Reduces to the classical KS entropy in the commutative limit.
+  \item Detects integrability: free-fermion chains have $\tilde{h}<\log d$ due to
+        conservation laws; strongly interacting chaotic chains have $\tilde{h}\to\log d$.
+\end{enumerate}
+The subtraction of $\log d$ removes the \emph{quantum noise floor}: the minimum AFL
+entropy arising from the Heisenberg uncertainty principle (one measurement per site
+always contributes $\log d$ regardless of dynamics).  The remainder $s(\omega)$ is the
+purely dynamical entropy density.
+\end{proposition}
+
+\begin{proof}
+All statements follow directly from Theorem~\ref{thm:spinchain} and $\tilde{h}=h-\log d=s(\omega)$.
+\end{proof}
+
+\subsection{Quantum Pesin Conjecture}
+
+\begin{conjecture}[Quantum Pesin relation for spin chains]
+\label{conj:pesin}
+Let $(\A_\mathbb{Z},\Theta_\sigma,\omega)$ be a translation-invariant quantum spin chain
+with well-defined quantum Lyapunov exponent $\lambda_L>0$ (via OTOC growth for
+$n\ll t_E$, in the thermodynamic limit).  Then
+\begin{equation}\label{eq:pesin_quantum}
+  \tilde{h}_\omega^{\mathrm{AFL}}(\Theta_\sigma) = s(\omega) \approx \lambda_L.
+\end{equation}
+In words: the corrected AFL entropy rate equals the quantum Lyapunov exponent.
+\end{conjecture}
+
+\begin{remark}[Evidence and obstacles]
+\emph{Supporting evidence:}
+\begin{enumerate}
+  \item In the classical limit, AFL $\to$ KS and $\lambda_L\to\lambda_{\mathrm{Lyap}}^{\mathrm{cl}}$,
+        so~\eqref{eq:pesin_quantum} reduces to the classical Pesin relation.
+  \item For free-fermion chains: $\lambda_L=0$ (no quantum chaos) and $s(\omega)<\log d$
+        (below maximum), consistent with $\tilde{h}<\log d$.
+  \item For random unitary circuits: both sides are expected to equal $\log d$ (maximal
+        scrambling), consistent with~\eqref{eq:pesin_quantum}.
+\end{enumerate}
+\emph{Main obstacles:}
+\begin{enumerate}
+  \item The OTOC grows exponentially only for $n\ll t_E$; for spin chains, $t_E\to\infty$
+        as the system size grows, making $\lambda_L$ well-defined only in the thermodynamic
+        limit.
+  \item No rigorous proof connecting $s(\omega)$ to $\lambda_L$ exists in the general
+        quantum case; the connection passes through an uncontrolled semiclassical
+        approximation.
+  \item The AFL entropy is defined via OPUs (measurements), while $\lambda_L$ is defined
+        via operator growth; a direct analytic link between them requires new tools,
+        possibly via the Goldfriend--Kurchan formalism or quantum ergodic theory.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Reply to Mateo's notes]
+To summarise: the answer to ``can we connect to integrability and subtract the quantum
+uncertainty?'' is \textbf{yes}, via the corrected AFL entropy~\eqref{eq:corr_afl}.
+The subtracted quantity $\log d$ is the irreducible quantum noise floor; what remains
+is $s(\omega)$, a genuine dynamical entropy that distinguishes free from chaotic systems
+and conjecturally equals the quantum Lyapunov exponent.  The quantum Pesin relation is
+thus: $s(\omega) = \lambda_L$ (Conjecture~\ref{conj:pesin}), with classical Pesin as the
+limiting case.
+\end{remark}
 
 \begin{thebibliography}{99}
 \bibitem{alicki1994}

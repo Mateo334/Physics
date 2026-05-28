@@ -147,3 +147,42 @@ Sections added (Output.tex now ~1647 lines, balanced environments):
 ### Current state
 Output.tex complete with new results. hadamard_qubit.py verified.
 Task 1 complete pending summary.md update.
+
+## Session: 2026-05-28 (continued)
+
+### Step 11 — Planning new sections
+Working on general task: quantum Pesin theorem.
+Addressing Mateo's open questions from Output.tex Section 1:
+- Instruments vs. projection-based coarse-graining
+- Quantum generating partitions
+- Connection to integrability
+New analytical result to derive: OTOC = (2/d)|U_ji|²(1-|U_ji|²), relate to AFL entropy.
+
+New sections planned for Output.tex:
+- Sec 20: POVM interpretation (instruments vs. projections)
+- Sec 21: OTOC connection (AFL entropy ↔ Rényi-2 via OTOC)
+- Sec 22: Quantum generating partitions (matrix-unit OPU is generating)
+- Sec 23: Quantum Pesin — partial result, obstructions, conjecture
+
+### Step 12 — otoc_analysis.py written and verified
+Key analytical results (all verified to machine precision):
+- OTOC(P_i,P_j;1) = (2/d)|U_ji|²(1-|U_ji|²)  — Theorem 21.1
+- C_1(U) = (2/d³)(d - Σ|U_ij|^4)  — Corollary 21.2
+- S(Z^2) = H_1(q) = Rényi-1 entropy of q_{ij}=|U_ij|²/d
+- H_1(q) ≥ H_2(q) with equality at permutations and MUBs
+- Both S(Z^2) and C_1(U) are maximized at MUB (Hadamard), minimized at permutation
+- Identity: H_1=H_2=log(2), C_1=0
+- Hadamard: H_1=H_2=log(4), C_1=1/4 (MUB, maximum)
+
+### Step 13 — Sections 20-23 written to Output.tex COMPLETE
+- Sec 20: POVM interpretation; sequential measurement = diagonal ρ[Z^n] for projectors;
+  coherences → S > H (quantum excess). Answers Mateo's "instruments vs. projections."
+- Sec 21: OTOC theorem (full proof of Thm 21.1); total OTOC formula; H_1 ≥ H_2 Thm;
+  MUB corollary; numerical tables 5-8 (verification + comparison).
+- Sec 22: Generating OPU definition; matrix-unit OPU is generating for spin chains
+  (Theorem 22.2); quantum Krieger theorem remark; subalgebra choice resolved.
+- Sec 23: Ehrenfest obstruction; AFL as partial Pesin; corrected AFL = s(ω) removes
+  quantum noise floor; Quantum Pesin Conjecture (s(ω) = λ_L); reply to Mateo.
+
+Output.tex now 2114 lines. All environments balanced (179 begin = 179 end).
+\conjecture theorem environment added to preamble.

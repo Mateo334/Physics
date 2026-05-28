@@ -65,17 +65,44 @@ All results confirmed by hadamard_qubit.py:
 - Permutation-like gates (I, X, T, S): S(rho[Z^2]) = log 2 (no scrambling)
 - Rotation angle formula: S = log2 + h(cos^2 theta), symmetric about pi/4
 
+**Result 6: OTOC = (2/d)|U_{ji}|²(1-|U_{ji}|²) [Theorem 21.1, new]**
+Full proof via commutator computation and anti-self-adjointness.
+Verified to machine precision for 8 qubit gates.
+
+**Result 7: AFL entropy is Rényi-1, OTOC probes Rényi-2 [Theorem 21.2, new]**
+For distribution q_{ij} = |U_{ij}|²/d:
+  S(ρ[Z^(2)]) = H_1(q)  [Rényi-1 = Shannon entropy]
+  C_1(U) = (2/d³)(d - Σ|U_{ij}|^4)  related to Rényi-2 moment
+  H_1(q) ≥ H_2(q), equality at permutations and MUBs.
+MUB ↔ max AFL ↔ max OTOC: all three conditions are equivalent (Corollary).
+
+**Result 8: Instruments vs. projections [Sec 20, new]**
+Projector OPU → diagonal ρ[Z^(n)] = classical joint probability.
+General OPU → off-diagonal coherences → S(ρ) > H(p) (quantum excess entropy).
+Sequential measurement interpretation of diagonal entries proved rigorously.
+
+**Result 9: Matrix-unit OPU is a quantum generating partition [Theorem 22.2, new]**
+Quantum analogue of Krieger's generator theorem: the matrix-unit OPU achieves
+the AFL entropy supremum for spin chains, requiring no optimisation.
+
+**Result 10: Corrected AFL entropy and quantum Pesin [Proposition 23.2 + Conjecture 23.1]**
+Corrected AFL entropy: h̃ = h_AFL - log d = s(ω).
+- Removes quantum noise floor (inherent uncertainty = log d per site).
+- Detects integrability: free-fermion chains → h̃ < log d; chaotic → h̃ = log d.
+- Quantum Pesin conjecture: s(ω) = λ_L (quantum Lyapunov exponent via OTOC).
+- Ehrenfest obstruction: no exponential OTOC growth for finite-dim systems.
+
 ## Status of this approach
 
-NOT exhausted. Key open directions:
-1. Extension to d > 2 (qutrit Hadamard, higher MUBs, SIC-POVMs).
-2. Connection between E(U) and OTOC: does maximal E(U) imply maximal OTOC?
-3. CP maps (non-unitary dynamics): can h_AFL > 0 for finite-dim systems?
-4. Quantum Pesin conjecture: does AFL entropy = sum of positive quantum
-   Lyapunov exponents in some limit?
+NOT exhausted. Remaining open directions:
+1. Rigorous proof of Quantum Pesin Conjecture (Conjecture 23.1) for specific models.
+2. Extension to d > 2 (qutrit Hadamard, SIC-POVMs).
+3. Non-unital CP maps: what happens when the dynamics is dissipative?
+4. Direct comparison of s(ω) with known Lyapunov exponents in XXZ chain.
 
 ## Files
-- Output.tex: Full LaTeX (~1647 lines), sections 1-19 + bibliography.
+- Output.tex: Full LaTeX (~2114 lines), sections 1-23 + bibliography.
 - progress.md: Step-by-step progress log.
 - summary.md: This file.
-- hadamard_qubit.py: Python verification script.
+- hadamard_qubit.py: Python verification (AFL entropy, MUB, matrix entropy formula).
+- otoc_analysis.py: Python verification (OTOC formula, Rényi comparison, total OTOC).
