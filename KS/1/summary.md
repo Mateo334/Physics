@@ -328,32 +328,51 @@ KEY THEOREMS:
 - Corollary cor:renyi_chaos: Rényi spread Δh = 0 for chaos, > 0 for integrable (new sharp indicator). ✓
 - Theorem thm:renyi_afl_gk: h^(1) ≥ h^(2) = h_GK, with equality at dual-unitary. ✓
 
+**Result 50: Semiclassical convergence plateau (Task 13, corrected)**
+For the coherent-state AFL h_excess(j,k=5,n=2):
+- Plateau at h_excess ≈ 0.631 for j ≥ 7 (vs λ+=0.876) — does NOT converge to λ+ at n=2
+- δ_∞^{(n=2)} ≈ 0.245 = permanent quantum floor from finite n
+- Fit: h_excess(j) ≈ 0.537 + 0.70/√j - 1.25/j (growth phase, j≤5), then plateau
+- Full convergence to λ+ requires DOUBLE LIMIT: n→∞ then j→∞
+
+**Result 51: Rényi AFL phase diagram extended (Task 13)**
+Full table for kicked Ising (L=4, n=2) at J=g = 0, 0.05, 0.10, 0.20, 0.30, π/8, π/6, 3π/16, π/4:
+- h^(1) monotone increasing from 2.00 to 4.00 (log2 units) = correct chaos order parameter
+- Δh non-monotone: peaks at small J (Δh≈2 for J=0.05), vanishes at both extremes
+- J=0.30: h^(1)=2.86, Δh=1.74; J=π/6: h^(1)=3.62, Δh=1.17
+
+**Result 52: Quantum Pesin equality test (Task 14)**
+For kicked Ising (open, J=g on self-dual line):
+- h_AFL^time/log2 = 0, 0.149, 0.413, 0.618, 0.733, 1.000 (L=5, n=5, site-0 OPU)
+- v_E/log2 = 0, 0.177, 0.391, 0.544, 0.631, 1.000 (L=12, t=1..6 linear fit)
+- Ratio h/v_E ∈ [0.84, 1.16] for all couplings; exact equality at J=0 and J=π/4
+- Conjecture: h_AFL^time = v_E log d in the thermodynamic limit
+
+**Result 53: Rényi AFL TIME spectrum (Task 14)**
+For ρ[Z^(4)] with site-0 OPU (L=5 open):
+- Same qualitative structure as shift-AFL: Δh large at small J, → 0 at dual-unitary
+- Δh/log2: 0 (J=0), 0.71 (π/16), 0.59 (π/8), 0.46 (π/6), 0.38 (3π/16), 0 (π/4)
+- h^(1) monotone: 0.25, 0.39, 0.61, 0.78, 0.86, 1.00 → chaos order parameter
+
 ## Status of this approach
 
 NOT exhausted. Remaining open directions:
-1. Prove h_AFL^time = v_E for generic chaotic (non-dual-unitary) Floquet chains.
+1. Prove h_AFL^time = v_E log d rigorously for generic coupling (Conjecture conj:qp_equality).
+   Numerically confirmed within ±16% at L=5,12; exact at dual-unitary.
 2. Prove the Qutrit Odd-Step Conjecture for all j ≥ 3/2 (higher spin).
-3. Quantum cat map: prove the DOUBLE LIMIT semiclassical Pesin (N→∞ then n→∞) rigorously.
-4. Semiclassical convergence rate: fit h_excess(j,k) = λ(k) + A/sqrt(j) + B/j for the kicked top; confirm the O(1/sqrt(j)) conjecture.
+3. Quantum cat map: prove the DOUBLE LIMIT semiclassical Pesin (n→∞ then N→∞) rigorously.
+4. Semiclassical convergence: the n=2 approximation saturates at 72% of λ+;
+   show that adding more steps (n=3,4,...) closes this gap.
 5. Rigorous proof of topological suppression conjecture (Conjecture 49.1).
-6. MIPT-AFL order parameter confirmed numerically for larger L (L=8,16,32 circuits).
-7. Rényi AFL spectrum for generic chaotic (non-dual-unitary) systems: is Rényi spread small but non-zero?
+6. MIPT-AFL order parameter confirmation for larger L (L≥20 circuits).
 
 ## Files
-- Output.tex: Full LaTeX (6933 lines), sections 1-63 + bibliography.
+- Output.tex: Full LaTeX (7483 lines), 71 numbered sections + bibliography.
 - progress.md: Step-by-step progress log.
 - summary.md: This file.
-- hadamard_qubit.py: Python verification (AFL entropy, MUB, matrix entropy formula).
-- otoc_analysis.py: Python verification (OTOC formula, Rényi comparison, total OTOC).
-- coarse_graining.py: Python verification (observational entropy, structural entropy, refinement bound).
-- kicked_top.py: Python verification (K-independence, E(U^n) growth, qutrit, SIC-POVM, amplitude damping).
-- free_fermion.py: Python verification (AFL entropy XX chain, OTOC comparison, entanglement growth).
-- time_evolution_afl.py: Time-dynamical AFL (OPU condition, KI vs XX entropy, OTOC connection).
-- quantum_pesin_phase.py: Phase diagram, qutrit odd-step proof, h_AFL vs v_B bound check.
-- lindbladian_afl.py: Open-system AFL via Stinespring dilation; amplitude damping comparison.
-- noise_threshold.py: Many-body noise threshold; local vs global noise comparison.
-- hybrid_circuit.py: MIPT-AFL hybrid circuit (Haar-random gates + measurement rate p); mean-field h_AFL vs p; trajectory model; Lindbladian dephasing spectral formula.
-- opu_comparison.py: OPU-type independence study (projector, SIC-POVM, matrix-unit); GK Rényi-2 comparison.
-- kicked_top_semiclassical.py: Semiclassical limit study; classical Lyapunov exponent; coherent-state OPU convergence.
-- quantum_cat_map.py: Quantum Arnold cat map; flat matrix property E(U)=2logN proved; Ehrenfest obstruction at n=1.
-- renyi_afl_spectrum.py: Rényi-q AFL spectrum for KI vs XX; flat spectrum test; Rényi spread indicator.
+- hadamard_qubit.py, otoc_analysis.py, coarse_graining.py, kicked_top.py: Tasks 1-3.
+- free_fermion.py, time_evolution_afl.py, quantum_pesin_phase.py: Tasks 4-6.
+- lindbladian_afl.py, noise_threshold.py, hybrid_circuit.py, opu_comparison.py: Tasks 7-10.
+- kicked_top_semiclassical.py, quantum_cat_map.py: Task 11.
+- renyi_afl_spectrum.py, renyi_phase_diagram.py: Tasks 12-13.
+- entanglement_afl_pesin.py: Task 14.

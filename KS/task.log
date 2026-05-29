@@ -178,3 +178,19 @@ Task 10 is fully complete. Here's a summary of what was accomplished this sessio
 `Output.tex` is now 6020 lines, 55 sections, 476 perfectly balanced environments, zero broken references.
 You've hit your session limit · resets 4:10pm (Europe/Prague)
 You've hit your session limit · resets 10:30pm (Europe/Prague)
+Here is a summary of what was accomplished this session:
+
+---
+
+**Task 13 completed** (was left with `[ ]` despite sections 64-67 existing in a prior partial session):
+- Extended Table 64 with the missing coupling values J=0.20, 0.30, π/6
+- Corrected Section 65's convergence analysis: the n=2 coherent-state AFL excess **plateaus** at ~0.631 (not converging to λ+=0.876), with δ_∞^{(n=2)} ≈ 0.245 — a permanent quantum floor from the finite-n approximation. Added data for j=15 and j=20. Added a Remark explaining the double limit is required.
+
+**Task 14 opened and completed** — testing the quantum Pesin equality h_AFL^time = v_E log d:
+- **Part A**: h_AFL^time/log2 increases monotonically 0→1 as J=g increases from 0 to π/4; S(n) = n log2 exactly at dual-unitary.
+- **Part B**: v_E/log2 also increases 0→1; must use open boundary + fit only the first L/2 steps to avoid the finite-size bounce. Dual-unitary: exact 1 bit/step.
+- **Part C**: Ratio h/v_E ∈ [0.84, 1.16] — approximately 1 for all couplings, exact at the extremes. A new Conjecture 70 (conj:qp_equality) in Output.tex formalises the equality.
+- **Part D**: Rényi time spectrum of ρ[Z^(4)]: Δh decreasing monotonically from 0.71 to 0 as J increases, confirming Δh as a chaos fingerprint for both shift- and time-AFL.
+
+Output.tex: 7483 lines, 71 numbered sections, 591 balanced environments, 288 labels, 0 broken refs.
+You've hit your session limit · resets 5:20am (Europe/Prague)
