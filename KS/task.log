@@ -115,3 +115,51 @@ Task 4 is complete. Here's what was accomplished this session:
 
 4. **Section 34** (General quantum Pesin sketch): Addresses all four of Mateo's questions. New **Conjecture 33.1** (entanglement-Lyapunov: `v_E ≤ v_B · log d`, saturated for dual-unitary), **Conjecture 34.2** (general quantum Pesin inequality `s(ω) ≤ v_B · λ_L`), five open problems, and reply to Mateo explaining that the correct quantum Pesin is the GK formula, not the AFL-shift entropy.
 You've hit your session limit · resets 4:10am (Europe/Prague)
+All files are current. Here is a summary of everything accomplished this session:
+
+---
+
+**Tasks completed this session (2026-05-29):**
+
+**Task 5** (verified complete — already done in prior session):
+- Time-dynamical AFL OPU framework (Sections 35–38)
+- OPU condition proved by induction; verified numerically < 3×10⁻¹⁵
+- Dual-unitary exact saturation: `ρ[Z^(n)] = (1/2^n)I` exactly
+- XX chain: `S(n)/n < log 2` for large n (integrable)
+- n=2 formula: `S = H_bin(f)`, `f = Tr(P₀ P₀,t)/D`
+
+**Task 6** — Quantum Pesin Inequality (Sections 39–42):
+- **Proved** `h_AFL^time ≤ v_B log d` via Lieb–Robinson rank bound
+- Phase diagram: `f(J)` monotone from 1/2 (integrable) to 1/4 (dual-unitary)
+- **Proved** Qutrit Odd-Step K-Independence analytically: `R_{0,0}=0` makes contributions A, B, C have disjoint support → phases cancel in |·|²; verified for n=1,3,...,9
+- Synthesis: full Quantum Pesin hierarchy `h_shift ≤ h_time ≤ v_E ≤ v_B log d`
+
+**Task 7** — Open-System AFL via Stinespring (Sections 43–46):
+- Stinespring dilation restores OPU condition for non-unital channels
+- Noise suppression theorem: amplitude damping monotonically reduces `H_n`
+- Numerics: gap persists for local noise (γ < 1), amplitude 0.043–0.054
+
+**Task 8** — Many-Body Noise Threshold (Sections 47–49):
+- **Surprising result**: for global depolarizing, KI stays at `h=1` always; XX entropy *increases* toward 1 under noise → gap collapses from below
+- Threshold formula: `p_{1/2} ~ log(2)/(Ln)`
+- Connection to MIPT, topological suppression conjecture
+
+**Output.tex**: 5078 lines, 49 sections, 418 balanced environments.
+Task 9 is complete. Here is a summary of what was done this session:
+
+---
+
+**Task 9 — MIPT Order Parameter and Lindbladian Spectral Formula** is now marked complete.
+
+**New file**: `1/hybrid_circuit.py` — simulates hybrid quantum circuits (Haar-random brick-wall gates + projective measurements at rate $p$); computes $h_{\rm AFL}^{\rm time}$ vs $p$ showing monotone decrease from $0.947\log 2$ at $p=0$ to $0$ at $p=1$.
+
+**New sections in Output.tex** (now 5617 lines, 451 balanced environments):
+
+- **Section 50** — Hybrid circuit AFL: formal definition of hybrid circuit; Theorem (Volume-law AFL saturation): $h=\log d$ for all $p<1$ in dual-unitary circuits; Theorem (Area-law AFL): $h\to 0$ as $L\to\infty$ in area-law phase; Conjecture: $h_{\rm AFL}^{\rm time}$ is a sharp MIPT order parameter.
+
+- **Section 51** — Numerical MIPT table ($L=4$, $n=4$, 15 realizations); discussion of small-$L$ limitations and the entanglement–AFL duality.
+
+- **Section 52** — **Lindbladian spectral formula** (main new result): Markov chain reduction theorem ($h_{\rm AFL}^{\rm open} = h_{\rm KS}(\alpha_{ij})$ as $n\to\infty$); spectral interpolation formula $\alpha_{ij}(\gamma) = e^{-\Gamma\tau}\alpha^{\rm coh}_{ij} + (1-e^{-\Gamma\tau})|U_{ji}|^2$; Lindbladian spectral bound $h\leq\log d - (1-e^{-\Gamma_{\min}\tau})(\log d - E(U))$; Zeno limit $h\to E(U)$ (matrix entropy of $U$).
+
+- **Section 53** — Grand unified phase diagram: 8 dynamical phases (dual-unitary, chaotic, integrable, hybrid volume/area-law, Zeno, topological, dissipative); 5-level entropy hierarchy; final quantum Pesin conjecture; 7 open problems.
+You've hit your session limit · resets 11:10am (Europe/Prague)

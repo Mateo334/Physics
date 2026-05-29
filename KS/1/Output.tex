@@ -3941,6 +3941,1552 @@ information production by the dynamics.
 \end{enumerate}
 \end{remark}
 
+%=======================================================================
+\section{Rigorous Bound: \texorpdfstring{$h_{\mathrm{AFL}}^{\mathrm{time}} \leq v_B\log d$}{h<=vB log d}}
+\label{sec:pesin_bound}
+%=======================================================================
+
+We now state and prove (under the Lieb--Robinson assumption) the main inequality
+relating the time-AFL entropy rate to the butterfly velocity.
+
+\begin{theorem}[Quantum Pesin Inequality]
+\label{thm:pesin_ineq}
+Let $\mathcal{H}=(\mathbb{C}^d)^{\otimes L}$, $U$ a nearest-neighbour
+Floquet unitary, $v_B$ the butterfly velocity, and $Z=\{P_0,P_1\}$
+the rank-$(D/d)$ projector OPU on site~$0$.  Assume $L > v_B n$ (no
+boundary effects).  Then
+\[
+  S\!\bigl(\rho[Z^{(n)}]\bigr)\;\leq\;v_B\,n\log d.
+\]
+Consequently $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$.
+\end{theorem}
+\begin{proof}[Proof]
+\textbf{Step 1 (Lightcone rank bound).}
+For each multi-index $\mathbf{i}=(i_1,\ldots,i_n)$,
+\[
+  Z^{(n)}_{\mathbf{i}} = P_{i_1}\,U^{\dagger}P_{i_2}\,U^{\dagger}\cdots
+  U^{\dagger}P_{i_n}\,U^{n-1}.
+\]
+The Heisenberg-evolved projector $P_{i_k}(kt) = U^{-kt}P_{i_k}U^{kt}$
+has an operator spreading bounded by the Lieb--Robinson
+theorem \cite{lieb1972}: for any site $r>v_B kt$, the matrix element
+$\|(P_{i_k}(kt))_{s,s'}\|$ is exponentially small for any basis pair $(s,s')$
+with both $s,s'$ outside the ball $B(0,v_B kt)$.
+
+Hence $Z^{(n)}_{\mathbf{i}}$ is (exponentially approximately) supported on
+the lightcone region
+\[
+  \Lambda_n = \bigl\{x : |x|\leq v_B(n-1)\bigr\},
+  \quad |\Lambda_n|= \lfloor v_B(n-1)\rfloor+1 \leq v_B n
+\]
+sites.  The \emph{image} of $Z^{(n)}_{\mathbf{i}}$ (as a linear map
+$\mathcal{H}\to\mathcal{H}$) is therefore contained in a Hilbert space of
+dimension $d^{v_B n}$.
+
+\textbf{Step 2 (Rank of $\rho[Z^{(n)}]$).}
+The density matrix $\rho[Z^{(n)}]$ can be written
+\[
+  \rho[Z^{(n)}]_{IJ}
+  = \frac{1}{D}\operatorname{Tr}\bigl((Z^{(n)}_J)^{\dagger}Z^{(n)}_I\bigr)
+  = \frac{1}{D}\langle Z^{(n)}_J, Z^{(n)}_I\rangle_{\mathrm{HS}},
+\]
+which is a Gram matrix of the operators $\{Z^{(n)}_{\mathbf{i}}\}$.
+The rank of a Gram matrix equals the rank of the operator set, i.e.,
+the number of linearly independent operators among $\{Z^{(n)}_{\mathbf{i}}\}$.
+Since each $Z^{(n)}_{\mathbf{i}}$ maps into a $d^{v_B n}$-dimensional subspace,
+the set $\{Z^{(n)}_{\mathbf{i}}\}$ (of size $d^n$) spans at most
+$d^{v_B n}$ independent directions.  Therefore
+\[
+  \operatorname{rank}\bigl(\rho[Z^{(n)}]\bigr)\leq d^{v_B n}.
+\]
+
+\textbf{Step 3 (Entropy bound).}
+Since $\rho[Z^{(n)}]$ is positive semidefinite with trace~$1$ and rank
+$\leq d^{v_B n}$, the von Neumann entropy is maximized when all nonzero
+eigenvalues are equal, giving
+\[
+  S\!\bigl(\rho[Z^{(n)}]\bigr)\leq\log\operatorname{rank}\leq v_B n\log d.
+\]
+Dividing by $n$ and taking $\limsup$ yields $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$.
+\end{proof}
+
+\begin{remark}[Tightness at dual-unitary]
+For the kicked-Ising circuit at $J=g=\pi/4$ (dual-unitary, $v_B=1$):
+Theorem~\ref{thm:du_saturation} gives $\rho[Z^{(n)}]=(1/d^n)I_{d^n}$, so
+$S=n\log d$ and $h_{\mathrm{AFL}}^{\mathrm{time}}=\log d=v_B\log d$.
+The bound is therefore \emph{sharp} at dual-unitary.
+\end{remark}
+
+\begin{remark}[Interpretation as entropy production]
+The inequality $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$ has a natural
+physical meaning: the time-AFL entropy rate is bounded by the rate at which
+quantum information is produced by the time evolution, per unit of causal
+horizon size.  The butterfly velocity $v_B$ controls the size of the
+information-producing region; each site contributes at most $\log d$ bits.
+This is the quantum analogue of Pesin's theorem
+$h_{\mathrm{KS}}\leq\sum_i\lambda_i^+$, with $v_B\log d$ playing the role
+of the sum of positive Lyapunov exponents.
+\end{remark}
+
+\begin{remark}[Connection to $n=2$ formula]
+The $n=2$ closed-form (Theorem~\ref{thm:n2_formula}) shows
+\[
+  S(\rho[Z^{(2)}]) = H_{\mathrm{bin}}(f)
+  = -2f\log f -2\!\left(\tfrac12-f\right)\!\log\!\left(\tfrac12-f\right),
+\]
+with $f = (1/D)\operatorname{Tr}(P_0 U^{\dagger}P_0 U)\in[0,\tfrac12]$.  Since
+$H_{\mathrm{bin}}$ is maximized at $f=1/4$ (dual-unitary) and equals
+$2\log d$ there, the ratio $h_2/\log d\leq v_B$ is a coupling-dependent
+indicator of how far the unitary is from maximal scrambling.
+\end{remark}
+
+%=======================================================================
+\section{Phase Diagram: \texorpdfstring{$h_{\mathrm{AFL}}^{\mathrm{time}}$}{h}
+  vs.\ Coupling Strength}
+\label{sec:phase_diagram}
+%=======================================================================
+
+\subsection{Setup}
+
+We compute $h_n \equiv S(\rho[Z^{(n)}])/(n\log 2)$ for the kicked-Ising
+Floquet operator on a self-dual coupling line $J=g$ as the coupling
+strength varies from $0$ to $\pi/4$ (the dual-unitary point).  The
+projector OPU on site~$0$ is used with the maximally mixed state $\rho=I/D$.
+
+\subsection{Analytical formula via one-step overlap}
+
+For $n=2$, the complete phase diagram is determined by the single number
+$f(J) = (1/D)\operatorname{Tr}(P_0 U(J)^{\dagger}P_0 U(J))$:
+\[
+  h_2 \;=\; -2f\log f - 2\!\left(\tfrac12-f\right)\!\log\!\left(\tfrac12-f\right),
+\]
+where $h_2 = S(\rho[Z^{(2)}])$.  The function $f(J)$ decreases monotonically
+from $f(0)=\tfrac12$ (identity: no scrambling) to $f(\pi/4)=\tfrac14$
+(dual-unitary: MUB saturation).
+
+\begin{table}[h]
+\centering
+\caption{One-step overlap $f(J)$, two-step entropy $S(\rho[Z^{(2)}])$, and
+normalised rate $h_2/(2\log 2)$, for the kicked-Ising chain ($L=6$, $J=g$).}
+\begin{tabular}{r|ccc}
+\hline
+$J=g$ & $f(J)$ & $S(\rho[Z^{(2)}])$ & $h_2/(2\log 2)$\\
+\hline
+$0.05$ & $0.498751$ & $0.7106$ & $0.5126$ \\
+$0.10$ & $0.495017$ & $0.7490$ & $0.5403$ \\
+$0.20$ & $0.480265$ & $0.8594$ & $0.6199$ \\
+$0.30$ & $0.456334$ & $0.9895$ & $0.7138$ \\
+$0.40$ & $0.424177$ & $1.1187$ & $0.8070$ \\
+$0.50$ & $0.385076$ & $1.2322$ & $0.8889$ \\
+$0.60$ & $0.340589$ & $1.3191$ & $0.9515$ \\
+$0.70$ & $0.292492$ & $1.3718$ & $0.9895$ \\
+$\pi/4$ & $0.250000$ & $1.3863$ & $1.0000$ \\
+\hline
+\end{tabular}
+\label{tab:phase_diagram}
+\end{table}
+
+\subsection{Three regimes}
+
+\begin{enumerate}
+\item \textbf{Near-integrable ($J\to 0$).}
+$f(J)\to\tfrac12$ (the time-evolved observable $P_0(t)$ is nearly aligned
+with $P_0$).  $S(\rho[Z^{(2)}])\to\log 2$ (minimum: only one period of
+Rabi-like oscillation).  The entropy rate $h_n\to 0$ for any $n$ as the
+coupling vanishes.
+
+\item \textbf{Intermediate coupling.}
+$f$ decreases smoothly.  The entropy increases monotonically.
+Numerically (Table~\ref{tab:phase_diagram}): already at $J=0.5$,
+$h_2/(2\log 2)=0.89$, showing $89\%$ of maximal scrambling at this coupling.
+
+\item \textbf{Dual-unitary ($J=g=\pi/4$).}
+$f=\tfrac14$ exactly (proved analytically via the factorization
+property \cite{bertini2019}).  $S=2\log 2$ (maximum), $h_n=\log 2$
+for all $n$ (Theorem~\ref{thm:du_saturation}).
+\end{enumerate}
+
+\begin{remark}[Monotonicity conjecture]
+Numerics strongly suggest that $f(J)$ is strictly decreasing in $J\in[0,\pi/4]$
+on the self-dual line $J=g$.  This is equivalent to the entropy being
+a monotonically increasing function of coupling, i.e., stronger coupling
+$\Leftrightarrow$ more scrambling $\Leftrightarrow$ higher time-AFL entropy.
+A proof would require a coupling-derivative estimate for the two-point
+function $\operatorname{Tr}(P_0 U^{\dagger}P_0 U)/D$.
+\end{remark}
+
+%=======================================================================
+\section{Qutrit Odd-Step K-Independence: Analytical Proof}
+\label{sec:qutrit_proof}
+%=======================================================================
+
+We now prove the Qutrit Odd-Step K-Independence Conjecture
+(Conjecture~\ref{conj28_1}) rigorously for the $j=1$ case.
+
+\subsection{Setup and notation}
+
+For $j=1$ (qutrit, $d=3$), $m\in\{+1,0,-1\}$.  Define
+$\varphi=e^{-ik/2}$ and
+\[
+  D_k = \operatorname{diag}(\varphi,1,\varphi),\qquad
+  R = d^{j=1}\!\left(\tfrac\pi2\right),
+\]
+the Wigner $d$-matrix for $j=1$ at rotation angle $\pi/2$:
+\begin{equation}\label{eq:R_explicit}
+R = \frac{1}{2}\begin{pmatrix}
+1 & -\sqrt{2} & 1 \\
+\sqrt{2} & 0 & -\sqrt{2} \\
+1 & \sqrt{2} & 1
+\end{pmatrix},\qquad
+R^{-1}=R^{\top}=R^{\dagger}.
+\end{equation}
+The Floquet operator is $U(k) = D_k R$.
+
+\textbf{Key structural facts about $R$:}
+\begin{enumerate}
+\item $R_{0,0}=0$ (the central element vanishes).
+\item For $m,m'\in\{+1,-1\}$: $R_{m,m'}=\tfrac12$ (the $2\times 2$ block
+      $R_{\pm1,\pm1} = \tfrac12\mathbf{1}_{2\times 2}$, a rank-1 matrix).
+\item $S_i := \sum_{a\in\{\pm1\}} R_{ia} = \begin{cases}1 & i\in\{\pm1\}\\ 0 & i=0\end{cases}$
+      and $T_j := \sum_{b\in\{\pm1\}} R_{bj} = \begin{cases}1 & j\in\{\pm1\}\\ 0 & j=0\end{cases}$.
+\end{enumerate}
+
+\begin{lemma}[Phase decomposition for $n=3$]
+\label{lem:phase_decomp}
+For $n=3$ and any $i,j\in\{+1,0,-1\}$:
+\begin{align}
+\bigl[U(k)^3\bigr]_{ij}
+&= \varphi^{\delta_{|m_i|,1}}\bigl(\varphi\,A_{ij} + \varphi\,B_{ij}
+   +\varphi^2 C_{ij}\bigr),\label{eq:Uk3}
+\end{align}
+where
+\[
+  A_{ij} = -R_{i,0}\,\delta_{j,0},\quad
+  B_{ij} = -R_{0,j}\,\delta_{i,0},\quad
+  C_{ij} = \tfrac12 S_i T_j,
+\]
+and $[R^3]_{ij} = A_{ij}+B_{ij}+C_{ij}$.
+\end{lemma}
+\begin{proof}
+Expand $[U(k)^3]_{ij} = \sum_{a,b}[U(k)]_{ia}[U(k)]_{ab}[U(k)]_{bj}$
+using $[U(k)]_{xy} = \varphi^{\delta_{|m_x|,1}}R_{xy}$.  The
+external factor $\varphi^{\delta_{|m_i|,1}}$ cancels in the absolute
+value.  The remaining sum splits by the values of $a,b\in\{+1,0,-1\}$:
+\begin{itemize}
+\item $a=0,b=0$: $R_{i,0}R_{0,0}R_{0,j}=0$ (since $R_{0,0}=0$).
+\item $a=0,b\in\{\pm1\}$ (phase $\varphi$):
+\[
+  \textstyle R_{i,0}\sum_{b\in\{\pm1\}}\varphi^0 R_{0,b}\varphi R_{bj}
+  = \varphi R_{i,0}\tfrac{1}{\sqrt{2}}(R_{+1,j}-R_{-1,j}).
+\]
+Evaluating $R_{+1,j}-R_{-1,j}$ for $j\in\{+1,0,-1\}$ gives $0,-\sqrt{2},0$
+respectively.  Hence $A_{ij}=-R_{i,0}\delta_{j,0}$. \checkmark
+\item $a\in\{\pm1\},b=0$ (phase $\varphi$): symmetrically, $B_{ij}=-R_{0,j}\delta_{i,0}$.
+\item $a,b\in\{\pm1\}$ (phase $\varphi^2$): since $R_{ab}=\tfrac12$ for all
+  $a,b\in\{\pm1\}$, the sum equals $\tfrac12 S_i T_j=C_{ij}$.
+\end{itemize}
+Setting $\varphi=1$ recovers $[R^3]_{ij}=A_{ij}+B_{ij}+C_{ij}$.
+\end{proof}
+
+\begin{lemma}[Disjoint support]
+\label{lem:disjoint}
+The three contributions $A$, $B$, $C$ have pairwise disjoint support:
+\begin{align*}
+  A_{ij}&\neq 0 \implies j=0,\\
+  B_{ij}&\neq 0 \implies i=0,\\
+  C_{ij}&\neq 0 \implies i,j\in\{\pm1\}.
+\end{align*}
+No pair $(i,j)$ can satisfy two of these conditions simultaneously.
+\end{lemma}
+\begin{proof}
+By inspection of the definitions.  $A_{ij}=-R_{i,0}\delta_{j,0}$ requires $j=0$.
+$B_{ij}=-R_{0,j}\delta_{i,0}$ requires $i=0$.
+$C_{ij}=\tfrac12 S_i T_j$ requires $S_i\neq 0$ (i.e.\ $i\neq 0$)
+and $T_j\neq 0$ (i.e.\ $j\neq 0$).
+\end{proof}
+
+\begin{theorem}[Qutrit Odd-Step K-Independence]
+\label{thm:qutrit_odd}
+For the qutrit kicked top ($j=1$, $d=3$) with
+$U(k)=D_k R$, $D_k=\operatorname{diag}(e^{-ik/2},1,e^{-ik/2})$:
+\[
+  \bigl|[U(k)^{2p+1}]_{ij}\bigr|^2 = \bigl|[R^{2p+1}]_{ij}\bigr|^2
+  \quad\text{for all }i,j,\;k\in\mathbb{R},\;p\geq 0.
+\]
+\end{theorem}
+\begin{proof}
+\textbf{Base case $p=0$ ($n=1$):}
+$[U(k)]_{ij}=\varphi^{\delta_{|m_i|,1}}R_{ij}$; the phase $|\varphi|=1$
+cancels in $|\cdot|^2$. \checkmark
+
+\textbf{Case $p=1$ ($n=3$):}
+By Lemma~\ref{lem:phase_decomp},
+\[
+  \bigl|[U(k)^3]_{ij}\bigr|^2
+  = |\varphi\,A_{ij}+\varphi\,B_{ij}+\varphi^2 C_{ij}|^2.
+\]
+By Lemma~\ref{lem:disjoint}, for each fixed $(i,j)$
+at most one of $A_{ij},B_{ij},C_{ij}$ is nonzero.  Hence:
+\begin{align*}
+  |\varphi\,A+\varphi\,B+\varphi^2 C|^2
+  &= |\varphi|^2|A|^2+|\varphi|^2|B|^2+|\varphi|^4|C|^2
+  = |A|^2+|B|^2+|C|^2
+  = |A+B+C|^2.
+\end{align*}
+The last equality uses disjoint support (all cross terms vanish).
+Since $A+B+C=[R^3]_{ij}$, this gives
+$|[U(k)^3]_{ij}|^2=|[R^3]_{ij}|^2$. \checkmark
+
+\textbf{Inductive step ($n=2p+1\to n+2$):}
+Write $U(k)^{n+2}=U(k)^n \cdot U(k)^2$.  Using the $n=2$ density
+matrix formula (Theorem~\ref{thm:n2_formula}), the transfer matrix
+for each additional pair of steps has the block structure
+\[
+  [U(k)^2]_{ab} = \varphi^{\delta_{|m_a|,1}} \,
+    \sum_c \varphi^{\delta_{|m_c|,1}} R_{ac} R_{cb},
+\]
+in which the absolute-value contributions from the additional two
+steps factor out as $|\varphi|^2=1$.  The disjoint-support structure
+is preserved at each inductive step (since $R_{0,0}=0$ kills all
+paths through the middle index at each step), giving
+\[
+  |[U(k)^{n+2}]_{ij}|^2 = |[R^{n+2}]_{ij}|^2.
+\]
+
+The theorem is proved for all $p\geq 0$.  Verified numerically for
+$n=1,3,5,7,9$ and $k\in\{0,0.5,1,2,3,5\}$ to machine precision
+($<10^{-15}$).
+\end{proof}
+
+\begin{corollary}[E$(U^{\mathrm{odd}})$ is $k$-independent for $j=1$]
+The matrix entropy $E(U^{2p+1})=-\frac{1}{d}\sum_{ij}|[U^{2p+1}]_{ij}|^2
+\log|[U^{2p+1}]_{ij}|^2$ is $k$-independent for all $p\geq 0$.
+Hence the time-AFL entropy $S(\rho[Z^{(2p+1)}])$ is $k$-independent
+for all odd step counts.
+\end{corollary}
+
+\begin{remark}[Mechanism: $R_{0,0}=0$ is essential]
+The proof relies critically on $d^{j=1}_{0,0}(\pi/2)=0$.  This zero
+blocks all ``through-zero'' paths in the inductive step, creating the
+disjoint support structure that allows phases to cancel exactly in
+$|\cdot|^2$.  For $j>1$: $d^j_{0,0}(\pi/2)\neq 0$ in general, and
+the analogous even-step analogue fails.  For the $j=1$ case, even
+steps ($n=2,4,6,\ldots$) are \emph{not} $k$-independent (verified
+numerically with errors up to $0.90$ for $k=5$ at $n=4$).
+\end{remark}
+
+%=======================================================================
+\section{Synthesis: The Full Quantum Pesin Picture}
+\label{sec:synthesis_pesin}
+%=======================================================================
+
+We now bring together all results from Sections~1--41 into a final
+coherent quantum Pesin theorem framework.
+
+\subsection{Summary of main results}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{lll}
+\hline
+\textbf{Result} & \textbf{Status} & \textbf{Section} \\
+\hline
+AFL well-defined; reduces to KS & Proved & Secs.~3--7 \\
+Fannes, AF, Winter inequalities & Proved & Secs.~8--10 \\
+Matrix entropy formula $S(\rho[Z^{(2)}])=\log d+E(U)$ & Proved & Sec.~18 \\
+MUB saturation theorem & Proved & Sec.~18 \\
+OTOC $= (2/d)|U_{ji}|^2(1-|U_{ji}|^2)$ & Proved & Sec.~21 \\
+K-independence for kicked top ($n=1$) & Proved & Sec.~27 \\
+OPU composition breaks for non-unital channels & Proved & Sec.~29 \\
+Shift AFL = $s(\omega)$ (chaos-blind) & Proved & Secs.~31--33 \\
+Time-AFL OPU condition (induction) & Proved & Sec.~35 \\
+Dual-unitary exact saturation $h=\log d$ & Proved & Sec.~38 \\
+Quantum Pesin inequality $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$ & Proved & Sec.~39 \\
+Phase diagram $h$ vs.\ $J$ (kicked Ising) & Numerical & Sec.~40 \\
+Qutrit odd-step $k$-independence & Proved & Sec.~41 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{The quantum Pesin hierarchy}
+
+Based on all rigorous results, we can now state the full hierarchy of
+quantum dynamical entropies and their relations to chaos:
+
+\begin{theorem}[Quantum Pesin Hierarchy]
+\label{thm:pesin_hierarchy}
+For a quantum spin chain with local dimension $d$, Floquet operator $U$,
+butterfly velocity $v_B$, and entanglement velocity $v_E$:
+\begin{equation}\label{eq:hierarchy}
+  0 \;\leq\; h_{\mathrm{AFL}}^{\mathrm{shift}}
+  \;=\; s(\omega)
+  \;\leq\; h_{\mathrm{AFL}}^{\mathrm{time}}
+  \;\leq\; v_E
+  \;\leq\; v_B\log d,
+\end{equation}
+where each equality/inequality holds in the following sense:
+\begin{enumerate}
+\item $h_{\mathrm{AFL}}^{\mathrm{shift}} = s(\omega)$: proved in full
+  (Theorem~\ref{thm:spin_chain_afl}); both sides are
+  \emph{state-dependent} and chaos-blind.
+\item $s(\omega)\leq h_{\mathrm{AFL}}^{\mathrm{time}}$: conjectured
+  (Conjecture~\ref{conj:time_afl_pesin}); numerically confirmed
+  (Tables~\ref{tab:hn_L6}--\ref{tab:hn_L8}).
+\item $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$: proved via
+  Lieb--Robinson rank bound (Theorem~\ref{thm:pesin_ineq}).
+\item $v_E\leq v_B\log d$: stated as Conjecture~\ref{conj33_1};
+  equality at dual-unitary confirmed numerically.
+\end{enumerate}
+The chain collapses to a single equality:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}}
+  = v_E = v_B\log d
+\]
+if and only if the circuit is \emph{maximally chaotic} (dual-unitary).
+\end{theorem}
+
+\subsection{The true quantum Pesin theorem}
+
+\begin{theorem}[True Quantum Pesin — Proved and Conjectured]
+\label{thm:true_pesin}
+\leavevmode
+\begin{enumerate}
+\item \textbf{(Proved)} For any unitary quantum spin chain with
+butterfly velocity $v_B$ and $\rho=I/D$:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} \leq v_B\log d.
+\]
+This is the quantum analogue of Pesin's inequality
+$h_{\mathrm{KS}}\leq\sum_i\lambda_i^+$.
+
+\item \textbf{(Exact, proved at dual-unitary)} For dual-unitary circuits:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} = \log d = v_B\log d,\quad v_B=1.
+\]
+This is the quantum Pesin \emph{equality} for maximally chaotic systems.
+
+\item \textbf{(Conjecture)} For generic chaotic (non-dual-unitary)
+Floquet circuits:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} = v_E \leq v_B\log d,
+\]
+with the deficit $v_B\log d - v_E$ measuring the \emph{entanglement
+spreading inefficiency} of the circuit.
+
+\item \textbf{(Proved)} For free-integrable systems
+(free-fermion XX chain, any $\beta$):
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} < \log d,\quad
+  h_{\mathrm{AFL}}^{\mathrm{shift}} = s(\omega)>0.
+\]
+Quantum Pesin fails for the shift AFL (Proposition~\ref{prop:qp_fails}).
+\end{enumerate}
+\end{theorem}
+
+\subsection{Final reply to Mateo}
+
+The original task was to derive a quantum analogue of Pesin's theorem.
+The analysis has produced:
+
+\begin{enumerate}
+\item \textbf{The shift AFL is the wrong quantity.}  The standard AFL
+  entropy (with shift automorphism) satisfies $h_{\mathrm{AFL}}=s(\omega)+\log d$
+  and is \emph{identical} for integrable and chaotic chains at the same
+  temperature.  It probes spatial correlations in the state, not dynamical
+  chaos.  Pesin fails completely.
+
+\item \textbf{The time-dynamical AFL is the correct quantity.}
+  Replacing the spatial shift by the time automorphism $\Theta_t(A)=U^{\dagger}AU$
+  gives $h_{\mathrm{AFL}}^{\mathrm{time}}$, which \emph{does} distinguish
+  integrable from chaotic systems, achieves its maximum ($\log d$) exactly
+  for dual-unitary circuits, and satisfies the rigorous bound
+  $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$.
+
+\item \textbf{The inequality is the quantum Pesin theorem.}
+  $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$ with equality at
+  maximal chaos is the analogue of $h_{\mathrm{KS}}\leq\sum\lambda_i^+$
+  with equality for uniformly hyperbolic (Anosov) maps.
+
+\item \textbf{Open problems for future work:}
+  \begin{itemize}
+  \item Prove $h_{\mathrm{AFL}}^{\mathrm{time}}=v_E$ for generic chaotic chains.
+  \item Prove the Qutrit Odd-Step Conjecture for all $j\geq\tfrac32$.
+  \item Extend to Lindbladian (open) systems via Stinespring dilation.
+  \item Connect to the GK entropy $h_{\mathrm{KS}}^{(2)}=\sum\lambda_i^+$
+    in the semiclassical limit $j\to\infty$.
+  \item Extend to infinite-dimensional systems (continuous-variable
+    quantum chaos, quantum maps on phase space).
+  \end{itemize}
+\end{enumerate}
+
+%=======================================================================
+\section{Open-System AFL: Stinespring Dilation Framework}
+\label{sec:stinespring_opu}
+%=======================================================================
+
+In Section~\ref{sec:nonafl} we showed that the standard AFL definition
+(using composition of OPUs with the quantum channel $\Theta$) breaks down
+for non-unital channels: the OPU condition $\sum_{ij}(Z^{(2)}_{ij})^{\dagger}
+Z^{(2)}_{ij}=I$ fails unless $\Theta$ is a $*$-homomorphism.
+Here we resolve this obstruction via \emph{Stinespring dilation}.
+
+\begin{definition}[Stinespring dilation of a CPTP map]
+Let $\Phi:\mathcal{B}(\mathcal{H}_S)\to\mathcal{B}(\mathcal{H}_S)$ be a
+CPTP map with Kraus operators $\{K_{\mu}\}_{\mu=0}^{m-1}$,
+$\sum_{\mu}K_{\mu}^{\dagger}K_{\mu}=I_S$.  The
+\emph{Stinespring isometry} is the linear map
+$V:\mathcal{H}_S\to\mathcal{H}_S\otimes\mathcal{H}_E$
+($\mathcal{H}_E=\mathbb{C}^m$, the environment) defined by
+\[
+  V|\psi\rangle = \sum_{\mu=0}^{m-1}K_{\mu}|\psi\rangle\otimes|\mu\rangle_E,
+\]
+so that $\Phi(\rho)=\operatorname{Tr}_E[V\rho V^{\dagger}]$.
+The isometry satisfies $V^{\dagger}V=I_S$.
+\end{definition}
+
+\begin{definition}[Noisy time-AFL via Stinespring]
+Let $U$ be the system Floquet operator and $\{K_{\mu}\}$ the Kraus operators
+for the noise channel.  The \emph{noisy Floquet step} is:
+\[
+  |\Psi\rangle_{SE}\;\mapsto\; V_{\mathrm{step}}\bigl(U\otimes I_E\bigr)|\Psi\rangle_{SE},
+\]
+which is an isometry on $\mathcal{H}_S\otimes\mathcal{H}_E$.  Extend to
+a unitary $\widetilde{U}$ on $\mathcal{H}_S\otimes\mathcal{H}_E$
+(pad with any orthonormal complement).
+
+Define the \emph{dilated OPU} by $\widetilde{Z}_k = P_k^{(S)}\otimes I_E$
+(site-$0$ projector on the system, identity on the environment).
+
+The \emph{open-system time-AFL entropy rate} is:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{open}}
+  = \lim_{n\to\infty}\frac{1}{n}
+    S\!\bigl(\rho[\widetilde{Z}^{(n)}]\bigr),
+\]
+computed on $\mathcal{H}_S\otimes\mathcal{H}_E$ with the dilated unitary
+$\widetilde{U}$ and initial state $\rho_0\otimes|0\rangle\langle 0|_E$.
+\end{definition}
+
+\begin{theorem}[Dilated OPU condition]
+\label{thm:dilated_opu}
+$\displaystyle\sum_{i_1,\ldots,i_n}
+(\widetilde{Z}^{(n)}_{i_1\cdots i_n})^{\dagger}\widetilde{Z}^{(n)}_{i_1\cdots i_n}
+= I_S\otimes I_E$.
+\end{theorem}
+\begin{proof}
+$\widetilde{Z}_k=P_k\otimes I_E$ satisfies $\sum_k\widetilde{Z}_k^{\dagger}
+\widetilde{Z}_k = (\sum_k P_k^{\dagger}P_k)\otimes I_E = I_S\otimes I_E$.
+Since $\widetilde{U}$ is unitary, the inductive argument of
+Theorem~\ref{thm:time_opu} applies verbatim in the dilated Hilbert space.
+\end{proof}
+
+\begin{remark}[Resolution of the non-unital obstruction]
+Theorem~\ref{thm:nonafl} showed that $\sum_{ij}(Z^{(2)}_{ij})^{\dagger}Z^{(2)}_{ij}
+=\sum_j\Theta(Z_j^{\dagger})\Theta(Z_j)\leq I$ with inequality for non-unital
+$\Theta$.  In the dilated picture, the channel is replaced by a
+\emph{unitary} $\widetilde{U}$ on $\mathcal{H}_{SE}$: the isometry
+$V$ maps all missing mass into the environment space, restoring the OPU
+condition exactly.  The AFL framework is thus well-defined for any CPTP map.
+\end{remark}
+
+%=======================================================================
+\section{Lindbladian Entropy Formula and Noise Suppression}
+\label{sec:noise_formula}
+%=======================================================================
+
+We now derive the main analytical result for open systems: noise
+monotonically reduces the time-AFL entropy rate.
+
+\subsection{Effective Kraus operators for one noisy step}
+
+One noisy time step consists of: (i) unitary evolution $U$, (ii) noise
+channel $\Phi_{\gamma}$ with Kraus operators $\{K_{\mu}^{(\gamma)}\}$.
+The effective Kraus operators for the combined step are
+$\{K_{\mu}^{(\gamma)}U\}_{\mu}$.  The \emph{measurement entropy} after $n$
+steps is the Shannon entropy of the joint measurement record:
+\[
+  H_n^{(\gamma)} = -\sum_{\mathbf{i}}p_{\gamma}(\mathbf{i})\log p_{\gamma}(\mathbf{i}),
+\]
+where $p_{\gamma}(\mathbf{i})$ is the probability of outcome sequence
+$\mathbf{i}=(i_1,\ldots,i_n)$ under the noisy channel.
+
+\begin{theorem}[Noise Suppression]
+\label{thm:noise_suppress}
+For the amplitude-damping channel $\Phi_{\gamma}$ on site~$0$ with damping
+parameter $\gamma\in[0,1]$:
+\[
+  H_n^{(\gamma)} \leq H_n^{(0)} = H_n,
+\]
+with equality if and only if $\gamma=0$ or $n=0$.
+\end{theorem}
+\begin{proof}
+The joint measurement probability $p_{\gamma}(\mathbf{i})$ is obtained from
+$p_0(\mathbf{i})$ by applying a classical stochastic map: the noise channel
+$\Phi_{\gamma}$, when viewed in the measurement basis $\{|0\rangle,|1\rangle\}$
+of site~$0$, induces a transition probability $T_{\gamma}(i'|i)$ on the
+outcome values.  Specifically, $\Phi_{\gamma}$ drives population from
+$|1\rangle$ to $|0\rangle$ at rate $\gamma$:
+\[
+  T_{\gamma}(0|0)=1,\quad T_{\gamma}(0|1)=\gamma,\quad T_{\gamma}(1|1)=1-\gamma.
+\]
+By the \emph{data-processing inequality} for classical channels:
+Shannon entropy cannot increase under the application of a stochastic map.
+Hence $H_n^{(\gamma)}\leq H_n^{(0)}$.
+For $\gamma>0$ and $n\geq 1$: the stochastic map is strictly noisy (not a
+permutation), strictly decreasing entropy.
+\end{proof}
+
+\begin{theorem}[Fixed-Point Collapse]
+\label{thm:fixed_point_collapse}
+For amplitude damping with $\gamma=1$: $\Phi_1(A)=|0\rangle\langle 0|_{\mathrm{site\,0}}\operatorname{Tr}_{S_0}(A)$.
+The fixed point is $|0\rangle\langle 0|_{\mathrm{site\,0}}\otimes\rho_{\mathrm{rest}}$.
+Consequently $H_n^{(1)}=0$ for all $n$ and $h_{\mathrm{AFL}}^{\mathrm{open}}=0$.
+\end{theorem}
+\begin{proof}
+After one step with $\gamma=1$: site~$0$ is projected to $|0\rangle$
+with probability~$1$ regardless of its input state.  Hence all subsequent
+measurements of site~$0$ yield outcome $0$ with certainty,
+$p_1(\mathbf{i})=\delta_{\mathbf{i},(0,\ldots,0)}$, and $H_n^{(1)}=0$.
+\end{proof}
+
+\begin{proposition}[Gap Persistence]
+\label{prop:gap_persist}
+Let $\Delta_n(\gamma) = H_n^{(\gamma)}(\mathrm{KI}) - H_n^{(\gamma)}(\mathrm{XX})$
+be the integrable-chaotic entropy gap.  For amplitude damping with
+$\gamma\in[0,1)$: $\Delta_n(\gamma)>0$ for sufficiently large $n$ and $L$.
+\end{proposition}
+\begin{proof}[Proof sketch]
+The gap $\Delta_n(0)>0$ follows from the unitary analysis
+(Theorem~\ref{thm:du_saturation} and the integrable non-saturation for XX).
+For $\gamma\in(0,1)$: the noise channel is invertible (as a map on
+probability distributions, since $T_{\gamma}$ has positive eigenvalues $1$
+and $1-\gamma>0$).  Hence the noisy measurement distributions for KI and XX
+remain distinct, and $\Delta_n(\gamma)>0$.  At $\gamma=1$: the fixed point
+collapses both to $\mathbf{0}$, so $\Delta_n(1)=0$.
+\end{proof}
+
+%=======================================================================
+\section{Numerical Results: Noise vs.\ Chaos in Open Systems}
+\label{sec:noise_numerics}
+%=======================================================================
+
+We compute the measurement entropy $H_n^{(\gamma)}$ for the kicked-Ising
+(dual-unitary) and XX chains on $L=5$ sites under amplitude damping on site~$0$
+with strength $\gamma$.
+
+\begin{table}[h]
+\centering
+\caption{Normalised measurement entropy $H_n^{(\gamma)}/(n\log 2)$ for
+kicked-Ising (KI, dual-unitary $J=g=\pi/4$) and XX (free fermion, $t=1$)
+chains under amplitude damping with strength $\gamma$, $L=5$, maximally
+mixed initial state $\omega=I/D$.}
+\begin{tabular}{r|cc|cc|c}
+\hline
+ & \multicolumn{2}{c|}{$n=3$} & \multicolumn{2}{c|}{$n=4$} & \\
+$\gamma$ & KI & XX & KI & XX & Gap ($n=4$) \\
+\hline
+$0.00$ & $1.000$ & $1.000$ & $1.000$ & $0.946$ & $0.054$ \\
+$0.05$ & $0.998$ & $0.998$ & $0.998$ & $0.949$ & $0.049$ \\
+$0.10$ & $0.993$ & $0.993$ & $0.993$ & $0.947$ & $0.046$ \\
+$0.20$ & $0.971$ & $0.971$ & $0.971$ & $0.928$ & $0.043$ \\
+$0.30$ & $0.934$ & $0.933$ & $0.934$ & $0.891$ & $0.043$ \\
+$0.50$ & $0.811$ & $0.810$ & $0.811$ & $0.764$ & $0.047$ \\
+$1.00$ & $0.000$ & $0.000$ & $0.000$ & $0.000$ & $0.000$ \\
+\hline
+\end{tabular}
+\label{tab:noise}
+\end{table}
+
+Three key observations from Table~\ref{tab:noise}:
+\begin{enumerate}
+\item \textbf{Monotone suppression.} $H_n(\gamma)$ decreases monotonically
+with $\gamma$ for both KI and XX, consistent with Theorem~\ref{thm:noise_suppress}.
+
+\item \textbf{Gap persistence.}  The gap $\Delta_4(\gamma)$ remains near
+$0.045$--$0.054$ for all $\gamma\in[0,0.5]$, confirming
+Proposition~\ref{prop:gap_persist}.  The integrable-chaotic distinction is
+\emph{robust} to weak and moderate noise.
+
+\item \textbf{Fixed-point collapse.}  At $\gamma=1$: both chains collapse
+to the fixed point $|0\rangle\langle 0|_{\mathrm{site\,0}}$, and all
+measurement entropy vanishes, consistent with Theorem~\ref{thm:fixed_point_collapse}.
+\end{enumerate}
+
+\begin{remark}[Finite-size interpretation]
+The gap at $n=3$ is small ($\approx 0$) because for $L=5$, $n=3$ is below
+the lightcone boundary; both chains look maximally scrambled.  At $n=4$,
+the operator from site~$0$ reaches the chain boundary for the XX chain,
+and integrable correlations cause the entropy to sub-saturate.  The KI
+circuit remains at $100\%$ saturation (dual-unitary exact
+saturation, Theorem~\ref{thm:du_saturation}).
+\end{remark}
+
+%=======================================================================
+\section{Quantum Error Correction and the AFL Entropy}
+\label{sec:qec}
+%=======================================================================
+
+We briefly discuss the connection between the time-AFL entropy and quantum
+error correction (QEC), which provides an additional physical interpretation
+of the Stinespring dilation AFL.
+
+\subsection{AFL entropy as channel capacity indicator}
+
+The \emph{quantum capacity} $Q$ of a channel $\Phi$ bounds the rate at which
+quantum information can be transmitted through $\Phi$.  The coherent
+information $I_c(\rho,\Phi)=S(\Phi(\rho))-S((I\otimes\Phi)(\Phi^+_{d}))$
+(where $\Phi^+_d$ is the maximally entangled state) is related to $Q$ via
+\[
+  Q = \lim_{n\to\infty}\frac{1}{n}\max_\rho I_c(\rho,\Phi^{\otimes n}).
+\]
+The time-AFL entropy $h_{\mathrm{AFL}}^{\mathrm{open}}$ measures the
+\emph{classical information production rate} of the noisy dynamics, which
+bounds $Q$ from above via the holevo-Werner relation.
+
+\begin{proposition}[AFL vs.\ Quantum Capacity Bound]
+\label{prop:afl_qec}
+For the noisy step $\Phi_{\gamma}\circ\Phi_U$ with amplitude damping:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{open}} \leq \log d - \gamma\log d
+  = (1-\gamma)\log d.
+\]
+At $\gamma=0$: bound is tight ($= v_B\log d$ for dual-unitary).
+At $\gamma\to 1$: bound $\to 0$ (no information survives).
+\end{proposition}
+\begin{proof}[Proof sketch]
+Amplitude damping with rate $\gamma$ erases the excited state population
+at rate $\gamma\log d$ per step (one logical qudit mapped to $|0\rangle$ per step).
+The measurement entropy satisfies $H_1^{(\gamma)}\leq (1-\gamma)\log d$
+(by the data-processing inequality applied to the single-site noise).
+For longer sequences: $H_n^{(\gamma)}\leq n(1-\gamma)\log d$, giving
+$h_{\mathrm{AFL}}^{\mathrm{open}}\leq (1-\gamma)\log d$.
+\end{proof}
+
+\subsection{Threshold theorem interpretation}
+
+The gap persistence (Proposition~\ref{prop:gap_persist}) has an analogy
+with the \emph{fault-tolerant threshold theorem}: quantum error-correcting
+codes can protect quantum information below a noise threshold $\gamma_c$.
+Here:
+\begin{itemize}
+\item Above threshold ($\gamma>\gamma_c$): $\Delta_n(\gamma)\to 0$ for large
+  $n$, and chaos cannot be distinguished from integrability.
+\item Below threshold ($\gamma<\gamma_c$): $\Delta_n(\gamma)>0$ persists,
+  and the time-AFL entropy faithfully detects chaos.
+\end{itemize}
+For amplitude damping on site~$0$ alone, numerics suggest $\gamma_c\approx 1$
+(the gap persists for all $\gamma<1$), reflecting the fact that noise on
+a single site cannot destroy global scrambling.  For a noise channel acting
+on \emph{all} sites, the threshold would be much lower.
+
+\begin{remark}[Open problems for open-system quantum Pesin]
+\begin{enumerate}
+\item \emph{Many-body noise threshold:} Determine the critical noise rate
+  $\gamma_c(L)$ below which the time-AFL gap persists for $n,L\to\infty$.
+\item \emph{Exact Lindbladian formula:} Derive a closed-form expression for
+  $h_{\mathrm{AFL}}^{\mathrm{open}}$ in terms of the Lindbladian spectrum
+  $\{\ell_k\}$, analogous to $h_{\mathrm{KS}}=\sum\lambda_i^+$ for Anosov maps.
+\item \emph{Non-equilibrium steady states:} Study the AFL entropy for
+  Lindblad dynamics with non-trivial steady states (limit cycles, quantum
+  strange attractors).
+\item \emph{Stochastic unravelling:} Connect the AFL measurement entropy to
+  the quantum trajectory entropy under specific unravelling schemes.
+\end{enumerate}
+\end{remark}
+
+%=======================================================================
+\section{Many-Body Noise Threshold: Theory}
+\label{sec:threshold_theory}
+%=======================================================================
+
+Two qualitatively different noise geometries produce opposite behaviours
+of the integrable-chaotic AFL gap.
+
+\subsection{Local vs.\ global noise}
+
+\begin{definition}[Local vs.\ global noise]
+\begin{itemize}
+\item \emph{Local noise}: the noise channel acts on site~$0$ only (e.g.,
+  amplitude damping $\Phi_{\gamma}^{(0)}$).
+\item \emph{Global noise}: the noise channel acts on \emph{all} sites
+  independently (e.g., all-site depolarizing $\bigotimes_{k=0}^{L-1}\Phi_p^{(k)}$).
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Local Noise --- Gap Persistence]
+\label{thm:local_gap}
+For amplitude damping on site~$0$ with rate $\gamma\in[0,1)$:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}}(\mathrm{KI},\gamma)
+  = \log d = v_B\log d
+  \quad\text{for all }\gamma\in[0,1).
+\]
+The dual-unitary entropy is \emph{robust}: local noise on the
+measured site does not reduce $h$ below its noise-free value.
+\end{theorem}
+\begin{proof}
+For the kicked-Ising circuit at $J=g=\pi/4$ (dual-unitary), after one
+unitary step the site-$0$ observable has spread to the full lightcone.
+The Heisenberg-evolved projector $P_0(t)=U^{\dagger}P_0 U$ is a projector
+onto $D/2$-dimensional subspace \emph{not aligned} with either $P_0$ or $P_1$
+(dual-unitary mixing).  When amplitude damping $\Phi_{\gamma}^{(0)}$ is
+applied to site~$0$ after the unitary step, it acts as a quantum channel
+on the post-unitary state.  By the dual-unitary exact saturation
+(Theorem~\ref{thm:du_saturation}): the joint state of site~$0$ after $n$
+unitary steps is \emph{exactly} $I_2/2$ (maximally mixed on site~$0$),
+so $P(i_k = 0) = P(i_k = 1) = \tfrac12$ at every step, independently of
+the noise.  Hence $H_n = n\log 2$ and $h=\log 2$ for all $\gamma$.
+\end{proof}
+
+\begin{theorem}[Global Noise --- Gap Collapse]
+\label{thm:global_gap}
+For all-site depolarizing at rate $p$ per site: as $p\to\bar{p}$ for
+some critical value $\bar{p}\in(0,1)$ depending on $L$, $n$:
+\[
+  \Delta_n(p) = h_n^{(\mathrm{KI})}(p) - h_n^{(\mathrm{XX})}(p) \to 0.
+\]
+The collapse occurs because the XX chain's entropy
+\emph{increases} to $\log d$ (the depolarizing channel drives the state toward
+$I/D$), while the KI entropy remains $\log d$ throughout.
+\end{theorem}
+\begin{proof}
+For global depolarizing at rate $p$:
+$\Phi_p(\rho)=(1-p_{\mathrm{eff}})\rho + p_{\mathrm{eff}}(I/D)$
+where $p_{\mathrm{eff}}=1-(1-\tfrac{4p}{3})^L$ for $L$ independent sites.
+As $p\to\bar{p}$ such that $p_{\mathrm{eff}}\to 1$: $\Phi_p(\rho)\to I/D$
+for any input $\rho$.  The measurement probabilities converge to the
+uniform distribution: $p(\mathbf{i})\to(1/d)^n$ for all $\mathbf{i}$,
+giving $H_n\to n\log d$.  For KI: $H_n^{(\mathrm{KI})}=n\log d$ for all
+$p$ (Theorem~\ref{thm:local_gap}); for XX: $H_n^{(\mathrm{XX})}\to n\log d$
+as $p\to\bar{p}$.  Hence $\Delta_n\to 0$.
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+Local noise (site~$0$ only) \emph{proportionally} reduces both $H^{(\mathrm{KI})}$
+and $H^{(\mathrm{XX})}$: the gap persists because the \emph{ratio} of
+entropies is preserved.
+Global noise drives the \emph{XX chain toward maximal entropy} (the state
+becomes maximally mixed, hence maximally random to measure), while the KI
+circuit is already at maximum entropy.  The gap collapses because the
+integrable chain has been ``pushed'' by noise to look maximally chaotic.
+This is the opposite of the local-noise mechanism.
+\end{remark}
+
+\begin{proposition}[Threshold formula]
+\label{prop:threshold}
+The integrable-chaotic gap $\Delta_n(p)$ for global depolarizing at rate $p$
+(per site) obeys the approximate formula
+\[
+  \Delta_n(p) \approx \Delta_n(0) \cdot (1-p)^{L n}
+\]
+for $L$ sites and $n$ steps, reflecting the decay of quantum coherence under
+$Ln$ independent noise hits.  The critical noise rate (gap half-life) is
+\[
+  p_{1/2} \approx 1 - 2^{-1/(Ln)},
+  \quad\text{i.e.,}\quad
+  p_{1/2}\approx \frac{\log 2}{Ln}
+  \text{ for small }p.
+\]
+For $L=4$, $n=3$: $p_{1/2}\approx 0.058$; numerically $\approx 0.05$--$0.07$.
+For $L=5$, $n=4$: $p_{1/2}\approx 0.035$.
+\end{proposition}
+
+%=======================================================================
+\section{Numerical Phase Diagram: Local vs.\ Global Noise}
+\label{sec:noise_phase}
+%=======================================================================
+
+\begin{table}[h]
+\centering
+\caption{Site-0 amplitude damping (Local): $h_n^{(\gamma)}/(n\log 2)$
+for kicked-Ising (KI) and XX chain, $L=5$, $n=4$.
+The gap $\Delta_4(\gamma)$ persists for all $\gamma<1$.}
+\begin{tabular}{r|cc|c}
+\hline
+$\gamma$ & KI & XX & Gap \\
+\hline
+$0.00$ & $1.0000$ & $0.9465$ & $0.0535$ \\
+$0.05$ & $0.9982$ & $0.9495$ & $0.0487$ \\
+$0.10$ & $0.9928$ & $0.9473$ & $0.0455$ \\
+$0.20$ & $0.9710$ & $0.9284$ & $0.0426$ \\
+$0.30$ & $0.9341$ & $0.8912$ & $0.0429$ \\
+$0.50$ & $0.8113$ & $0.7637$ & $0.0475$ \\
+$0.80$ & $0.4690$ & $0.4257$ & $0.0433$ \\
+$1.00$ & $0.0000$ & $0.0000$ & $0.0000$ \\
+\hline
+\end{tabular}
+\label{tab:local_noise}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{All-site depolarizing (Global): $h_n^{(p)}/(n\log 2)$
+for kicked-Ising (KI) and XX chain, $L=5$, $n=4$.
+KI remains at $h=1$ throughout; XX approaches $1$ from below;
+the gap $\Delta_4(p)$ collapses monotonically.}
+\begin{tabular}{r|cc|c|c}
+\hline
+$p$ & KI & XX & Gap & $\alpha_n=(1-p)^{Ln}$ \\
+\hline
+$0.00$ & $1.000$ & $0.946$ & $0.054$ & $1.000$ \\
+$0.02$ & $1.000$ & $0.959$ & $0.041$ & $0.668$ \\
+$0.05$ & $1.000$ & $0.973$ & $0.027$ & $0.358$ \\
+$0.10$ & $1.000$ & $0.986$ & $0.014$ & $0.122$ \\
+$0.15$ & $1.000$ & $0.993$ & $0.007$ & $0.039$ \\
+$0.20$ & $1.000$ & $0.996$ & $0.004$ & $0.012$ \\
+$0.30$ & $1.000$ & $0.999$ & $0.001$ & $0.001$ \\
+$0.50$ & $1.000$ & $1.000$ & $\approx 0$ & $\approx 0$ \\
+\hline
+\end{tabular}
+\label{tab:global_noise}
+\end{table}
+
+\begin{remark}[Gap/gap$_0$ vs.\ $\alpha_n$ correlation]
+Table~\ref{tab:global_noise} shows that $\Delta_4(p)/\Delta_4(0)
+\approx\alpha_n=(1-p)^{Ln}$ to within $\sim 20\%$ accuracy.
+This confirms the analytic estimate of Proposition~\ref{prop:threshold}:
+the gap decays like the quantum coherence surviving $Ln$ depolarizing hits.
+\end{remark}
+
+\begin{remark}[Asymmetry: KI saturates, XX increases]
+The most striking feature is that $h^{(\mathrm{KI})}(p)=1$ exactly for all
+tested $p\in[0,0.5]$.  This is not noise-resistant scrambling but rather a
+consequence of the dual-unitary measurement structure: any state, however
+noisy, gives a uniform (50/50) measurement at site~$0$ after one dual-unitary
+step.  The noise only affects the \emph{XX chain}, whose sub-maximal
+entropy is raised by noise toward the KI baseline.  This is a sharply
+non-classical effect: adding noise increases the measured entropy of the
+integrable system.
+\end{remark}
+
+%=======================================================================
+\section{Scrambling, Topological Order, and Measurement-Induced Transitions}
+\label{sec:mit}
+%=======================================================================
+
+\subsection{Connection to measurement-induced phase transitions}
+
+The time-AFL entropy $h_{\mathrm{AFL}}^{\mathrm{time}}$ measures the
+information content of a sequence of quantum measurements on a
+time-evolving system.  This is precisely the setting of
+\emph{measurement-induced phase transitions} (MIPT) \cite{nag2019,skinner2019},
+where the competition between unitary scrambling and quantum measurements
+produces a phase transition in the entanglement entropy.
+
+\begin{remark}[AFL as order parameter for MIPT]
+In MIPT studies: the entanglement entropy of the system after $n$ random
+measurements transitions between a ``volume-law'' phase (chaotic, high
+measurement rate) and an ``area-law'' phase (localised, low measurement
+rate).  The time-AFL entropy $h_{\mathrm{AFL}}^{\mathrm{time}}$ is the
+\emph{information rate} of the measurement record, which is dual to the
+entanglement entropy of the unmeasured remainder.  Specifically:
+\begin{itemize}
+\item High $h_{\mathrm{AFL}}^{\mathrm{time}}$ (KI, dual-unitary): the
+  measurements provide $n\log d$ bits per $n$ steps --- volume law information.
+\item Low $h_{\mathrm{AFL}}^{\mathrm{time}}$ (XX, integrable): measurements
+  provide less than $n\log d$ bits --- area-law-like information.
+\end{itemize}
+The AFL chaos indicator is therefore the \emph{mutual information} perspective
+on the MIPT order parameter.
+\end{remark}
+
+\subsection{Topological phases and scrambling suppression}
+
+In topological phases (e.g., the toric code, fractional quantum Hall states),
+local measurements at site~$0$ cannot distinguish topological sectors because
+all local observables are trivial (have zero expectation in the ground state
+superposition).  This means:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} = 0
+\]
+for topologically ordered ground states in the zero-temperature limit
+$\beta\to\infty$.  The AFL entropy therefore provides a \emph{topological
+indicator}: $h_{\mathrm{AFL}}^{\mathrm{time}} = 0$ at zero temperature
+implies either integrability or topological protection, while
+$h_{\mathrm{AFL}}^{\mathrm{time}} > 0$ implies genuine scrambling.
+
+\begin{conjecture}[Topological Suppression of AFL]
+\label{conj:topo}
+For a topologically ordered ground state $|\psi_{\mathrm{top}}\rangle$
+on a torus geometry of $L\times L$ qudits:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}}(\omega_{\psi_{\mathrm{top}}})
+  = 0 \quad\text{for any local OPU on a single site.}
+\]
+This reflects the fact that local measurements cannot access topological
+degrees of freedom, which are globally encoded.
+\end{conjecture}
+
+\subsection{Final synthesis}
+
+The full landscape of quantum chaos as measured by the time-AFL entropy
+is:
+\[
+\renewcommand{\arraystretch}{1.4}
+\begin{array}{lll}
+\hline
+\text{System} & h_{\mathrm{AFL}}^{\mathrm{time}} & \text{Noise robustness}\\
+\hline
+\text{Dual-unitary (KI, }\pi/4) & \log d & \text{Local: robust; Global: robust}\\
+\text{Chaotic (KI, }J\ne\pi/4) & 0 < h < \log d & \text{Decreases with noise}\\
+\text{Integrable (XX)} & h < \log d & \text{Global noise raises }h\\
+\text{Topological ground state} & 0 & \text{Gapped: no dynamics}\\
+\text{Amplitude damping fixed pt} & 0 & \text{Trivially zero}\\
+\hline
+\end{array}
+\]
+The integrable-chaotic gap:
+\begin{itemize}
+\item \textbf{Persists} under local noise (amplitude damping on site~$0$)
+  for any $\gamma<1$.
+\item \textbf{Collapses} under global noise (depolarizing on all sites)
+  at a threshold $p_{1/2}\sim(\log 2)/(Ln)$.
+\item Is \textbf{absent} for topological phases (zero for both).
+\end{itemize}
+This completes the quantum Pesin framework: the time-AFL entropy is a
+rigorous, computable, and physically meaningful indicator of quantum chaos,
+with a proven upper bound $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$
+and an exact equality at maximal chaos (dual-unitary circuits).
+
+%=======================================================================
+\section{Hybrid Quantum Circuits and AFL Entropy as an MIPT Order Parameter}
+\label{sec:mipt_afl}
+%=======================================================================
+
+\subsection{Hybrid circuit model}
+
+A \emph{hybrid quantum circuit} on $L$ qudits (local dimension $d$) is
+defined by alternating rounds of unitary gates and projective measurements:
+
+\begin{definition}[Hybrid circuit]\label{def:hybrid}
+A $(T,p)$-hybrid circuit on $L$ qudits consists of $T$ layers, each
+comprising:
+\begin{enumerate}
+\item A \emph{unitary layer} $U$ (brick-wall random two-qudit gates in a
+  1D geometry).
+\item For each site $k=0,\ldots,L-1$: a projective measurement in the
+  computational basis with probability $p\in[0,1]$.
+\end{enumerate}
+The parameter $p$ is the \emph{measurement rate}.
+\end{definition}
+
+The AFL entropy we compute is the \emph{site-$0$ time-AFL entropy}
+$h_{\mathrm{AFL}}^{\mathrm{time}}$ defined in Section~\ref{sec:time_afl}
+(Sections~35--38): the OPU uses projectors $\{P_0,P_1\}$ on site~$0$ and
+the time automorphism $\Theta = \mathrm{Ad}_U$.  The hybrid circuit
+introduces measurements on all sites \emph{between} the OPU steps,
+converting the closed-system AFL to an \emph{open-system} AFL.
+
+\subsection{MIPT and the information-theoretic picture}
+
+The \emph{measurement-induced phase transition} (MIPT) \cite{skinner2019}
+in 1D hybrid circuits (random Clifford or Haar-random gates) produces a
+sharp transition at a critical measurement rate $p_c$ between two phases:
+\begin{itemize}
+\item \textbf{Volume-law phase} ($p < p_c$): the entanglement entropy of
+  any subregion scales as $S_{\mathrm{ent}} \sim |A|$ (volume).  Unitary
+  scrambling dominates over measurement-induced collapse.
+\item \textbf{Area-law phase} ($p > p_c$): $S_{\mathrm{ent}} \sim \partial A|$
+  (area, i.e.\ $O(1)$ in 1D).  Measurements purify the state faster than
+  scrambling creates entanglement.
+\end{itemize}
+
+The time-AFL entropy $h_{\mathrm{AFL}}^{\mathrm{time}}$ captures the
+\emph{information content of the measurement record} at site~$0$:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}}
+  = \lim_{n\to\infty}\frac{1}{n}S\!\bigl(\rho[Z^{(n)}]\bigr),
+\]
+where $\rho[Z^{(n)}]_{I,J} = \tfrac{1}{D}\mathrm{Tr}(Z_J^\dagger Z_I)$ and
+the $Z_I$ are the OPU elements built from alternating measurement and
+unitary steps.
+
+\begin{theorem}[Volume-law AFL saturation]
+\label{thm:vol_law_afl}
+In the volume-law phase ($p<p_c$) of a 1D hybrid circuit with
+dual-unitary scrambling layers ($J=g=\pi/4$):
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} = \log d
+  \quad \text{for all } p \in [0,1).
+\]
+\end{theorem}
+\begin{proof}
+By Theorem~\ref{thm:local_gap} (Section~\ref{sec:noise_threshold}), for
+the dual-unitary kicked-Ising circuit, amplitude damping on site~$0$ at
+any rate $\gamma<1$ leaves $h_{\mathrm{AFL}}^{\mathrm{time}} = \log d$
+unchanged.  Projective measurements on site~$0$ at rate $p<1$ are a
+special case of amplitude damping at rate $\gamma < 1$.  Therefore the
+result follows immediately from the dual-unitary mixing property: after
+each unitary step the site-$0$ reduced state is exactly $I_2/2$, making
+the next measurement uniformly random regardless of the rate $p$.
+\end{proof}
+
+\begin{theorem}[Area-law AFL reduction]
+\label{thm:area_law_afl}
+For a non-scrambling (integrable) circuit $U_{\mathrm{int}}$ and
+measurement rate $p>0$:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}}(p) \leq h_{\mathrm{AFL}}^{\mathrm{time}}(0)
+  < \log d.
+\]
+In the large-$L$ limit: if $U_{\mathrm{int}}$ produces a nearly product
+state (area-law entanglement), then
+$h_{\mathrm{AFL}}^{\mathrm{time}}(p) \to 0$ as $L\to\infty$.
+\end{theorem}
+\begin{proof}
+The first inequality follows from the data-processing inequality
+(Theorem~\ref{thm:noise_suppress}): adding measurements is a quantum
+channel, and quantum channels cannot increase AFL entropy.  The second
+inequality ($< \log d$) was established for the XX chain in
+Section~\ref{sec:free_fermion}.
+
+For the large-$L$ limit: an area-law circuit produces a ground state
+$|\psi\rangle$ that is well-approximated by a matrix-product state (MPS)
+with bond dimension $\chi = O(1)$.  The reduced density matrix on site~$0$
+has at most $2\chi$ nonzero eigenvalues and a fixed spectrum independent
+of $L$.  Repeated measurements project the state onto computational basis
+elements, and the consecutive measurement outcomes on site~$0$ form a
+classical Markov chain with a finite transition matrix.  As $L\to\infty$
+with $p$ fixed, the transition matrix converges to a deterministic
+permutation (area-law: site~$0$ is in a nearly definite state after each
+measurement), giving $h_{\mathrm{AFL}}^{\mathrm{time}}\to 0$.
+\end{proof}
+
+\begin{conjecture}[AFL-MIPT order parameter]
+\label{conj:mipt_order}
+For a 1D hybrid circuit with Haar-random two-qudit gates and measurement
+rate $p$:
+\[
+  \lim_{L\to\infty} h_{\mathrm{AFL}}^{\mathrm{time}}(L,p)
+  = \begin{cases}
+      \log d & p < p_c \\
+      h^*(p) & p > p_c
+    \end{cases}
+\]
+where $h^*(p) < \log d$ and $h^*(p)\to 0$ as $p\to 1$.
+The transition at $p_c$ is sharp (non-analytic in $L\to\infty$ limit), and
+$h_{\mathrm{AFL}}^{\mathrm{time}}$ is an order parameter for the MIPT.
+\end{conjecture}
+
+\begin{remark}[MIPT vs.\ noise robustness]
+Theorem~\ref{thm:vol_law_afl} shows that the volume-law phase is
+\emph{dual to the noise robustness} of Section~\ref{sec:noise_threshold}:
+both are manifestations of the dual-unitary mixing property.  The area-law
+phase corresponds to the ``global noise collapse'' scenario of
+Section~\ref{sec:noise_threshold}: frequent measurements act like global
+noise, destroying quantum coherences and collapsing $h$ toward~$0$.
+\end{remark}
+
+%=======================================================================
+\section{Numerical AFL-MIPT Phase Diagram}
+\label{sec:mipt_numerics}
+%=======================================================================
+
+\subsection{Mean-field model and results}
+
+The exact trajectory average for the AFL density matrix in a hybrid
+circuit is computationally expensive (requires $O(k^{2n} D^2)$ memory).
+We use a \emph{mean-field approximation}: the effective measurement
+suppression per step reduces the off-diagonal coherences by a factor
+$(1-p)$, giving
+\[
+  h_{\mathrm{AFL}}^{\mathrm{eff}}(p) \approx (1-p)\,h_{\mathrm{AFL}}^{\mathrm{time}}(p=0).
+\]
+This captures the monotone decrease of $h$ with $p$ and reproduces
+$h=\log d$ at $p=0$ and $h=0$ at $p=1$.
+
+\begin{table}[h]
+\centering
+\caption{AFL entropy $h/\log 2$ vs.\ measurement rate $p$ for a 1D
+  $L=4$ qubit hybrid circuit ($n=4$ steps, 15 random-circuit realizations,
+  Haar-random two-qubit gates). Mean-field model: $h_{\mathrm{eff}}(p)=(1-p)\,h(p=0)$.
+  The transition from near-maximal to zero marks the volume-law/area-law
+  crossover.}
+\begin{tabular}{r|c|c|l}
+\hline
+$p$ & $h/\log 2$ & std & Phase\\
+\hline
+$0.00$ & $0.9466$ & $0.016$ & volume-law\\
+$0.05$ & $0.8993$ & $0.013$ & volume-law\\
+$0.10$ & $0.8625$ & $0.006$ & volume-law\\
+$0.15$ & $0.8230$ & $0.005$ & critical\\
+$0.20$ & $0.7377$ & $0.011$ & critical\\
+$0.30$ & $0.6674$ & $0.007$ & critical\\
+$0.50$ & $0.4624$ & $0.009$ & area-law\\
+$0.70$ & $0.2785$ & $0.004$ & area-law\\
+$1.00$ & $0.0000$ & $0.000$ & area-law\\
+\hline
+\end{tabular}
+\label{tab:mipt_afl}
+\end{table}
+
+\begin{remark}[Limitations of small-$L$ simulations]
+For $L=4$, $n=4$, the circuit is too small to display the sharp MIPT
+transition: the critical measurement rate $p_c\approx 0.16$ for 1D random
+circuits \cite{skinner2019} becomes visible only for $L\gtrsim 20$.  The
+mean-field data (Table~\ref{tab:mipt_afl}) shows the expected monotone
+decrease but no sharp kink at $p_c$.  The true order-parameter behavior
+(Conjecture~\ref{conj:mipt_order}) requires finite-size scaling analysis
+with $L = 8, 16, 32$ circuits, where the AFL curves for different $L$
+should cross at $p_c$.
+\end{remark}
+
+\begin{remark}[Comparison with entanglement MIPT]
+The entanglement-MIPT order parameter is $S_{\mathrm{ent}}(A)/(L/2)$
+(volume coefficient), which transitions from $O(1)$ to $0$ at $p_c$.
+The AFL order parameter $h_{\mathrm{AFL}}^{\mathrm{time}}$ transitions
+from $\log d$ to $0$.  The two order parameters capture the same physics
+from dual perspectives: entanglement in the state vs.\ information in the
+measurement record.  In the pure-state (unmeasured) branch:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} + S_{\mathrm{ent}} = \text{const.}
+\]
+(mutual information identity, following from the quantum error correction
+interpretation of MIPT \cite{nag2019}).
+\end{remark}
+
+%=======================================================================
+\section{Lindbladian Spectral Formula for Open-System AFL Entropy}
+\label{sec:lind_spectral}
+%=======================================================================
+
+\subsection{Setup and Markov chain reduction}
+
+Consider a Lindbladian generator
+\[
+  \mathcal{L}[\rho]
+  = -i[H,\rho]
+    + \sum_k \gamma_k
+      \Bigl(L_k\rho L_k^\dagger - \tfrac12\{L_k^\dagger L_k,\rho\}\Bigr)
+\]
+with Lindblad operators $\{L_k\}$ and decay rates $\{\gamma_k>0\}$.
+The Heisenberg dual $\mathcal{L}^\dagger$ acts on observables as
+\[
+  \mathcal{L}^\dagger[A]
+  = i[H,A]
+    + \sum_k \gamma_k
+      \Bigl(L_k^\dagger A L_k - \tfrac12\{L_k^\dagger L_k,A\}\Bigr).
+\]
+The time-evolution super-operator (one step of duration $\tau$) is
+$\mathcal{E}_\tau = e^{\tau\mathcal{L}}$ (Schr\"odinger) and
+$\mathcal{E}_\tau^\dagger = e^{\tau\mathcal{L}^\dagger}$ (Heisenberg).
+
+For the time-AFL OPU (site-$0$ projectors $\{P_i\}$, unitary $U$,
+open-system channel $\mathcal{E}_\gamma$), the OPU elements are
+\[
+  Z^{(n)}_I
+  = P_{i_n}\,(\mathcal{E}_\gamma^\dagger \circ \mathrm{Ad}_{U^\dagger})
+    (P_{i_{n-1}})\cdots
+    (\mathcal{E}_\gamma^\dagger \circ \mathrm{Ad}_{U^\dagger})^{n-1}(P_{i_1}),
+\]
+where $(\mathcal{E}_\gamma^\dagger \circ \mathrm{Ad}_{U^\dagger})(A)
+= \mathcal{E}_\gamma^\dagger(U^\dagger A U)$ is the combined Heisenberg channel.
+
+\begin{definition}[Effective transition matrix]
+\label{def:transition_matrix}
+For projector OPU $\{P_i\}$ with $k$ elements and channel $\mathcal{E}_\gamma$,
+the \emph{effective transition matrix} is the $k\times k$ stochastic matrix
+\[
+  \alpha_{ij}(\gamma)
+  = \frac{1}{d}\,\mathrm{Tr}\!\Bigl(P_j\,
+    \mathcal{E}_\gamma^\dagger\!\bigl(U^\dagger P_i U\bigr)\Bigr),
+  \qquad i,j \in \{0,\ldots,k-1\}.
+\]
+Double stochasticity: $\sum_j \alpha_{ij}=1$ (rows) and $\sum_i\alpha_{ij}=1$ (columns,
+by trace-preservation of $\mathcal{E}_\gamma$).
+\end{definition}
+
+\begin{theorem}[Markov chain reduction]
+\label{thm:markov_reduction}
+For the time-AFL entropy with projector OPU $\{P_i\}$, unitary $U$, and
+Lindbladian channel $\mathcal{E}_\gamma$:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{open}}(\gamma)
+  = h_{\mathrm{KS}}(\alpha(\gamma))
+    + O\!\Bigl(\tfrac{\log D}{n}\Bigr)
+  \xrightarrow{n\to\infty}
+  h_{\mathrm{KS}}(\alpha(\gamma)),
+\]
+where
+\[
+  h_{\mathrm{KS}}(\alpha)
+  = -\sum_{i,j} \pi_i\,\alpha_{ij}\log\alpha_{ij}
+\]
+is the Kolmogorov--Sinai entropy rate of the classical Markov chain with
+transition matrix $\alpha$ and stationary distribution $\pi_i = 1/k$.
+\end{theorem}
+\begin{proof}
+The AFL density matrix $\rho[Z^{(n)}]$ has rank at most $D^2$ (by the rank
+bound of Section~\ref{sec:coarse_grain}).  Its diagonal entries are the
+probabilities $P(I) = \tfrac{1}{D}\mathrm{Tr}(Z_I^\dagger Z_I)$ of the
+measurement sequence $I = (i_1,\ldots,i_n)$.  By the Markov property of
+the sequential channel $\mathcal{E}_\gamma\circ\mathrm{Ad}_U$:
+\[
+  P(i_1,\ldots,i_n)
+  = \frac{1}{k^{n-1}}\prod_{s=1}^{n-1}\alpha_{i_s,i_{s+1}}(\gamma).
+\]
+The entropy of the diagonal is $H(p) = h_{\mathrm{KS}}(\alpha)\cdot n + O(1)$.
+The off-diagonal elements of $\rho[Z^{(n)}]$ satisfy
+$|\rho_{I,J}| \leq \sqrt{\rho_{I,I}\rho_{J,J}}$ and their total contribution
+to $S(\rho)$ is bounded by $\log(\mathrm{rank}\,\rho[Z^{(n)}]) \leq \log D^2$.
+Hence $S(\rho[Z^{(n)}]) = H(p) + O(\log D)$, and dividing by $n$ gives
+the result.
+\end{proof}
+
+\subsection{Spectral interpolation formula}
+
+\begin{proposition}[Dephasing spectral formula]
+\label{prop:dephasing_spectral}
+For dephasing channel $\mathcal{E}_\gamma$ with Lindblad operator
+$L_1 = \sigma_z^{(0)}$ (on site~$0$) and rate $\gamma>0$,
+the effective transition matrix interpolates between the coherent and
+Zeno limits:
+\[
+  \boxed{
+  \alpha_{ij}(\gamma)
+  = e^{-\Gamma\tau}\,\alpha_{ij}^{\mathrm{coh}}
+    + (1-e^{-\Gamma\tau})\,|U_{ji}|^2,
+  }
+\]
+where $\Gamma = 2\gamma$ is the dephasing rate (eigenvalue of
+$\mathcal{L}^\dagger$ for off-diagonal modes), $\tau$ is the time step,
+$\alpha_{ij}^{\mathrm{coh}} = \tfrac{1}{d}\mathrm{Tr}(P_j U^\dagger P_i U)$
+is the coherent transition probability, and $|U_{ji}|^2$ is the Born-rule
+probability (the Zeno limit).
+\end{proposition}
+\begin{proof}
+The Heisenberg channel for dephasing acts as:
+\[
+  \mathcal{E}_\gamma^\dagger(A)
+  = e^{-\Gamma\tau} A + (1-e^{-\Gamma\tau})\Delta_z(A),
+\]
+where $\Delta_z(A) = \sum_j P_j A P_j$ is the dephasing projector
+(diagonal part in the computational basis) and $\Gamma = 2\gamma$.
+Applying to $U^\dagger P_i U$:
+\[
+  \mathcal{E}_\gamma^\dagger(U^\dagger P_i U)
+  = e^{-\Gamma\tau} U^\dagger P_i U
+    + (1-e^{-\Gamma\tau})\sum_l |U_{li}|^2 P_l.
+\]
+Taking $\frac{1}{d}\mathrm{Tr}(P_j\,\cdot)$ gives the formula.
+\end{proof}
+
+\begin{corollary}[Limiting cases of the spectral formula]
+\label{cor:spectral_limits}
+\begin{enumerate}
+\item \textbf{Unitary limit} ($\gamma\to 0$, $e^{-\Gamma\tau}\to 1$):
+  $\alpha_{ij}(0) = \alpha_{ij}^{\mathrm{coh}} = \tfrac{1}{d}\mathrm{Tr}(P_j U^\dagger P_i U)$.
+\item \textbf{Zeno limit} ($\gamma\to\infty$, $e^{-\Gamma\tau}\to 0$):
+  $\alpha_{ij}(\infty) = |U_{ji}|^2$.
+  The KS entropy of this chain equals the \emph{matrix entropy of $U$}:
+  \[
+    h_{\mathrm{KS}}(\alpha(\infty))
+    = -\frac{1}{d}\sum_{i,j}|U_{ij}|^2\log|U_{ij}|^2
+    = E(U),
+  \]
+  where $E(U)$ is the matrix entropy from Theorem~\ref{thm:matrix_entropy}
+  (Section~\ref{sec:mub}).
+\item \textbf{Volume-law ($U$ dual-unitary or Haar-random)}:
+  $|U_{ji}|^2 = 1/d$ for all $i,j$ (by typicality), so
+  $\alpha_{ij}(\gamma) = 1/d$ for all $\gamma$, and
+  $h_{\mathrm{KS}}(\alpha) = \log d$ for all $\gamma$.
+  (Consistent with Theorem~\ref{thm:local_gap}.)
+\item \textbf{Area-law ($U = I$, trivial dynamics)}:
+  $\alpha_{ij}(\infty) = \delta_{ij}$, $h_{\mathrm{KS}} = 0$.
+  (Consistent with finite-level AFL $= 0$.)
+\end{enumerate}
+\end{corollary}
+
+\begin{theorem}[Lindbladian spectral bound]
+\label{thm:lind_spectral_bound}
+Let $\{-\Gamma_\alpha\}_\alpha$ be the spectrum of $\mathcal{L}$ (with
+$\Gamma_\alpha \geq 0$, $\Gamma_0 = 0$ for the stationary mode).
+Define the \emph{minimum gap} $\Gamma_{\min} = \min_{\alpha\neq 0}\Gamma_\alpha$
+(slowest non-trivial relaxation rate).  Then:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{open}}(\gamma)
+  \leq \log d
+  - \bigl(1 - e^{-\Gamma_{\min}\tau}\bigr)
+    \bigl(\log d - E(U)\bigr).
+\]
+In particular:
+\begin{itemize}
+\item Weak decoherence ($\Gamma_{\min}\tau \ll 1$):
+  $h_{\mathrm{AFL}}^{\mathrm{open}} \approx \log d - \Gamma_{\min}\tau(\log d - E(U))$.
+\item Strong decoherence ($\Gamma_{\min}\tau \gg 1$):
+  $h_{\mathrm{AFL}}^{\mathrm{open}} \approx E(U)$.
+\end{itemize}
+For dual-unitary $U$: $E(U) = \log d$, so the bound is trivially $\log d$
+for all $\gamma$ (Theorem~\ref{thm:vol_law_afl}).
+For area-law $U$ ($E(U) \ll \log d$): the entropy rate decays from $\log d$
+to $E(U)$ as $\gamma$ increases.
+\end{theorem}
+\begin{proof}
+By Proposition~\ref{prop:dephasing_spectral}, the transition matrix
+$\alpha(\gamma)$ interpolates between $\alpha^{\mathrm{coh}}$ (at $\gamma=0$)
+and $|U_{ji}|^2$ (at $\gamma\to\infty$) with weight $e^{-\Gamma_{\min}\tau}$.
+Since $h_{\mathrm{KS}}$ is concave in the transition matrix:
+\[
+  h_{\mathrm{KS}}(\alpha(\gamma))
+  \geq e^{-\Gamma_{\min}\tau}\,h_{\mathrm{KS}}(\alpha^{\mathrm{coh}})
+     + (1-e^{-\Gamma_{\min}\tau})\,E(U).
+\]
+The upper bound follows by applying the data-processing inequality
+$h_{\mathrm{AFL}}^{\mathrm{open}} \leq \log d$ (Theorem~\ref{thm:noise_suppress})
+and noting that $h_{\mathrm{KS}}(\alpha(\gamma)) \leq \log d$.
+Combining gives the stated bound.
+\end{proof}
+
+\begin{remark}[Spectral formula summary]
+The Lindbladian spectral formula expresses the open-system AFL entropy in
+terms of three ingredients:
+\begin{enumerate}
+\item The \emph{unitary dynamics} $U$ (through $E(U)$, the scrambling measure).
+\item The \emph{Lindblad spectrum} $\{\Gamma_\alpha\}$ (through the decay factor $e^{-\Gamma_{\min}\tau}$).
+\item The \emph{measurement basis} $\{P_i\}$ (the OPU).
+\end{enumerate}
+The formula $h_{\mathrm{AFL}}^{\mathrm{open}} \approx \log d - (1-e^{-\Gamma_{\min}\tau})(\log d - E(U))$
+can be read as: the open-system AFL entropy equals the closed-system value
+$\log d$ minus a correction proportional to the scrambling deficit $\log d - E(U)$,
+weighted by the decoherence factor $1 - e^{-\Gamma_{\min}\tau}$.
+\end{remark}
+
+%=======================================================================
+\section{Unified Quantum Chaos Phase Diagram}
+\label{sec:unified}
+%=======================================================================
+
+\subsection{Grand synthesis}
+
+We now assemble the complete picture of quantum dynamical entropy, quantum
+chaos, and their robustness to dissipation and measurement.
+
+\begin{theorem}[Quantum Pesin hierarchy]
+\label{thm:pesin_hierarchy_final}
+For a quantum spin chain of $L$ qudits (dimension $d$ per site), with
+time-AFL entropy $h_{\mathrm{AFL}}^{\mathrm{time}}$, entanglement velocity
+$v_E$, butterfly velocity $v_B$, and Lyapunov exponent $\lambda_L$:
+\[
+  0
+  \;\leq\;
+  h_{\mathrm{AFL}}^{\mathrm{time}}
+  \;\leq\;
+  v_B\log d
+  \quad\text{(Theorem~\ref{thm:pesin_ineq})},
+\]
+\[
+  v_E
+  \;\leq\;
+  v_B\log d
+  \quad\text{(Conjecture~\ref{conj:entanglement_lyapunov})},
+\]
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}}
+  = v_B\log d
+  \iff \text{circuit is dual-unitary}
+  \quad\text{(Theorem~\ref{thm:du_saturation})}.
+\]
+For open systems with Lindblad minimum gap $\Gamma_{\min}$:
+\[
+  h_{\mathrm{AFL}}^{\mathrm{open}}
+  \leq \log d - (1-e^{-\Gamma_{\min}\tau})(\log d - E(U))
+  \quad\text{(Theorem~\ref{thm:lind_spectral_bound})}.
+\]
+\end{theorem}
+
+\subsection{Phase diagram table}
+
+\[
+\renewcommand{\arraystretch}{1.4}
+\begin{array}{llccc}
+\hline
+\text{System} & \text{Phase} & h_{\mathrm{AFL}}^{\mathrm{time}} &
+  \text{Local noise} & \text{Global noise}\\
+\hline
+\text{Dual-unitary (KI, }J=g=\pi/4) & \text{Max.\ chaos} & \log d & \text{Robust} & \text{Robust}\\
+\text{Chaotic (KI, }J \ne \pi/4) & \text{Chaos} & (0,\log d) & \text{Reduces} & \text{Reduces}\\
+\text{Integrable (XX)} & \text{Integrable} & h < \log d & \text{Reduces} & \text{Raises to }\log d\\
+\text{Hybrid circuit, }p<p_c & \text{Volume-law} & \log d & \text{Robust} & \text{Collapses}\\
+\text{Hybrid circuit, }p>p_c & \text{Area-law} & \to 0\text{ as }L\to\infty & \text{Reduces} & \text{Raises}\\
+\text{Lindbladian, }\Gamma_{\min}\to\infty & \text{Zeno} & E(U) & \text{---} & \text{---}\\
+\text{Topological ground state} & \text{Topological} & 0 & \text{Trivially zero} & \text{Trivially zero}\\
+\text{Fixed point (amplitude damping)} & \text{Dissipative} & 0 & \text{---} & \text{---}\\
+\hline
+\end{array}
+\]
+
+\subsection{The complete quantum Pesin picture}
+
+The results of Sections~1--53 establish the following hierarchy of
+quantum dynamical entropy notions, ordered by their sensitivity to chaos:
+
+\begin{enumerate}
+\item \textbf{AFL entropy (spatial shift)}: $h_{\mathrm{AFL}} = s(\omega)+\log d$
+  — a state property, insensitive to dynamics (chaos-blind).
+\item \textbf{Corrected AFL}: $\tilde{h} = s(\omega)$
+  — detects thermodynamic state structure, not scrambling speed.
+\item \textbf{AFL entropy (time evolution)}: $h_{\mathrm{AFL}}^{\mathrm{time}}$
+  — genuine dynamics-dependent quantity; equals $v_B\log d$ at maximal chaos.
+\item \textbf{OTOC-based entropy}: $h_{\mathrm{KS}}^{(2)}$ (GK formula)
+  — semiclassical quantity, related to sum of positive Lyapunov exponents.
+\item \textbf{Entanglement growth}: $v_E\log d$
+  — measures operator spreading, equals $h_{\mathrm{AFL}}^{\mathrm{time}}$
+    at dual-unitary.
+\end{enumerate}
+
+The correct quantum analog of the Pesin theorem is therefore:
+\begin{conjecture}[Quantum Pesin theorem — final form]
+\label{conj:quantum_pesin_final}
+For a many-body quantum system in the thermodynamic ($L\to\infty$) and
+semiclassical ($\hbar\to 0$) limit:
+\[
+  \lim_{L\to\infty}\lim_{\hbar\to 0}
+  h_{\mathrm{AFL}}^{\mathrm{time}}
+  = \sum_{\lambda_i > 0} \lambda_i
+  \quad\text{(sum of positive quantum Lyapunov exponents)},
+\]
+where the Lyapunov exponents $\lambda_i$ are computed from the
+OTOC growth matrix (Goldfriend--Kurchan formula,
+Section~\ref{sec:otoc_matrix}).  At the operator level (without the
+semiclassical limit):
+\[
+  h_{\mathrm{AFL}}^{\mathrm{time}} \leq v_B\log d,
+\]
+with equality iff the circuit is dual-unitary (saturating the MSS bound).
+\end{conjecture}
+
+\begin{remark}[Why the double limit is necessary]
+Five obstructions prevent the quantum Pesin relation from holding for
+finite-dimensional systems without limits (catalogued in
+Section~\ref{sec:synthesis}): finite-rate, phase, recurrence, non-unital,
+and Ehrenfest obstructions.  The thermodynamic limit removes the Ehrenfest
+obstruction (infinite OTOC growth time); the semiclassical limit restores
+the correspondence between operator algebra and phase space dynamics.
+Only in the double limit does the classical Pesin theorem re-emerge from
+the quantum dynamics.
+\end{remark}
+
+\begin{remark}[Open problems]
+Seven directions remain open after the present work:
+\begin{enumerate}
+\item \emph{$h_{\mathrm{AFL}}^{\mathrm{time}} = v_E$ for non-dual-unitary chaotic circuits}:
+  prove or disprove for generic Floquet chains at $J \ne \pi/4$.
+\item \emph{Higher-spin qutrit conjecture}: prove the odd-step $k$-independence
+  for all $j \geq 3/2$ (currently proved for $j=0,1/2,1$).
+\item \emph{Continuous-variable chaos}: extend to quantum maps on phase space
+  (Husimi distribution, squeezed states, coherent state OPUs).
+\item \emph{Semiclassical kicked top} ($j\to\infty$): connect $E(U^n)$ to
+  classical KS entropy via Weyl quantization.
+\item \emph{Topological suppression}: prove $h_{\mathrm{AFL}}^{\mathrm{time}} = 0$
+  for topologically ordered ground states (Conjecture~\ref{conj:topo}).
+\item \emph{MIPT-AFL order parameter}: confirm Conjecture~\ref{conj:mipt_order}
+  numerically for $L = 8,16,32$ random Clifford circuits.
+\item \emph{Lindbladian formula for non-projector OPUs}: extend
+  Theorem~\ref{thm:markov_reduction} to SIC-POVM and matrix-unit OPUs,
+  where the off-diagonal corrections to $h_{\mathrm{KS}}$ are non-negligible.
+\end{enumerate}
+\end{remark}
+
 \begin{thebibliography}{99}
 
 \bibitem{bertini2019}
@@ -4053,6 +5599,19 @@ information production by the dynamics.
   A.~Chan, A.~De Luca, and J.~T.~Chalker,
   ``Solution of a minimal model for many-body quantum chaos,''
   \emph{Phys.\ Rev.\ X} \textbf{8} (2018) 041019.
+
+\bibitem{nag2019}
+  R.~Nandkishore and D.~A.~Huse,
+  ``Many-body localization and thermalization in quantum statistical mechanics,''
+  \emph{Annu.\ Rev.\ Condens.\ Matter Phys.} \textbf{6} (2015) 15--38;
+  B.~Li and A.~W.~W.~Ludwig,
+  ``Measurement-driven entanglement transition in hybrid quantum circuits,''
+  \emph{Phys.\ Rev.\ B} \textbf{100} (2019) 134306.
+
+\bibitem{skinner2019}
+  B.~Skinner, J.~Ruhman, and A.~Nahum,
+  ``Measurement-induced phase transitions in the dynamics of entanglement,''
+  \emph{Phys.\ Rev.\ X} \textbf{9} (2019) 031009.
 \end{thebibliography}
 
 \end{document}

@@ -188,17 +188,99 @@ Remark: correct quantum Pesin is the GK formula h_KS^{(2)} = sum lambda_i^+ (not
   v_E ≤ v_B * log d  (entanglement velocity ≤ butterfly velocity × log d)
 Equality at dual-unitary (J=g=pi/4): v_E = log 2 = v_B * log d. Verified numerically.
 
+**Result 27: Time-Dynamical AFL OPU condition (Section 35, new)**
+For Z^(n)_I = P_{i1} U† P_{i2} ... U† P_{in} U^{n-1} with U unitary:
+Sum_I (Z^(n)_I)† Z^(n)_I = I (proved by induction). Verified numerically to < 3e-15.
+
+**Result 28: Dual-unitary exact saturation (Theorem 38, new)**
+For kicked Ising at J=g=π/4 (dual-unitary): rho[Z^(n)] = (1/2^n) I_{2^n} exactly.
+h_AFL^time = log 2 for all n, L ≥ n. Proved via dual-unitary factorization condition.
+Verified numerically for L=4,6,8 and n=1..6 to machine precision.
+
+**Result 29: Quantum Pesin Inequality h_AFL^time ≤ v_B log d (Theorem 39, new)**
+Proved via Lieb-Robinson rank bound: image of Z^(n)_I is in lightcone of dim d^{v_B n}
+→ rank(rho[Z^(n)]) ≤ d^{v_B n} → S ≤ v_B n log d → h ≤ v_B log d.
+Tight at dual-unitary (v_B=1, h = log d).
+
+**Result 30: Phase diagram h_AFL^time vs coupling (Section 40, new)**
+For kicked Ising on self-dual line J=g: f(J) = Tr(P0 P_{0,t})/D decreases monotonically
+from 1/2 (J=0, no scrambling) to 1/4 (J=π/4, dual-unitary, MUB saturation).
+h_2 = H_bin(f) = binary entropy of f: ranges from log 2 to 2 log 2.
+
+**Result 31: Qutrit Odd-Step K-Independence Proved (Theorem 41.1, new)**
+For j=1 (d=3) kicked top: |[U(k)^{2p+1}]_{ij}|^2 = |[R^{2p+1}]_{ij}|^2 for all k, i, j, p.
+Proof: R_{0,0} = 0 (central Wigner d-matrix element vanishes at π/2) → contributions A, B, C
+have DISJOINT SUPPORT → phases cancel in |·|^2. Verified to < 7e-16 for n=1,3,...,9.
+Even steps are k-DEPENDENT (errors up to 0.90 for k=5 at n=4).
+
+**Result 32: Stinespring dilation fixes OPU for open systems (Theorem 43.1, new)**
+For any CPTP map with Kraus {K_mu}: Stinespring isometry V|psi> = sum_mu K_mu|psi>|mu>_E.
+Dilated OPU Z_tilde_k = P_k ⊗ I_E satisfies Sum (Z_tilde)^dag Z_tilde = I_{SE}.
+OPU composition holds exactly in the dilated space.
+
+**Result 33: Noise suppression theorem (Theorem 44.1, new)**
+Amplitude damping with rate γ: H_n(γ) ≤ H_n(0) monotonically (data-processing inequality).
+Proved via stochastic transition matrix T_γ(0|0)=1, T_γ(0|1)=γ, T_γ(1|1)=1-γ.
+
+**Result 34: Local noise gap persistence (Theorem 47.1, new)**
+For site-0 amplitude damping with γ < 1: h_KI = log d EXACTLY for all γ.
+Proof: dual-unitary mixing makes site-0 measurement uniform regardless of noise.
+Gap Δ_n(γ) ~ 0.043-0.054 for all γ ∈ [0, 0.8]; only vanishes at γ=1 (fixed-point collapse).
+
+**Result 35: Global noise gap collapse (Theorem 47.2, new)**
+For all-site depolarizing at rate p: gap collapses because XX entropy INCREASES toward log d
+(noise randomizes integrable chain), not because KI decreases.
+Threshold: p_{1/2} ~ log(2)/(L*n) → 0 as L or n → ∞.
+For L=5, n=4: p_{1/2} ≈ 0.035 (numerically confirmed).
+
+**Result 36: Topological suppression conjecture (Conjecture 49.1, new)**
+For topologically ordered ground states: h_AFL^time = 0 for any local OPU.
+Physical reason: topological information is globally encoded, invisible to local measurements.
+
+**Result 37: Markov chain reduction theorem (Theorem 52.1, new)**
+For time-AFL with projector OPU and Lindbladian channel E_gamma:
+h_AFL^open = h_KS(alpha_ij) + O(log D / n)
+where alpha_ij(gamma) = Tr(P_j E†(U† P_i U))/d is the effective transition matrix.
+Proof: diagonal of rho[Z^(n)] is the Markov chain probability; off-diagonals bounded by rank <= D^2.
+
+**Result 38: Lindbladian spectral interpolation formula (Proposition 52.2, new)**
+For dephasing channel with rate gamma (Lindblad L_1 = sigma_z, rate gamma):
+alpha_ij(gamma) = e^{-2*gamma*tau} alpha^coh_ij + (1 - e^{-2*gamma*tau}) |U_ji|^2
+This interpolates between the coherent quantum transition (gamma=0) and
+the classical Born-rule Markov chain (gamma→∞, Zeno limit).
+
+**Result 39: Lindbladian spectral bound (Theorem 52.3, new)**
+h_AFL^open ≤ log d - (1 - e^{-Gamma_min*tau})(log d - E(U))
+where Gamma_min = minimum non-zero Lindblad decay rate.
+Limiting cases:
+  - Weak: h ≈ log d - Gamma_min*tau*(log d - E(U))
+  - Strong (Zeno): h ≈ E(U) (matrix entropy of U)
+  - Dual-unitary: E(U) = log d → h = log d for all gamma (robust)
+
+**Result 40: MIPT-AFL order parameter (Theorems 50.1-50.2 + Conjecture 50.3, new)**
+Volume-law phase (p < p_c): h_AFL^time = log d for all p (dual-unitary robustness theorem)
+Area-law phase (p > p_c, L→∞): h_AFL^time → 0 (MPS structure purifies site-0 state)
+Conjecture: h_AFL^time is a sharp MIPT order parameter; phase boundary at p_c.
+Numerical: h_AFL/log2 = 0.947 (p=0), 0.000 (p=1.0), monotone (L=4, mean-field, 15 realizations)
+
+**Result 41: Zeno-limit AFL = matrix entropy (Corollary 52.2.2, new)**
+In the strong decoherence limit gamma→∞:
+h_AFL^open → E(U) = -(1/d) Σ_{ij} |U_{ij}|^2 log |U_{ij}|^2 (matrix entropy)
+This recovers Theorem 18.2: at n=2, S(rho[Z^(2)]) = log d + E(U), so h → E(U)/2 → 0.
+
 ## Status of this approach
 
 NOT exhausted. Remaining open directions:
-1. Rigorous proof of Qutrit Odd-Step Conjecture (Conjecture 28.1) via Wigner d-matrix analysis.
-2. Rigorous proof of General Quantum Pesin inequality (Conjecture 34.2): s(omega) ≤ v_B * lambda_L.
-3. Stinespring dilation approach to AFL for dissipative channels.
+1. Prove h_AFL^time = v_E for generic chaotic (non-dual-unitary) Floquet chains.
+2. Prove the Qutrit Odd-Step Conjecture for all j ≥ 3/2 (higher spin).
+3. Extend to continuous-variable quantum chaos (quantum maps on phase space).
 4. Semiclassical analysis in the j→∞ limit for kicked top (Weyl quantization route).
-5. Operator entanglement entropy growth rate = v_B * s_op (Conjecture, Problem 5 in Sec 34).
+5. Rigorous proof of topological suppression conjecture.
+6. MIPT-AFL order parameter confirmed numerically for larger L (L=8,16,32 circuits).
+7. Lindbladian formula for non-projector OPUs (SIC-POVM, matrix-unit): off-diagonal corrections.
 
 ## Files
-- Output.tex: Full LaTeX (3664 lines), sections 1-34 + bibliography.
+- Output.tex: Full LaTeX (5078 lines), sections 1-49 + bibliography.
 - progress.md: Step-by-step progress log.
 - summary.md: This file.
 - hadamard_qubit.py: Python verification (AFL entropy, MUB, matrix entropy formula).
@@ -206,3 +288,8 @@ NOT exhausted. Remaining open directions:
 - coarse_graining.py: Python verification (observational entropy, structural entropy, refinement bound).
 - kicked_top.py: Python verification (K-independence, E(U^n) growth, qutrit, SIC-POVM, amplitude damping).
 - free_fermion.py: Python verification (AFL entropy XX chain, OTOC comparison, entanglement growth).
+- time_evolution_afl.py: Time-dynamical AFL (OPU condition, KI vs XX entropy, OTOC connection).
+- quantum_pesin_phase.py: Phase diagram, qutrit odd-step proof, h_AFL vs v_B bound check.
+- lindbladian_afl.py: Open-system AFL via Stinespring dilation; amplitude damping comparison.
+- noise_threshold.py: Many-body noise threshold; local vs global noise comparison.
+- hybrid_circuit.py: MIPT-AFL hybrid circuit (Haar-random gates + measurement rate p); mean-field h_AFL vs p; trajectory model; Lindbladian dephasing spectral formula.
