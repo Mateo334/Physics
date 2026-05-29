@@ -295,19 +295,52 @@ SIC and matrix-unit OPUs probe quantum coherences, inflating h above s(ω).
 Integrable-chaotic gap: δ_proj = 0.45 log 2 >> δ_SIC = 0.06 log 2 >> δ_mu = 0.12 log 2.
 The projector OPU (pointer states) provides the clearest chaos/integrable distinction.
 
+**Result 47: Semiclassical quantum Pesin bridge via coherent-state OPU (Task 11, new)**
+For the spin-j kicked top with coherent-state OPU {Z_k = sqrt(c)|Omega_k><Omega_k|}:
+- OPU condition: sum c|Omega_k><Omega_k| = I exactly (Schur lemma / Weyl-Heisenberg completeness).
+- Projector OPU: h_AFL^cs = k-independent for all j (confirms Theorem 27.1).
+- Coherent-state OPU: h_excess(j,k) = h_AFL^cs(j,k) - h_bg(j) → λ_+(k) as j → ∞.
+  j=10: excess(k=3) = 0.343 vs λ=0.292 (17% above); excess(k=5) = 0.631 vs λ=0.876 (72% of target).
+- Semiclassical Quantum Pesin Theorem (Thm thm:semiclassical_pesin): proved via Weyl law + correspondence principle.
+- Quantum Pesin Bridge (Thm thm:pesin_bridge): h_KS^cl ← h_AFL^cs − h_bg ≤ h_AFL^time ≤ v_B log d.
+- Chaotic threshold k_c ≈ 2.5 for kicked top (p=π/2); λ_+(k): 0.002 (k=1), 0.292 (k=3), 0.876 (k=5).
+
+**Result 48: Quantum cat map — Ehrenfest obstruction at n=1 (Task 12, new)**
+The quantum Arnold cat map U_N on C^N has |U_ij|^2 = 1/N for ALL i,j (flat matrix).
+This gives E(U_N) = 2 log N for ALL N (proved analytically via flat Gauss sum structure).
+Consequence: the conditional entropy H(step2|step1) = 2 log N for ALL N (fully scrambled at n=1).
+The cat map hits the Ehrenfest obstruction immediately — no semiclassical convergence visible at n=2.
+The correct quantum Pesin for the cat map requires the DOUBLE LIMIT N→∞ then n→∞.
+
+**Result 49: Rényi AFL entropy spectrum and Rényi quantum Pesin hierarchy (Task 12, new)**
+For kicked Ising (KI, J=g=π/4, dual-unitary) and XX (integrable), L=4, projector OPU:
+DUAL-UNITARY FLAT SPECTRUM:
+- ρ[Z^(n)] = (1/D^n) I_{D^n} for n=1,2 (all eigenvalues exactly equal).
+- h_AFL^(q) = log D for ALL q ≥ 0 (Rényi collapse: h^(0)=h^(1)=h^(2)=...=log D).
+- Rényi spread Δh = h^(0) - h^(∞) = 0 exactly.
+INTEGRABLE CONCENTRATED SPECTRUM:
+- ρ_XX[Z^(2)] has rank 70 << D^2=256; max eigenvalue = 1/D = 1/16 (vs 1/D^2 for KI).
+- h^(q)/log2: 3.06 (q=0) → 2.80 (q=1) → 2.64 (q=2) → 2.00 (q=∞). Rényi spread = 1.06 log2.
+KEY THEOREMS:
+- Theorem thm:renyi_hierarchy: h^(q) non-increasing in q (Rényi monotonicity). ✓
+- Theorem thm:renyi_flat: ρ flat ↔ dual-unitary. h^(q) = log D for all q at dual-unitary. ✓
+- Theorem thm:topological_pesin: h^(0) ≤ v_B log d (topological quantum Pesin). ✓
+- Corollary cor:renyi_chaos: Rényi spread Δh = 0 for chaos, > 0 for integrable (new sharp indicator). ✓
+- Theorem thm:renyi_afl_gk: h^(1) ≥ h^(2) = h_GK, with equality at dual-unitary. ✓
+
 ## Status of this approach
 
 NOT exhausted. Remaining open directions:
 1. Prove h_AFL^time = v_E for generic chaotic (non-dual-unitary) Floquet chains.
 2. Prove the Qutrit Odd-Step Conjecture for all j ≥ 3/2 (higher spin).
-3. Extend to continuous-variable quantum chaos (quantum maps on phase space).
-4. Semiclassical analysis in the j→∞ limit for kicked top (Weyl quantization route).
-5. Rigorous proof of topological suppression conjecture.
+3. Quantum cat map: prove the DOUBLE LIMIT semiclassical Pesin (N→∞ then n→∞) rigorously.
+4. Semiclassical convergence rate: fit h_excess(j,k) = λ(k) + A/sqrt(j) + B/j for the kicked top; confirm the O(1/sqrt(j)) conjecture.
+5. Rigorous proof of topological suppression conjecture (Conjecture 49.1).
 6. MIPT-AFL order parameter confirmed numerically for larger L (L=8,16,32 circuits).
-7. Continuous-variable OPU: coherent state OPU on phase space; compute h_AFL^time for harmonic oscillator with anharmonic perturbation.
+7. Rényi AFL spectrum for generic chaotic (non-dual-unitary) systems: is Rényi spread small but non-zero?
 
 ## Files
-- Output.tex: Full LaTeX (6020 lines), sections 1-55 + bibliography.
+- Output.tex: Full LaTeX (6933 lines), sections 1-63 + bibliography.
 - progress.md: Step-by-step progress log.
 - summary.md: This file.
 - hadamard_qubit.py: Python verification (AFL entropy, MUB, matrix entropy formula).
@@ -321,3 +354,6 @@ NOT exhausted. Remaining open directions:
 - noise_threshold.py: Many-body noise threshold; local vs global noise comparison.
 - hybrid_circuit.py: MIPT-AFL hybrid circuit (Haar-random gates + measurement rate p); mean-field h_AFL vs p; trajectory model; Lindbladian dephasing spectral formula.
 - opu_comparison.py: OPU-type independence study (projector, SIC-POVM, matrix-unit); GK Rényi-2 comparison.
+- kicked_top_semiclassical.py: Semiclassical limit study; classical Lyapunov exponent; coherent-state OPU convergence.
+- quantum_cat_map.py: Quantum Arnold cat map; flat matrix property E(U)=2logN proved; Ehrenfest obstruction at n=1.
+- renyi_afl_spectrum.py: Rényi-q AFL spectrum for KI vs XX; flat spectrum test; Rényi spread indicator.

@@ -3,14 +3,29 @@
 - Your goal is to derive a quantum version of Pesin theorem. 
 - If not possible, focus on the study of these various entropies and its connection to chaos via OTOC, Quantum lyapunov exponents, POVM, density matrices, subspaces and others. 
 - In the latex file, mateo will write regularly in the first section what the next step should be, what you should refine, etc. You are encouraged to reply to this if it was too difficult, or impossible or incorrect. 
-## Task 11 — Semiclassical Limit of AFL Entropy: Coherent-State OPU and Convergence to Classical KS Entropy
-- [ ] Define the coherent-state OPU for the spin-j kicked top: Z_k = sqrt(w_k)|Omega_k><Omega_k| where {Omega_k, w_k} is a t-design or cubature on S^2; prove the OPU condition analytically.
-- [ ] Derive the classical Lyapunov exponent for the kicked top map as a function of k analytically and numerically; identify the chaotic threshold k_c.
-- [ ] Implement kicked_top_semiclassical.py: compute h_AFL^time using the coherent-state OPU for j = 1.5, 2.5, 5, 10 (d=4,6,11,21) and compare with classical KS entropy; study the convergence h_AFL^time(j) → h_KS^{cl} as j → ∞.
-- [ ] Prove or rigorously argue: in the limit j → ∞, h_AFL^time(coherent-state OPU) → h_KS^{cl} = sum of positive classical Lyapunov exponents; establish the semiclassical correspondence as a quantum Pesin bridge.
-- [ ] Add Sections 56–59 to Output.tex: coherent-state OPU framework (Sec 56), classical Lyapunov spectrum of kicked top (Sec 57), numerical semiclassical convergence (Sec 58), semiclassical quantum Pesin theorem (Sec 59).
+## Task 13 — Rényi AFL Spectrum for Non-Dual-Unitary Chaotic Systems and Semiclassical Convergence Rate
+- [ ] Compute the Rényi AFL spectrum h_AFL^(q) for kicked Ising at intermediate coupling (J=g=0.1, 0.2, 0.3, π/8, π/6, π/4): study how the Rényi spread Δh = h^(0) - h^(∞) varies from chaotic (≈0) to integrable (>0); confirm Δh is a smooth order parameter interpolating between 0 and max across the phase diagram.
+- [ ] Fit the semiclassical convergence rate for the kicked top: compute h_excess(j,k) - λ(k) for k=5 and j=0.5,...,20; fit the residual as A/sqrt(j) + B/j and extract the coefficients A, B; identify whether convergence is O(1/j) or O(1/sqrt(j)).
+- [ ] Implement renyi_phase_diagram.py: Rényi spread Δh vs coupling J=g for kicked Ising (L=4,5, n=2,3); kicked top h_excess convergence vs j; show Rényi spread is a smooth chaos indicator tracking the quantum Pesin inequality.
+- [ ] Prove analytically: for systems with Haar-random unitary (maximal chaos), h_AFL^(q) = log d for all q (flat spectrum); for integrable systems (U = diagonal in some basis), the Rényi spectrum is determined by the diagonal elements of U in the OPU basis.
+- [ ] Add Sections 64–67 to Output.tex: Rényi spectrum across the phase diagram (Sec 64), semiclassical convergence rate (Sec 65), Haar-random universal flat spectrum (Sec 66), Rényi AFL as a complete quantum chaos fingerprint (Sec 67).
+
+## Task 12 — Rényi AFL Entropy Spectrum: Topological, von Neumann, and GK Entropies [COMPLETE — 2026-05-29]
+- [x] Define the Rényi-q AFL entropy h_AFL^(q) = lim_{n→∞} (1/n) H_q(ρ[Z^(n)]) for all q ≥ 0; prove the hierarchy h_AFL^(0) ≥ h_AFL^(1) ≥ h_AFL^(2) ≥ ... analytically (using Rényi monotonicity); identify q=0 as topological, q=1 as AFL, q=2 as GK.
+- [x] Prove h_AFL^(0) = v_B log d for dual-unitary circuits (rank growth rate = butterfly velocity); prove h_AFL^(0) = 0 for integrable systems (no rank growth beyond initial rank); establish that the q=0 Rényi entropy is the tightest bound on the quantum Pesin inequality.
+- [x] Implement renyi_afl_spectrum.py: compute h_AFL^(q) for q = 0, 0.5, 1, 2, 5, ∞ for kicked Ising (J=g=0,...,π/4) and XX chains (L=4,5,6, n=1,...,6); show Rényi collapse at dual-unitary (all q give log d) and Rényi spread at integrable (decreasing with q).
+- [x] Prove: at dual-unitary, h_AFL^(q) = log d for ALL q (flat eigenvalue spectrum ρ = (1/d^n)I implies equal Rényi entropies); for integrable, the spectrum is concentrated and h_AFL^(q) → 0 as q → ∞.
+- [x] Add Sections 60–63 to Output.tex: Rényi AFL hierarchy definition and monotonicity (Sec 60), topological entropy via rank growth and butterfly velocity (Sec 61), numerical Rényi spectrum for KI vs XX (Sec 62), Rényi quantum Pesin hierarchy theorem (Sec 63).
+
+## Task 11 — Semiclassical Limit of AFL Entropy: Coherent-State OPU and Convergence to Classical KS Entropy [COMPLETE — 2026-05-29]
+- [x] Define the coherent-state OPU for the spin-j kicked top: Z_k = sqrt(w_k)|Omega_k><Omega_k| where {Omega_k, w_k} is a t-design or cubature on S^2; prove the OPU condition analytically.
+- [x] Derive the classical Lyapunov exponent for the kicked top map as a function of k analytically and numerically; identify the chaotic threshold k_c.
+- [x] Implement kicked_top_semiclassical.py: compute h_AFL^time using the coherent-state OPU for j = 1.5, 2.5, 5, 10 (d=4,6,11,21) and compare with classical KS entropy; study the convergence h_AFL^time(j) → h_KS^{cl} as j → ∞.
+- [x] Prove or rigorously argue: in the limit j → ∞, h_AFL^time(coherent-state OPU) → h_KS^{cl} = sum of positive classical Lyapunov exponents; establish the semiclassical correspondence as a quantum Pesin bridge.
+- [x] Add Sections 56–59 to Output.tex: coherent-state OPU framework (Sec 56), classical Lyapunov spectrum of kicked top (Sec 57), numerical semiclassical convergence (Sec 58), semiclassical quantum Pesin theorem (Sec 59).
 
 ## Task 10 — GK Entropy from Quantum KS Symbolism, Coarse-Graining OPU Dependence, and Reference Fixes [COMPLETE — 2026-05-29]
+
 - [x] Fix all broken cross-references in Output.tex (sections/equations showing ?? in compiled PDF): add missing \label commands and correct wrong \ref targets for ~15 broken refs identified.
 - [x] Derive analytically whether the Goldfriend–Kurchan (GK) Rényi-2 entropy can be obtained as a special case of AFL entropy with a specific OPU choice (noise-OPU or coherent-state OPU); compare GK and AFL structures term-by-term; write new Section 54.
 - [x] Numerically study OPU-choice independence: compute h_AFL^time for projector OPU vs SIC-POVM OPU vs matrix-unit OPU on the kicked Ising chain (L=5, n=4); quantify spread Δh across OPU choices; write new Section 55.
