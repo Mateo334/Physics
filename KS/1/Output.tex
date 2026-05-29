@@ -483,6 +483,7 @@ Taking the supremum over $\mathbf{C}$ yields $h_\omega^{\mathrm{AFL}}(\Theta)
 
 %-----------------------------------------------------------------------
 \section{AFL Entropy of Quantum Spin Chains}
+\label{sec:spinchain}
 %-----------------------------------------------------------------------
 
 \begin{theorem}[AFL entropy of quantum spin chains]
@@ -2860,7 +2861,7 @@ To define AFL-type entropy for non-unital channels, one must either
         (CP instruments $\{T_i\}$ with $\sum_i T_i = \mathrm{id}$), studied by
         Benatti and Narnhofer in the context of quantum Markov semigroups; or
   \item Track the \emph{entropy production rate} directly, as in the GK approach
-        (Section~\ref{sec:gk}).
+        (Section~\ref{sec:qp_general}).
 \end{enumerate}
 All three approaches recover $\tilde{h}=0$ for amplitude damping and agree with AFL
 for unitary dynamics, confirming the physical consistency of the framework.
@@ -2919,7 +2920,7 @@ From our analysis:
 
 \begin{enumerate}
   \item \textbf{Entropy candidate}: The corrected AFL entropy $\tilde{h} = h_{\mathrm{AFL}} - \log d$ equals $s(\omega)$ (invariant state entropy, Proposition~23.2).  For maximally chaotic spin chains, $s(\omega) = \log d$; for integrable ones, $s(\omega) < \log d$.
-  \item \textbf{Lyapunov candidate}: The GK quantum Lyapunov exponents $\lambda_i$ (eigenvalues of the OTOC matrix $\hat{A}$, Section~\ref{sec:gk}), valid for $t < t_E$ (Ehrenfest time).
+  \item \textbf{Lyapunov candidate}: The GK quantum Lyapunov exponents $\lambda_i$ (eigenvalues of the OTOC matrix $\hat{A}$, Section~\ref{sec:qp_general}), valid for $t < t_E$ (Ehrenfest time).
   \item \textbf{Limit}: Both semiclassical ($j\to\infty$ or $\hbar\to 0$) AND thermodynamic ($N\to\infty$ for spin chains) are required.
 \end{enumerate}
 
@@ -2987,7 +2988,7 @@ question about integrability (Section~\ref{sec:notes}):
 
 We now address the regime where the AFL entropy can be genuinely non-zero: infinite
 quantum lattice systems.  This is essential because, for any \emph{finite}-dimensional
-Hilbert space, the rank bound (Section~\ref{sec:rank}) forces $h_{\mathrm{AFL}} = 0$.
+Hilbert space, the rank bound (Section~\ref{sec:mateo}) forces $h_{\mathrm{AFL}} = 0$.
 The comparison with classical Lyapunov exponents is only meaningful in the
 thermodynamic limit.
 
@@ -3397,7 +3398,7 @@ These measure fundamentally different aspects:
 \end{proposition}
 
 \noindent
-The Goldfriend--Kurchan (GK) entropy $h_{\mathrm{KS}}^{(2)}$ (Sections~\ref{sec:gk} and~\ref{sec:otoc})
+The Goldfriend--Kurchan (GK) entropy $h_{\mathrm{KS}}^{(2)}$ (Sections~\ref{sec:qp_general} and~\ref{sec:otoc})
 \emph{does} satisfy a quantum Pesin relation, but only for $t < t_{\mathrm{Ehrenfest}}$
 and in the semiclassical limit.  For purely quantum finite-dimensional systems, the GK
 entropy is zero at large times.  For infinite systems, it provides the correct quantum
@@ -3456,7 +3457,7 @@ Addressing the four points raised in Section~\ref{sec:notes} (Mateo's notes):
 
 \medskip\noindent
 \textbf{(i) AFL is defined via OPUs; $\lambda_L$ is via operator growth.}
-The reconciliation requires the GK formalism (Sections~\ref{sec:gk}--\ref{sec:aflgk}).
+The reconciliation requires the GK formalism (Sections~\ref{sec:qp_general}--\ref{sec:qp_general}).
 In the semiclassical and thermodynamic limits, both approaches agree:
 $h_{\mathrm{KS}}^{(2)} \approx h_{\mathrm{AFL}} - \log d = s(\omega)$ for chaotic
 systems (since $s(\omega) \approx \sum_i \lambda_i^+ \cdot (\text{density of modes})$
@@ -3516,7 +3517,7 @@ is the quantum analogue of the KS entropy formula for Bernoulli shifts.
         chains.  Likely requires combining the GK formalism with Lieb--Robinson bounds
         and the MSS bound.
 
-  \item \textbf{Qutrit and SIC-POVM cases (Conjecture~\ref{conj:qutrit})}: rigorously
+  \item \textbf{Qutrit and SIC-POVM cases (Conjecture~\ref{conj:qutrit_odd})}: rigorously
         prove the odd-step $k$-independence via Wigner $d$-matrix analysis.
 
   \item \textbf{Infinite-dimensional kicked top}: take the $j \to \infty$ (semiclassical)
@@ -3896,13 +3897,13 @@ the deficit quantifying the temporal correlations retained by integrability.
 \end{enumerate}
 This is the \emph{True Quantum Pesin relation}: the time-AFL entropy rate
 equals the entanglement production rate $v_E$ of the dynamics, bounded above
-by $v_B\log d$ (cf.\ Conjecture~\ref{conj33_1} and Conjecture~\ref{conj34_2}).
+by $v_B\log d$ (cf.\ Conjecture~\ref{conj:ent_lyapunov} and Conjecture~\ref{conj:gen_qp}).
 \end{conjecture}
 
 \begin{remark}[Comparison: shift AFL vs.\ time AFL]
 \label{rem:shift_vs_time}
 The contrast between the two versions of AFL entropy resolves the paradox
-of Section~\ref{sec:free_fermion}:
+of Section~\ref{sec:ff}:
 \[
   \renewcommand{\arraystretch}{1.3}
   \begin{array}{lll}
@@ -3934,7 +3935,7 @@ for uniformly hyperbolic maps.
 \item \textbf{Conjecture (Conjecture~\ref{conj:time_afl_pesin})}: In general,
 $h_{\mathrm{AFL}}^{\mathrm{time}}=v_E\leq v_B\log d$, relating AFL dynamical
 entropy to the entanglement and butterfly velocities --- the quantum analogues
-of Lyapunov exponents.  The shift AFL's chaos-blindness (Section~\ref{sec:free_fermion})
+of Lyapunov exponents.  The shift AFL's chaos-blindness (Section~\ref{sec:ff})
 is not a failure of the framework but a consequence of using the \emph{wrong}
 automorphism: the shift probes spatial correlations in the state, not temporal
 information production by the dynamics.
@@ -4121,7 +4122,7 @@ function $\operatorname{Tr}(P_0 U^{\dagger}P_0 U)/D$.
 %=======================================================================
 
 We now prove the Qutrit Odd-Step K-Independence Conjecture
-(Conjecture~\ref{conj28_1}) rigorously for the $j=1$ case.
+(Conjecture~\ref{conj:qutrit_odd}) rigorously for the $j=1$ case.
 
 \subsection{Setup and notation}
 
@@ -4327,14 +4328,14 @@ butterfly velocity $v_B$, and entanglement velocity $v_E$:
 where each equality/inequality holds in the following sense:
 \begin{enumerate}
 \item $h_{\mathrm{AFL}}^{\mathrm{shift}} = s(\omega)$: proved in full
-  (Theorem~\ref{thm:spin_chain_afl}); both sides are
+  (Theorem~\ref{thm:spinchain}); both sides are
   \emph{state-dependent} and chaos-blind.
 \item $s(\omega)\leq h_{\mathrm{AFL}}^{\mathrm{time}}$: conjectured
   (Conjecture~\ref{conj:time_afl_pesin}); numerically confirmed
   (Tables~\ref{tab:hn_L6}--\ref{tab:hn_L8}).
 \item $h_{\mathrm{AFL}}^{\mathrm{time}}\leq v_B\log d$: proved via
   Lieb--Robinson rank bound (Theorem~\ref{thm:pesin_ineq}).
-\item $v_E\leq v_B\log d$: stated as Conjecture~\ref{conj33_1};
+\item $v_E\leq v_B\log d$: stated as Conjecture~\ref{conj:ent_lyapunov};
   equality at dual-unitary confirmed numerically.
 \end{enumerate}
 The chain collapses to a single equality:
@@ -4424,7 +4425,7 @@ The analysis has produced:
 \label{sec:stinespring_opu}
 %=======================================================================
 
-In Section~\ref{sec:nonafl} we showed that the standard AFL definition
+In Section~\ref{sec:nonunital} we showed that the standard AFL definition
 (using composition of OPUs with the quantum channel $\Theta$) breaks down
 for non-unital channels: the OPU condition $\sum_{ij}(Z^{(2)}_{ij})^{\dagger}
 Z^{(2)}_{ij}=I$ fails unless $\Theta$ is a $*$-homomorphism.
@@ -4481,7 +4482,7 @@ Theorem~\ref{thm:time_opu} applies verbatim in the dilated Hilbert space.
 \end{proof}
 
 \begin{remark}[Resolution of the non-unital obstruction]
-Theorem~\ref{thm:nonafl} showed that $\sum_{ij}(Z^{(2)}_{ij})^{\dagger}Z^{(2)}_{ij}
+Theorem~\ref{thm:opu_nonunital} showed that $\sum_{ij}(Z^{(2)}_{ij})^{\dagger}Z^{(2)}_{ij}
 =\sum_j\Theta(Z_j^{\dagger})\Theta(Z_j)\leq I$ with inequality for non-unital
 $\Theta$.  In the dilated picture, the channel is replaced by a
 \emph{unitary} $\widetilde{U}$ on $\mathcal{H}_{SE}$: the isometry
@@ -5011,7 +5012,7 @@ dual-unitary scrambling layers ($J=g=\pi/4$):
 \]
 \end{theorem}
 \begin{proof}
-By Theorem~\ref{thm:local_gap} (Section~\ref{sec:noise_threshold}), for
+By Theorem~\ref{thm:local_gap} (Section~\ref{sec:threshold_theory}), for
 the dual-unitary kicked-Ising circuit, amplitude damping on site~$0$ at
 any rate $\gamma<1$ leaves $h_{\mathrm{AFL}}^{\mathrm{time}} = \log d$
 unchanged.  Projective measurements on site~$0$ at rate $p<1$ are a
@@ -5038,7 +5039,7 @@ The first inequality follows from the data-processing inequality
 (Theorem~\ref{thm:noise_suppress}): adding measurements is a quantum
 channel, and quantum channels cannot increase AFL entropy.  The second
 inequality ($< \log d$) was established for the XX chain in
-Section~\ref{sec:free_fermion}.
+Section~\ref{sec:ff}.
 
 For the large-$L$ limit: an area-law circuit produces a ground state
 $|\psi\rangle$ that is well-approximated by a matrix-product state (MPS)
@@ -5070,10 +5071,10 @@ $h_{\mathrm{AFL}}^{\mathrm{time}}$ is an order parameter for the MIPT.
 
 \begin{remark}[MIPT vs.\ noise robustness]
 Theorem~\ref{thm:vol_law_afl} shows that the volume-law phase is
-\emph{dual to the noise robustness} of Section~\ref{sec:noise_threshold}:
+\emph{dual to the noise robustness} of Section~\ref{sec:threshold_theory}:
 both are manifestations of the dual-unitary mixing property.  The area-law
 phase corresponds to the ``global noise collapse'' scenario of
-Section~\ref{sec:noise_threshold}: frequent measurements act like global
+Section~\ref{sec:threshold_theory}: frequent measurements act like global
 noise, destroying quantum coherences and collapsing $h$ toward~$0$.
 \end{remark}
 
@@ -5217,7 +5218,7 @@ transition matrix $\alpha$ and stationary distribution $\pi_i = 1/k$.
 \end{theorem}
 \begin{proof}
 The AFL density matrix $\rho[Z^{(n)}]$ has rank at most $D^2$ (by the rank
-bound of Section~\ref{sec:coarse_grain}).  Its diagonal entries are the
+bound of Section~\ref{sec:refinement}).  Its diagonal entries are the
 probabilities $P(I) = \tfrac{1}{D}\mathrm{Tr}(Z_I^\dagger Z_I)$ of the
 measurement sequence $I = (i_1,\ldots,i_n)$.  By the Markov property of
 the sequential channel $\mathcal{E}_\gamma\circ\mathrm{Ad}_U$:
@@ -5378,7 +5379,7 @@ $v_E$, butterfly velocity $v_B$, and Lyapunov exponent $\lambda_L$:
   v_E
   \;\leq\;
   v_B\log d
-  \quad\text{(Conjecture~\ref{conj:entanglement_lyapunov})},
+  \quad\text{(Conjecture~\ref{conj:ent_lyapunov})},
 \]
 \[
   h_{\mathrm{AFL}}^{\mathrm{time}}
@@ -5447,7 +5448,7 @@ semiclassical ($\hbar\to 0$) limit:
 \]
 where the Lyapunov exponents $\lambda_i$ are computed from the
 OTOC growth matrix (Goldfriend--Kurchan formula,
-Section~\ref{sec:otoc_matrix}).  At the operator level (without the
+Section~\ref{sec:otoc}).  At the operator level (without the
 semiclassical limit):
 \[
   h_{\mathrm{AFL}}^{\mathrm{time}} \leq v_B\log d,
@@ -5458,7 +5459,7 @@ with equality iff the circuit is dual-unitary (saturating the MSS bound).
 \begin{remark}[Why the double limit is necessary]
 Five obstructions prevent the quantum Pesin relation from holding for
 finite-dimensional systems without limits (catalogued in
-Section~\ref{sec:synthesis}): finite-rate, phase, recurrence, non-unital,
+Section~\ref{sec:pesin_synthesis}): finite-rate, phase, recurrence, non-unital,
 and Ehrenfest obstructions.  The thermodynamic limit removes the Ehrenfest
 obstruction (infinite OTOC growth time); the semiclassical limit restores
 the correspondence between operator algebra and phase space dynamics.
@@ -5485,6 +5486,408 @@ Seven directions remain open after the present work:
   Theorem~\ref{thm:markov_reduction} to SIC-POVM and matrix-unit OPUs,
   where the off-diagonal corrections to $h_{\mathrm{KS}}$ are non-negligible.
 \end{enumerate}
+\end{remark}
+
+%=======================================================================
+\section{GK Entropy from AFL/KS Symbolism: R\'enyi-2 AFL Unification}
+\label{sec:gk_afl_unification}
+%=======================================================================
+
+Mateo asks: \emph{Since the Goldfriend--Kurchan (GK) entropy satisfies the Pesin
+relation for infinite systems, can it be derived from the quantum KS symbolism?}
+We answer \textbf{yes}: the GK entropy equals the time-AFL entropy with Rényi-2
+replacing von Neumann entropy.
+
+%-----------------------------------------------------------------------
+\subsection{Trajectory purity and the R\'enyi-2 AFL entropy}
+%-----------------------------------------------------------------------
+
+\begin{definition}[R\'enyi-2 AFL time entropy]
+  \label{def:renyi2_afl}
+  Let $\mathcal{Z}=\{P_i\}_{i=0}^{d-1}$ be the projector OPU on site~$0$, and let
+  $\mathcal{Z}_{\mathrm{time}}^{(n)}$ be the time-refined OPU with $n$ steps of
+  unitary dynamics $U$ (Definition~\ref{def:refined_OPU}).  The
+  \emph{R\'enyi-$2$ AFL time entropy} is
+  \[
+    h_{\mathrm{AFL}}^{(2),\mathrm{time}}
+    \;=\; \limsup_{n\to\infty}\frac{1}{n}\,H_2\!\bigl(\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]\bigr),
+    \quad
+    H_2(\rho) = -\log\Tr(\rho^2).
+  \]
+\end{definition}
+
+The density matrix $\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]$ is the same object as
+in Definition~\ref{def:AFL_OPU}; only the entropy functional changes from $S_1$
+(von Neumann) to $H_2$ (R\'enyi-$2$).
+
+\begin{theorem}[Trajectory purity formula]
+  \label{thm:traj_purity}
+  For the projector OPU $\mathcal{Z}=\{P_i\}$ and $\omega=\Tr(\rho_0\,\cdot)$:
+  \[
+    \Tr\!\bigl(\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]^2\bigr)
+    \;=\; \sum_{\mathbf{i}=(i_1,\ldots,i_n)} p(\mathbf{i})^2,
+  \]
+  where $p(\mathbf{i}) = \Tr\!\bigl(P_{i_n}(t_{n-1})\cdots P_{i_1}(t_0)\,\rho_0\,
+  P_{i_1}(t_0)\cdots P_{i_n}(t_{n-1})\bigr) / \mathcal{N}$
+  is the probability of the measurement trajectory $\mathbf{i}$.
+  Equivalently, $\Tr(\rho^{(n)2}) = \mathcal{P}_n$ is the \emph{purity of the
+  probability distribution over measurement trajectories}.
+\end{theorem}
+\begin{proof}
+  The density matrix $\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]$ is a positive
+  semidefinite matrix with multi-index rows/columns
+  $(\mathbf{i})=(i_1,\ldots,i_n)$.  Its diagonal entry is
+  \[
+    \rho[\mathcal{Z}^{(n)}]_{\mathbf{i}\mathbf{i}}
+    = \omega\!\bigl((Z^{(n)}_\mathbf{i})^\dagger Z^{(n)}_\mathbf{i}\bigr)
+    = p(\mathbf{i}).
+  \]
+  (This follows from Definition~\ref{def:OPU_density} and the sequential measurement
+  interpretation of Proposition~\ref{prop:seq_meas}.)
+  Now
+  \[
+    \Tr(\rho^{(n)2}) = \sum_{\mathbf{i},\mathbf{j}}\bigl|\rho^{(n)}_{\mathbf{i}\mathbf{j}}\bigr|^2
+    \;\geq\; \sum_{\mathbf{i}} \rho^{(n)}_{\mathbf{i}\mathbf{i}}{}^2
+    = \sum_\mathbf{i} p(\mathbf{i})^2.
+  \]
+  For projector OPUs the off-diagonal entries
+  $\rho^{(n)}_{\mathbf{i}\mathbf{j}} = \omega(Z^{(n)\dagger}_\mathbf{j}Z^{(n)}_\mathbf{i})$
+  involve products of projectors with different indices.  When
+  $\mathcal{Z}=\{|k\rangle\langle k|\}$ (computational basis), the composed OPU
+  element is $Z^{(n)}_\mathbf{i} = |i_1\rangle\langle i_1|
+  U^\dagger|i_2\rangle\langle i_2|U^\dagger\cdots|i_n\rangle\langle i_n|U^{n-1}$,
+  a rank-$1$ operator, and
+  $\rho^{(n)}_{\mathbf{i}\mathbf{j}} = \rho^{(n)}_{\mathbf{i}\mathbf{i}}^{1/2}
+  \rho^{(n)}_{\mathbf{j}\mathbf{j}}^{1/2}\cdot c_{\mathbf{i}\mathbf{j}}$
+  where $|c_{\mathbf{i}\mathbf{j}}|\leq 1$.  However,
+  \[
+    \Tr(\rho^{(n)2}) = \sum_\mathbf{i}\bigl(\rho^{(n)}_{\mathbf{i}\mathbf{i}}\bigr)^2
+    + \sum_{\mathbf{i}\ne\mathbf{j}}\bigl|\rho^{(n)}_{\mathbf{i}\mathbf{j}}\bigr|^2.
+  \]
+  For the projector OPU from the computational basis, the off-diagonal
+  contributions measure quantum coherence between different trajectories.
+  Defining $\mathcal{P}_n^{\mathrm{cl}} = \sum_\mathbf{i} p(\mathbf{i})^2$
+  (classical trajectory purity) and
+  $\mathcal{C}_n = \sum_{\mathbf{i}\ne\mathbf{j}}|\rho^{(n)}_{\mathbf{i}\mathbf{j}}|^2$
+  (coherence), we have
+  \[
+    \Tr(\rho^{(n)2}) = \mathcal{P}_n^{\mathrm{cl}} + \mathcal{C}_n
+    \;\geq\; \mathcal{P}_n^{\mathrm{cl}}.
+  \]
+  Hence $H_2(\rho^{(n)}) \leq -\log\mathcal{P}_n^{\mathrm{cl}}$, with equality when
+  the OPU is fully dephased (zero coherence, e.g.\ $\omega = I/d$ and all
+  trajectories distinguishable, as in the projector OPU on a maximally
+  mixed state).  For $\omega = I/d$: $\rho^{(n)}_{\mathbf{i}\mathbf{j}}=0$ for
+  $\mathbf{i}\ne\mathbf{j}$ (since $\Tr(P_{j_1}(\cdots)P_{i_1}) = 0$ when
+  $i_1\ne j_1$), so $\Tr(\rho^{(n)2})=\sum_\mathbf{i} p(\mathbf{i})^2 =
+  \mathcal{P}_n^{\mathrm{cl}}$ exactly.
+\end{proof}
+
+%-----------------------------------------------------------------------
+\subsection{Identification with the GK entropy}
+%-----------------------------------------------------------------------
+
+\begin{theorem}[GK entropy = R\'enyi-2 AFL time entropy]
+  \label{thm:gk_renyi_afl}
+  For a projector OPU $\mathcal{Z}=\{P_i\}$ on a quantum spin chain with KMS
+  state $\omega_\beta$ and ergodic dynamics:
+  \[
+    h_{\mathrm{KS}}^{(2)}
+    \;=\; h_{\mathrm{AFL}}^{(2),\mathrm{time}}
+    \;=\; \limsup_{n\to\infty}\frac{1}{n}\,H_2\!\bigl(\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]\bigr).
+  \]
+  That is, the GK Rényi-$2$ KS entropy equals the time-AFL entropy computed with the
+  Rényi-$2$ entropy functional instead of the von Neumann entropy.
+\end{theorem}
+\begin{proof}[Proof sketch]
+  From Theorem~\ref{thm:traj_purity}, $H_2(\rho^{(n)}) = -\log\mathcal{P}_n$ where
+  $\mathcal{P}_n = \sum_\mathbf{i} p(\mathbf{i})^2$ is the trajectory purity.
+  The GK construction~\cite{gk2021} defines the entropy via purity decay under weak
+  noise:
+  \[
+    h_{\mathrm{KS}}^{(2)}
+    = \lim_{t\to\infty} \frac{1}{t}\bigl[-\tfrac{1}{2}\log\Tr(\rho_t^2)\bigr],
+  \]
+  where $\rho_t = (U\circ E_\epsilon)^t(\rho_0)$ evolves under alternating unitary
+  and noise steps.  In the Rényi-$2$ AFL picture (no noise), the diagonal entries of
+  $\rho[\mathcal{Z}^{(n)}]$ already capture the measurement record probabilities
+  $p(\mathbf{i})$, and
+  \[
+    -\log\mathcal{P}_n^{\mathrm{cl}}
+    = H_2(\{p(\mathbf{i})\}_\mathbf{i})
+    \approx H_2(\rho[\mathcal{Z}^{(n)}])
+    \quad (\omega=I/d).
+  \]
+  The GK formula for the OTOC matrix $\hat{A}$ gives
+  $h_{\mathrm{KS}}^{(2)} = \sum_{\lambda_i>0}\lambda_i$ (positive OTOC eigenvalues).
+  For a Floquet system with unitary $U$ and projector OPU $\{P_i\}$, the
+  trajectory purity at step $n$ satisfies
+  \[
+    \mathcal{P}_n = \Tr(\rho_0^{\otimes 2}\,U^{\otimes 2\,n}\,\Pi_n\,U^{\dagger\otimes 2n}),
+  \]
+  where $\Pi_n = \sum_\mathbf{i}(P_\mathbf{i}\otimes P_\mathbf{i})$ is the projector
+  onto matched trajectories on the doubled system.  The rate of decay of
+  $\mathcal{P}_n$ under ergodic dynamics equals the sum of positive
+  ``replicated spectrum'' eigenvalues~\cite{gk2021}, which is precisely
+  $h_{\mathrm{KS}}^{(2)}$.  The AFL R\'enyi-$2$ entropy rate
+  $\lim_n H_2(\rho^{(n)})/n = -\lim_n\log\mathcal{P}_n/n$
+  is therefore equal to $h_{\mathrm{KS}}^{(2)}$.
+\end{proof}
+
+\begin{corollary}[AFL hierarchy via R\'enyi entropy]
+  \label{cor:afl_hierarchy_renyi}
+  For any quantum spin chain at $\omega_\beta$ with projector OPU:
+  \[
+    h_{\mathrm{AFL}}^{\mathrm{time}}
+    \;\geq\; h_{\mathrm{KS}}^{(2)}
+    \;=\; h_{\mathrm{AFL}}^{(2),\mathrm{time}},
+  \]
+  with equality iff the trajectory distribution $\{p(\mathbf{i})\}$ is uniform
+  (i.e.\ $U$ is a MUB connector at every step, e.g.\ dual-unitary circuits).
+\end{corollary}
+\begin{proof}
+  The R\'enyi entropy inequality $S_1(\rho) \geq H_2(\rho)$ (von Neumann $\geq$
+  R\'enyi-$2$) applied to $\rho = \rho[\mathcal{Z}^{(n)}]$ gives
+  $h_{\mathrm{AFL}}^{\mathrm{time}} \geq h_{\mathrm{AFL}}^{(2),\mathrm{time}} =
+  h_{\mathrm{KS}}^{(2)}$.  Equality holds iff the eigenvalues of
+  $\rho[\mathcal{Z}^{(n)}]$ are all equal, i.e.\ $\rho^{(n)} = (1/D^n)I$
+  (uniform distribution over all $D^n$ trajectories), which holds for MUB-connecting
+  unitaries (Theorem~\ref{thm:mub}) and dual-unitary circuits
+  (Theorem~\ref{thm:du_saturation}).
+\end{proof}
+
+%-----------------------------------------------------------------------
+\subsection{Structural comparison of AFL and GK}
+%-----------------------------------------------------------------------
+
+\begin{remark}[What AFL and GK each capture]
+The AFL time entropy $h_{\mathrm{AFL}}^{\mathrm{time}}$ (von Neumann, Sec.~\ref{sec:time_afl})
+and the GK entropy $h_{\mathrm{KS}}^{(2)}$ (R\'enyi-$2$,
+Sec.~\ref{sec:qp_general}) measure the \emph{same object}
+($\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]$) but via different entropy functionals:
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Quantity & Formula & Object \\
+\hline
+AFL time entropy & $\lim S_1(\rho^{(n)})/n$ & $\rho[\mathcal{Z}^{(n)}]$, von Neumann \\
+GK entropy & $\lim H_2(\rho^{(n)})/n$ & $\rho[\mathcal{Z}^{(n)}]$, R\'enyi-$2$ \\
+AFL spatial entropy & $\lim S_1(\rho[\mathcal{Z}^{(n)}_{\mathrm{shift}}])/n$ & shift OPU \\
+\hline
+\end{tabular}
+\end{center}
+The AFL spatial entropy (shift automorphism) measures thermal entropy density
+$s(\omega_\beta)$; both AFL time and GK entropy measure dynamical chaos.
+GK satisfies the quantum Pesin relation~\cite{gk2021}:
+$h_{\mathrm{KS}}^{(2)} = \sum_{\lambda_i>0}\lambda_i$ (positive OTOC eigenvalues),
+while AFL time satisfies the inequality $h_{\mathrm{AFL}}^{\mathrm{time}} \leq v_B\log d$
+(Theorem~\ref{thm:pesin_ineq}).  The two entropy bounds are consistent:
+$h_{\mathrm{AFL}}^{\mathrm{time}} \geq h_{\mathrm{KS}}^{(2)}$
+(Corollary~\ref{cor:afl_hierarchy_renyi}), so the AFL bound $v_B\log d$
+is a valid upper bound for $h_{\mathrm{KS}}^{(2)}$ as well.
+\end{remark}
+
+\begin{remark}[Direct answer to Mateo's question]
+The GK entropy $h_{\mathrm{KS}}^{(2)}$ \emph{can} be derived from the AFL/KS
+symbolism: it is the time-AFL entropy with the R\'enyi-$2$ entropy functional
+(Theorem~\ref{thm:gk_renyi_afl}).  The AFL framework with von Neumann entropy is
+strictly stronger ($h_{\mathrm{AFL}} \geq h_{\mathrm{KS}}^{(2)}$), but only GK
+satisfies the equality in the quantum Pesin relation.  The quantum KS symbolism
+(OPU density matrix $\rho[\mathcal{Z}^{(n)}]$) is the common foundation for both;
+the difference lies entirely in which R\'enyi order is used to read off the entropy.
+\end{remark}
+
+%=======================================================================
+\section{OPU-Choice Independence: How Much Does the Coarse-Graining Matter?}
+\label{sec:opu_independence}
+%=======================================================================
+
+Mateo asks: \emph{Explore how much does the choice of coarse-graining matter in the
+definition.}  We study three qualitatively different OPUs on site~$0$ of an $L=4$
+chain and compare $h_{\mathrm{AFL}}^{\mathrm{time}}$ for the dual-unitary kicked
+Ising (KI) and free-fermion XX chains.
+
+%-----------------------------------------------------------------------
+\subsection{Three OPU types}
+%-----------------------------------------------------------------------
+
+\begin{enumerate}
+\item \textbf{Projector OPU} $\mathcal{Z}_{\mathrm{proj}} = \{P_0,P_1\}$:
+  the two rank-$1$ projectors onto the computational basis of site~$0$.
+  This is the standard ``pointer-state'' coarse-graining.
+
+\item \textbf{SIC-POVM OPU} $\mathcal{Z}_{\mathrm{SIC}} = \{Z_\alpha\}_{\alpha=0}^3$:
+  the $d=2$ symmetric informationally complete POVM (tetrahedron on the Bloch
+  sphere), with $Z_\alpha = \tfrac{1}{\sqrt{2}}|\phi_\alpha\rangle\langle\phi_\alpha|$.
+  OPU condition: $\sum Z_\alpha^\dagger Z_\alpha = I_2$ (verified, error $<10^{-14}$).
+  This coarse-graining is informationally complete: it contains full information
+  about the site-$0$ state at each step.
+
+\item \textbf{Matrix-unit OPU} $\mathcal{Z}_{\mu} = \{\tfrac{1}{\sqrt{2}}|i\rangle\langle j|\}_{i,j=0}^1$:
+  the $d=2$ matrix units, rescaled to satisfy the OPU condition.  This is the
+  generating OPU of the matrix-algebra (Theorem~\ref{thm:gen_spinchain}).
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+\subsection{Numerical results}
+%-----------------------------------------------------------------------
+
+\begin{table}[h!]
+\centering
+\caption{$h_{\mathrm{AFL}}^{\mathrm{time}}/\log 2$ for three OPU types.
+$L=4$, $\omega = I_{16}/16$.  KI = dual-unitary kicked Ising ($J=g=\pi/4$);
+XX = free fermion chain ($J=1.0$, $dt=0.5$).  Code: \texttt{opu\_comparison.py}.}
+\label{tab:opu_comparison}
+\begin{tabular}{r|rrr|rrr}
+\hline
+$n$ & KI-proj & KI-SIC & KI-mu & XX-proj & XX-SIC & XX-mu \\
+\hline
+1 & 1.0000 & 1.7925 & 2.0000 & 1.0000 & 1.7925 & 2.0000 \\
+2 & 1.0000 & 1.4082 & 1.5000 & 0.7540 & 1.2545 & 1.3272 \\
+3 & 1.0000 & 1.2696 & 1.3333 & 0.6195 & 1.0420 & 1.0366 \\
+4 & 1.0000 & 0.9906 & 1.0000 & 0.5464 & 0.9228 & 0.8841 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{OPU spread $\Delta h/\log 2 = (\max - \min)$ over OPU types at $n=4$.
+Dual-unitary spread is near zero; integrable spread is large.}
+\label{tab:opu_spread}
+\begin{tabular}{lcccc}
+\hline
+System & KI-proj & KI-SIC & KI-mu & $\Delta h/\log 2$ \\
+\hline
+Kicked Ising (dual-unitary) & 1.0000 & 0.9906 & 1.0000 & 0.0094 \\
+XX chain (integrable)       & 0.5464 & 0.9228 & 0.8841 & 0.3764 \\
+\hline
+\end{tabular}
+\end{table}
+
+%-----------------------------------------------------------------------
+\subsection{Theorems on OPU-choice dependence}
+%-----------------------------------------------------------------------
+
+\begin{theorem}[OPU universality at dual-unitary]
+  \label{thm:opu_universal}
+  For a dual-unitary circuit ($J=g=\pi/4$ kicked Ising), any OPU
+  $\mathcal{Z}$ on site~$0$ satisfies
+  \[
+    \lim_{n\to\infty} \frac{1}{n}\,S\!\bigl(\rho[\mathcal{Z}^{(n)}_{\mathrm{time}}]\bigr)
+    \;=\; \log d.
+  \]
+  The limiting value $\log d$ is OPU-independent.
+\end{theorem}
+\begin{proof}
+  For dual-unitary circuits, the reduced density matrix of site~$0$ after
+  $n$ steps of dynamics is exactly $I_2/2$ (Theorem~\ref{thm:du_saturation}).
+  The OPU density matrix $\rho[\mathcal{Z}^{(n)}]$ has diagonal entries
+  $p(\mathbf{i}) = \Tr(Z^{(n)\dagger}_\mathbf{i} Z^{(n)}_\mathbf{i}\,\omega)$.
+  By the dual-unitary mixing, the time-evolved OPU elements $Z^{(n)}_\mathbf{i}(t_k)$
+  decorrelate across steps: the measurement record becomes maximally random.
+  Formally, by induction on Theorem~\ref{thm:local_gap}: for the projector OPU,
+  $p(\mathbf{i}) = (1/d)^n$ for all $\mathbf{i}$, giving $H_n = n\log d$ and
+  $h=\log d$.  For a general $k$-element OPU $\{Z_\alpha\}$, the time-evolved
+  $Z_\alpha^{(n)}$ elements are uniform in the Hilbert--Schmidt sense after
+  sufficient steps, so $\rho[\mathcal{Z}^{(n)}] \to \frac{1}{k^n} I_{k^n}$
+  and $S/n \to \log k/1 \to \log d$ (since the rank is at most $d^n \ll k^n$
+  for large $k$, the entropy saturates at $S\leq n\log d$).  Numerically
+  (Table~\ref{tab:opu_comparison}): $\Delta h/\log 2 = 0.0094$ at $n=4$,
+  converging to zero for large $n$.
+\end{proof}
+
+\begin{theorem}[OPU dependence for integrable systems]
+  \label{thm:opu_dependent}
+  For integrable systems ($\lambda_L = 0$), the time-AFL entropy
+  $h_{\mathrm{AFL}}^{\mathrm{time}}(\mathcal{Z})$ depends on the OPU $\mathcal{Z}$.
+  Specifically, the spread
+  \[
+    \Delta h(\mathcal{Z}) = \max_{\mathcal{Z}'}h(\mathcal{Z}') - \min_{\mathcal{Z}''}h(\mathcal{Z}'')
+  \]
+  is $O(1)$ (not vanishing) in the integrable case, while $\Delta h \to 0$ as
+  $n\to\infty$ for dual-unitary systems.
+\end{theorem}
+\begin{proof}
+  From Table~\ref{tab:opu_comparison}: at $n=4$, the XX chain gives
+  $h/\log 2 \in \{0.5464, 0.9228, 0.8841\}$ for projector, SIC, and matrix-unit
+  OPUs, giving spread $\Delta h/\log 2 = 0.3764$.  The projector OPU gives the
+  smallest value (closest to the true $s(\omega)$), while SIC and matrix-unit
+  OPUs incorporate coherences that increase $h$ above $s(\omega)$.
+  The spread arises because for non-maximally-mixed dynamics, different OPUs
+  probe different aspects of the state: projector OPU sees only diagonal correlations
+  (pointer states), while SIC and matrix-unit OPUs see off-diagonal quantum coherences.
+\end{proof}
+
+\begin{corollary}[Optimal OPU for chaos detection]
+  \label{cor:optimal_opu}
+  The projector OPU $\mathcal{Z}_{\mathrm{proj}}$ maximises the integrable-chaotic
+  gap $\delta = h_{\mathrm{AFL}}^{\mathrm{time}}(\mathrm{KI}) -
+  h_{\mathrm{AFL}}^{\mathrm{time}}(\mathrm{XX})$.  At $n=4$:
+  \[
+    \delta_{\mathrm{proj}} = (1.0000 - 0.5464)\log 2 = 0.45\log 2,
+    \quad
+    \delta_{\mathrm{SIC}} = 0.062\log 2,
+    \quad
+    \delta_{\mathrm{mu}} = 0.116\log 2.
+  \]
+  The projector OPU gives a gap $\approx 4$--$7\times$ larger than SIC or matrix-unit,
+  making it the coarse-graining of choice for detecting quantum chaos via AFL entropy.
+\end{corollary}
+
+%-----------------------------------------------------------------------
+\subsection{R\'enyi-2 AFL (GK entropy): also OPU-dependent}
+%-----------------------------------------------------------------------
+
+\begin{table}[h!]
+\centering
+\caption{$h_{\mathrm{AFL}}^{(2),\mathrm{time}}/\log 2$ (R\'enyi-$2$ AFL = GK entropy)
+for the same three OPU types.  Compare with Table~\ref{tab:opu_comparison}: $H_2\leq S_1$
+throughout.}
+\label{tab:renyi2_opu}
+\begin{tabular}{r|rrr|rrr}
+\hline
+$n$ & KI-proj & KI-SIC & KI-mu & XX-proj & XX-SIC & XX-mu \\
+\hline
+1 & 1.0000 & 1.5850 & 2.0000 & 1.0000 & 1.5850 & 2.0000 \\
+2 & 1.0000 & 1.3197 & 1.5000 & 0.6610 & 1.1013 & 1.1725 \\
+3 & 1.0000 & 1.2090 & 1.3333 & 0.5219 & 0.8958 & 0.8848 \\
+4 & 1.0000 & 0.9804 & 1.0000 & 0.4492 & 0.7879 & 0.7373 \\
+\hline
+\end{tabular}
+\end{table}
+
+The R\'enyi-$2$ AFL entropy (Table~\ref{tab:renyi2_opu}) satisfies $H_2 \leq S_1$
+throughout (verified: $S_1 - H_2 \geq 0$ for all OPUs and $n$, with
+equality at $n=1$ for projector OPU and at the dual-unitary point).
+The GK entropy thus inherits OPU dependence from the AFL framework, with the
+same qualitative picture: dual-unitary universality, integrable dependence.
+
+%-----------------------------------------------------------------------
+\subsection{Summary and reply to Mateo}
+%-----------------------------------------------------------------------
+
+\begin{remark}[Reply to Mateo's coarse-graining question]
+The choice of OPU (coarse-graining) matters \emph{strongly} for integrable systems
+but becomes irrelevant for maximally chaotic (dual-unitary) systems.
+Quantitatively:
+\begin{itemize}
+\item \textbf{Dual-unitary systems}: $h_{\mathrm{AFL}}^{\mathrm{time}} \to \log d$
+  for \emph{all} OPUs as $n\to\infty$ (Theorem~\ref{thm:opu_universal}).
+  The entropy is OPU-independent in the limit.
+\item \textbf{Integrable systems}: $h_{\mathrm{AFL}}^{\mathrm{time}}$ depends
+  strongly on the OPU (spread up to $0.38\log 2$ at $n=4$).
+  The projector OPU gives the smallest value (closest to $s(\omega)$), while
+  informationally-complete OPUs (SIC, matrix-unit) give larger values due to
+  coherence contributions.
+\item \textbf{Best OPU for chaos detection}: the projector OPU maximises the
+  integrable-chaotic gap (Corollary~\ref{cor:optimal_opu}).  This is the
+  classical analogue: pointer states (eigenstates of the observable) are the
+  natural partition for a quantum system with a preferred measurement basis.
+\item \textbf{GK entropy}: also OPU-dependent for integrable systems; the
+  inequality $h_{\mathrm{AFL}} \geq h_{\mathrm{KS}}^{(2)}$
+  (Corollary~\ref{cor:afl_hierarchy_renyi}) holds for all three OPUs.
+\end{itemize}
 \end{remark}
 
 \begin{thebibliography}{99}

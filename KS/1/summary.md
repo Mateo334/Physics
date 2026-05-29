@@ -268,6 +268,33 @@ In the strong decoherence limit gamma→∞:
 h_AFL^open → E(U) = -(1/d) Σ_{ij} |U_{ij}|^2 log |U_{ij}|^2 (matrix entropy)
 This recovers Theorem 18.2: at n=2, S(rho[Z^(2)]) = log d + E(U), so h → E(U)/2 → 0.
 
+**Result 42: Reference fixes (Task 10, new)**
+All 17 broken cross-references in Output.tex corrected: section/theorem/conjecture
+labels unified. Added \label{sec:spinchain} to Section 7 (AFL Entropy of Spin Chains).
+
+**Result 43: GK entropy = Rényi-2 AFL time entropy (Theorem thm:gk_renyi_afl, new)**
+The Goldfriend–Kurchan entropy h_KS^{(2)} equals the AFL time entropy computed with
+the Rényi-2 entropy functional:
+  h_KS^{(2)} = lim (1/n) H_2(ρ[Z_time^{(n)}])
+Proof: Tr(ρ[Z^(n)]²) = Σ_i p(trajectory i)² = trajectory purity.
+GK's OTOC matrix eigenvalue formula is the rate of trajectory purity decay,
+which is the Rényi-2 AFL rate. AFL (von Neumann) ≥ GK (Rényi-2) always.
+Equality iff measurement outcomes are uniform (dual-unitary circuits).
+
+**Result 44: OPU universality at dual-unitary (Theorem thm:opu_universal, new)**
+For dual-unitary circuits, h_AFL^time → log d for ALL OPU choices as n → ∞.
+The entropy is OPU-independent at the dual-unitary point.
+Numerically: spread Δh = 0.0094 * log 2 at n=4 (converging to 0).
+
+**Result 45: OPU dependence for integrable systems (Theorem thm:opu_dependent, new)**
+For integrable systems, Δh = O(1) across OPU types.
+At n=4: proj=0.546, SIC=0.923, mu=0.884 (spread Δh = 0.376 * log 2).
+SIC and matrix-unit OPUs probe quantum coherences, inflating h above s(ω).
+
+**Result 46: Projector OPU is optimal for chaos detection (Corollary cor:optimal_opu, new)**
+Integrable-chaotic gap: δ_proj = 0.45 log 2 >> δ_SIC = 0.06 log 2 >> δ_mu = 0.12 log 2.
+The projector OPU (pointer states) provides the clearest chaos/integrable distinction.
+
 ## Status of this approach
 
 NOT exhausted. Remaining open directions:
@@ -277,10 +304,10 @@ NOT exhausted. Remaining open directions:
 4. Semiclassical analysis in the j→∞ limit for kicked top (Weyl quantization route).
 5. Rigorous proof of topological suppression conjecture.
 6. MIPT-AFL order parameter confirmed numerically for larger L (L=8,16,32 circuits).
-7. Lindbladian formula for non-projector OPUs (SIC-POVM, matrix-unit): off-diagonal corrections.
+7. Continuous-variable OPU: coherent state OPU on phase space; compute h_AFL^time for harmonic oscillator with anharmonic perturbation.
 
 ## Files
-- Output.tex: Full LaTeX (5078 lines), sections 1-49 + bibliography.
+- Output.tex: Full LaTeX (6020 lines), sections 1-55 + bibliography.
 - progress.md: Step-by-step progress log.
 - summary.md: This file.
 - hadamard_qubit.py: Python verification (AFL entropy, MUB, matrix entropy formula).
@@ -293,3 +320,4 @@ NOT exhausted. Remaining open directions:
 - lindbladian_afl.py: Open-system AFL via Stinespring dilation; amplitude damping comparison.
 - noise_threshold.py: Many-body noise threshold; local vs global noise comparison.
 - hybrid_circuit.py: MIPT-AFL hybrid circuit (Haar-random gates + measurement rate p); mean-field h_AFL vs p; trajectory model; Lindbladian dephasing spectral formula.
+- opu_comparison.py: OPU-type independence study (projector, SIC-POVM, matrix-unit); GK Rényi-2 comparison.

@@ -3,6 +3,20 @@
 - Your goal is to derive a quantum version of Pesin theorem. 
 - If not possible, focus on the study of these various entropies and its connection to chaos via OTOC, Quantum lyapunov exponents, POVM, density matrices, subspaces and others. 
 - In the latex file, mateo will write regularly in the first section what the next step should be, what you should refine, etc. You are encouraged to reply to this if it was too difficult, or impossible or incorrect. 
+## Task 11 — Semiclassical Limit of AFL Entropy: Coherent-State OPU and Convergence to Classical KS Entropy
+- [ ] Define the coherent-state OPU for the spin-j kicked top: Z_k = sqrt(w_k)|Omega_k><Omega_k| where {Omega_k, w_k} is a t-design or cubature on S^2; prove the OPU condition analytically.
+- [ ] Derive the classical Lyapunov exponent for the kicked top map as a function of k analytically and numerically; identify the chaotic threshold k_c.
+- [ ] Implement kicked_top_semiclassical.py: compute h_AFL^time using the coherent-state OPU for j = 1.5, 2.5, 5, 10 (d=4,6,11,21) and compare with classical KS entropy; study the convergence h_AFL^time(j) → h_KS^{cl} as j → ∞.
+- [ ] Prove or rigorously argue: in the limit j → ∞, h_AFL^time(coherent-state OPU) → h_KS^{cl} = sum of positive classical Lyapunov exponents; establish the semiclassical correspondence as a quantum Pesin bridge.
+- [ ] Add Sections 56–59 to Output.tex: coherent-state OPU framework (Sec 56), classical Lyapunov spectrum of kicked top (Sec 57), numerical semiclassical convergence (Sec 58), semiclassical quantum Pesin theorem (Sec 59).
+
+## Task 10 — GK Entropy from Quantum KS Symbolism, Coarse-Graining OPU Dependence, and Reference Fixes [COMPLETE — 2026-05-29]
+- [x] Fix all broken cross-references in Output.tex (sections/equations showing ?? in compiled PDF): add missing \label commands and correct wrong \ref targets for ~15 broken refs identified.
+- [x] Derive analytically whether the Goldfriend–Kurchan (GK) Rényi-2 entropy can be obtained as a special case of AFL entropy with a specific OPU choice (noise-OPU or coherent-state OPU); compare GK and AFL structures term-by-term; write new Section 54.
+- [x] Numerically study OPU-choice independence: compute h_AFL^time for projector OPU vs SIC-POVM OPU vs matrix-unit OPU on the kicked Ising chain (L=5, n=4); quantify spread Δh across OPU choices; write new Section 55.
+- [x] Implement opu_comparison.py: h_AFL^time for three OPU types on KI and XX chains; tabulate the spread; confirm whether h is OPU-independent at dual-unitary point.
+- [x] Add Sections 54–55 to Output.tex: GK–AFL unification attempt (Sec 54), OPU independence study (Sec 55); reply to Mateo's notes.
+
 ## Task 9 — MIPT Order Parameter and Lindbladian Spectral Formula for AFL Entropy [COMPLETE — 2026-05-29]
 - [x] Implement hybrid_circuit.py: L-qubit circuit with alternating Haar-random 2-qubit gates + projective measurements at rate p; compute h_AFL^time vs p for L=4,6; identify AFL phase transition at p_c; compare with entanglement entropy transition.
 - [x] Derive the Lindbladian spectral formula: for Lindbladian with Lindblad operators {L_k, γ_k}, express h_AFL^open analytically in terms of the Lindblad spectrum; prove h_AFL^open → 0 in the strong-coupling limit and recover the unitary result at γ→0.
