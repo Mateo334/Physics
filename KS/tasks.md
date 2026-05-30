@@ -3,6 +3,12 @@
 - Your goal is to derive a quantum version of Pesin theorem. 
 - If not possible, focus on the study of these various entropies and its connection to chaos via OTOC, Quantum lyapunov exponents, POVM, density matrices, subspaces and others. 
 - In the latex file, mateo will write regularly in the first section what the next step should be, what you should refine, etc. You are encouraged to reply to this if it was too difficult, or impossible or incorrect. 
+## Task 16 — Multi-Step Semiclassical AFL: n-Convergence to Classical KS Entropy
+- [ ] Implement multi_step_semiclassical.py: for kicked top at j=1 (d=3) and j=2.5 (d=6), k=5, compute h_excess(n) for n=2,3,4,5,6,8 by building the full time-OPU ρ[Z^(n)] via coherent-state OPU; show h_excess(n,j) increases toward λ+(k=5)=0.876 as n increases, closing the gap identified in Task 15.
+- [ ] Fit the n-convergence rate: fit h_excess(n) = λ+ · (1 − A·e^{−Bn}) or h_excess(n) = λ+ − C/n; extract rate constants A,B (or C) at j=1 and j=2.5; identify whether convergence is exponential or power-law in n.
+- [ ] Prove analytically (or rigorously argue): for any finite-j coherent-state AFL computation, h_excess(n,j) → h_excess(∞,j) = H(Ω_{n}|Ω_1,...,Ω_{n-1})_cl as n→∞ (multi-step classical conditional entropy), and this approaches λ+ only as j→∞ also; quantify the j-dependence of the asymptote h_excess(∞,j) as a function of the Fibonacci lattice resolution.
+- [ ] Add Sections 76–79 to Output.tex: multi-step OPU construction and n-convergence (Sec 76), numerical h_excess(n) tables and fits at j=1,2.5 (Sec 77), analytical argument for the order of limits and asymptote identification (Sec 78), synthesis: the quantum double limit theorem refined (Sec 79).
+
 ## Task 15 — Quantum Pesin Lower Bound: Proving h_AFL^time ≥ v_E log d and Finite-Size Convergence [COMPLETE — 2026-05-30]
 - [x] Derive an analytical lower bound: prove h_AFL^time ≥ v_E log d − δ(L,n) where δ → 0 as L,n → ∞; use data-processing / mutual-information chain; compare with the known upper bound h_AFL^time ≤ v_B log d to complete the quantum Pesin sandwich.
 - [x] Extend the L=12 entanglement-velocity computation to L=8,12,16,20 (open, Néel state); extend h_AFL^time to L=6,8,10 (site-0 OPU, n=5); tabulate the ratio r(L) = h_AFL^time / (v_E log d) and fit r(L) = 1 + A/L + B/L² to extract the leading finite-size correction.

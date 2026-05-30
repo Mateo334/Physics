@@ -194,3 +194,4 @@ Here is a summary of what was accomplished this session:
 
 Output.tex: 7483 lines, 71 numbered sections, 591 balanced environments, 288 labels, 0 broken refs.
 You've hit your session limit · resets 5:20am (Europe/Prague)
+API Error: Claude's response exceeded the 32000 output token maximum. To configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable.
