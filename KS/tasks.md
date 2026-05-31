@@ -2,7 +2,8 @@
 ## General task
 - Your goal is to derive a quantum version of Pesin theorem. 
 - If not possible, focus on the study of these various entropies and its connection to chaos via OTOC, Quantum lyapunov exponents, POVM, density matrices, subspaces and others. 
-- In the latex file, mateo will write regularly in the first section what the next step should be, what you should refine, etc. You are encouraged to reply to this if it was too difficult, or impossible or incorrect. 
+- In the latex file, mateo will write regularly in the first section what the next step should be, what you should refine, etc. You are encouraged to reply to this if it was too difficult, or impossible or incorrect.
+- Ok, now we turn our attention to CNT entropy. Create another folder and start with the basics for this entropy in there
 ## Task 16 — Multi-Step Semiclassical AFL: n-Convergence to Classical KS Entropy
 - [ ] Implement multi_step_semiclassical.py: for kicked top at j=1 (d=3) and j=2.5 (d=6), k=5, compute h_excess(n) for n=2,3,4,5,6,8 by building the full time-OPU ρ[Z^(n)] via coherent-state OPU; show h_excess(n,j) increases toward λ+(k=5)=0.876 as n increases, closing the gap identified in Task 15.
 - [ ] Fit the n-convergence rate: fit h_excess(n) = λ+ · (1 − A·e^{−Bn}) or h_excess(n) = λ+ − C/n; extract rate constants A,B (or C) at j=1 and j=2.5; identify whether convergence is exponential or power-law in n.
