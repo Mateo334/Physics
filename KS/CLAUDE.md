@@ -13,6 +13,6 @@ Read `tasks.md` in this folder to find what to work on.
 - Keep a running `progress.md` in the active subfolder. Update it briefly after each significant step (a definition pinned down, a proof step completed, a dead end hit). This is your checkpoint file — it must reflect the current state of understanding at all times.
 - Before finishing each session, write a `summary.md` in the subfolder you worked in. It should describe what was attempted, what was established, and — if the approach is exhausted — why it is a dead end.
 - All LaTeX output files must be named or marked `Output` (e.g. `Output.tex`) inside the relevant subfolder.
-- Each `Output.tex` begins with a `\section*{Notes}` written by Mateo. Read it carefully before working — it contains directions, focus areas, and strategy hints that override general priorities.
 - You may use any PDF files found in this folder or any of its subfolders as reference material or any online, you are encouraged to download them to the corresponding subfolder.
 - You may also use online resources — especially arXiv, Scholarpedia, and Wikipedia.
+- In each subfolder there should be a file named notes.md. Mateos notes are in there, those override any other plans you currently have. Focus on that strategy. If there is no such file, create one. 
