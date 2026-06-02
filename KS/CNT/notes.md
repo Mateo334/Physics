@@ -1,11 +1,4 @@
 # Notes — CNT Subfolder
-
-## Mateo's instruction (from subfolder 1/notes.md and tasks.md)
-
-> "We will close this approach for now. Create another folder in KS and focus on the basics of CNT entropy."
-
-Focus: basics of CNT (Connes–Narnhofer–Thirring) entropy, from first principles.
-
 ## Scope for this subfolder
 
 1. Mathematical setup: W*-dynamical systems, relative entropy, abelian models.
