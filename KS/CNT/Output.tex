@@ -1877,6 +1877,363 @@ OTOC measures operator growth; TMI measures measurement independence.
 For dual-unitary: OTOC saturates at maximum, TMI vanishes --- both confirm maximal chaos.
 \end{remark}
 
+\subsection{Connection to Operator Entanglement and Dual-Unitary Gates}
+\label{sec:op_entanglement}
+
+We establish a rigorous connection between the equality condition
+$I_\mathrm{temp}=0$ and the \emph{operator entanglement} of the local gate,
+and characterise when the kicked Ising circuit attains both extrema simultaneously.
+
+\subsubsection{Operator Entanglement of a 2-Site Gate}
+
+\begin{definition}[Operator entanglement]\label{def:op_ent}
+Let $u\in\mathcal{L}((\CC^d)^{\otimes 2})$ be a 2-site unitary.
+The \emph{reshuffled matrix} $R(u)$ (space bipartition: site 1 vs.\ site 2)
+is the $d^2\times d^2$ matrix
+\begin{equation}\label{eq:reshuffle}
+  R(u)_{(k,m),(l,n)} \;:=\; u_{kl,mn},
+\end{equation}
+where $u_{kl,mn}=\langle k,l\,|\,u\,|\,m,n\rangle$.
+The \emph{operator entanglement} of $u$ is
+\begin{equation}\label{eq:Eop}
+  E_\mathrm{op}(u) \;:=\; S(\rho_L),\qquad
+  \rho_L = \tfrac{1}{d^2}\,R(u)\,R(u)^\dagger.
+\end{equation}
+\end{definition}
+
+\noindent
+The reshuffled matrix $R(u)$ corresponds to viewing $u$ as an element of
+$\mathcal{L}(\CC^d)_{\mathrm{out}_1}\otimes\mathcal{L}(\CC^d)_{\mathrm{out}_2}$
+via the Choi--Jamiołkowski isomorphism and computing the entanglement across the
+left-site vs.\ right-site split.
+
+\begin{proposition}[Rank structure of kicked Ising gate]\label{prop:rank}
+The local 2-site gate of the standard kicked Ising model,
+\begin{equation}
+  u(J,g) = e^{-ig(X_1+X_2)}\,e^{-iJ\,Z_1Z_2},
+\end{equation}
+satisfies $u_{kl,mn} = H^{(g)}_{km}\,H^{(g)}_{ln}\,e^{i\phi_{mn}^{(J)}}$
+where $H^{(g)}=e^{-igX}$ and $\phi_{mn}^{(J)}=-J(-1)^m(-1)^n$.
+Consequently $\rho_L$ has at most rank~$d$, so
+$E_\mathrm{op}(u)\le\log d$.
+\end{proposition}
+\begin{proof}
+Direct substitution into~\eqref{eq:reshuffle} gives
+$R(u)_{(k,m),(l,n)} = H^{(g)}_{km}H^{(g)}_{ln}e^{i\phi_{mn}^{(J)}}$.
+Viewed as a $d\times d$ block matrix with blocks $[R]_{kl}$, each block equals
+$H^{(g)}_{k\,\cdot}\otimes H^{(g)}_{l\,\cdot}$ up to a phase, so the rank of
+$R$ is at most $d$.
+\end{proof}
+
+\subsubsection{I\_temp = 0 via the X-Basis Transition Matrix}
+
+\begin{definition}[X-basis transition matrix]\label{def:transition}
+For a unitary $U$ on $(\CC^d)^{\otimes L}$, state $\phi=\mathrm{tr}$,
+and site-0 channel
+$\mathcal{E}_U[\sigma]=\frac{1}{D_\mathrm{rest}}\mathrm{Tr}_\mathrm{rest}
+[U(\sigma\otimes I_\mathrm{rest})U^\dagger]$,
+the \emph{X-basis transition matrix} is
+\begin{equation}\label{eq:Tmatrix}
+  T_{ij}(U) \;:=\; \mathrm{Tr}[p_i\,\mathcal{E}_U[p_j]]
+  \;=\; \frac{d}{D}\,\mathrm{Tr}[P_i\,U\,P_j\,U^\dagger],
+\end{equation}
+where $p_k=|x_k\rangle\langle x_k|$ are the sigma-$x$ eigenprojectors
+($d\times d$) and $P_k=p_k\otimes I_\mathrm{rest}$ ($D\times D$).
+Each row of $T$ sums to~1, and $T_{ij}\ge 0$, so $T$ is a stochastic matrix.
+\end{definition}
+
+\begin{theorem}[Equality characterisation]\label{thm:equality_Tmatrix}
+The following are equivalent:
+\begin{enumerate}
+\item[(i)] $I_\mathrm{temp}(U,Z,\phi_\mathrm{tr})=0$.
+\item[(ii)] $\rho[Z^{(2)}] = \tfrac{1}{d^2}\,I_{d^2}$.
+\item[(iii)] $T_{ij}(U)=\tfrac{1}{d}$ for all $i,j\in\{0,\ldots,d-1\}$.
+\item[(iv)] The site-0 channel $\mathcal{E}_U$ is \emph{X-basis depolarising}:
+  all X-eigenstates map to the same X-outcome distribution under $\mathcal{E}_U$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(i)$\Leftrightarrow$(ii): $I_\mathrm{temp}=0$ iff $\rho[Z^{(2)}]=\rho[Z^{(1)}]\otimes\rho[Z^{(1)}]$.
+Since $\rho[Z^{(1)}]=\frac{1}{d}I_d$ (all X-outcomes equally likely for the tracial state),
+the product state is $\frac{1}{d^2}I_{d^2}$.
+
+(ii)$\Leftrightarrow$(iii): The diagonal elements of $\rho[Z^{(2)}]$ are
+(using~\eqref{eq:Tmatrix})
+\begin{equation}
+  \rho[Z^{(2)}]_{(i,j),(i,j)}
+  = \tfrac{1}{d}\,\mathrm{Tr}[p_i\,\mathcal{E}_U[p_j]]
+  = \tfrac{1}{d}\,T_{ij}.
+\end{equation}
+Since $\rho[Z^{(2)}]$ is diagonal (off-diagonals vanish by orthogonality of $P_k$),
+(ii) holds iff all diagonal elements equal $\frac{1}{d^2}$, i.e.\ $T_{ij}=\frac{1}{d}$. \qed
+\end{proof}
+
+\subsubsection{Numerical Results: Kicked Ising Family}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J=g$ & $E_\mathrm{op}(u)$ & Eigenvalues of $\rho_L$ & $I_\mathrm{temp}$ & Regime \\
+\midrule
+0.05 & 0.0175 & $[0.998,\ 0.002,\ 0,\ 0]$ & 0.676 & integrable \\
+0.10 & 0.0559 & $[0.990,\ 0.010,\ 0,\ 0]$ & 0.637 & integrable \\
+0.20 & 0.1663 & $[0.961,\ 0.039,\ 0,\ 0]$ & 0.527 & near-integrable \\
+$\pi/8$ & 0.4165 & $[0.854,\ 0.146,\ 0,\ 0]$ & 0.277 & weakly chaotic \\
+$\pi/6$ & 0.5623 & $[0.750,\ 0.250,\ 0,\ 0]$ & 0.131 & chaotic \\
+$\pi/4$ & $\ln 2$ & $[1/2,\ 1/2,\ 0,\ 0]$ & $0$ & dual-unitary \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent
+$E_\mathrm{op}(u)$ and $I_\mathrm{temp}$ are strictly monotone anti-correlated
+as $J=g$ increases from $0$ to $\pi/4$.
+
+\vspace{4pt}
+\noindent
+\textbf{X-basis transition matrix} (L=4):
+\begin{align}
+T(J{=}g{=}0.1) &= \begin{pmatrix}0.990 & 0.010 \\ 0.010 & 0.990\end{pmatrix}
+  \quad\text{(strong memory: diagonal dominant)},\\
+T(J{=}g{=}\pi/4) &= \begin{pmatrix}1/2 & 1/2 \\ 1/2 & 1/2\end{pmatrix}
+  \quad\text{(zero memory: completely uniform)}.
+\end{align}
+
+\begin{proposition}[Maximal $E_\mathrm{op}$ and $I_\mathrm{temp}=0$]\label{prop:Eop_Itemp}
+For the kicked Ising family $u(J,g)$ and the standard X-kick Floquet $U_\mathrm{KI}(J,g)$:
+\begin{enumerate}
+\item[(a)] Both $E_\mathrm{op}(u(J,g))$ and $I_\mathrm{temp}(U_\mathrm{KI}(J,g))$
+  are \emph{independent of $g$} (the kick strength).
+\item[(b)] $E_\mathrm{op}$ increases strictly from $0$ to $\log d$ as $J$ increases from $0$ to $\pi/4$.
+\item[(c)] $I_\mathrm{temp}$ decreases strictly from $\log d$ to $0$ as $J$ increases from $0$ to $\pi/4$.
+\item[(d)] $E_\mathrm{op}(u)=\log d \;\Leftrightarrow\; I_\mathrm{temp}=0 \;\Leftrightarrow\; J=\pi/4$.
+\end{enumerate}
+The locus $\{J=\pi/4\}\times[0,\pi/2]$ in parameter space is an \emph{entire line}.
+\end{proposition}
+\begin{proof}
+\textit{Independence from $g$.}
+For $E_\mathrm{op}$: the eigenvalues of $\rho_L = R(u)R(u)^\dagger/d^2$ are
+$\lambda_\pm = (1\pm\cos(2J))/2$ (independent of $g$; see Section~\ref{sec:Eop_formula}).
+For $I_\mathrm{temp}$: since the sigma-$x$ projectors $P_i^x$ are eigenprojectors of $X$
+at site 0, they commute with the single-site X-rotation $e^{-igX_0}$, so
+$K_g^\dagger P_i^x K_g = P_i^x$ where $K_g = \bigotimes_k e^{-igX_k}$.
+Therefore $\mathrm{Tr}[P_i^x U_\mathrm{KI} P_j^x U_\mathrm{KI}^\dagger] = \mathrm{Tr}[P_i^x D_{ZZ} P_j^x D_{ZZ}^\dagger]$,
+which depends only on $J$ (through $D_{ZZ}=e^{-iJ\sum_kZ_kZ_{k+1}}$).
+\textit{Extrema at $J=\pi/4$.} Both claims follow from Part~(d)
+of Theorem~\ref{thm:equality_Tmatrix} combined with the formula in Theorem~\ref{thm:Eop_formula}. \qed
+\end{proof}
+
+\begin{remark}[Space-time complementarity]\label{rmk:spacetime}
+The sigma-$x$ basis plays a distinguished role: it is simultaneously the
+eigenbasis of the local X-kick and the measurement basis of the OPU.
+This shared basis is why the X-kick ``drops out'' of both $E_\mathrm{op}$ and
+$I_\mathrm{temp}$.
+The spatial operator entanglement and the temporal correlations are
+both controlled exclusively by the ZZ coupling strength~$J$.
+At $J=\pi/4$ (for any kick $g$): spatial entanglement is maximal
+($E_\mathrm{op}=\log d$) and temporal correlations vanish ($I_\mathrm{temp}=0$).
+The ZZ coupling at the $\pi/4$ value acts as a ``perfect splitter'' that
+simultaneously scrambles the spatial degree of freedom (maximal operator
+entanglement) and randomises the temporal measurement record (complete
+X-basis depolarisation).
+\end{remark}
+
+%% ============================================================
+\section{Exact Formula for Operator Entanglement of the Kicked Ising Gate}
+\label{sec:Eop_formula}
+%% ============================================================
+
+\subsection{Analytical Derivation}
+
+\begin{theorem}[Exact $E_\mathrm{op}$ formula]\label{thm:Eop_formula}
+For the 2-site kicked Ising gate $u(J,g) = e^{-ig(X_1+X_2)}\,e^{-iJ\,Z_1Z_2}$:
+\begin{equation}\label{eq:Eop_formula}
+  \boxed{E_\mathrm{op}(u(J,g)) \;=\; H_\mathrm{bin}(\sin^2 J)
+  \;=\; -\cos^2\!J\,\ln\cos^2\!J - \sin^2\!J\,\ln\sin^2\!J.}
+\end{equation}
+This is \emph{independent of $g$}.
+The eigenvalues of $\rho_L = R(u)R(u)^\dagger/d^2$ are
+\begin{equation}
+  \lambda_\pm = \tfrac{1}{2}(1\pm\cos 2J) = \cos^2 J,\;\sin^2 J,
+\end{equation}
+and $E_\mathrm{op} = \log 2$ (maximum for this family) iff $J=\pi/4$.
+\end{theorem}
+\begin{proof}
+The gate $u(J,g)$ satisfies $u_{kl,mn} = H^{(g)}_{km}\,H^{(g)}_{ln}\,e^{i\phi_{mn}^{(J)}}$
+where $H^{(g)} = e^{-igX}$ is unitary and $\phi_{mn}^{(J)} = -J(-1)^m(-1)^n$.
+
+Writing $h_m$ for the $m$-th column of $H^{(g)}$ (a unit vector in $\CC^d$), the
+reshuffled density matrix is
+\begin{equation}
+  \rho_L = \tfrac{1}{2}\begin{pmatrix}
+    h_0 h_0^\dagger & \cos(2J)\, h_0 h_1^\dagger \\[2pt]
+    \cos(2J)\, h_1 h_0^\dagger & h_1 h_1^\dagger
+  \end{pmatrix},
+\end{equation}
+where the $2\times 2$ block structure groups rows/columns by the site-1 index $m$.
+Since $H^{(g)}$ is unitary, the columns satisfy $h_0\perp h_1$ and $\|h_m\|=1$.
+The only nonzero eigenvalues are those of the $2\times 2$ matrix obtained by
+projecting onto $\mathrm{span}\{h_0,h_1\}$:
+in this subspace the matrix becomes
+$\frac{1}{2}\begin{pmatrix}1&\cos(2J)\\\cos(2J)&1\end{pmatrix}$,
+with eigenvalues
+\begin{equation}
+  \lambda_\pm = \tfrac{1\pm\cos(2J)}{2}.
+\end{equation}
+Using $\tfrac{1-\cos(2J)}{2}=\sin^2 J$ and $\tfrac{1+\cos(2J)}{2}=\cos^2 J$
+and the binary entropy formula gives~\eqref{eq:Eop_formula}. \qed
+\end{proof}
+
+\begin{remark}[Geometric interpretation]
+The eigenvalues $\lambda_\pm = \cos^2 J, \sin^2 J$ depend on the ZZ coupling
+through the single angle $J$.  As $J$ varies from $0$ to $\pi/4$:
+\begin{itemize}
+\item $J=0$: $\lambda_+ = 1, \lambda_- = 0$ (rank-1 state, $E_\mathrm{op}=0$).
+\item $J=\pi/4$: $\lambda_+ = \lambda_- = 1/2$ (maximally mixed on the 2D subspace, $E_\mathrm{op}=\log 2$).
+\end{itemize}
+The kick $H^{(g)}$ only rotates the eigenvectors $h_0,h_1$, leaving the Schmidt
+values unchanged.  Hence $E_\mathrm{op}$ is a \emph{coupling-only} invariant of the gate.
+\end{remark}
+
+\subsection{Numerical Verification and Parameter Space Map}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J$ & $E_\mathrm{op}$ (code) & $H_\mathrm{bin}(\sin^2 J)$ (formula) & Error & $g$-dep? \\
+\midrule
+0.10 & 0.055848 & 0.055848 & $< 10^{-15}$ & None (3 values tested) \\
+$\pi/4$ & 0.693147 & 0.693147 & $< 10^{-15}$ & None (3 values tested) \\
+0.50 & 0.539094 & 0.539094 & $< 10^{-15}$ & None (2 values tested) \\
+0.70 & 0.678632 & 0.678632 & $< 10^{-14}$ & None (1 value tested) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\textbf{Locus comparison in $(J,g)$ parameter space:}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$J$ & $g$ & $E_\mathrm{op}$ & $I_\mathrm{temp}$ & $E_\mathrm{op}=\log 2$? & $I_\mathrm{temp}=0$? \\
+\midrule
+0.20 & 0.10 & 0.166 & 0.527 & No & No \\
+0.20 & $\pi/4$ & 0.166 & 0.527 & No & No \\
+0.20 & 1.00 & 0.166 & 0.527 & No & No \\
+$\pi/4$ & 0.10 & $\ln 2$ & 0.000 & Yes & Yes \\
+$\pi/4$ & $\pi/4$ & $\ln 2$ & 0.000 & Yes & Yes \\
+$\pi/4$ & 1.00 & $\ln 2$ & 0.000 & Yes & Yes \\
+0.90 & 0.10 & 0.667 & 0.026 & No & No \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent
+Both $E_\mathrm{op}$ and $I_\mathrm{temp}$ are independent of $g$, and their
+extreme values $\{E_\mathrm{op}=\log d\}=\{I_\mathrm{temp}=0\}=\{J=\pi/4\}$
+define the \emph{same line} in $(J,g)$ parameter space.
+
+\begin{corollary}[Equivalence of the two conditions]\label{cor:equivalence}
+For the standard kicked Ising model with sigma-$x$ OPU and tracial state:
+\begin{equation}
+  E_\mathrm{op}(u(J,g)) = \log d \;\;\Longleftrightarrow\;\; I_\mathrm{temp}(U_\mathrm{KI}(J,g)) = 0
+  \;\;\Longleftrightarrow\;\; J = \tfrac{\pi}{4}.
+\end{equation}
+Neither condition depends on $g$.  The locus in parameter space is the line
+$\{J=\pi/4\}\times[0,\pi/2]$, not a single point.
+\end{corollary}
+
+\subsection{The Space-Time Complementarity Law}
+
+\begin{theorem}[Space-Time Complementarity]\label{thm:complementarity}
+For the standard kicked Ising model with sigma-$x$ OPU and tracial state,
+for \emph{all} $J\in[0,\pi/2]$, $g\in[0,\pi/2]$, and $L\ge 2$:
+\begin{equation}\label{eq:complementarity}
+  \boxed{E_\mathrm{op}(u(J,g)) + I_\mathrm{temp}(U_\mathrm{KI}(J,g)) = \log d.}
+\end{equation}
+\end{theorem}
+\begin{proof}
+\textbf{Step 1: Exact formula for $I_\mathrm{temp}(J)$.}
+Since $I_\mathrm{temp}$ is independent of $g$ (Proposition~\ref{prop:Eop_Itemp}),
+set $g=0$ (no kick), so $U_\mathrm{KI} = D_{ZZ} = e^{-iJ\sum_k Z_k Z_{k+1}}$.
+
+The site-0 channel $\mathcal{E}_{D_{ZZ}}[p_i^x]$ is computed by tracing out sites $1,\ldots,L-1$:
+\begin{equation}
+  \mathrm{Tr}_\mathrm{rest}[D_{ZZ}(p_i^x\otimes I_\mathrm{rest})D_{ZZ}^\dagger]
+  = \mathrm{Tr}_1[e^{-iJZ_0Z_1}(p_i^x\otimes I_1)e^{iJZ_0Z_1}]\cdot 2^{L-2},
+\end{equation}
+since the ZZ pairs for $k\ge 1$ commute with $p_i^x\otimes I_\mathrm{rest}$ and
+cancel under the partial trace.  Evaluating the site-$\{0,1\}$ trace:
+\begin{equation}
+  \mathrm{Tr}_1[e^{-iJZ_0Z_1}(p_i^x\otimes I_1)e^{iJZ_0Z_1}]
+  = \sum_{n=0}^{1} e^{-iJ(-1)^nZ_0}\,p_i^x\,e^{iJ(-1)^nZ_0}
+  = 2(\cos^2\!J\, p_i^x + \sin^2\!J\, p_{1-i}^x),
+\end{equation}
+using $e^{\mp iJZ}|x_i\rangle = \cos J|x_i\rangle \mp (-1)^i i\sin J|x_{1-i}\rangle$.
+Dividing by $D_\mathrm{rest}=2^{L-1}$:
+\begin{equation}
+  \mathcal{E}_{D_{ZZ}}[p_i^x] = \cos^2\!J\, p_i^x + \sin^2\!J\, p_{1-i}^x.
+\end{equation}
+The transition matrix is $T_{ij} = \cos^2\!J\,\delta_{ij} + \sin^2\!J\,(1-\delta_{ij})$,
+so the 4 diagonal entries of $\rho[Z^{(2)}]$ are:
+\begin{equation}
+  \rho[Z^{(2)}]_{(i,j),(i,j)} = \tfrac{1}{d}T_{ij}
+  = \begin{cases}\cos^2\!J/d & i=j \\ \sin^2\!J/d & i\ne j.\end{cases}
+\end{equation}
+\textbf{Step 2: Entropy computation.}
+$S_1 = \log d$ (always, since $\rho[Z^{(1)}] = I/d$).
+With the 4 probabilities $\cos^2\!J/2$ (twice) and $\sin^2\!J/2$ (twice):
+\begin{equation}
+  S_2 = -2\cdot\tfrac{\cos^2\!J}{2}\log\tfrac{\cos^2\!J}{2}
+        -2\cdot\tfrac{\sin^2\!J}{2}\log\tfrac{\sin^2\!J}{2}
+  = \log 2 + H_\mathrm{bin}(\sin^2\!J).
+\end{equation}
+Therefore:
+\begin{equation}
+  I_\mathrm{temp} = 2S_1 - S_2 = 2\log 2 - \log 2 - H_\mathrm{bin}(\sin^2\!J)
+  = \log d - H_\mathrm{bin}(\sin^2\!J) = \log d - E_\mathrm{op}.
+\end{equation}
+\textbf{Step 3.}
+Equation~\eqref{eq:complementarity} follows immediately. \qed
+\end{proof}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J$ & $E_\mathrm{op}=H_\mathrm{bin}(\sin^2J)$ & $I_\mathrm{temp}$ & $E_\mathrm{op}+I_\mathrm{temp}$ & $\log 2$? \\
+\midrule
+0.05 & 0.01746 & 0.67568 & 0.69314 & \checkmark \\
+0.10 & 0.05585 & 0.63730 & 0.69315 & \checkmark \\
+0.20 & 0.16625 & 0.52689 & 0.69314 & \checkmark \\
+$\pi/8$ & 0.41650 & 0.27665 & 0.69315 & \checkmark \\
+$\pi/6$ & 0.56234 & 0.13081 & 0.69315 & \checkmark \\
+$\pi/4$ & 0.69315 & 0.00000 & 0.69315 & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Physical interpretation of the complementarity law]
+Equation~\eqref{eq:complementarity} is a \emph{conservation law} for the kicked Ising model:
+the total ``quantum information content'' $E_\mathrm{op} + I_\mathrm{temp}$ equals $\log d$
+regardless of the coupling~$J$.
+
+\begin{itemize}
+\item When $J=0$ (no coupling): $E_\mathrm{op}=0$ (gate has no entanglement)
+  and $I_\mathrm{temp}=\log d$ (measurements are perfectly correlated across time steps).
+\item When $J=\pi/4$ (dual-unitary coupling): $E_\mathrm{op}=\log d$ (maximal spatial
+  entanglement) and $I_\mathrm{temp}=0$ (measurements are completely uncorrelated).
+\item Intermediate $J$: the total $\log d$ is shared between spatial and temporal channels.
+\end{itemize}
+
+The complementarity law shows that the ZZ coupling $J$ governs a \emph{redistribution}
+of quantum information between the spatial and temporal degrees of freedom.
+Increasing $J$ ``transfers'' information from time into space: less temporal memory,
+more spatial entanglement, with the total conserved.
+\end{remark}
+
 \begin{thebibliography}{99}
 
 \bibitem{cnt87}
@@ -1918,6 +2275,11 @@ Commun.\ Math.\ Phys.\ \textbf{125}, 565 (1989).
 G.G.\ Emch,
 \emph{Algebraic Methods in Statistical Mechanics and Quantum Field Theory},
 Wiley, New York (1972).
+
+\bibitem{bertini2019}
+B.\ Bertini, P.\ Kos, T.\ Prosen,
+\emph{Entanglement Spreading in a Minimal Model of Maximal Many-Body Quantum Chaos},
+Phys.\ Rev.\ X \textbf{9}, 021033 (2019).
 
 \end{thebibliography}
 

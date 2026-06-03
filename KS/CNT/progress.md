@@ -114,14 +114,61 @@ Key results:
 
 Output.tex: 13 sections (+ bibliography), 192 environments balanced, 1798 lines.
 
+### Step 11 — cnt_operator_entanglement.py written and run (Session 2026-06-03)
+Key results:
+- Proved analytically: I_temp=0 <=> rho[Z^(2)]=I/d^2 <=> X-basis transition matrix T=uniform.
+- T_{ij} = (d/D)*Tr[P_i U P_j U†]; T=1/d for all i,j iff I_temp=0.
+- Operator entanglement E_op(u) of local 2-site gate (space bipartition):
+  ranges from ~0 (integrable) to log(d) (dual-unitary J=g=pi/4).
+  Eigenvalues of rho_L = [0.998,0.002,0,0] -> [0.5,0.5,0,0] as J goes 0 to pi/4.
+- All results verified numerically (L=5, standard X-kick + ZZ coupling kicked Ising).
+- Space-time complementarity: maximal E_op <=> zero I_temp <=> J=g=pi/4.
+
+### Step 12 — Section 14.3 added to Output.tex
+- Subsection 14.3: Connection to Operator Entanglement (3 sub-subsections)
+- Definition: E_op(u) via reshuffled matrix R(u).
+- Proposition: rank structure of kicked Ising gate (rank <= d, E_op <= log d).
+- Theorem: I_temp=0 <=> T uniform (X-basis depolarising) — rigorous proof.
+- Numerical table: E_op and I_temp for 6 coupling values, eigenvalue structure shown.
+- Proposition: Maximal E_op <=> I_temp=0 <=> dual-unitary point.
+- Remark: Space-time complementarity of maximal chaos.
+- Reference added: Bertini et al. (2019).
+Output.tex: 14+ sections (Sec 14 now has 3 subsections), 220 environments balanced.
+Python script: cnt_operator_entanglement.py.
+
+### Step 13 — cnt_eop_formula.py written and run (Session 2026-06-03)
+Key results (both analytical and numerical):
+- EXACT FORMULA proved: E_op(u(J,g)) = H_bin(sin²J), independent of g.
+  Proof: rho_L eigenvalues = lambda_pm = (1±cos(2J))/2 = cos²J, sin²J.
+  The kick H^g only rotates eigenvectors; eigenvalues depend only on J.
+- INDEPENDENCE OF g: I_temp also independent of g (X-projectors commute with X-kick).
+  Proved: K_g†P_i^x K_g = P_i^x, so Tr[P_i^x U P_j^x U†] = Tr[P_i^x D_ZZ P_j^x D_ZZ†].
+- EQUIVALENCE: {E_op = log(d)} = {I_temp = 0} = {J = pi/4} x [0,pi/2] (a LINE, not a point).
+- PHASE PORTRAIT: 5x5 grid in (J,g) space confirms I_temp depends only on J.
+- All verified numerically (L=4, various J,g).
+
+### Step 14 — Section 15 added to Output.tex
+- Theorem: Exact E_op formula H_bin(sin²J), boxed.
+- Full proof: block structure of rho_L, orthonormal columns h_0⊥h_1.
+- Remark: geometric interpretation (J=0 rank-1, J=π/4 maximally mixed 2D subspace).
+- Numerical table: exact formula vs code, g-independence verified.
+- Locus table: (J,g) parameter space, both conditions = {J=π/4} (any g).
+- Corollary: complete equivalence stated.
+- Proposition 14.3 and Remark updated with corrected g-independent statement.
+Output.tex: 15 sections (+ bibliography), 237 environments balanced, 2198 lines.
+Python script: cnt_eop_formula.py.
+
 ### Current state
-All tasks in tasks.md for CNT complete:
-  - [x] CNT basics (Output.tex Sections 1-9)
+ALL TASKS COMPLETE (2026-06-03):
+  - [x] CNT basics (Sections 1-9)
   - [x] CNT deeper: h_AFL - h_CNT = log d (Section 10)
-  - [x] CNT extension: time evolution + modular (Section 11)
+  - [x] CNT time evolution + modular (Section 11)
   - [x] CNT chaos diagnostic (Section 12)
-  - [x] CNT lower bound: Fekete bound proved; h_CNT >= Delta_1/|t| disproved (Section 13)
-5 Python scripts: cnt_basics.py, cnt_deeper.py, cnt_time_evolution.py, cnt_chaos_diagnostic.py, cnt_lower_bound.py.
+  - [x] CNT lower bound: Fekete bound; AFL subadditivity (Section 13)
+  - [x] CNT subadditivity: rigorous proof + I_temp as diagnostic (Section 14.1-14.2)
+  - [x] CNT open problem: subadditivity proof, equality conditions, operator entanglement connection (Section 14.3)
+6 Python scripts: cnt_basics.py, cnt_deeper.py, cnt_time_evolution.py,
+                  cnt_chaos_diagnostic.py, cnt_lower_bound.py, cnt_operator_entanglement.py.
 
 
 
