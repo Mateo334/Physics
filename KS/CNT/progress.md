@@ -265,7 +265,123 @@ Explanation:
 
 Output.tex: 17 sections + bibliography, 294 balanced environments, 2671 lines.
 
+## Session: 2026-06-04 (Task: CNT second-marginal consistency — COMPLETE)
 
+### Step 20 — Two-sided marginal consistency proved and added to Section 16
 
+**The gap identified:**
+The existing Lemma `lem:marginal` in Section 16.1 only proved Tr_first[rho[Z^n]] = rho[Z^{n-1}].
+However, the SSA proof for S(AB) in Theorem thm:ssa_concave required tracing over C = {X_n}
+(the LAST measurement), not the first. This was cited incorrectly — a logical gap in the proof.
 
+**New Lemma added (lem:marginal_last): Last-Marginal Consistency**
+Tr_last[rho[Z^n]] = rho[Z^{n-1}]
+
+Proof strategy: factorize Z^n_{(I,i_n)} = A_I * C_{i_n} where
+  A_I = P_{i1} U^† ... U^† P_{i_{n-1}}  (first n-1 projectors)
+  C_{i_n} = U^† P_{i_n} U^{n-1}  (last projector + Floquet evolution)
+Then Σ = Sum_{i_n} C_{i_n} C_{i_n}^† = U^† (Sum P_{i_n}^2) U = I
+(by unitarity and OPU completeness).
+Consequence: rho^{marg-last}_{I,J} = (1/D) Tr(A_J^† A_I) = rho[Z^{n-1}]_{I,J}
+(by A_I = Z^{n-1}_I U^{2-n} and cyclicity).
+
+**SSA proof corrected:**
+- S(AB): now correctly cites lem:marginal_last (trace over C = last)
+- S(BC): now correctly cites lem:marginal (trace over A = first)
+- S(B): cites both lemmas applied in sequence
+- Old "time-stationarity" detour removed — the first-marginal lemma already gives
+  rho[Z^{n-1}] exactly as a matrix (not just same spectrum), so no separate
+  stationarity axiom is needed.
+
+**Remark (two-sided) added** after lem:marginal_last: both lemmas need only OPU
+completeness and unitarity — no property of the kicked Ising model is used.
+
+**Updated remark after SSA proof**: explains why the time-homogeneity is already
+encoded in the cyclic-trace identity, removing any separate stationarity hypothesis.
+
+**Table 6 added** to Section 16.4: two-sided marginal consistency verified numerically
+for 4 parameter cases (integrable, off-DU, dual-unitary, arbitrary), n=2,3,4.
+All errors at machine precision (≤ 2e-16). S_AB = S_BC confirmed for all cases.
+
+**Python script**: cnt_marginal_consistency.py (already existed from a prior session).
+
+Output.tex: 17 sections + bibliography, 302 balanced environments, 2769 lines.
+
+### Current state (2026-06-04, after second-marginal task)
+  - [x] CNT second-marginal consistency: COMPLETE.
+
+## Session: 2026-06-04 (New task: CNT finite-size scaling — COMPLETE)
+
+### Step 21 — cnt_finite_size_scaling.py written and run (initial version)
+Computed Delta(J,g,L) for L=4,5,6 at various (J,g). Revealed unexpected pattern.
+
+### Step 22 — cnt_L_independence.py written and run (key discovery)
+KEY DISCOVERY: rho[Z^n](L) is L-independent for:
+  - ALL (J,g) at n=2 (exact theorem proved)
+  - g=0, ALL n (universal L-independence proved)
+
+Proof: Z^{2,(L)}_I = W^dag Z^{2,(2)}_I W where W = V'K (V' at non-measured sites,
+K = X-kick). Since P commutes with both V' (different sites) and K (both sigma_x),
+the trace cancels by cyclicity. QED.
+
+Key corollaries:
+  1. h_AFL^time(J,g,L) = 0 for all finite L (rank argument, unchanged).
+  2. Delta(J,g,L) = E_op(J) for ALL finite L != DU.
+  3. The Markovian rate E_op is a thermodynamic-limit phenomenon only.
+  4. Limits n->inf and L->inf do NOT commute for g=0:
+     - lim_L lim_n ΔS_n = E_op  (Markovian, thermodynamic limit)
+     - lim_n ΔS_n (finite L) = 0  (rank saturation)
+
+For g>0, L-independence fails for n > n_sat(L=2) ≈ 3-4 (when 2-site orbit saturates).
+Verified numerically: J=pi/4, g=pi/4-0.1 gives same S_3 for L=2,3,4 but different S_4.
+
+### Step 23 — Section 18 added to Output.tex
+- Theorem thm:L_indep_n2: L-independence for n=2, all (J,g). Full proof.
+- Theorem thm:L_indep_g0: Universal L-independence for g=0, all n. Full proof.
+- Corollary cor:noncomm: Non-commutativity of limits lim_n and lim_L for g=0.
+- Remark: ΔS_2 = E_op is the only finite-L signature of the Markovian rate.
+- Table 7: numerical verification for both theorems.
+
+Output.tex: 18 sections + bibliography, 318 balanced environments, 2937 lines.
+Python scripts: cnt_finite_size_scaling.py, cnt_L_independence.py.
+
+### Current state (2026-06-04, after finite-size task)
+  - [x] CNT finite-size scaling: L-independence theorems proved, Section 18 done.
+
+## Session: 2026-06-04 (New task: OTOC/Lyapunov — COMPLETE)
+
+### Step 24 — cnt_otoc_lyapunov.py written and run
+Key findings:
+- OTOC F(n)/F(0) decays from 1 for chaotic systems, constant for DU (instantaneous).
+- DU: F(1)/F(0) = 0.25 = cos⁴(π/4). Constant until recurrence at n=2L=12 (L=6).
+- Non-DU: gradual OTOC decay from 1 toward asymptote.
+
+KEY THEOREM (OTOC-AFL connection):
+  F(1)/F(0) = cos⁴J for ALL (J,g) and L≥2.
+
+Proof: P_0 = (I+σ_x_site)/2 commutes with K = Prod e^{-ig σ_x} (both σ_x functions).
+Therefore U P_0 U^{-1} = e^{-iJ H_ZZ} P_0 e^{iJ H_ZZ} (g-independent!).
+BCH gives P_0(1) = (I + cos(2J)σ_x + sin(2J)σ_y σ_z)/2.
+Tr[P_0 P_0(1)] = D/2 * cos²J.
+F(1) = |Tr[P_0 P_0(1)]|²/D² = cos⁴J * F(0). QED.
+
+Combined with ΔS_2 = E_op = H_bin(sin²J) (Thm 15):
+  ΔS_2 = H_bin(1 - sqrt(F(1)/F(0)))
+
+This is an exact OTOC-AFL connection: the AFL entropy increment is the binary
+entropy of the "1-step scrambling probability" sin²J = 1 - sqrt(F(1)/F(0)).
+
+### Step 25 — Section 19 added to Output.tex
+- Proposition prop:otoc1: F(1)/F(0) = cos⁴J (proved analytically)
+- Theorem thm:otoc_afl: ΔS_2 = H_bin(1-√(F(1)/F(0))) (boxed)
+- Remark: physical interpretation + g-independence explanation
+- DU instantaneous scrambling + Poincaré recurrence at n=2L
+- Table 8: OTOC values for L=6 at 3 parameter sets
+
+Output.tex: 19 sections + bibliography, 329 balanced environments, 3062 lines.
+Python script: cnt_otoc_lyapunov.py.
+
+### Current state (2026-06-04, end of session)
+ALL TASKS COMPLETE.
+Output.tex has 19 sections.
 

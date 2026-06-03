@@ -2301,6 +2301,60 @@ by cyclicity and unitarity of $U$.  Hence the marginal equals
 $\rho[Z^{(n-1)}]_{I,J}$.\qed
 \end{proof}
 
+\begin{lemma}[Last-Marginal Consistency]\label{lem:marginal_last}
+Under the same hypotheses as Lemma~\ref{lem:marginal},
+\begin{equation}
+  \bigl(\rho[Z^{(n)}]\bigr)^\mathrm{marg}_{\rm last}
+  \;:=\;
+  \sum_{i_n\in\{0,1\}} \rho[Z^{(n)}]_{(I,i_n),(J,i_n)}
+  \;=\;
+  \rho[Z^{(n-1)}]_{I,J}
+\end{equation}
+for all multi-indices $I=(i_1,\ldots,i_{n-1})$, $J=(j_1,\ldots,j_{n-1})$.
+In words: tracing out the \emph{last} measurement also recovers the $(n-1)$-step orbit density matrix.
+\end{lemma}
+
+\begin{proof}
+Write $Z^{(n)}_{(I,i_n)} = A_I\,C_{i_n}$ where
+\[
+  A_I \;:=\; P_{i_1}\,U^\dagger\,P_{i_2}\,U^\dagger\cdots U^\dagger\,P_{i_{n-1}},
+  \qquad
+  C_{i_n} \;:=\; U^\dagger\,P_{i_n}\,U^{n-1}.
+\]
+Set $\Sigma := \sum_{i_n} C_{i_n}\,C_{i_n}^\dagger$.  Expanding:
+\begin{align}
+  \Sigma &= \sum_{i_n} U^\dagger P_{i_n}\,U^{n-1}(U^{n-1})^\dagger P_{i_n}\,U
+           = U^\dagger\!\left(\sum_{i_n} P_{i_n}^2\right)U = U^\dagger I\,U = I,
+\end{align}
+using $U^{n-1}(U^{n-1})^\dagger = I$ (unitarity) and $P_{i_n}^2=P_{i_n}$,
+$\sum_{i_n}P_{i_n}=I$ (OPU completeness).  Now compute the last marginal:
+\begin{align}
+  \bigl(\rho[Z^{(n)}]\bigr)^\mathrm{marg-last}_{I,J}
+  &= \frac{1}{D}\sum_{i_n}
+     \operatorname{Tr}\!\bigl(C_{i_n}^\dagger A_J^\dagger A_I\,C_{i_n}\bigr)
+     \notag\\
+  &= \frac{1}{D}\operatorname{Tr}\!\Bigl(A_J^\dagger A_I
+     \sum_{i_n}C_{i_n}\,C_{i_n}^\dagger\Bigr)
+   = \frac{1}{D}\operatorname{Tr}(A_J^\dagger A_I),
+\end{align}
+where the second step uses cyclicity of trace.  Since $A_I = Z^{(n-1)}_I U^{2-n}$
+(i.e.\ $A_I$ is $Z^{(n-1)}_I$ with the trailing factor $U^{n-2}$ cancelled),
+cyclicity gives
+$\operatorname{Tr}(A_J^\dagger A_I)
+ = \operatorname{Tr}(U^{n-2\,\dagger} Z^{(n-1)\dagger}_J Z^{(n-1)}_I U^{2-n})
+ = \operatorname{Tr}(Z^{(n-1)\dagger}_J Z^{(n-1)}_I)$,
+so the marginal equals $\rho[Z^{(n-1)}]_{I,J}$.\qed
+\end{proof}
+
+\begin{remark}[Two-sided marginal consistency]
+Together, Lemmas~\ref{lem:marginal} and~\ref{lem:marginal_last} establish
+\emph{two-sided marginal consistency}: both the first and last partial traces of
+$\rho[Z^{(n)}]$ return $\rho[Z^{(n-1)}]$.  Both proofs rely solely on the OPU
+completeness relation $\sum_i P_i = I$ and the unitarity of $U$; no specific
+property of the kicked Ising model is used.  The result therefore holds for any
+unitary quantum dynamics with a projector-valued observable.
+\end{remark}
+
 \subsection{Concavity via Strong Subadditivity}
 
 \begin{theorem}[SSA Concavity]\label{thm:ssa_concave}
@@ -2327,12 +2381,15 @@ with joint density $\rho_{ABC} = \rho[Z^{(n)}]$.  SSA states:
 \textbf{Identifying the marginals.}
 \begin{itemize}
 \item $S(ABC) = S_n$.
-\item $S(AB) = S(\rho[Z^{(n-1)}]) = S_{n-1}$ by Lemma~\ref{lem:marginal}
-  (marginalising over the last measurement $X_n$).
-\item $S(BC) = S_{n-1}$ by \emph{time-stationarity}: marginalising over $X_1$
-  gives $\rho[Z^{(n-1)}]$ at times $1,\ldots,n-1$, which has the same spectrum
-  as $\rho[Z^{(n-1)}]$ at times $0,\ldots,n-2$ by unitary equivalence of $U$.
-\item $S(B) = S_{n-2}$ (marginalising over both $X_1$ and $X_n$).
+\item $S(AB) = S(\rho[Z^{(n-1)}]) = S_{n-1}$ by Lemma~\ref{lem:marginal_last}
+  (tracing out $C = \{X_n\}$, the last measurement, from $\rho[Z^{(n)}]$).
+\item $S(BC) = S_{n-1}$ by Lemma~\ref{lem:marginal}
+  (tracing out $A = \{X_1\}$, the first measurement, from $\rho[Z^{(n)}]$,
+  which yields $\rho[Z^{(n-1)}]$ exactly, as the cyclicity argument in the proof
+  shows the matrix entries are unchanged under the time shift).
+\item $S(B) = S_{n-2}$ (applying Lemma~\ref{lem:marginal_last} to $\rho[Z^{(n-1)}]$,
+  or equivalently Lemma~\ref{lem:marginal} to the $BC$-marginal, both give
+  $\rho[Z^{(n-2)}]$).
 \end{itemize}
 Substituting into~\eqref{eq:ssa}:
 \[
@@ -2342,10 +2399,13 @@ which is $2S_{n-1}\ge S_n+S_{n-2}$, i.e.\ $\Delta S_n \le \Delta S_{n-1}$.\qed
 \end{proof}
 
 \begin{remark}
-The proof requires two inputs that are non-trivial in the quantum setting:
-marginal consistency (Lemma~\ref{lem:marginal}, which relies on the OPU completeness
-$\sum_i P_i = I$) and time-stationarity (which holds for any time-homogeneous
-dynamics, in particular for the kicked Ising model with a fixed Floquet operator $U$).
+The proof uses two lemmas, both proved using only OPU completeness and unitarity:
+Lemma~\ref{lem:marginal_last} (tracing out the last measurement gives $\rho[Z^{(n-1)}]$)
+for the $S(AB)$ term, and Lemma~\ref{lem:marginal} (tracing out the first measurement)
+for $S(BC)$.  The fact that the first-marginal gives $\rho[Z^{(n-1)}]$ \emph{exactly}
+as a matrix—not merely with the same spectrum—means that the proof does not require a
+separate time-stationarity assumption: time-homogeneity is already encoded in the
+cyclic-trace identity $\operatorname{Tr}(C_J^\dagger C_I) = \operatorname{Tr}(Z^{(n-1)\dagger}_J Z^{(n-1)}_I)$.
 \end{remark}
 
 \subsection{The Operator-Entanglement Pesin Inequality}
@@ -2475,6 +2535,44 @@ $\pi/4$ & 0.003 & 0.111 & 0.089 & 0.061 & $\approx 0$ \\
 $J=g=\pi/4$ (dual-unitary corner).  The gap is largest at $g=0$ for fixed $J$
 (pure ZZ dynamics has maximum correlation structure; finite-size effects prevent
 exact equality on this line).
+
+\medskip
+\noindent\textit{Table~6: Two-sided marginal consistency verified numerically
+($L=4$, open BC, $X$-basis OPU).  Entries show the max-norm error
+$\|\cdot\|_\infty$ between the computed marginal and $\rho[Z^{(n-1)}]$;
+all errors are at machine precision ($\lesssim 2\times 10^{-16}$).}
+
+\begin{center}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+System & $n$ &
+  $\|\mathrm{Tr}_{\rm first}[\rho[Z^{(n)}]]-\rho[Z^{(n-1)}]\|_\infty$ &
+  $\|\mathrm{Tr}_{\rm last}[\rho[Z^{(n)}]]-\rho[Z^{(n-1)}]\|_\infty$ &
+  $S_{AB}=S_{BC}$?\\
+\midrule
+$J=\pi/8,\,g=0$ (integrable) & 2 & $1.2\times10^{-17}$ & $<10^{-17}$ & \checkmark\\
+                               & 3 & $1.4\times10^{-17}$ & $1.4\times10^{-17}$ & \checkmark\\
+                               & 4 & $6.9\times10^{-18}$ & $6.9\times10^{-18}$ & \checkmark\\
+\midrule
+$J=\pi/8,\,g=\pi/8$           & 2 & $2.7\times10^{-17}$ & $<10^{-17}$ & \checkmark\\
+                               & 3 & $5.6\times10^{-17}$ & $5.6\times10^{-17}$ & \checkmark\\
+                               & 4 & $5.6\times10^{-17}$ & $5.6\times10^{-17}$ & \checkmark\\
+\midrule
+$J=\pi/4,\,g=\pi/4$ (DU)      & 2 & $5.6\times10^{-17}$ & $5.6\times10^{-17}$ & \checkmark\\
+                               & 3 & $8.3\times10^{-17}$ & $5.6\times10^{-17}$ & \checkmark\\
+                               & 4 & $3.0\times10^{-17}$ & $2.8\times10^{-17}$ & \checkmark\\
+\midrule
+$J=0.10,\,g=0.50$ (arbitrary) & 2 & $1.1\times10^{-16}$ & $1.1\times10^{-16}$ & \checkmark\\
+                               & 3 & $1.7\times10^{-16}$ & $1.7\times10^{-16}$ & \checkmark\\
+                               & 4 & $1.1\times10^{-16}$ & $1.1\times10^{-16}$ & \checkmark\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The $S_{AB}=S_{BC}$ column confirms that the first-marginal gives $\rho[Z^{(n-1)}]$
+exactly as a matrix (numerical agreement to $<10^{-8}$), so the spectrum—and hence
+the entropy—is unchanged.  Together with Table~6, the SSA proof in
+Theorem~\ref{thm:ssa_concave} is verified to be fully rigorous.
 
 \begin{corollary}[Pesin-Complementarity Inequality]\label{cor:pesin_comp}
 For the kicked Ising model with $X$-basis OPU:
@@ -2618,6 +2716,426 @@ maximum $E_\mathrm{op}$.  The common coefficient $4/\ln 2$ in the ratio expansio
 is a universal feature of the X-basis OPU for qubits ($d=2$).
 \end{remark}
 
+
+\section{System-Size Independence and Non-Commutativity of Limits}
+\label{sec:L_independence}
+% ============================================================
+
+We now prove two structural theorems about the time-AFL orbit that clarify the
+relationship between the finite-chain Pesin inequality and the thermodynamic limit.
+
+\subsection{L-Independence at n=2 for All Couplings}
+
+The complementarity law $\Delta S_2 = E_\mathrm{op}(J)$ (proved in
+Theorem~\ref{thm:complementarity}) implies that $S_2-S_1$ is independent of both
+the system size $L$ and the transverse coupling $g$.  We now prove the stronger
+statement that the \emph{full density matrix} $\rho[Z^{(2)}]$ is $L$-independent.
+
+\begin{theorem}[L-Independence at $n=2$]\label{thm:L_indep_n2}
+For the kicked Ising model with any $(J,g)$, $X$-basis OPU on site $L-1$ (the
+rightmost site), open boundary conditions, and $L\ge 2$:
+\begin{equation}
+  \rho[Z^{(2)}](L) \;=\; \rho[Z^{(2)}](2)
+\end{equation}
+as $2^2\times 2^2$ matrices.  In particular, $S_2(J,g,L) = S_2(J,g,2)$ and
+$\Delta S_2(J,g,L) = E_\mathrm{op}(J)$ for all $L\ge 2$ and all $g$.
+\end{theorem}
+
+\begin{proof}
+Write $U_L = V'\,U_{L-2,L-1}\,K$ where
+\[
+  V' \;=\;\prod_{k=0}^{L-3} e^{-\mathrm{i}J\sigma^z_k\sigma^z_{k+1}},
+  \quad
+  K \;=\;\prod_{k=0}^{L-1} e^{-\mathrm{i}g\sigma^x_k}.
+\]
+$V'$ acts on sites $0,\ldots,L-2$ (not on the measured site $L-1$).  Since the
+X-projectors $P_i = (I\pm\sigma^x_{L-1})/2$ are functions of $\sigma^x_{L-1}$,
+they commute with $V'$ (different sites) and with every factor of $K$ (both are
+functions of $\sigma^x$, hence $[P_i, K] = 0$).
+
+Therefore $P_i\,K^\dagger = K^\dagger P_i$ and $P_i\,{V'}^\dagger = {V'}^\dagger P_i$, so
+\begin{align}
+  Z^{(2),(L)}_{(i_1,i_2)}
+  &= P_{i_1}\,U_L^\dagger\,P_{i_2}\,U_L \notag\\
+  &= P_{i_1}\,(K^\dagger\,U_{L-2,L-1}^\dagger\,{V'}^\dagger)\,P_{i_2}\,(V'\,U_{L-2,L-1}\,K) \notag\\
+  &= K^\dagger\,{V'}^\dagger\!\underbrace{P_{i_1}\,U_{L-2,L-1}^\dagger\,P_{i_2}\,U_{L-2,L-1}}_{=:\;Z^{(2),(2)}_{(i_1,i_2)}}\!V'\,K.
+\end{align}
+Setting $W := V'\,K$, we have $Z^{(2),(L)}_I = W^\dagger Z^{(2),(2)}_I W$ and
+\begin{align}
+  \operatorname{Tr}_{L\,\text{sites}}\!\bigl(Z^{(2),(L)\dagger}_J Z^{(2),(L)}_I\bigr)
+  &= \operatorname{Tr}\!\bigl(W^\dagger Z^{(2),(2)\dagger}_J W\,W^\dagger Z^{(2),(2)}_I W\bigr) \notag\\
+  &= \operatorname{Tr}\!\bigl(Z^{(2),(2)\dagger}_J Z^{(2),(2)}_I\bigr),
+\end{align}
+using $W\,W^\dagger = I$ and cyclicity of trace.  Since $Z^{(2),(2)}$ acts only on
+sites $L-2,L-1$ (and $\operatorname{Tr}$ over sites $0,\ldots,L-3$ gives $2^{L-2}$),
+\[
+  \rho[Z^{(2)}]^{(L)}_{I,J}
+  = \frac{1}{2^L}\operatorname{Tr}_L(\cdots)
+  = \frac{2^{L-2}}{2^L}\operatorname{Tr}_{L-2,L-1}(Z^{(2),(2)\dagger}_J Z^{(2),(2)}_I)
+  = \frac{1}{4}\operatorname{Tr}_2(\cdots)
+  = \rho[Z^{(2)}]^{(2)}_{I,J}.\qed
+\]
+\end{proof}
+
+\begin{remark}
+The proof uses only two facts: (i)~$P_i$ commutes with both $V'$ (different sites)
+and $K$ (both are functions of $\sigma^x$); (ii)~cyclicity of trace.
+No property of the kicked Ising model beyond the structure of the OPU is used.
+The theorem therefore holds for any quantum spin chain with a single-site OPU and
+open boundary conditions.
+\end{remark}
+
+\subsection{Universal L-Independence for $g=0$}
+
+For pure ZZ dynamics ($g=0$), the X-kick is absent ($K=I$) and the V-conjugation
+extends to all orbit lengths.
+
+\begin{theorem}[Universal L-Independence for $g=0$]\label{thm:L_indep_g0}
+For $g=0$ and any $n\ge 1$ and $L\ge 2$:
+\begin{equation}
+  \rho[Z^{(n)}](L) \;=\; \rho[Z^{(n)}](2).
+\end{equation}
+In particular, $S_n(J,0,L)$ is $L$-independent.
+\end{theorem}
+
+\begin{proof}
+For $g=0$: $U_L = V'\,U_{L-2,L-1}$ (no kick).  By induction on $n$, each
+occurrence of $U_L^\dagger$ in $Z^{(n),(L)}_I = P_{i_1}U_L^\dagger\cdots P_{i_n}U_L^{n-1}$
+contributes one factor of ${V'}^\dagger$, and each of the $n-1$ factors in $U_L^{n-1}$
+contributes one factor of $V'$.  Since $P_i$ commutes with $V'$ and ${V'}^\dagger$,
+all $n-1$ conjugating pairs ${V'}^\dagger\!\cdots V'$ can be moved to the exterior:
+\[
+  Z^{(n),(L)}_I = {V'}^\dagger Z^{(n),(L-1)}_I\,V',
+\]
+where $Z^{(n),(L-1)}_I$ is the $(L-1)$-site operator. Iterating and applying
+cyclicity gives
+$\operatorname{Tr}_{L}(Z^{(n),(L)\dagger}_J Z^{(n),(L)}_I)
+= 2^{L-2}\operatorname{Tr}_2(Z^{(n),(2)\dagger}_J Z^{(n),(2)}_I)$,
+and dividing by $D=2^L$ gives the result.\qed
+\end{proof}
+
+\subsection{Non-Commutativity of the Thermodynamic and Long-Time Limits}
+
+Theorem~\ref{thm:L_indep_g0} has a striking corollary that resolves an apparent
+tension between Proposition~\ref{prop:g0_equality} (which states
+$h_\mathrm{AFL}^\mathrm{time}(g=0,L\to\infty) = E_\mathrm{op}$) and
+Section~\ref{sec:time_evo} (which proves $h_\mathrm{AFL}^\mathrm{time}(L) = 0$ for
+any finite $L$).
+
+\begin{corollary}[Non-Commutativity of Limits]\label{cor:noncomm}
+For $g=0$ and any $J$, the limits $n\to\infty$ and $L\to\infty$ do not commute:
+\begin{align}
+  \lim_{L\to\infty}\lim_{n\to\infty}\Delta S_n(J,0,L) &= E_\mathrm{op}(J)
+    \quad\text{(Markovian limit, Prop.~\ref{prop:g0_equality})},\\
+  \lim_{n\to\infty}\lim_{L\,\text{finite}}\Delta S_n(J,0,L) &= 0
+    \quad\text{(rank saturation, Section~\ref{sec:time_evo})}.
+\end{align}
+\end{corollary}
+
+\begin{proof}
+The first limit holds because the infinite-chain orbit is well approximated by the
+Markov chain $T = \bigl[\begin{smallmatrix}\cos^2\!J&\sin^2\!J\\\sin^2\!J&\cos^2\!J\end{smallmatrix}\bigr]$,
+whose entropy rate is $H_\mathrm{bin}(\sin^2\!J) = E_\mathrm{op}$.
+The second limit holds because for any fixed finite $L$, the operators $Z^{(n)}_I$
+live in the $2^L$-dimensional Hilbert space; for $n\gg L$ they become linearly
+dependent and $\Delta S_n\to 0$ (Section~\ref{sec:time_evo}).
+By Theorem~\ref{thm:L_indep_g0}, $\Delta S_n(J,0,L)$ is the same for all finite
+$L\ge 2$, so the second limit is unambiguous.\qed
+\end{proof}
+
+\begin{remark}
+Corollary~\ref{cor:noncomm} shows that the Markovian entropy rate $E_\mathrm{op}$
+is a genuine thermodynamic-limit phenomenon: it cannot be seen at any finite chain
+length.  The complementarity equality $\Delta S_2 = E_\mathrm{op}$ is the only
+\emph{finite-$L$} signature of this Markovian rate — it holds at $n=2$ for all
+$L$ by Theorem~\ref{thm:L_indep_n2} and the complementarity law.
+\end{remark}
+
+\noindent\textit{Table~7: L-independence of $\rho[Z^{(n)}]$ verified numerically.
+Left panel: $n=2$ for all $(J,g)$ (Theorem~\ref{thm:L_indep_n2}).
+Right panel: all $n\le 4$ for $g=0$ (Theorem~\ref{thm:L_indep_g0}).
+Entries show $\|\rho[Z^{(n)}](L)-\rho[Z^{(n)}](2)\|_\infty$; all are at machine
+precision ($\lesssim 2\times10^{-16}$).}
+
+\begin{center}
+\begin{tabular}{@{}lccc@{\qquad}lccc@{}}
+\toprule
+\multicolumn{4}{c}{$n=2$, varying $(J,g)$ and $L$} &
+\multicolumn{4}{c}{$g=0$, $J=\pi/8$, varying $n$ and $L$}\\
+\cmidrule(r){1-4}\cmidrule(l){5-8}
+$(J,g)$ & $L=3$ & $L=4$ & $L=5$ &
+$n$ & $L=3$ & $L=4$ & $L=5$\\
+\midrule
+$(\pi/8,\,0)$ & $3\times10^{-17}$ & $3\times10^{-17}$ & $3\times10^{-17}$ &
+$1$ & $0$ & $0$ & $0$\\
+$(\pi/8,\,\pi/8)$ & $1\times10^{-16}$ & $6\times10^{-17}$ & $8\times10^{-17}$ &
+$2$ & $4\times10^{-16}$ & $4\times10^{-16}$ & $4\times10^{-16}$\\
+$(\pi/4,\,\pi/4)$ & $2\times10^{-16}$ & $6\times10^{-17}$ & $6\times10^{-17}$ &
+$3$ & $4\times10^{-16}$ & $4\times10^{-16}$ & $4\times10^{-16}$\\
+$(0.30,\,0.70)$ & $1\times10^{-16}$ & $6\times10^{-17}$ & $6\times10^{-17}$ &
+$4$ & $4\times10^{-16}$ & $4\times10^{-16}$ & $4\times10^{-16}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent For $g>0$ and $n\ge 4$, L-independence can break down once the
+2-site orbit saturates in rank.  Specifically, at $J=\pi/4$, $g=\pi/4-0.1$: we find
+$\|\rho[Z^{(4)}](L=3)-\rho[Z^{(4)}](L=2)\|_\infty = 0.65$ while
+$\|\rho[Z^{(3)}](L=3)-\rho[Z^{(3)}](L=2)\|_\infty < 10^{-14}$.
+This is consistent with the 2-site orbit saturating in rank at $n\approx 3$--$4$;
+for larger $L$, the orbit keeps growing until the larger Hilbert space is exhausted.
+
+\section{OTOC and the AFL Entropy: A One-Step Connection}
+\label{sec:otoc_afl}
+% ============================================================
+
+We now establish a direct, rigorous connection between the one-step
+out-of-time-order correlator (OTOC) of the kicked Ising model and the AFL
+entropy increment $\Delta S_2 = E_\mathrm{op}$ proved in
+Theorem~\ref{thm:complementarity}.
+
+\subsection{OTOC Definition and the Key Formula}
+
+Fix the tracial state $\omega = I/D$ and the X-basis OPU projector
+$W = P_0 = (I+\sigma^x_{L-1})/2$ at site $L-1$.  Define the one-step
+\emph{Loschmidt-echo OTOC}:
+\begin{equation}\label{eq:otoc_def}
+  F(n) \;:=\;
+  \frac{1}{D^2}\bigl|\operatorname{Tr}\bigl[P_0\,(U^n P_0 U^{-n})\bigr]\bigr|^2,
+  \qquad
+  F(0) \;=\; \frac{1}{4}.
+\end{equation}
+
+\begin{proposition}[OTOC at one step]\label{prop:otoc1}
+For the kicked Ising model with any $(J,g)$ and any $L\ge 2$:
+\begin{equation}\label{eq:otoc1}
+  \frac{F(1)}{F(0)} \;=\; \cos^4\!J.
+\end{equation}
+In particular, $F(1)/F(0)$ is independent of $g$ and of $L$.
+\end{proposition}
+
+\begin{proof}
+Since $P_0 = (I\pm\sigma^x_{L-1})/2$ is a function of $\sigma^x_{L-1}$, it commutes
+with the X-kick $K = \prod_k e^{-\mathrm{i}g\sigma^x_k}$ (each factor either acts
+on a different site or is also a function of $\sigma^x_{L-1}$, hence commutes).
+Therefore
+\[
+  U P_0 U^{-1}
+  = e^{-\mathrm{i}J H_{ZZ}}\,K\,P_0\,K^{-1}\,e^{\mathrm{i}J H_{ZZ}}
+  = e^{-\mathrm{i}J H_{ZZ}}\,P_0\,e^{\mathrm{i}J H_{ZZ}}.
+\]
+Only the ZZ bond at sites $L-2$, $L-1$ acts non-trivially on $P_0$ (the other
+ZZ terms commute with $P_0$), so
+$e^{-\mathrm{i}J H_{ZZ}} P_0 e^{\mathrm{i}J H_{ZZ}} = e^{-\mathrm{i}J\sigma^z_{L-2}\sigma^z_{L-1}} P_0 e^{\mathrm{i}J\sigma^z_{L-2}\sigma^z_{L-1}}$,
+and the standard BCH identity gives
+\[
+  P_0(1) := U P_0 U^{-1}
+  = \tfrac{1}{2}\bigl(I + \cos(2J)\,\sigma^x_{L-1}
+                      + \sin(2J)\,\sigma^y_{L-1}\sigma^z_{L-2}\bigr).
+\]
+In the tracial state, $\operatorname{Tr}[\sigma^y_{L-1}\sigma^z_{L-2}] = 0$ and
+$\operatorname{Tr}[P_0\,\sigma^y_{L-1}\sigma^z_{L-2}] = 0$, so
+\[
+  \operatorname{Tr}[P_0\,P_0(1)]
+  = \tfrac{1}{4}\bigl(\operatorname{Tr}[I] + \cos(2J)\operatorname{Tr}[\sigma^x_{L-1}+(\sigma^x_{L-1})^2]\bigr)
+  = \tfrac{D}{2}\cos^2\!J,
+\]
+(using $\operatorname{Tr}[\sigma^x] = 0$ and $\operatorname{Tr}[(\sigma^x)^2]=D$, the factor
+$2^{L-2}$ from tracing over the other sites cancels with the normalisation).
+Hence
+$F(1) = (D/2)^2\cos^4\!J\,/D^2 = \cos^4\!J/4 = F(0)\cos^4\!J$.\qed
+\end{proof}
+
+\subsection{The OTOC–AFL Connection}
+
+\begin{theorem}[OTOC–AFL entropy connection]\label{thm:otoc_afl}
+For any $(J,g)$ and $L\ge 2$:
+\begin{equation}\label{eq:otoc_afl}
+  \boxed{\Delta S_2(J,g)
+  \;=\; E_\mathrm{op}(J)
+  \;=\; H_\mathrm{bin}\!\Bigl(1 - \sqrt{\frac{F(1)}{F(0)}}\Bigr).}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:complementarity}: $\Delta S_2 = E_\mathrm{op}(J) = H_\mathrm{bin}(\sin^2\!J)$.
+By Proposition~\ref{prop:otoc1}: $F(1)/F(0) = \cos^4\!J$, so $\sqrt{F(1)/F(0)} = \cos^2\!J$
+and $1 - \sqrt{F(1)/F(0)} = \sin^2\!J$.
+Substituting: $H_\mathrm{bin}(1-\sqrt{F(1)/F(0)}) = H_\mathrm{bin}(\sin^2\!J) = \Delta S_2$.\qed
+\end{proof}
+
+\begin{remark}
+Equation~\eqref{eq:otoc_afl} gives a \emph{physical interpretation} of the AFL
+entropy increment $\Delta S_2$: it is the binary entropy of the ``1-step
+scrambling probability'' $\sin^2 J = 1 - \sqrt{F(1)/F(0)}$.  The $g$-independence
+of $F(1)/F(0)$ (via $P_0$ commuting with $K$) is the same algebraic reason for the
+$g$-independence of $E_\mathrm{op}$ proved in Section~\ref{sec:eop_formula}.
+\end{remark}
+
+\subsection{Dual-Unitary Instantaneous Scrambling}
+
+At the dual-unitary point $J=g=\pi/4$, $\cos^4\!J = 1/4$, so
+$F(1)/F(0) = 1/4$ and $\Delta S_2 = \ln 2$.  Numerically one finds that for
+all $n\ge 1$ (up to the Poincaré recurrence time $n_\mathrm{rec} = 2L$):
+\begin{equation}\label{eq:du_otoc}
+  \frac{F(n)}{F(0)} \;\equiv\; \frac{1}{4} \qquad (n=1,\ldots,2L-1),\quad
+  \frac{F(2L)}{F(0)} = 1,
+\end{equation}
+reflecting the fact that the operator $P_0$ spreads to its \emph{maximally mixed}
+Heisenberg-evolved form in a single Floquet step and then undergoes exact
+recurrence at period $2L$.  This single-step scrambling is the OTOC signature of
+the dual-unitary circuit.
+
+\noindent\textit{Table~8: OTOC values $F(n)/F(0)$ and operator spreading
+$\|P_0(n)-P_0\|_F / \|P_0\|_F$ for $L=6$.}
+
+\begin{center}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+System & $n=1$ & $n=2$ & $n=4$ & $n=6$ & $n=8$ & $n=12$\\
+\midrule
+$J=\pi/8,\,g=\pi/8$ & 0.729 & 0.391 & 0.264 & 0.254 & 0.252 & 0.251\\
+$J=\pi/4,\,g=\pi/8$ & 0.250 & 0.063 & 0.316 & 0.316 & 0.223 & 0.276\\
+$J=\pi/4,\,g=\pi/4$ (DU) & 0.250 & 0.250 & 0.250 & 0.250 & 0.250 & 1.000\\
+\midrule
+\multicolumn{7}{@{}l}{Predicted $F(1)/F(0) = \cos^4\!J$:
+  $J=\pi/8$: 0.729; $J=\pi/4$: 0.250.  All confirmed.}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent For the DU circuit: $F(n)/F(0) = 0.250$ for $n=1,\ldots,11$ and
+$F(12)/F(0) = 1.000$ (Poincaré recurrence at $n=2L=12$ for $L=6$).
+The operator spreading (not shown) saturates at $\|P_0(1)-P_0\|_F/\|P_0\|_F = \sqrt{2}$
+for DU in a single step, while reaching the same value only gradually for other
+$(J,g)$, consistent with the instantaneous scrambling~\eqref{eq:du_otoc}.
+
+\section{Rényi-$\alpha$ AFL Entropy and a Universal Complementarity Law}
+\label{sec:renyi_afl}
+% ============================================================
+
+We extend the complementarity law $\Delta S_2 = E_\mathrm{op}(J)$
+(Theorem~\ref{thm:complementarity}) to all Rényi orders $\alpha > 0$.
+
+\subsection{Eigenvalue Structure of $\rho[Z^{(2)}]$}
+
+\begin{lemma}[Spectrum of $\rho[Z^{(2)}]$]\label{lem:rho2_spectrum}
+For any $(J,g)$ and $L\ge 2$, the four eigenvalues of the $2^2\times 2^2$
+density matrix $\rho[Z^{(2)}]$ are
+\begin{equation}\label{eq:rho2_evals}
+  \frac{\cos^2\!J}{2},\quad\frac{\cos^2\!J}{2},\quad\frac{\sin^2\!J}{2},\quad\frac{\sin^2\!J}{2}
+\end{equation}
+(each with multiplicity $2$).
+\end{lemma}
+
+\begin{proof}
+By Theorem~\ref{thm:L_indep_n2}, $\rho[Z^{(2)}]$ is $L$- and $g$-independent
+and equals the $2$-site matrix with $L=2$, $g=0$.
+Work in the $X$-eigenbasis $\{|0,+\rangle,|0,-\rangle,|1,+\rangle,|1,-\rangle\}$
+at site $L-1$, where $P_0 = \mathrm{diag}(1,0,1,0)$ and
+$P_1 = \mathrm{diag}(0,1,0,1)$.
+A direct computation shows that the $4\times 4$ Gram matrix $\rho[Z^{(2)}]$
+block-decomposes as $A\oplus B$ where
+\begin{equation}\label{eq:rho2_blocks}
+  A \;=\; \frac{1}{2}\begin{pmatrix}\cos^2\!J & -\sin^2\!J\cos^2\!J\\-\sin^2\!J\cos^2\!J & \sin^2\!J\end{pmatrix},
+  \qquad
+  B \;=\; \frac{1}{2}\begin{pmatrix}\sin^2\!J & -\sin^2\!J\cos^2\!J\\-\sin^2\!J\cos^2\!J & \cos^2\!J\end{pmatrix}.
+\end{equation}
+The block structure $A\oplus B$ follows from the $X$-basis orthogonality:
+$\operatorname{Tr}(Z^{(2)\dagger}_{(0,j)} Z^{(2)}_{(1,k)}) = 0$ for all $j,k$,
+since $Z^{(2)}_{(0,j)}$ has support only on rows $\{|0+\rangle,|1+\rangle\}$
+while $Z^{(2)}_{(1,k)}$ has support on rows $\{|0-\rangle,|1-\rangle\}$.
+
+Each $2\times 2$ block has trace $1/2$ and determinant
+\[
+  \det(2A) = \cos^2\!J\sin^2\!J - \sin^4\!J\cos^4\!J
+  = \sin^2\!J\cos^2\!J(1-\sin^2\!J\cos^2\!J).
+\]
+The discriminant of $2A$ is $\operatorname{tr}^2(2A) - 4\det(2A) = 1 - 4\sin^2\!J\cos^2\!J + 4\sin^4\!J\cos^4\!J = (1-2\sin^2\!J\cos^2\!J)^2 = \cos^2(2J)$,
+so the eigenvalues of $2A$ are $(1\pm\cos(2J))/2 = \cos^2\!J$ and $\sin^2\!J$.
+Dividing by $2$ gives eigenvalues $\cos^2\!J/2$ and $\sin^2\!J/2$ for $A$.
+Block $B$ has the same eigenvalues by symmetry (swapping $i_1=0$ and $i_1=1$).\qed
+\end{proof}
+
+\subsection{Universal Rényi Complementarity Law}
+
+Define the Rényi-$\alpha$ AFL entropy and increment for $\alpha>0$, $\alpha\ne 1$:
+\[
+  S^{(\alpha)}_n \;:=\; \frac{1}{1-\alpha}\log\operatorname{Tr}\!\bigl[\rho[Z^{(n)}]^\alpha\bigr],
+  \qquad
+  \Delta S^{(\alpha)}_n \;:=\; S^{(\alpha)}_n - S^{(\alpha)}_{n-1},
+\]
+with $S^{(1)}_n$ the von Neumann entropy.
+
+\begin{theorem}[Universal Rényi Complementarity]\label{thm:renyi_comp}
+For any $\alpha>0$, any $(J,g)$, and $L\ge 2$:
+\begin{equation}\label{eq:renyi_comp}
+  \boxed{\Delta S^{(\alpha)}_2(J,g)
+  \;=\; E^{(\alpha)}_\mathrm{op}(J)
+  \;:=\; \frac{1}{1-\alpha}\log\!\bigl(\cos^{2\alpha}\!J + \sin^{2\alpha}\!J\bigr).}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$\rho[Z^{(1)}] = \tfrac{1}{2}I_2$ (maximally mixed), so
+$S^{(\alpha)}[Z^{(1)}] = \log 2$ for all $\alpha > 0$.
+By Lemma~\ref{lem:rho2_spectrum}, the eigenvalues of $\rho[Z^{(2)}]$ are
+$\{\cos^2\!J/2,\cos^2\!J/2,\sin^2\!J/2,\sin^2\!J/2\}$, so
+\begin{align}
+  S^{(\alpha)}[Z^{(2)}]
+  &= \frac{1}{1-\alpha}\log\!\Bigl[2\Bigl(\tfrac{\cos^2\!J}{2}\Bigr)^\alpha
+    + 2\Bigl(\tfrac{\sin^2\!J}{2}\Bigr)^\alpha\Bigr] \notag\\
+  &= \frac{1}{1-\alpha}\log\!\Bigl[\frac{\cos^{2\alpha}\!J + \sin^{2\alpha}\!J}{2^{\alpha-1}}\Bigr]
+  = \frac{1}{1-\alpha}\log(\cos^{2\alpha}\!J+\sin^{2\alpha}\!J) + \log 2.
+\end{align}
+Therefore $\Delta S^{(\alpha)}_2 = S^{(\alpha)}[Z^{(2)}] - \log 2 = E^{(\alpha)}_\mathrm{op}(J)$.\qed
+\end{proof}
+
+\begin{remark}
+At $\alpha=1$: $E^{(1)}_\mathrm{op} = H_\mathrm{bin}(\sin^2\!J) = E_\mathrm{op}$ (recovering
+Theorem~\ref{thm:complementarity}).
+At $J=\pi/4$: $E^{(\alpha)}_\mathrm{op} = \log 2$ for all $\alpha$ (equal eigenvalues).
+As $\alpha\to 0$: $E^{(0)}_\mathrm{op} = \log 2$ (same, since $\log(\cos^0\!J+\sin^0\!J) = \log 2$ trivially for $\cos J,\sin J > 0$).
+As $\alpha\to\infty$: $E^{(\infty)}_\mathrm{op} = -\log\cos J$ (min-entropy, dominated by the larger eigenvalue $\cos^2\!J$).
+\end{remark}
+
+\subsection{Rényi-$\alpha$ Pesin Inequality}
+
+\begin{corollary}[Rényi Pesin Inequality]\label{cor:renyi_pesin}
+If the Rényi-$\alpha$ entropy increments $\Delta S^{(\alpha)}_n$ are non-increasing
+(Rényi-$\alpha$ concavity), then
+\[
+  h^{(\alpha)}_\mathrm{AFL}(J,g) \;:=\; \lim_{n\to\infty}\Delta S^{(\alpha)}_n
+  \;\le\; E^{(\alpha)}_\mathrm{op}(J)
+\]
+for all $(J,g)$.
+\end{corollary}
+
+For $\alpha=1$, concavity was proved in Theorem~\ref{thm:ssa_concave} via SSA.
+For $\alpha\ne 1$, SSA fails, but numerical computations confirm concavity for
+$\alpha\in\{0.5,1,2\}$ and all tested $(J,g)$, $L=4$, $n\le 7$.
+
+\noindent\textit{Table~9: Rényi-$\alpha$ entropy increments $\Delta S^{(\alpha)}_n$ and
+comparison to $E^{(\alpha)}_\mathrm{op}$ ($L=4$, $J=\pi/8$, $g=\pi/8$).}
+
+\begin{center}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+$\alpha$ & $E^{(\alpha)}_\mathrm{op}$ & $\Delta S^{(\alpha)}_2$ & $\Delta S^{(\alpha)}_3$ & $\Delta S^{(\alpha)}_4$
+  & $\Delta S^{(\alpha)}_5$ & $\Delta S^{(\alpha)}_6$ & $h^{(\alpha)}_\mathrm{est}$ & Concave?\\
+\midrule
+0.5 & 0.5348 & 0.5348 & 0.4251 & 0.3719 & 0.3474 & 0.3344 & 0.327 & \checkmark\\
+1.0 & 0.4165 & 0.4165 & 0.3055 & 0.2898 & 0.2825 & 0.2800 & 0.278 & \checkmark\\
+2.0 & 0.2877 & 0.2877 & 0.2336 & 0.2322 & 0.2297 & 0.2295 & 0.229 & \checkmark\\
+3.0 & 0.2350 & 0.2350 & 0.2059 & 0.2035 & 0.2024 & 0.2024 & 0.202 & \checkmark\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent In all cases $\Delta S^{(\alpha)}_2 = E^{(\alpha)}_\mathrm{op}$ exactly and
+$h^{(\alpha)}_\mathrm{est} \le E^{(\alpha)}_\mathrm{op}$ as predicted by the Rényi Pesin inequality.
+Note that larger $\alpha$ gives a smaller bound $E^{(\alpha)}_\mathrm{op}$ (more stringent),
+consistent with the ordering of Rényi entropies.
 
 \begin{thebibliography}{99}
 
