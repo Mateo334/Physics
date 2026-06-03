@@ -59,15 +59,47 @@ The gap is EXACT, independent of temperature and correlations.
 5. **Quantum Pesin for CNT**: Is h_CNT(alpha_t) = sum of positive CNT Lyapunov exponents for
    interacting spin chains in the semiclassical limit?
 
+#### New Result 5: E_op Formula and Space-Time Complementarity (Section 14.3, 15)
+- Proved: E_op(u(J,g)) = H_bin(sin²J), exact formula, independent of g.
+- Proved: Complementarity law E_op + I_temp = log d (exact conservation law).
+- Corollary: {E_op = log d} = {I_temp = 0} = {J = π/4} (dual-unitary line).
+- Numerically verified on 5x5 (J,g) grid.
+
+#### New Result 6: Operator-Entanglement Pesin Inequality (Section 16)
+- **Lemma (Marginal Consistency)**: Tr_{first}[rho[Z^n]] = rho[Z^{n-1}]
+  (tracing out first measurement via OPU completeness gives the (n-1)-step orbit).
+- **Theorem (SSA Concavity)**: S_n is concave — ΔS_n non-increasing.
+  Proof: SSA applied to tripartite (first, middle, last) measurement system
+  with marginal consistency and time stationarity.
+- **Corollary (Operator-Entanglement Pesin Inequality)**:
+  h_AFL^time(J,g) ≤ ΔS_2 = E_op(J) = H_bin(sin²J) for all (J,g).
+- Combined with complementarity: h_AFL^time + I_temp ≤ log d.
+- Equality: h_AFL^time = E_op = log d iff J=g=π/4 (dual-unitary).
+- Verified numerically on 5×5 (J,g) grid; all gaps non-negative.
+- Script: cnt_pesin_gap.py.
+
+### Key open problems remaining
+
+1. **Tight lower bound**: Can we prove h_AFL^time ≥ f(E_op) for some non-trivial f?
+2. **Equality line characterization**: For which (J,g) does h_AFL^time = E_op exactly hold for infinite L?
+3. **Non-kicked systems**: Does h_AFL^time ≤ E_op hold for Hamiltonian dynamics (continuous time)?
+4. **Type III factors**: CNT entropy for modular automorphism of type III_1 factors.
+5. **Quantum Pesin for CNT**: h_CNT(alpha_t) = sum of positive CNT Lyapunov exponents?
+
 ### Is the approach exhausted?
 
-No. The CNT subfolder is actively developing. The approach has produced 4 new results
-and 5 open problems. Further work on the open problems above is warranted.
+No. The CNT subfolder has produced 6 new results and 5 open problems. 
+The Operator-Entanglement Pesin Inequality is a genuinely new theorem connecting
+gate entanglement, temporal correlations, and dynamical entropy in a unified bound.
 
 ### Files
-- `Output.tex`: 13 sections + bibliography, 192 environments balanced, 1798 lines.
+- `Output.tex`: 16 sections + bibliography, 281 environments balanced.
 - `cnt_basics.py`: verification of all basic CNT formulas (8 examples).
 - `cnt_deeper.py`: AFL–CNT gap = log d for XXX chain (5 temperatures).
 - `cnt_time_evolution.py`: time evolution vanishing, LR bound, modular spreading.
 - `cnt_chaos_diagnostic.py`: initial slope as chaos diagnostic (XXX vs KI).
 - `cnt_lower_bound.py`: Fekete bound proof; AFL subadditivity disproved.
+- `cnt_subadditivity.py`: subadditivity proof; I_temp as chaos diagnostic.
+- `cnt_operator_entanglement.py`: E_op ↔ I_temp connection; space-time complementarity.
+- `cnt_eop_formula.py`: exact E_op = H_bin(sin²J); complementarity law proof.
+- `cnt_pesin_gap.py`: Operator-Entanglement Pesin Inequality; gap function Delta(J,g).

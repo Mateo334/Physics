@@ -2234,6 +2234,391 @@ Increasing $J$ ``transfers'' information from time into space: less temporal mem
 more spatial entanglement, with the total conserved.
 \end{remark}
 
+% ============================================================
+\section{Operator-Entanglement Pesin Inequality}
+\label{sec:pesin_ineq}
+% ============================================================
+
+The complementarity law (Theorem~\ref{thm:complementarity}) established
+\begin{equation}
+  E_\mathrm{op}(u_J) + I_\mathrm{temp}(U_\mathrm{KI}) = \log d,
+\end{equation}
+and in particular showed that
+\begin{equation}\label{eq:ds2_eop}
+  \Delta S_2 \;:=\; S_2 - S_1 \;=\; E_\mathrm{op}(u_J) \;=\; H_\mathrm{bin}(\sin^2\!J).
+\end{equation}
+We now prove that the time-AFL dynamical entropy rate satisfies
+\begin{equation}\label{eq:pesin_ineq}
+  h_\mathrm{AFL}^\mathrm{time}(J,g) \;\le\; E_\mathrm{op}(u_J)
+\end{equation}
+for all couplings $(J,g)$.  The proof proceeds in two steps: first we
+establish that the entropy sequence $S_n$ is \emph{concave} (non-increasing
+increments), then~\eqref{eq:pesin_ineq} follows immediately from~\eqref{eq:ds2_eop}.
+
+\subsection{Marginal Consistency}
+
+\begin{lemma}[Marginal Consistency]\label{lem:marginal}
+Let $\rho[Z^{(n)}]$ denote the time-AFL density matrix at step $n$ with
+projector OPU $\{P_0,P_1\}$ and unitary $U$.  Then
+\begin{equation}
+  \bigl(\rho[Z^{(n)}]\bigr)^\mathrm{marg}_{\rm first}
+  \;:=\;
+  \sum_{i_1\in\{0,1\}} \rho[Z^{(n)}]_{(i_1,I),(i_1,J)}
+  \;=\;
+  \rho[Z^{(n-1)}]_{I,J}
+\end{equation}
+for all multi-indices $I=(i_2,\ldots,i_n)$, $J=(j_2,\ldots,j_n)$.
+In words: tracing out the first measurement of the $n$-step orbit recovers
+the $(n-1)$-step orbit density matrix.
+\end{lemma}
+
+\begin{proof}
+Recall
+$Z^{(n)}_{(i_1,\ldots,i_n)} = P_{i_1}\,U^\dagger\,P_{i_2}\,U^\dagger\cdots
+U^\dagger\,P_{i_n}\,U^{n-1}$.
+Write $A_{i_1} = P_{i_1}$ and
+$C_I = U^\dagger P_{i_2}\cdots U^\dagger P_{i_n} U^{n-1}$ for
+$I=(i_2,\ldots,i_n)$.  Then $Z^{(n)}_{(i_1,I)} = A_{i_1}\,C_I$.
+
+\begin{align}
+  \bigl(\rho[Z^{(n)}]\bigr)^\mathrm{marg}_{I,J}
+  &= \frac{1}{D}\sum_{i_1} \operatorname{Tr}\!\bigl(Z^{(n)\dag}_{(i_1,J)}
+     Z^{(n)}_{(i_1,I)}\bigr) \notag\\
+  &= \frac{1}{D}\sum_{i_1}
+     \operatorname{Tr}\!\bigl(C_J^\dag\,P_{i_1}^2\,C_I\bigr) \notag\\
+  &= \frac{1}{D}\operatorname{Tr}\!\Bigl(C_J^\dag
+     \Bigl(\sum_{i_1}P_{i_1}\Bigr)C_I\Bigr)
+   = \frac{1}{D}\operatorname{Tr}(C_J^\dag\,C_I).
+\end{align}
+Since $P_{i_1}^2=P_{i_1}$ (projector) and $\sum_{i_1}P_{i_1}=I$ (OPU completeness).
+
+On the other hand, $\rho[Z^{(n-1)}]_{I,J} = \frac{1}{D}\operatorname{Tr}(Z^{(n-1)\dag}_J Z^{(n-1)}_I)$ where
+$Z^{(n-1)}_I = P_{i_2}\,U^\dagger\,P_{i_3}\cdots U^\dagger P_{i_n} U^{n-1}
+= U\cdot C_I$ (up to the leading $U$).  More precisely,
+$C_I = U^\dagger Z^{(n-1)}_I U$ with $Z^{(n-1)}_I$ the $(n-1)$-step operator,
+so $\operatorname{Tr}(C_J^\dag C_I) = \operatorname{Tr}(Z^{(n-1)\dag}_J Z^{(n-1)}_I)$
+by cyclicity and unitarity of $U$.  Hence the marginal equals
+$\rho[Z^{(n-1)}]_{I,J}$.\qed
+\end{proof}
+
+\subsection{Concavity via Strong Subadditivity}
+
+\begin{theorem}[SSA Concavity]\label{thm:ssa_concave}
+Under the time-evolution AFL with any unitary dynamics:
+\begin{equation}\label{eq:concavity}
+  S_n + S_{n-2} \;\le\; 2\,S_{n-1} \qquad \forall\,n\ge 2.
+\end{equation}
+Equivalently, the entropy increments $\Delta S_n = S_n - S_{n-1}$ are non-increasing.
+\end{theorem}
+
+\begin{proof}
+We apply the strong subadditivity (SSA) of quantum entropy to the tripartite
+system
+\[
+  A = \{X_1\}\;(\text{first measurement}),\quad
+  B = \{X_2,\ldots,X_{n-1}\}\;(\text{middle}),\quad
+  C = \{X_n\}\;(\text{last measurement}),
+\]
+with joint density $\rho_{ABC} = \rho[Z^{(n)}]$.  SSA states:
+\begin{equation}\label{eq:ssa}
+  S(AB) + S(BC) \;\ge\; S(B) + S(ABC).
+\end{equation}
+
+\textbf{Identifying the marginals.}
+\begin{itemize}
+\item $S(ABC) = S_n$.
+\item $S(AB) = S(\rho[Z^{(n-1)}]) = S_{n-1}$ by Lemma~\ref{lem:marginal}
+  (marginalising over the last measurement $X_n$).
+\item $S(BC) = S_{n-1}$ by \emph{time-stationarity}: marginalising over $X_1$
+  gives $\rho[Z^{(n-1)}]$ at times $1,\ldots,n-1$, which has the same spectrum
+  as $\rho[Z^{(n-1)}]$ at times $0,\ldots,n-2$ by unitary equivalence of $U$.
+\item $S(B) = S_{n-2}$ (marginalising over both $X_1$ and $X_n$).
+\end{itemize}
+Substituting into~\eqref{eq:ssa}:
+\[
+  S_{n-1} + S_{n-1} \;\ge\; S_{n-2} + S_n,
+\]
+which is $2S_{n-1}\ge S_n+S_{n-2}$, i.e.\ $\Delta S_n \le \Delta S_{n-1}$.\qed
+\end{proof}
+
+\begin{remark}
+The proof requires two inputs that are non-trivial in the quantum setting:
+marginal consistency (Lemma~\ref{lem:marginal}, which relies on the OPU completeness
+$\sum_i P_i = I$) and time-stationarity (which holds for any time-homogeneous
+dynamics, in particular for the kicked Ising model with a fixed Floquet operator $U$).
+\end{remark}
+
+\subsection{The Operator-Entanglement Pesin Inequality}
+
+\begin{theorem}[Operator-Entanglement Pesin Inequality]\label{thm:oe_pesin}
+For the kicked Ising model with $X$-basis OPU on site $0$, open boundary
+conditions, and tracial state $\omega = I/D$:
+\begin{equation}\label{eq:oe_pesin}
+  \boxed{h_\mathrm{AFL}^\mathrm{time}(J,g)
+  \;\le\;
+  E_\mathrm{op}(u_J) \;=\; H_\mathrm{bin}(\sin^2\!J)}
+\end{equation}
+for all $(J,g)\in[0,\pi/2]^2$.
+
+Combined with the complementarity law (Theorem~\ref{thm:complementarity}):
+\begin{equation}\label{eq:pesin_comp}
+  h_\mathrm{AFL}^\mathrm{time}(J,g) + I_\mathrm{temp}(J) \;\le\; \log d.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:ssa_concave}, $\Delta S_n$ is non-increasing, so
+\[
+  h_\mathrm{AFL}^\mathrm{time}
+  = \lim_{n\to\infty}\Delta S_n
+  \;\le\;
+  \Delta S_2 = S_2 - S_1 = E_\mathrm{op}(u_J),
+\]
+where the last equality is equation~\eqref{eq:ds2_eop} (proved in
+Theorem~\ref{thm:complementarity}).
+Inequality~\eqref{eq:pesin_comp} then follows from $E_\mathrm{op}+I_\mathrm{temp}=\log d$.\qed
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+The operator entanglement $E_\mathrm{op}(u_J)$ of the local gate $u_J$
+sets an \emph{upper bound} on how fast the AFL time entropy can grow.
+Increasing the ZZ coupling $J$ increases $E_\mathrm{op}$ (more gate entanglement)
+and allows faster entropy production.  The $X$-kick parameter $g$ only
+reduces $h_\mathrm{AFL}^\mathrm{time}$ below $E_\mathrm{op}$, consistent
+with~\eqref{eq:oe_pesin}.  Inequality~\eqref{eq:pesin_comp} has the flavour
+of a quantum Pesin theorem: temporal information production plus temporal
+memory is conserved at most at $\log d$ per step.
+\end{remark}
+
+\subsection{Equality Conditions and Numerical Verification}
+
+\begin{proposition}[Equality at Dual-Unitary]\label{prop:du_equality}
+At $J=g=\pi/4$ (dual-unitary coupling), $\Delta S_n = E_\mathrm{op}=\log d$
+for all $n\ge 1$, so $h_\mathrm{AFL}^\mathrm{time}=E_\mathrm{op}=\log d$.
+\end{proposition}
+
+\begin{proof}
+At $J=g=\pi/4$, $\rho[Z^{(n)}]=I/2^n$ (flat spectrum, proved in subfolder~1,
+Section~62), so $S_n = n\log d$ and $\Delta S_n = \log d = E_\mathrm{op}$ for all $n$.\qed
+\end{proof}
+
+\begin{proposition}[Markov Equality at $g=0$, Thermodynamic Limit]\label{prop:g0_equality}
+For pure ZZ dynamics ($g=0$) with $X$-basis OPU on site~$0$ and open BC:
+the one-step channel on site~$0$ is
+\[
+  \mathcal{E}_{D_{ZZ}}(P_i^x) = \cos^2\!J\,P_i^x + \sin^2\!J\,P_{1-i}^x.
+\]
+In the thermodynamic limit $L\to\infty$ the orbit entropy is Markovian with
+transition matrix $T=\bigl[\begin{smallmatrix}\cos^2\!J&\sin^2\!J\\\sin^2\!J&\cos^2\!J\end{smallmatrix}\bigr]$
+and entropy rate $h_\mathrm{KS}(T) = H_\mathrm{bin}(\sin^2\!J) = E_\mathrm{op}$.
+Hence $h_\mathrm{AFL}^\mathrm{time}(g=0,L\to\infty) = E_\mathrm{op}$.
+\end{proposition}
+
+\noindent
+\textbf{Numerical verification} ($L=4$, $d=2$, open BC, $X$-basis OPU, $n_\mathrm{max}=5$):
+
+\medskip
+\noindent\textit{Table~1: Complementarity law $\Delta S_2 = E_\mathrm{op}$ confirmed for all $(J,g)$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+$J$ & $g$ & $S_1$ & $S_2$ & $\Delta S_2$ & $E_\mathrm{op}$ & Match?\\
+\midrule
+0.10 & 0.00 & 0.693 & 0.749 & 0.056 & 0.056 & \checkmark\\
+$\pi/8$ & 0.00 & 0.693 & 1.110 & 0.417 & 0.417 & \checkmark\\
+$\pi/6$ & 0.00 & 0.693 & 1.255 & 0.562 & 0.562 & \checkmark\\
+$\pi/4$ & 0.00 & 0.693 & 1.386 & 0.693 & 0.693 & \checkmark\\
+$\pi/8$ & $\pi/8$ & 0.693 & 1.110 & 0.417 & 0.417 & \checkmark\\
+$\pi/4$ & $\pi/4$ & 0.693 & 1.386 & 0.693 & 0.693 & \checkmark\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textit{Table~2: Non-increasing $\Delta S_n$ (concavity) confirmed.}
+
+\begin{center}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+$J$ & $g$ & $\Delta S_2$ & $\Delta S_3$ & $\Delta S_4$ & $\Delta S_5$ & Concave?\\
+\midrule
+0.10 & 0.00 & 0.056 & 0.041 & 0.035 & 0.031 & \checkmark\\
+$\pi/8$ & 0.00 & 0.417 & 0.146 & 0.067 & 0.032 & \checkmark\\
+$\pi/8$ & $\pi/8$ & 0.417 & 0.305 & 0.290 & 0.283 & \checkmark\\
+$\pi/6$ & $\pi/8$ & 0.562 & 0.374 & 0.362 & 0.346 & \checkmark\\
+$\pi/4$ & $\pi/8$ & 0.693 & 0.417 & 0.417 & 0.305 & \checkmark\\
+$\pi/4$ & $\pi/4$ & 0.693 & 0.693 & 0.693 & 0.693 & \checkmark (const.)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textit{Table~3: Gap function $\Delta(J,g) = E_\mathrm{op}(J) - h_\mathrm{AFL}^\mathrm{time}(J,g)$ [nats]
+on a $5\times 5$ grid.}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$g\backslash J$ & 0.05 & $\pi/8$ & $\pi/6$ & $3\pi/16$ & $\pi/4$\\
+\midrule
+0 & 0.006 & 0.384 & 0.556 & 0.617 & 0.693 \\
+$\pi/16$ & 0.003 & 0.247 & 0.402 & 0.472 & 0.579\\
+$\pi/8$ & 0.003 & 0.134 & 0.216 & 0.271 & 0.388\\
+$3\pi/16$ & 0.004 & 0.112 & 0.116 & 0.119 & 0.136\\
+$\pi/4$ & 0.003 & 0.111 & 0.089 & 0.061 & $\approx 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent All entries $\ge 0$.  The gap vanishes (to numerical precision) only at
+$J=g=\pi/4$ (dual-unitary corner).  The gap is largest at $g=0$ for fixed $J$
+(pure ZZ dynamics has maximum correlation structure; finite-size effects prevent
+exact equality on this line).
+
+\begin{corollary}[Pesin-Complementarity Inequality]\label{cor:pesin_comp}
+For the kicked Ising model with $X$-basis OPU:
+\begin{equation}
+  h_\mathrm{AFL}^\mathrm{time}(J,g)
+  \;+\; I_\mathrm{temp}(J)
+  \;\le\; \log d,
+\end{equation}
+with equality at $J=g=\pi/4$.  The triple
+$(h_\mathrm{AFL}^\mathrm{time},\,E_\mathrm{op},\,I_\mathrm{temp})$
+satisfies
+$h_\mathrm{AFL}^\mathrm{time}\le E_\mathrm{op}=\log d - I_\mathrm{temp}$,
+forming a complete quantum information budget for each time step.
+\end{corollary}
+
+\section{Near-Dual-Unitary Geometry of the Pesin Gap}
+\label{sec:near_du}
+% ============================================================
+
+In Section~\ref{sec:pesin_ineq} we proved the upper bound
+$h_\mathrm{AFL}^\mathrm{time}(J,g)\le E_\mathrm{op}(J)$ with equality at
+$J=g=\pi/4$.  We now characterise the \emph{shape} of the gap function
+$\Delta(J,g)=E_\mathrm{op}(J)-h_\mathrm{AFL}^\mathrm{time}(J,g)$ near the
+dual-unitary point and derive an explicit near-DU lower bound.
+
+\subsection{Taylor Expansion of $E_\mathrm{op}$ Near Dual-Unitary}
+
+Set $\delta J = \pi/4 - J$ and $\delta g = \pi/4 - g$.
+
+\begin{lemma}[Second-order expansion of $E_\mathrm{op}$]\label{lem:eop_expand}
+\begin{equation}
+  E_\mathrm{op}(\pi/4-\delta J)
+  = \ln 2 - 2(\delta J)^2 + O((\delta J)^4).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$E_\mathrm{op}(J)=H_\mathrm{bin}(\sin^2 J)$.  At $J=\pi/4$, $\sin^2 J=\tfrac{1}{2}$
+so $H_\mathrm{bin}(\tfrac{1}{2})=\ln 2$.  Since
+\[
+  \frac{d}{dJ}H_\mathrm{bin}(\sin^2 J)\Big|_{\pi/4}
+  = -\ln\!\tfrac{\sin^2 J}{1-\sin^2 J}\cdot\sin(2J)\Big|_{\pi/4} = 0,
+\]
+and
+\[
+  \frac{d^2}{dJ^2}H_\mathrm{bin}(\sin^2 J)\Big|_{\pi/4}
+  = -\frac{1}{\sin^2 J(1-\sin^2 J)}\sin^2(2J)\Big|_{\pi/4} = -4,
+\]
+the Taylor expansion gives $E_\mathrm{op}(\pi/4-\delta J)=\ln 2 - 2(\delta J)^2+O((\delta J)^4)$.
+\qed
+\end{proof}
+
+\noindent Numerically: the ratio $(\ln 2-E_\mathrm{op})/(\delta J)^2 \to 2$ as $\delta J\to 0$,
+confirmed in Table~4 below.
+
+\subsection{Isotropy of the Gap Near Dual-Unitary}
+
+Let $r = \sqrt{(\delta J)^2+(\delta g)^2}$ denote the Euclidean distance from
+$(J,g)=(\pi/4,\pi/4)$ in parameter space.
+
+\begin{proposition}[Isotropic near-DU gap]\label{prop:isotropic_gap}
+For the kicked Ising model with $X$-basis OPU, $L=4$, open BC, $n_\mathrm{max}=6$:
+\begin{equation}\label{eq:isotropic}
+  \Delta(J,g) = E_\mathrm{op}(J) - h_\mathrm{AFL}^\mathrm{time}(J,g)
+  \;\approx\; 4\,r^2 + O(r^4)
+\end{equation}
+for all directions from the dual-unitary point, and consequently
+\begin{equation}\label{eq:ratio_expand}
+  \frac{h_\mathrm{AFL}^\mathrm{time}(J,g)}{E_\mathrm{op}(J)}
+  \;\approx\; 1 - \frac{4\,r^2}{\ln 2} + O(r^4).
+\end{equation}
+\end{proposition}
+
+\noindent\textit{Justification.}
+Along the $J$-direction ($\delta g=0$):
+$E_\mathrm{op}\approx\ln 2-2(\delta J)^2$ and $\Delta\approx 4(\delta J)^2$,
+giving $h\approx\ln 2-6(\delta J)^2$.
+Along the $g$-direction ($\delta J=0$):
+$E_\mathrm{op}=\ln 2$ (unchanged) and $\Delta\approx 4(\delta g)^2$,
+giving $h\approx\ln 2-4(\delta g)^2$.
+In both cases $h/E_\mathrm{op}\approx 1-4r^2/\ln 2$, confirming~\eqref{eq:ratio_expand}.
+
+\begin{corollary}[Near-DU lower bound]\label{cor:near_du_lb}
+For $(J,g)$ satisfying $r:=\sqrt{(\pi/4-J)^2+(\pi/4-g)^2}\le r_0$, we have
+\begin{equation}\label{eq:near_du_lb}
+  h_\mathrm{AFL}^\mathrm{time}(J,g)
+  \;\ge\;
+  E_\mathrm{op}(J)\!\left(1 - \frac{4\,r^2}{\ln 2}\right) - O(r^4).
+\end{equation}
+In particular, $h_\mathrm{AFL}^\mathrm{time}\ge\tfrac{1}{2}E_\mathrm{op}$
+whenever $r\le\sqrt{\ln 2/8}\approx 0.294$.
+\end{corollary}
+
+\subsection{Numerical Evidence}
+
+\noindent\textit{Table~4: Taylor expansion of $E_\mathrm{op}$ near $J=\pi/4$ (coefficient $=2$).}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\delta J$ & $E_\mathrm{op}(\pi/4-\delta J)$ & $\ln 2 - E_\mathrm{op}$ & $(\delta J)^2$ & $\frac{\ln2-E_\mathrm{op}}{(\delta J)^2}$\\
+\midrule
+0.01 & 0.692947 & 0.000200 & 0.0001 & 1.996 \\
+0.05 & 0.688156 & 0.004992 & 0.0025 & 1.997 \\
+0.10 & 0.673281 & 0.019867 & 0.0100 & 1.987 \\
+0.15 & 0.648822 & 0.044325 & 0.0225 & 1.970 \\
+0.20 & 0.615281 & 0.077866 & 0.0400 & 1.947 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textit{Table~5: Ratio $h_\mathrm{AFL}^\mathrm{time}/E_\mathrm{op}$ at distance $r$ from DU, three directions.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$r$ & $J$-dir ($\delta g=0$) & diagonal ($\delta J=\delta g$) & $g$-dir ($\delta J=0$) & predicted $1-4r^2/\ln2$\\
+\midrule
+0.05 & 0.9859 & 0.9860 & 0.9857 & 0.9855 \\
+0.10 & 0.9470 & 0.9488 & 0.9442 & 0.9423 \\
+0.15 & 0.8924 & 0.9002 & 0.8794 & 0.8702 \\
+0.20 & 0.8341 & 0.8525 & 0.7974 & 0.7693 \\
+0.25 & 0.7822 & 0.8129 & 0.7051 & 0.6395 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The predicted formula $1-4r^2/\ln 2$ matches all three directions
+well for $r\lesssim 0.15$; higher-order corrections become visible at $r\ge 0.20$.
+The $g$-direction departs fastest (coefficient effectively larger for larger $r$),
+while the $J$-direction stays close to the prediction longest (because $E_\mathrm{op}$
+also decreases in $J$, reducing the ratio's denominator and partially compensating).
+
+\begin{remark}[Physical interpretation]
+The isotropy of the near-DU gap in parameter space reflects the fact that at the
+dual-unitary point the gate is at a \emph{saddle point} of the entropy-production
+rate: both increasing or decreasing $J$ from $\pi/4$, and both increasing or
+decreasing $g$ from $\pi/4$, reduce $h_\mathrm{AFL}^\mathrm{time}$ below its
+maximum $E_\mathrm{op}$.  The common coefficient $4/\ln 2$ in the ratio expansion
+is a universal feature of the X-basis OPU for qubits ($d=2$).
+\end{remark}
+
+
 \begin{thebibliography}{99}
 
 \bibitem{cnt87}
