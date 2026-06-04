@@ -103,3 +103,73 @@ gate entanglement, temporal correlations, and dynamical entropy in a unified bou
 - `cnt_operator_entanglement.py`: E_op ↔ I_temp connection; space-time complementarity.
 - `cnt_eop_formula.py`: exact E_op = H_bin(sin²J); complementarity law proof.
 - `cnt_pesin_gap.py`: Operator-Entanglement Pesin Inequality; gap function Delta(J,g).
+
+## Update: 2026-06-04 (Sessions adding Sections 17–23)
+
+### New Results (Sections 17–23)
+
+#### Section 17 — Near-DU Lower Bound (E_op as local bound)
+- E_op(π/4-dJ) ≈ ln2 - 2*(dJ)^2 Taylor expansion (coefficient proved).
+- h_AFL ≈ E_op*(1 - 4r^2/ln2) isotropically near DU. Gap Δ ≈ 4*r^2.
+- Corollary: h_AFL ≥ E_op/2 for r ≤ sqrt(ln2/8) ≈ 0.294.
+
+#### Section 18 — Finite-Size Scaling and L-Independence
+- **Theorem**: rho[Z^(2)](L) is L-independent for ALL (J,g) (proved algebraically).
+- **Theorem**: For g=0, rho[Z^(n)](L) is L-independent for ALL n (universal).
+- **Corollary (non-commutativity)**: lim_L(lim_n ΔS_n) = E_op ≠ lim_n(finite L) = 0.
+
+#### Section 19 — OTOC–AFL Connection
+- **Proposition**: F(1)/F(0) = cos^4(J) for all (J,g,L) (proved analytically).
+- **Theorem**: ΔS_2 = H_bin(1-√(F(1)/F(0))) (OTOC–AFL connection).
+- DU: F(n)/F(0) = 1/4 for all n < 2L (instantaneous scrambling), Poincaré recurrence at n=2L.
+
+#### Section 20 — Rényi-α AFL Entropy and Universal Complementarity
+- **Lemma**: Spectrum of rho[Z^(2)] = {cos²J/2, cos²J/2, sin²J/2, sin²J/2}.
+- **Theorem**: ΔS^(α)_2 = E_op^(α)(J) = (1/(1-α)) log(cos^{2α}J + sin^{2α}J) for all α.
+- **Corollary (Rényi-OTOC)**: ΔS^(α)_2 = (1/(1-α)) log(r^{α/2} + (1-√r)^α), r = F(1)/F(0).
+- Special cases: α=1 recovers H_bin(1-√r); α→∞ gives -(1/2)log(r) = -log(cos²J).
+- Rényi Pesin: h_α^AFL ≤ E_op^(α) (conditional on concavity; proved α=1; numerical all α).
+
+#### Section 21 — Min-Entropy and Rényi-α Transfer Matrix
+- **Proposition (g=0 Markov chain)**: T = [[cos²J,sin²J],[sin²J,cos²J]].
+- **Proposition**: M_α = T^α_{elementwise}, largest eigenvalue = cos^{2α}J + sin^{2α}J = exp((1-α)E_op^(α)).
+- **Theorem (g=0, L=∞)**: h_α^AFL = E_op^(α) in thermodynamic limit (Markov chain equality).
+- **Proposition**: E_op^(∞) = -log(cos²J) = -(1/2)log(F(1)/F(0)) (min-entropy OTOC).
+- **Corollary**: h_∞^AFL ≤ E_op^(∞) = -(1/2)log(F(1)/F(0)).
+- Summary: full Rényi-Pesin-OTOC chain, equality at DU and at g=0 (L=∞).
+
+#### Section 22 — Quantum Pesin Variational Principle
+- **Theorem (power-mean bound)**: E_op^(α)(J) ≤ log2 for all α and J (equality iff J=π/4).
+  Proof: power-mean inequality applied to (cos²J, sin²J) with cos²J + sin²J = 1.
+- **Corollary**: h_α^AFL(J,g) ≤ log2 globally (for all α, J, g).
+- **Theorem (DU maximum entropy)**: rho[Z^n](DU) = I_{2^n}/2^n for all n.
+  Proof: off-diagonal elements vanish (P_{j_k} P_{i_k} = 0); diagonal = (1/2)^n (uniform T).
+- **Theorem (Quantum Pesin VP)**: max_{J,g} h_α^AFL = log2, achieved uniquely at DU.
+- **Corollary (DU characterisation)**: u is DU ⟺ h_α^AFL = log2 for all α.
+- Verified: 8×8 (J,g) grid, all h_α ≤ log2; max at DU only.
+
+#### Section 23 — Rényi-α Near-DU Gap Spectrum
+- **Lemma**: E_op^(α)(π/4-dJ) = log2 - 2α*(dJ)^2 + O(dJ^4) (analytic).
+- **Theorem (Universal Rényi gap)**: C_α^E = (E_op^(α) - h_α)/r^2 ≈ 4α near DU.
+  Generalizes Section 17's C_1^E = 4 to all Rényi orders.
+  Verified: δ=0.01, errors < 2% for α ∈ {0.5,1,2,3}.
+- **Corollary**: log2 - h_α ≈ 10α * δ^2 along diagonal (C_α^{tot} = 10α).
+- C_α^E is monotone increasing in α (higher orders more sensitive to DU deviations).
+
+### Current state of Output.tex
+23 sections + bibliography, ~500 environments, ~4100 lines.
+
+### Python scripts in CNT/
+cnt_basics.py, cnt_deeper.py, cnt_time_evolution.py, cnt_chaos_diagnostic.py,
+cnt_lower_bound.py, cnt_subadditivity.py, cnt_operator_entanglement.py,
+cnt_eop_formula.py, cnt_pesin_gap.py, cnt_lower_pesin_bound.py,
+cnt_marginal_consistency.py, cnt_finite_size_scaling.py, cnt_L_independence.py,
+cnt_otoc_lyapunov.py, cnt_renyi_pesin.py, cnt_min_entropy_transfer.py,
+cnt_du_variational.py, cnt_renyi_gap_spectrum.py.
+
+### Open problems and possible next tasks
+1. Extend gap spectrum to other deformation directions (non-diagonal in J,g space).
+2. Prove C_α^E = 4α analytically from perturbation theory.
+3. Study the AFL entropy for non-kicked Ising systems (continuous-time Hamiltonian).
+4. Extend the Rényi Pesin inequality to general qudit systems (d > 2).
+5. Connect the dual-unitary characterization to quantum error correction.

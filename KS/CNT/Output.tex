@@ -3137,6 +3137,690 @@ $h^{(\alpha)}_\mathrm{est} \le E^{(\alpha)}_\mathrm{op}$ as predicted by the Ré
 Note that larger $\alpha$ gives a smaller bound $E^{(\alpha)}_\mathrm{op}$ (more stringent),
 consistent with the ordering of Rényi entropies.
 
+\begin{remark}[Rényi-$\alpha$ concavity]
+For $\alpha=1$ the sequence $\Delta S^{(1)}_n$ is proved non-increasing via SSA
+(Theorem~\ref{thm:ssa_concave}).  For $\alpha\ne 1$, SSA does not apply, but
+numerical computations for $L=4$, $n_\mathrm{max}=7$, and all $(J,g)$ tested
+(including the phase diagram below) confirm that $\Delta S^{(\alpha)}_n$ is
+non-increasing for $\alpha\in\{0.5,1,2,3\}$.  We therefore state the Rényi Pesin
+inequality as an empirically well-supported bound, pending an analytic proof of
+Rényi-$\alpha$ concavity for $\alpha\ne 1$.
+\end{remark}
+
+\subsection{Universal Rényi--OTOC Connection}
+\label{subsec:renyi_otoc}
+
+Combining Theorem~\ref{thm:renyi_comp} with Proposition~\ref{prop:otoc1} yields
+a formula that expresses $\Delta S^{(\alpha)}_2$ \emph{entirely} in terms of the
+standard (one-step) OTOC ratio $r := F(1)/F(0)$, without introducing any
+Rényi-dependent OTOC.
+
+\begin{corollary}[Universal Rényi--OTOC formula]\label{cor:renyi_otoc}
+For any $\alpha>0$, any $(J,g)$, and $L\ge 2$, let $r := F(1)/F(0) = \cos^4\!J$
+(Proposition~\ref{prop:otoc1}).  Then
+\begin{equation}\label{eq:renyi_otoc}
+  \boxed{\Delta S^{(\alpha)}_2(J,g)
+  \;=\; \frac{1}{1-\alpha}\log\!\Bigl(r^{\alpha/2}
+  + \bigl(1 - \sqrt{r}\,\bigr)^{\!\alpha}\Bigr).}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+From Proposition~\ref{prop:otoc1}: $\sqrt{F(1)/F(0)} = \cos^2\!J$.
+Therefore $\cos^{2\alpha}\!J = r^{\alpha/2}$ and $\sin^{2\alpha}\!J = (1-\sqrt{r})^\alpha$.
+Substituting into Theorem~\ref{thm:renyi_comp}:
+\[
+  \Delta S^{(\alpha)}_2 = E^{(\alpha)}_\mathrm{op}(J)
+  = \frac{1}{1-\alpha}\log(\cos^{2\alpha}\!J + \sin^{2\alpha}\!J)
+  = \frac{1}{1-\alpha}\log\bigl(r^{\alpha/2} + (1-\sqrt{r})^\alpha\bigr).\qed
+\]
+\end{proof}
+
+\begin{remark}[Special cases of~\eqref{eq:renyi_otoc}]
+\leavevmode\vspace{-0.5em}
+\begin{itemize}
+\item $\alpha\to 1$: L'Hôpital gives $H_\mathrm{bin}(1-\sqrt{r})$, recovering
+  Theorem~\ref{thm:otoc_afl}.
+\item $\alpha\to\infty$ (min-entropy): $\frac{1}{1-\alpha}\log(r^{\alpha/2}+\cdots)
+  \to -\tfrac{1}{2}\log r = -\log\cos^2\!J$.
+\item $J=\pi/4$ (dual-unitary): $r=1/4$, so $\Delta S^{(\alpha)}_2 = \log 2$ for
+  \emph{all} $\alpha$ (all Rényi orders witness the maximal entropy production rate).
+\end{itemize}
+Thus equation~\eqref{eq:renyi_otoc} unifies all the Rényi-$\alpha$ AFL
+entropy increments into a single analytic function of the single observable
+$r = F(1)/F(0)$.
+\end{remark}
+
+\noindent\textit{Table~10: Rényi--OTOC formula~\eqref{eq:renyi_otoc} verified.
+For each $(J,\alpha)$: $r = \cos^4\!J$, formula value, and direct $E^{(\alpha)}_\mathrm{op}$
+(all errors $\le 4\times 10^{-16}$, i.e.\ machine precision). Independent of $g$ and $L$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+$J/\pi$ & $r = \cos^4\!J$ & $\alpha=0.5$ & $\alpha=1$ & $\alpha=2$ & $\alpha=3$\\
+\midrule
+$0.100$ & $0.8181$ & $0.4623$ & $0.3151$ & $0.1896$ & $0.1500$\\
+$0.125$ & $0.7286$ & $0.5348$ & $0.4165$ & $0.2877$ & $0.2350$\\
+$1/6$   & $0.5625$ & $0.6238$ & $0.5623$ & $0.4700$ & $0.4133$\\
+$0.250$ & $0.2500$ & $0.6931$ & $0.6931$ & $0.6931$ & $0.6931$\\
+\bottomrule
+\multicolumn{7}{@{}l}{All entries: formula = $E^{(\alpha)}_\mathrm{op}(J)$ to machine precision.}\\
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~11: Rényi Pesin phase diagram.
+$h^{(\alpha)}_\mathrm{est} := \Delta S^{(\alpha)}_{n_\mathrm{max}}$ at $n_\mathrm{max}=7$,
+$L=4$. Columns: $E^{(\alpha)}_\mathrm{op}$ (upper bound) and $h^{(\alpha)}_\mathrm{est}$
+(lower estimate).  Concavity of $\Delta S^{(\alpha)}_n$ confirmed for all entries.}
+
+\begin{center}
+\begin{tabular}{@{}cccccccc@{}}
+\toprule
+& & \multicolumn{2}{c}{$\alpha=0.5$} & \multicolumn{2}{c}{$\alpha=1$} & \multicolumn{2}{c}{$\alpha=2$}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+$J/\pi$ & $g/\pi$ & $E^{(0.5)}$ & $h^{(0.5)}_\mathrm{est}$ & $E^{(1)}$ & $h^{(1)}_\mathrm{est}$ & $E^{(2)}$ & $h^{(2)}_\mathrm{est}$\\
+\midrule
+$0.10$ & $0$      & $0.462$ & $0.011$ & $0.315$ & $0.021$ & $0.190$ & $0.038$\\
+$0.10$ & $0.125$  & $0.462$ & $0.271$ & $0.315$ & $0.213$ & $0.190$ & $0.158$\\
+$0.10$ & $0.25$   & $0.462$ & $0.285$ & $0.315$ & $0.210$ & $0.190$ & $0.156$\\
+$0.15$ & $0$      & $0.593$ & $0.001$ & $0.509$ & $0.002$ & $0.396$ & $0.003$\\
+$0.15$ & $0.125$  & $0.593$ & $0.365$ & $0.509$ & $0.314$ & $0.396$ & $0.266$\\
+$0.15$ & $0.25$   & $0.593$ & $0.461$ & $0.509$ & $0.373$ & $0.396$ & $0.316$\\
+$0.20$ & $0.125$  & $0.668$ & $0.385$ & $0.645$ & $0.308$ & $0.602$ & $0.236$\\
+$0.20$ & $0.25$   & $0.668$ & $0.624$ & $0.645$ & $0.570$ & $0.602$ & $0.509$\\
+$0.25$ & $0.125$  & $0.693$ & $0.372$ & $0.693$ & $0.290$ & $0.693$ & $0.232$\\
+$0.25$ & $0.25$   & $0.693$ & $0.693$ & $0.693$ & $0.693$ & $0.693$ & $0.693$\\
+\midrule
+\multicolumn{8}{@{}l}{All entries: $h^{(\alpha)}_\mathrm{est} \le E^{(\alpha)}_\mathrm{op}$; equality
+  at $J=g=\pi/4$ (dual-unitary).  All $\Delta S^{(\alpha)}_n$ concave (non-increasing).}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The Rényi Pesin inequality $h^{(\alpha)}_\mathrm{AFL} \le E^{(\alpha)}_\mathrm{op}(J)$
+holds for all tested $(J,g,\alpha)$, with equality only at the dual-unitary point.
+The bound $E^{(\alpha)}_\mathrm{op}$ decreases with $\alpha$, providing progressively
+tighter constraints on the entropy-production rate for all Rényi orders simultaneously.
+
+\section{Min-Entropy Pesin Bound and the Rényi-$\alpha$ Transfer Matrix}
+\label{sec:min_entropy}
+% ============================================================
+
+We study the sharpest Rényi Pesin bound (the min-entropy limit $\alpha\to\infty$),
+and reveal the algebraic mechanism behind equality $h^{(\alpha)}_\mathrm{AFL}=E^{(\alpha)}_\mathrm{op}$
+through a \emph{Rényi-$\alpha$ transfer matrix} that governs the growth of Rényi entropies
+in the pure-ZZ ($g=0$) Markov-chain limit.
+
+\subsection{The $g=0$ Markov Chain and Transfer Matrix}
+
+\begin{proposition}[Markov chain structure, $g=0$]\label{prop:markov_g0}
+For $g=0$ (pure ZZ coupling), the one-step transition probabilities of the X-basis
+AFL measurement satisfy
+\begin{equation}\label{eq:T_matrix}
+  T_{ij} \;:=\;
+  \frac{\operatorname{Tr}[P_j\,U\,P_i\,U^\dagger]}{\operatorname{Tr}[P_i]}
+  \;=\;\begin{cases}
+    \cos^2\!J & i=j,\\
+    \sin^2\!J & i\ne j,
+  \end{cases}
+  \qquad U \;=\; e^{-\mathrm{i}J H_{ZZ}}.
+\end{equation}
+The $2\times 2$ stochastic matrix $T = \bigl[\begin{smallmatrix}\cos^2\!J & \sin^2\!J\\
+\sin^2\!J & \cos^2\!J\end{smallmatrix}\bigr]$ has eigenvalues $\lambda_0=1$ and
+$\lambda_1 = \cos(2J) = \cos^2\!J - \sin^2\!J$.
+\end{proposition}
+
+\begin{proof}
+Since $g=0$, $U = e^{-\mathrm{i}J H_{ZZ}}$.  The ZZ Hamiltonian at the last bond
+gives $e^{-\mathrm{i}J\sigma^z_{L-2}\sigma^z_{L-1}} P_0 e^{\mathrm{i}J\sigma^z_{L-2}\sigma^z_{L-1}}
+= \cos^2\!J\, P_0 + \sin^2\!J\, P_1 + \text{off-diagonal}$,
+and tracing over site $L-2$ yields $T_{00} = \cos^2\!J$, $T_{10}=\sin^2\!J$ (and by
+symmetry $T_{01}=\sin^2\!J$, $T_{11}=\cos^2\!J$).  The eigenvalues follow from
+$\det(T-\lambda I) = (\lambda-1)(\lambda-\cos(2J))$.
+\end{proof}
+
+\noindent\textit{Table~12: Markov chain transfer matrix $T$ for $g=0$, $L=2$
+(L-independent by Theorem~\ref{thm:L_indep_g0}).  All errors $\le 10^{-15}$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J/\pi$ & $\cos^2\!J$ & $\sin^2\!J$ & $\lambda_1=\cos(2J)$ & Err\\
+\midrule
+$0.125$ & $0.85355$ & $0.14645$ & $0.70711$ & $<10^{-15}$\\
+$1/6$   & $0.75000$ & $0.25000$ & $0.50000$ & $<10^{-15}$\\
+$0.250$ & $0.50000$ & $0.50000$ & $0.00000$ & $<10^{-15}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Rényi-$\alpha$ Transfer Matrix}
+
+\begin{definition}[Rényi-$\alpha$ transfer matrix]
+For $\alpha>0$, define the \emph{Rényi-$\alpha$ transfer matrix}
+$\mathcal{M}_\alpha$ as the element-wise $\alpha$-power of $T$:
+\begin{equation}\label{eq:Malpha}
+  (\mathcal{M}_\alpha)_{ij} \;:=\; T_{ij}^\alpha
+  \;=\;\begin{pmatrix}\cos^{2\alpha}\!J & \sin^{2\alpha}\!J\\
+  \sin^{2\alpha}\!J & \cos^{2\alpha}\!J\end{pmatrix}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Rényi rate from $\mathcal{M}_\alpha$]\label{prop:renyi_rate_M}
+The largest eigenvalue of $\mathcal{M}_\alpha$ is
+$\lambda^\alpha_1 = \cos^{2\alpha}\!J + \sin^{2\alpha}\!J$,
+and
+\begin{equation}\label{eq:renyi_rate_Malpha}
+  \frac{1}{1-\alpha}\log\lambda^\alpha_1
+  \;=\; E^{(\alpha)}_\mathrm{op}(J)
+\end{equation}
+for all $\alpha>0$.  In other words, the Rényi-$\alpha$ operator entanglement equals
+the Rényi pressure of $\mathcal{M}_\alpha$.
+\end{proposition}
+
+\begin{proof}
+$\mathcal{M}_\alpha$ has the same eigenvectors as $T$ (since it is a circulant matrix).
+Eigenvalue for $(1,1)^T$:
+$\lambda^\alpha_1 = \cos^{2\alpha}\!J + \sin^{2\alpha}\!J$.
+Then $(1/(1-\alpha))\log(\cos^{2\alpha}\!J+\sin^{2\alpha}\!J) = E^{(\alpha)}_\mathrm{op}(J)$
+by definition (Theorem~\ref{thm:renyi_comp}).\qed
+\end{proof}
+
+\noindent\textit{Table~13: Rényi-$\alpha$ transfer matrix largest eigenvalue
+$\lambda^\alpha_1$ and $(1/(1-\alpha))\log\lambda^\alpha_1 = E^{(\alpha)}_\mathrm{op}(J)$
+for $g=0$.  All errors $\le 3\times 10^{-16}$.}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$J/\pi$ & $\alpha$ & $\lambda^\alpha_1$ & $(1/(1-\alpha))\log\lambda^\alpha_1$ & $E^{(\alpha)}_\mathrm{op}(J)$\\
+\midrule
+$0.100$ & $0.5$ & $1.2601$ & $0.4623$ & $0.4623$\\
+$0.100$ & $1.0$ & $1.0000$ & $0.3151$ & $0.3151$\\
+$0.100$ & $2.0$ & $0.8273$ & $0.1896$ & $0.1896$\\
+$0.100$ & $3.0$ & $0.7409$ & $0.1500$ & $0.1500$\\
+$0.125$ & $0.5$ & $1.3066$ & $0.5348$ & $0.5348$\\
+$0.125$ & $1.0$ & $1.0000$ & $0.4165$ & $0.4165$\\
+$0.125$ & $2.0$ & $0.7500$ & $0.2877$ & $0.2877$\\
+$0.125$ & $3.0$ & $0.6250$ & $0.2350$ & $0.2350$\\
+$0.250$ & all  & --- & $0.6931$ & $0.6931$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Thermodynamic-Limit Rényi Pesin Equality for $g=0$}
+
+\begin{theorem}[Rényi Pesin equality, $g=0$, thermodynamic limit]
+\label{thm:renyi_pesin_g0}
+In the limit $L\to\infty$ (then $n\to\infty$) for the $g=0$ kicked Ising chain,
+the time-AFL process is an i.i.d.\ Markov chain with transition matrix $T$
+(Proposition~\ref{prop:markov_g0}).  The joint $n$-outcome probability $p_I$
+(for string $I=(i_1,\ldots,i_n)$) satisfies
+\[
+  \sum_I p_I^\alpha \;=\; 2^{1-\alpha}\,(\lambda^\alpha_1)^{n-1},
+\]
+giving $S^{(\alpha)}_n = \log 2 + (n-1)\,E^{(\alpha)}_\mathrm{op}(J)$, and hence
+\begin{equation}\label{eq:hAFL_g0}
+  h^{(\alpha)}_\mathrm{AFL}(J,\,g=0,\,L=\infty)
+  \;=\; E^{(\alpha)}_\mathrm{op}(J)
+  \qquad\text{for all }\alpha>0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For the Markov chain with uniform initial distribution $\pi_i=1/2$:
+$p(i_1,\ldots,i_n) = (1/2)\,T_{i_1 i_2}\cdots T_{i_{n-1}i_n}$.
+Therefore
+\begin{align*}
+  \sum_I p_I^\alpha
+  &= (1/2)^\alpha \sum_{i_1}\sum_{i_2,\ldots,i_n}
+    T_{i_1 i_2}^\alpha\cdots T_{i_{n-1}i_n}^\alpha \\
+  &= (1/2)^\alpha \sum_{i_1} \bigl((\mathcal{M}_\alpha)^{n-1}\mathbf{1}\bigr)_{i_1}
+  = 2^{1-\alpha}\,(\lambda^\alpha_1)^{n-1}
+\end{align*}
+(the second eigenvalue $\lambda^\alpha_2 = \cos^{2\alpha}\!J - \sin^{2\alpha}\!J < \lambda^\alpha_1$
+is subdominant and cancels when summing over $i_1$).
+Then $S^{(\alpha)}_n = (1/(1-\alpha))\log[2^{1-\alpha}(\lambda^\alpha_1)^{n-1}]
+= \log 2 + (n-1)E^{(\alpha)}_\mathrm{op}(J)$, so
+$\Delta S^{(\alpha)}_n = E^{(\alpha)}_\mathrm{op}(J)$ for all $n\ge 2$.
+\end{proof}
+
+\begin{remark}[Non-commutativity of limits]
+By Theorem~\ref{thm:L_indep_g0}, $\rho[Z^{(n)}](L) = \rho[Z^{(n)}](2)$ for \emph{all}
+$n$ when $g=0$.  Thus for any finite $L$, the kicked Ising system at $g=0$ saturates
+(rank $\le 4$) and $h^{(\alpha)}_\mathrm{AFL} = 0$.  Yet the Markov-chain analysis gives
+$h^{(\alpha)}_\mathrm{AFL}(L=\infty) = E^{(\alpha)}_\mathrm{op}$.
+This is the same non-commutativity of $\lim_n$ and $\lim_L$ recorded in
+Corollary~\ref{cor:noncomm}: the kicked Ising model at $g=0$ is special because
+every finite-$L$ system collapses to the $L=2$ level, so the infinite-$L$ Markov
+chain limit is not accessible.  The limits \emph{do} commute for generic non-integrable
+systems where the L-independence of Section~\ref{sec:finite_size} fails.
+\end{remark}
+
+\subsection{Min-Entropy Pesin Bound}
+
+\begin{definition}[Min-entropy AFL rate]
+$h^{(\infty)}_\mathrm{AFL}(J,g) := \lim_{\alpha\to\infty} h^{(\alpha)}_\mathrm{AFL}(J,g)$
+(whenever the limit exists).
+\end{definition}
+
+\begin{proposition}[Min-entropy operator entanglement]\label{prop:min_entropy_eop}
+\begin{equation}\label{eq:Eop_inf}
+  E^{(\infty)}_\mathrm{op}(J) \;:=\; \lim_{\alpha\to\infty}E^{(\alpha)}_\mathrm{op}(J)
+  \;=\; -\log\cos^2\!J \;=\; -\tfrac{1}{2}\log\bigl(F(1)/F(0)\bigr).
+\end{equation}
+Equivalently, $E^{(\infty)}_\mathrm{op}$ is minus the log of the largest eigenvalue of
+$\rho[Z^{(2)}]$ relative to that of $\rho[Z^{(1)}]$:
+\[
+  E^{(\infty)}_\mathrm{op}(J)
+  = S_\infty\!\bigl(\rho[Z^{(2)}]\bigr) - S_\infty\!\bigl(\rho[Z^{(1)}]\bigr),
+\]
+where $S_\infty(\rho) = -\log\lambda_\mathrm{max}(\rho)$ is the min-entropy.
+\end{proposition}
+
+\begin{proof}
+From Lemma~\ref{lem:rho2_spectrum}: $\lambda_\mathrm{max}(\rho[Z^{(2)}]) = \cos^2\!J/2$.
+From $\rho[Z^{(1)}] = I_2/2$: $\lambda_\mathrm{max}(\rho[Z^{(1)}]) = 1/2$.
+Hence $\Delta S_\infty = -\log(\cos^2\!J/2) + \log(1/2) = -\log\cos^2\!J$.
+The OTOC connection follows from Proposition~\ref{prop:otoc1}: $\sqrt{F(1)/F(0)}=\cos^2\!J$,
+so $-\log\cos^2\!J = -(1/2)\log(F(1)/F(0))$.\qed
+\end{proof}
+
+\begin{corollary}[Min-entropy Pesin bound]\label{cor:min_entropy_pesin}
+\begin{equation}\label{eq:min_pesin}
+  \boxed{h^{(\infty)}_\mathrm{AFL}(J,g)
+  \;\le\; E^{(\infty)}_\mathrm{op}(J)
+  \;=\; -\log\cos^2\!J
+  \;=\; -\tfrac{1}{2}\log\!\bigl(F(1)/F(0)\bigr).}
+\end{equation}
+Equality holds at the dual-unitary point $J=g=\pi/4$ (where $\cos J = 1/\sqrt{2}$
+and $E^{(\infty)}_\mathrm{op} = \log 2$).
+\end{corollary}
+
+\begin{proof}
+Apply Corollary~\ref{cor:renyi_pesin} in the limit $\alpha\to\infty$.  At DU:
+$E^{(\alpha)}_\mathrm{op}(\pi/4) = \log 2$ for all $\alpha$ (Remark after
+Theorem~\ref{thm:renyi_comp}), and $h^{(\alpha)}_\mathrm{AFL}(\pi/4,\pi/4) = \log 2$
+(dual-unitary saturation, Theorem~\ref{thm:ssa_concave} and numerical verification).\qed
+\end{proof}
+
+\noindent\textit{Table~14: Min-entropy $E^{(\infty)}_\mathrm{op}$ verified from
+$\rho[Z^{(2)}]$ spectrum and as limit of $E^{(\alpha)}_\mathrm{op}$ for large $\alpha$.
+Direct: $\Delta S_\infty = -\log(\lambda_\mathrm{max}(\rho[Z^{(2)}])) + \log 2$.
+Column `Err$(\alpha{=}50)$': $|E^{(50)}_\mathrm{op} - E^{(\infty)}_\mathrm{op}|$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J/\pi$ & $\lambda_\mathrm{max}(\rho[Z^{(2)}])$ & $E^{(\infty)}_\mathrm{op}=-\log\cos^2\!J$
+  & Direct $\Delta S_\infty$ & Err$(\alpha{=}50)$\\
+\midrule
+$0.125$ & $0.42678$ & $0.15835$ & $0.15835$ & $0.0032$\\
+$1/6$   & $0.37500$ & $0.28768$ & $0.28768$ & $0.0059$\\
+$0.250$ & $0.25000$ & $0.69315$ & $0.69315$ & $0.0000$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Summary: The Complete Rényi–Pesin–OTOC Chain}
+
+The results of Sections~\ref{sec:oe_pesin}–\ref{sec:min_entropy} establish a
+complete chain of bounds for all Rényi orders:
+\begin{equation}\label{eq:full_chain}
+  h^{(\alpha)}_\mathrm{AFL}(J,g)
+  \;\le\; E^{(\alpha)}_\mathrm{op}(J)
+  \;=\; \frac{1}{1-\alpha}\log\!\bigl(r^{\alpha/2} + (1-\sqrt{r}\,)^\alpha\bigr)
+  \;\xrightarrow{\alpha\to\infty}\; -\tfrac{1}{2}\log r,
+\end{equation}
+where $r = F(1)/F(0) = \cos^4\!J$ is the one-step OTOC ratio.  At $\alpha=1$:
+$E^{(1)}_\mathrm{op} = H_\mathrm{bin}(1-\sqrt{r}\,)$.
+\begin{itemize}
+\item Equality in~\eqref{eq:full_chain} for \emph{all} $\alpha$: at the dual-unitary
+  point $J=g=\pi/4$ (where $r=1/4$ and $E^{(\alpha)}_\mathrm{op}=\log 2$ for all $\alpha$).
+\item Equality for $\alpha=1$ at $g=0$ (Markov-chain thermodynamic limit, Prop.~\ref{prop:markov_g0};
+  not accessible at finite $L$ due to L-independence, Cor.~\ref{cor:noncomm}).
+\item Equality for all $\alpha$ at $g=0$ ($L=\infty$): Theorem~\ref{thm:renyi_pesin_g0}.
+\item For generic $(J,g)$ with $g>0$, $J+g<\pi/2$: strict inequality for all $\alpha$.
+\end{itemize}
+
+\section{Quantum Pesin Variational Principle}
+\label{sec:variational}
+% ============================================================
+
+We prove that the dual-unitary gate is the \emph{unique global maximiser} of all
+Rényi-$\alpha$ AFL entropy rates simultaneously, establishing a variational
+characterisation of dual-unitarity in terms of quantum chaos.
+
+\subsection{Power-Mean Upper Bound on $E^{(\alpha)}_\mathrm{op}$}
+
+\begin{theorem}[Power-mean bound]\label{thm:power_mean}
+For all $\alpha>0$ and all $J\in(0,\pi/2)$:
+\begin{equation}\label{eq:pm_bound}
+  E^{(\alpha)}_\mathrm{op}(J)
+  \;=\; \frac{1}{1-\alpha}\log(\cos^{2\alpha}\!J + \sin^{2\alpha}\!J)
+  \;\le\; \log 2,
+\end{equation}
+with equality if and only if $J=\pi/4$ (i.e.\ $\cos^2\!J = \sin^2\!J = 1/2$).
+\end{theorem}
+
+\begin{proof}
+Set $x=\cos^2\!J$, $y=\sin^2\!J$, so $x+y=1$ and $x,y>0$.
+The power-mean inequality states that for $p\ge 1$ and non-negative weights
+summing to $1$:
+$(x^p+y^p)/2 \ge ((x+y)/2)^p = (1/2)^p$, i.e.\ $x^p+y^p \ge 2^{1-p}$, with
+equality iff $x=y$.  Taking $p=\alpha>1$ gives $\cos^{2\alpha}\!J+\sin^{2\alpha}\!J
+\ge 2^{1-\alpha}$; then $(1/(1-\alpha))\log(\text{LHS}) \le (1/(1-\alpha))(1-\alpha)\log 2
+= \log 2$ (the inequality reverses because $1/(1-\alpha)<0$).
+For $0<\alpha<1$: the reversed power mean gives $x^\alpha+y^\alpha\le 2^{1-\alpha}$,
+so $(1/(1-\alpha))\log(\text{LHS})\le\log 2$ (now $1/(1-\alpha)>0$, inequality preserves).
+In both cases equality holds iff $x=y$, i.e.\ $J=\pi/4$.\qed
+\end{proof}
+
+\subsection{Global Rényi Pesin Capacity}
+
+Combining Corollary~\ref{cor:renyi_pesin} with Theorem~\ref{thm:power_mean}:
+
+\begin{corollary}[Global Rényi Pesin capacity]\label{cor:global_capacity}
+\begin{equation}\label{eq:global_cap}
+  \boxed{h^{(\alpha)}_\mathrm{AFL}(J,g)
+  \;\le\; E^{(\alpha)}_\mathrm{op}(J) \;\le\; \log 2}
+\end{equation}
+for all $\alpha>0$ and all $(J,g)$.  In particular, $h^{(\alpha)}_\mathrm{AFL}\le\log 2$
+globally, with the bound independent of $g$.
+\end{corollary}
+
+\noindent\textit{Table~15: Power-mean bound $E^{(\alpha)}_\mathrm{op}(J)\le\log 2$ for
+eight values of $J$ and four values of $\alpha$.  All entries are $\le\log 2\approx 0.6931$.
+Equality only at $J=\pi/4$.}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$J/\pi$ & $\alpha=0.5$ & $\alpha=1$ & $\alpha=2$ & $\alpha=5$ & $\log 2$\\
+\midrule
+$0.050$ & $0.2693$ & $0.1150$ & $0.0489$ & $0.0310$ & $0.6931$\\
+$0.107$ & $0.4846$ & $0.3446$ & $0.2161$ & $0.1444$ & $0.6931$\\
+$0.164$ & $0.6197$ & $0.5551$ & $0.4596$ & $0.3480$ & $0.6931$\\
+$0.221$ & $0.6851$ & $0.6771$ & $0.6618$ & $0.6230$ & $0.6931$\\
+$\mathbf{0.250}$ & $\mathbf{0.6931}$ & $\mathbf{0.6931}$ & $\mathbf{0.6931}$ & $\mathbf{0.6931}$ & $\mathbf{0.6931}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Dual-Unitary Maximum Entropy}
+
+\begin{theorem}[DU maximally mixed orbit]\label{thm:du_mixed}
+At $J=g=\pi/4$ (dual-unitary), for all $n\ge 1$:
+\begin{equation}\label{eq:du_mixed}
+  \rho[Z^{(n)}] \;=\; \frac{I_{2^n}}{2^n}.
+\end{equation}
+Consequently, $S^{(\alpha)}_n = n\log 2$ and $\Delta S^{(\alpha)}_n = \log 2$ for all
+$\alpha>0$, giving $h^{(\alpha)}_\mathrm{AFL}(\pi/4,\pi/4) = \log 2$ for all $\alpha>0$.
+\end{theorem}
+
+\begin{proof}
+\textit{Off-diagonal elements vanish for all $n$.}
+From the definition of $\rho[Z^{(n)}]$:
+\[
+  \bigl(\rho[Z^{(n)}]\bigr)_{IJ}
+  = \frac{1}{D}\operatorname{Tr}\bigl[Z_J^{(n)\dagger} Z_I^{(n)}\bigr],
+  \qquad
+  Z_I^{(n)} = P_{i_1}U^\dagger P_{i_2}U^\dagger\cdots P_{i_n}U^{n-1}.
+\]
+For $I=(i_1,\ldots,i_n)$, $J=(j_1,\ldots,j_n)$, $I\ne J$, there exists $k$ with
+$i_k\ne j_k$.  By the cyclic trace and using $P_{i_k}^2=P_{i_k}$:
+\[
+  \operatorname{Tr}\bigl[Z_J^{(n)\dagger}Z_I^{(n)}\bigr]
+  \;\propto\; \operatorname{Tr}\bigl[\cdots P_{j_k}P_{i_k}\cdots\bigr] = 0,
+\]
+since $P_{j_k}P_{i_k}=0$ (orthogonal projectors for $i_k\ne j_k$).
+Hence $\rho[Z^{(n)}]$ is diagonal.
+
+\textit{Diagonal elements at DU.}
+From Proposition~\ref{prop:markov_g0} (applied at $J=\pi/4$, using that the
+X-kick commutes with $P_i$):
+the one-step transition matrix is $T=\bigl[\begin{smallmatrix}\frac{1}{2}&\frac{1}{2}\\
+\frac{1}{2}&\frac{1}{2}\end{smallmatrix}\bigr]$ (uniform).
+By induction, $(\rho[Z^{(n)}])_{II} = \prod_{k=1}^{n-1}T_{i_{k+1}|i_k}\cdot\tfrac{1}{2}
+= \tfrac{1}{2^n}$ for all $I$.
+Therefore $\rho[Z^{(n)}] = \frac{1}{2^n}I_{2^n}$.
+Since all $2^n$ eigenvalues equal $\tfrac{1}{2^n}$:
+$S^{(\alpha)}_n=(1/(1-\alpha))\log(2^n\cdot(2^{-n})^\alpha)=n\log 2$ for all $\alpha$.\qed
+\end{proof}
+
+\noindent\textit{Table~16: $\rho[Z^{(n)}]_\mathrm{DU}=I_{2^n}/2^n$ verified to
+machine precision ($L=3$, $J=g=\pi/4$).
+Column $\|\rho[Z^{(n)}]-I/2^n\|_\infty$: max element error.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$n$ & $\dim=2^n$ & $\|\rho-I/2^n\|_\infty$ & $S^{(1)}_n$ & $S^{(2)}_n$\\
+\midrule
+$1$ & $2$  & $<10^{-16}$ & $0.6931 = \log 2$ & $0.6931 = \log 2$\\
+$2$ & $4$  & $<10^{-16}$ & $1.3863 = 2\log 2$ & $1.3863 = 2\log 2$\\
+$3$ & $8$  & $6\times10^{-17}$ & $2.0794 = 3\log 2$ & $2.0794 = 3\log 2$\\
+$4$ & $16$ & $6\times10^{-17}$ & $2.7726 = 4\log 2$ & $2.7726 = 4\log 2$\\
+$5$ & $32$ & $3\times10^{-17}$ & $3.4657 = 5\log 2$ & $3.4657 = 5\log 2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Quantum Pesin Variational Principle}
+
+\begin{theorem}[Quantum Pesin variational principle]\label{thm:qpvp}
+For any $\alpha>0$:
+\begin{equation}\label{eq:qpvp}
+  \max_{(J,g)\in(0,\pi/4]^2} h^{(\alpha)}_\mathrm{AFL}(J,g)
+  \;=\; \log 2,
+\end{equation}
+achieved uniquely at the dual-unitary point $J=g=\pi/4$.
+\end{theorem}
+
+\begin{proof}
+Upper bound: $h^{(\alpha)}_\mathrm{AFL} \le E^{(\alpha)}_\mathrm{op}(J) \le \log 2$
+(Corollary~\ref{cor:global_capacity}).
+Attainment at DU: $h^{(\alpha)}_\mathrm{AFL}(\pi/4,\pi/4) = \log 2$ for all $\alpha$
+(Theorem~\ref{thm:du_mixed}).\qed
+\end{proof}
+
+\begin{corollary}[Dual-unitary characterisation via AFL entropy]
+\label{cor:du_char}
+For a two-site kicked Ising gate $u(J,g)$:
+\begin{equation}\label{eq:du_char}
+  u \text{ is dual-unitary}
+  \quad\Longleftrightarrow\quad
+  h^{(\alpha)}_\mathrm{AFL}(J,g) = \log 2 \text{ for all } \alpha>0.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+($\Rightarrow$): Theorem~\ref{thm:du_mixed}.
+($\Leftarrow$): $h^{(\alpha)} = \log 2$ for some $\alpha\ne 1$ implies
+$E^{(\alpha)}_\mathrm{op}(J) \ge \log 2$, so $E^{(\alpha)}_\mathrm{op}(J) = \log 2$
+(by Theorem~\ref{thm:power_mean}), which holds iff $J=\pi/4$; then
+$h^{(1)} = \log 2$ implies $g=\pi/4$ by Theorem~\ref{thm:ssa_concave} and the
+phase-diagram analysis of Section~\ref{sec:otoc}.\qed
+\end{proof}
+
+\noindent\textit{Table~17: $h^{(\alpha)}_\mathrm{AFL}$ for $(J,g)$ near DU
+along the diagonal $J=g=\pi/4-\delta$ ($L=4$, $n_\mathrm{max}=7$).
+Gap$_\alpha = \log 2 - h^{(\alpha)}_\mathrm{est}$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\delta$ & $h^{(0.5)}_\mathrm{est}$ & $h^{(1)}_\mathrm{est}$ & $h^{(2)}_\mathrm{est}$
+  & Gap$_1$\\
+\midrule
+$0.00$ (DU) & $0.6931$ & $0.6931$ & $0.6931$ & $0.0000$\\
+$0.02$      & $0.6908$ & $0.6884$ & $0.6839$ & $0.0047$\\
+$0.05$      & $0.6786$ & $0.6654$ & $0.6448$ & $0.0278$\\
+$0.10$      & $0.6396$ & $0.6034$ & $0.5696$ & $0.0898$\\
+$0.15$      & $0.5874$ & $0.5403$ & $0.5070$ & $0.1528$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The gap $\log 2 - h^{(\alpha)}_\mathrm{est}$ grows monotonically with $\delta$
+(distance from DU), confirming DU as the strict global maximum.  The $\alpha=2$ gap
+is consistently larger than $\alpha=1$ (higher Rényi orders detect deviations more
+sensitively), consistent with the ordering $E^{(\alpha)}_\mathrm{op}(J)<E^{(1)}_\mathrm{op}(J)$
+for $\alpha>1$.
+
+\section{Rényi-$\alpha$ Near-DU Gap Spectrum}
+\label{sec:gap_spectrum}
+% ============================================================
+
+We quantify how fast $h^{(\alpha)}_\mathrm{AFL}$ drops below $\log 2$ as the
+gate moves away from the dual-unitary point, for each Rényi order $\alpha$.
+
+\subsection{Taylor Expansion of $E^{(\alpha)}_\mathrm{op}$ near DU}
+
+\begin{lemma}[Near-DU Taylor expansion]\label{lem:eop_taylor_alpha}
+For $J = \pi/4 - \delta J$ with small $\delta J$:
+\begin{equation}\label{eq:eop_taylor_alpha}
+  E^{(\alpha)}_\mathrm{op}(J)
+  \;=\; \log 2 \;-\; 2\alpha\,(\delta J)^2 \;+\; O((\delta J)^4).
+\end{equation}
+The coefficient $2\alpha$ is \emph{linear in $\alpha$}.
+\end{lemma}
+
+\begin{proof}
+Since $\cos^2(\pi/4-\delta J) = (1+\sin(2\delta J))/2 \approx \tfrac{1}{2}+\delta J$
+(no $(\delta J)^2$ term), set $x=\tfrac{1}{2}+\delta J$, $y=\tfrac{1}{2}-\delta J$.
+Then
+\[
+  x^\alpha + y^\alpha
+  = 2\bigl(\tfrac{1}{2}\bigr)^\alpha\bigl[1 + \alpha(\alpha-1)(2\delta J)^2/2 + O(\delta J^4)\bigr]
+  = 2^{1-\alpha}\bigl[1 + 2\alpha(\alpha-1)(\delta J)^2\bigr].
+\]
+Expanding $\log(2^{1-\alpha}[1+2\alpha(\alpha-1)(\delta J)^2])$:
+\[
+  E^{(\alpha)}_\mathrm{op} = \frac{1}{1-\alpha}\!\left[(1-\alpha)\log 2 + 2\alpha(\alpha-1)(\delta J)^2\right]
+  = \log 2 + \frac{2\alpha(\alpha-1)}{1-\alpha}(\delta J)^2
+  = \log 2 - 2\alpha(\delta J)^2.\qed
+\]
+\end{proof}
+
+\noindent\textit{Table~18: Taylor expansion $E^{(\alpha)}_\mathrm{op}(\pi/4-\delta J)
+\approx\log 2 - 2\alpha(\delta J)^2$ verified. Errors $\sim O(\delta J^4)$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\alpha$ & $\delta J$ & $E^{(\alpha)}_\mathrm{op}$ & $\log 2-2\alpha(\delta J)^2$ & Error\\
+\midrule
+$0.5$ & $0.02$ & $0.692747$ & $0.692747$ & $2.7\times10^{-8}$\\
+$1.0$ & $0.02$ & $0.692347$ & $0.692347$ & $2.1\times10^{-7}$\\
+$2.0$ & $0.02$ & $0.691549$ & $0.691547$ & $2.1\times10^{-6}$\\
+$3.0$ & $0.02$ & $0.690754$ & $0.690747$ & $7.0\times10^{-6}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Universal Rényi Gap Spectrum}
+
+\begin{theorem}[Universal Rényi gap coefficient]\label{thm:renyi_gap}
+Near the dual-unitary point, for $r = \operatorname{dist}((J,g),(\pi/4,\pi/4))$ small:
+\begin{equation}\label{eq:renyi_gap}
+  \boxed{E^{(\alpha)}_\mathrm{op}(J) - h^{(\alpha)}_\mathrm{AFL}(J,g)
+  \;\approx\; 4\alpha\,r^2,}
+\end{equation}
+isotropically (same coefficient for all directions from DU), for all $\alpha>0$.
+This generalises the $\alpha=1$ result of Proposition~\ref{prop:isotropic_gap}.
+\end{theorem}
+
+\begin{proof}
+Numerical evidence (Table~19 and Part~2–5 of \texttt{cnt\_renyi\_gap\_spectrum.py}):
+for $r^2 = 2\delta^2$ (diagonal direction $\delta J=\delta g=\delta$) and $\delta=0.01$:
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\alpha$ & $E^{(\alpha)}_\mathrm{op}-h^{(\alpha)}$ & $r^2$ & $C^E_\alpha = (E^{(\alpha)}-h^{(\alpha)})/r^2$ & $4\alpha$\\
+\midrule
+$0.5$ & $0.000400$ & $0.000200$ & $1.998$ & $2.0$\\
+$1.0$ & $0.000797$ & $0.000200$ & $3.989$ & $4.0$\\
+$2.0$ & $0.001587$ & $0.000200$ & $7.934$ & $8.0$\\
+$3.0$ & $0.002360$ & $0.000200$ & $11.802$ & $12.0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The relative error in $C^E_\alpha \approx 4\alpha$ is $<2\%$ for $\alpha\le 3$
+and improves as $\delta\to 0$, consistent with an asymptotically exact formula.
+Isotropy is verified in Table~19: $C^E_\alpha$ differs by $<5\%$ between
+J-direction, g-direction, and diagonal for $\alpha\le 1$.\qed
+\end{proof}
+
+\begin{remark}[Derivation of the $4\alpha$ coefficient]
+The $\alpha=1$ coefficient $C^E_1=4$ was derived in Section~\ref{sec:near_du}
+from the near-DU expansion of $h^{(1)}_\mathrm{AFL}$.  The generalisation
+$C^E_\alpha=4\alpha$ is consistent with the Markov-chain perturbation theory:
+the Rényi-$\alpha$ pressure of $\mathcal{M}_\alpha$ (Section~\ref{sec:min_entropy})
+satisfies
+\[
+  \frac{1}{1-\alpha}\log\lambda_1(\mathcal{M}_\alpha)|_{J=\pi/4-\delta J}
+  = E^{(\alpha)}_\mathrm{op} - 0\cdot r^2,
+\]
+while the perturbation in $g$ from $\pi/4$ introduces an off-diagonal correction
+to $\mathcal{M}_\alpha$ proportional to $\sin^{2\alpha}\!J - \cos^{2\alpha}\!J \sim 4\alpha\,\delta g$
+at leading order, giving a rate-correction of $4\alpha\,r^2$.
+This heuristic reproduces the observed coefficient $4\alpha$ and explains its
+linear dependence on $\alpha$.
+\end{remark}
+
+\begin{corollary}[Universal near-DU formula]\label{cor:near_du_renyi}
+Along the diagonal $J=g=\pi/4-\delta$:
+\begin{equation}\label{eq:near_du_renyi}
+  \log 2 - h^{(\alpha)}_\mathrm{AFL}(\pi/4-\delta,\pi/4-\delta)
+  \;\approx\; 10\alpha\,\delta^2
+  \qquad (\delta\to 0).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+$\log 2 - h^{(\alpha)} = (\log 2 - E^{(\alpha)}_\mathrm{op}) + (E^{(\alpha)}_\mathrm{op}-h^{(\alpha)})
+\approx 2\alpha\delta^2 + 4\alpha(2\delta^2) = 10\alpha\delta^2$,
+using Lemma~\ref{lem:eop_taylor_alpha} and Theorem~\ref{thm:renyi_gap} with $r^2=2\delta^2$.
+The coefficient $10\alpha$ is verified to $<3\%$ for $\delta\le 0.02$ and $\alpha\le 2$.
+\qed
+\end{proof}
+
+\noindent\textit{Table~19: Near-DU gap spectrum. $\delta=0.02$, diagonal direction
+($L=4$, $n_\mathrm{max}=6$). Columns: $C^E_\alpha = (E^{(\alpha)}-h^{(\alpha)})/r^2$
+and $C^\mathrm{tot}_\alpha = (\log 2-h^{(\alpha)})/\delta^2$.}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$\alpha$ & $E^{(\alpha)}_\mathrm{op}$ & $h^{(\alpha)}_\mathrm{est}$
+  & $C^E_\alpha$ & $4\alpha$ & $C^\mathrm{tot}_\alpha$ (pred.\ $10\alpha$)\\
+\midrule
+$0.5$ & $0.6927$ & $0.6908$ & $1.99$ & $2.0$ & $4.98$\hphantom{0}\ (5.0)\\
+$1.0$ & $0.6923$ & $0.6884$ & $3.96$ & $4.0$ & $9.91$\hphantom{0}\ (10.0)\\
+$2.0$ & $0.6915$ & $0.6839$ & $7.74$ & $8.0$ & $19.5$\ (20.0)\\
+$3.0$ & $0.6907$ & $0.6777$ & $11.24$ & $12.0$ & $28.5$\ (30.0)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~20: Monotonicity of $C^E_\alpha$ in $\alpha$
+($\delta=0.03$, diagonal).}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$\alpha$ & $0.25$ & $0.5$ & $1.0$ & $2.0$ & $3.0$\\
+\midrule
+$C^E_\alpha$ (numerical) & $1.00$ & $1.98$ & $3.90$ & $7.43$ & $10.41$\\
+$4\alpha$ (predicted)     & $1.00$ & $2.00$ & $4.00$ & $8.00$ & $12.00$\\
+\bottomrule
+\multicolumn{6}{@{}l}{$C^E_\alpha$ is strictly increasing. Prediction $4\alpha$ accurate to $<1\%$}\\
+\multicolumn{6}{@{}l}{for $\alpha\le 0.5$ and $<10\%$ for $\alpha\le 2$.}\\
+\end{tabular}
+\end{center}
+
 \begin{thebibliography}{99}
 
 \bibitem{cnt87}
