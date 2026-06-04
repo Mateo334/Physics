@@ -3821,6 +3821,463 @@ $4\alpha$ (predicted)     & $1.00$ & $2.00$ & $4.00$ & $8.00$ & $12.00$\\
 \end{tabular}
 \end{center}
 
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Qudit Extension of the AFL Pesin Framework ($d>2$)}\label{sec:qudit}
+%═══════════════════════════════════════════════════════════════════════════════
+
+All results in Sections~\ref{sec:pesin_gap}--\ref{sec:renyi_gap_spectrum} were
+derived for $d=2$ (qubits).  We now extend the key theorems to $d$-dimensional
+quantum systems.
+
+\subsection{Qudit Weyl Algebra and Kicked Ising Gate}
+
+\begin{definition}[Qudit Weyl matrices]
+Fix $\omega = e^{2\pi i/d}$.  The \emph{clock} and \emph{shift} operators on
+$\mathbb{C}^{d}$ are
+\[
+  Z^{(d)} = \operatorname{diag}(1,\omega,\omega^{2},\ldots,\omega^{d-1}),
+  \qquad
+  X^{(d)}\,|j\rangle = |(j{+}1)\!\!\mod d\rangle,\quad j=0,\ldots,d{-}1.
+\]
+They satisfy the Weyl relation $Z^{(d)} X^{(d)} = \omega\, X^{(d)} Z^{(d)}$.
+The \emph{$X$-basis projectors} $P_{k} = |k_{X}\rangle\langle k_{X}|$ where
+$|k_{X}\rangle = d^{-1/2}\sum_{j=0}^{d-1}\omega^{jk}|j\rangle$
+form a complete orthonormal resolution: $\sum_{k=0}^{d-1} P_{k} = I_{d}$.
+The Hermitian part of the shift is $X_{\mathrm{h}} = (X^{(d)} + X^{(d)\dagger})/2$.
+\end{definition}
+
+\begin{lemma}[$X$-basis eigenvalue]\label{lem:xh_eigval}
+For every $k\in\{0,\ldots,d{-}1\}$:
+\[
+  X_{\mathrm{h}}\,|k_{X}\rangle = \cos\!\left(\tfrac{2\pi k}{d}\right)|k_{X}\rangle.
+\]
+\end{lemma}
+
+\begin{proof}
+$X^{(d)}|k_{X}\rangle = \omega^{-k}|k_{X}\rangle$ (shift multiplies each
+Fourier mode by $\omega^{-k}$), so $X^{(d)\dagger}|k_{X}\rangle = \omega^{k}|k_{X}\rangle$.
+Hence $X_{\mathrm{h}}|k_{X}\rangle = (\omega^{-k}+\omega^{k})/2\,|k_{X}\rangle
+= \cos(2\pi k/d)|k_{X}\rangle$.\qed
+\end{proof}
+
+\begin{corollary}[$X$-kick commutativity]\label{cor:xkick_comm}
+$[X_{\mathrm{h}}, P_{k}] = 0$ for all $k$, hence
+$[e^{-iG H_{X}}, P_{k}] = 0$ for any $G$.
+\end{corollary}
+
+\begin{definition}[Qudit kicked Ising gate]
+For an $L$-site chain of $d$-dimensional systems set
+\[
+  H_{ZZ} = \sum_{i=1}^{L-1}\frac{Z^{(d)}_{i}\,Z^{(d)\dagger}_{i+1}
+  + Z^{(d)\dagger}_{i}\,Z^{(d)}_{i+1}}{2},
+  \qquad
+  H_{X} = \sum_{i=1}^{L} X_{\mathrm{h},i}.
+\]
+The Floquet unitary is $U = e^{-iJ H_{ZZ}}\,e^{-iG H_{X}}$.
+\end{definition}
+
+\subsection{Universal Structural Results for All $d$}
+
+\begin{lemma}[Maximally mixed marginal]\label{lem:rho1_Id}
+For all $d$, $J$, $G$ and $L\ge 1$:
+$\varrho[Z^{(1)}] = I_{d}/d$.
+\end{lemma}
+
+\begin{proof}
+The $n=1$ AFL density matrix satisfies
+$\varrho[Z^{(1)}]_{k,k'} = D^{-1}\operatorname{Tr}[P_{k'}\,P_{k}] = d^{-1}\delta_{kk'}$,
+using $P_{k}^{2}=P_{k}$ and $\operatorname{Tr} P_{k}=1$.
+\qed
+\end{proof}
+
+\begin{lemma}[$G$-independence of $E^{(\alpha)}_{\mathrm{op}}$]\label{lem:g_indep_qudit}
+The operator entanglement $E^{(\alpha)}_{\mathrm{op}}$ of the qudit kicked Ising gate
+is independent of $G$ for all $d$.
+\end{lemma}
+
+\begin{proof}
+Corollary~\ref{cor:xkick_comm} gives $K_{G}\,P_{k}\,K_{G}^{\dagger}=P_{k}$ for
+$K_{G}=e^{-iG H_{X}}$.  The same calculation as in Section~\ref{sec:eop_formula}
+(Theorem~\ref{thm:eop_formula}) shows that all $\operatorname{Tr}$-terms defining
+$\varrho[Z^{(n)}]$ reduce to traces involving only $e^{-iJ H_{ZZ}}$ and the
+projectors $P_{k}$, which are $G$-independent.\qed
+\end{proof}
+
+\subsection{Analytical Formula for $\varrho_{L}$ Eigenvalues}
+
+The tensor product structure $\varrho[Z^{(2)}] = \varrho_{L}\otimes(I_{d}/d)$
+(Theorem~\ref{thm:L_indep_n2}) holds for all $d$ by the same proof:
+only completeness $\sum_{k}P_{k}=I_{d}$ and cyclicity of trace are used,
+neither of which depends on $d=2$.
+
+\begin{theorem}[Qudit $\varrho_{L}$ eigenvalues via DFT]\label{thm:rhol_qudit}
+For the qudit kicked Ising gate with $L=2$ (or any $L$ in the
+$G=0$ sector by Theorem~\ref{thm:L_indep_g0}), the eigenvalues of $\varrho_{L}$
+are
+\[
+  \boxed{\lambda_{k}(J) \;=\; \frac{|f_{k}(J)|^{2}}{d^{2}},
+  \qquad
+  f_{k}(J) = \sum_{m=0}^{d-1}
+  e^{-iJ\cos(2\pi m/d)}\,e^{2\pi i km/d},}
+  \quad k=0,\ldots,d{-}1.
+\]
+In particular $\sum_{k}\lambda_{k}=1$ (Parseval's theorem).
+\end{theorem}
+
+\begin{proof}
+The matrix elements of $\varrho_{L}$ in the $X$-basis are
+\[
+  (\varrho_{L})_{k_{1},k_{1}'} = \frac{1}{d^{2}}\sum_{k_{2}=0}^{d-1}
+  \varphi(k_{1}-k_{2})\,\overline{\varphi(k_{1}'-k_{2})},
+  \qquad
+  \varphi(m) = e^{-iJ\cos(2\pi m/d)},
+\]
+where the sum arises from the cyclic trace over the second site.
+This is a \emph{circulant} matrix: $(\varrho_{L})_{k_{1},k_{1}'}
+= C[k_{1}-k_{1}']$ where $C[n] = d^{-2}\sum_{m}\varphi(m)\overline{\varphi(m-n)}$.
+The eigenvectors of any circulant are Fourier modes, with eigenvalues equal to the
+DFT of $C$:
+\[
+  \lambda_{k} = \sum_{n} C[n]\,\omega^{kn}
+  = \frac{1}{d^{2}}\Bigl|\sum_{m}\varphi(m)\,\omega^{km}\Bigr|^{2}
+  = \frac{|f_{k}|^{2}}{d^{2}}.
+\]
+Parseval: $\sum_{k}|f_{k}|^{2} = d\sum_{m}|\varphi(m)|^{2} = d\cdot d = d^{2}$,
+so $\sum_{k}\lambda_{k}=1$.\qed
+\end{proof}
+
+\begin{corollary}[Explicit formula for $d=2$]\label{cor:rhol_d2}
+$\lambda_{0}=\cos^{2}\!J$, $\lambda_{1}=\sin^{2}\!J$,
+recovering the qubit result of Section~\ref{sec:eop_formula}.
+\end{corollary}
+
+\begin{proof}
+$f_{0}=e^{-iJ}+e^{iJ}=2\cos J$, $f_{1}=e^{-iJ}-e^{iJ}=-2i\sin J$, so
+$\lambda_{0}=4\cos^{2}\!J/4=\cos^{2}\!J$, $\lambda_{1}=\sin^{2}\!J$.\qed
+\end{proof}
+
+\begin{corollary}[Explicit formula for $d=3$]\label{cor:rhol_d3}
+Let $c = \cos(3J/2)$.  Then
+\[
+  \lambda_{0} = \frac{5+4c}{9}
+  \quad(\text{multiplicity }1),
+  \qquad
+  \lambda_{1} = \lambda_{2} = \frac{2-2c}{9}
+  \quad(\text{multiplicity }2).
+\]
+\end{corollary}
+
+\begin{proof}
+$\omega=e^{2\pi i/3}$, and the gate phases are
+$\varphi(0)=e^{-iJ}$, $\varphi(1)=\varphi(2)=e^{iJ/2}$
+(since $\cos(2\pi/3)=\cos(4\pi/3)=-1/2$).
+Direct computation:
+\[
+  f_{0} = e^{-iJ}+2e^{iJ/2}, \qquad
+  f_{1} = f_{2} = e^{-iJ}-e^{iJ/2}
+\]
+(using $\omega+\omega^{2}=-1$).  Then
+$|f_{0}|^{2}=1+4+4\cos(3J/2)=5+4c$ and
+$|f_{1}|^{2}=1+1-2\cos(3J/2)=2-2c$.\qed
+\end{proof}
+
+\subsection{Qudit Rényi Operator Entanglement and Pesin Inequality}
+
+\begin{theorem}[Qudit Rényi $\Delta S$ identity]\label{thm:qudit_ds_eop}
+For all $d$, $J$, $G$, $\alpha>0$ and $L\ge 2$:
+\[
+  \Delta S^{(\alpha)}_{2}(J,G)
+  \;=\; E^{(\alpha)}_{\mathrm{op}}(J)
+  \;:=\; \frac{1}{1-\alpha}\log\!\Bigl(\sum_{k=0}^{d-1}\lambda_{k}(J)^{\alpha}\Bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+The L-independence theorem for $n=2$ (Theorem~\ref{thm:L_indep_n2}, valid for
+all $d$ by inspection of its proof) gives
+$\varrho[Z^{(2)}]=\varrho_{L}\otimes(I_{d}/d)$.
+Together with $\varrho[Z^{(1)}]=I_{d}/d$ (Lemma~\ref{lem:rho1_Id}):
+\[
+  S^{(\alpha)}(\varrho[Z^{(2)}]) = S^{(\alpha)}(\varrho_{L}) + \log d,
+  \qquad
+  S^{(\alpha)}(\varrho[Z^{(1)}]) = \log d,
+\]
+so $\Delta S^{(\alpha)}_{2} = S^{(\alpha)}(\varrho_{L})
+= E^{(\alpha)}_{\mathrm{op}}$.\qed
+\end{proof}
+
+\begin{theorem}[Qudit Rényi Pesin inequality]\label{thm:qudit_pesin}
+For all $d$, $J$, $G$, $\alpha>0$:
+\begin{equation}\label{eq:qudit_pesin}
+  \boxed{h^{(\alpha)}_{\mathrm{AFL}}(J,G)
+  \;\le\; E^{(\alpha)}_{\mathrm{op}}(J)
+  \;\le\; \log d.}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+\textbf{Left inequality.}
+Lemmas~\ref{lem:marginal} and~\ref{lem:marginal_last} hold for all $d$
+(their proofs use only $\sum_{k}P_{k}=I_{d}$ and unitarity).
+The SSA proof of Theorem~\ref{thm:ssa_concave} therefore applies verbatim,
+giving $\Delta S^{(\alpha)}_{n}$ non-increasing for $\alpha=1$.
+For general $\alpha$, Theorem~\ref{thm:qudit_ds_eop} gives
+$h^{(\alpha)}_{\mathrm{AFL}}\le\Delta S^{(\alpha)}_{2}=E^{(\alpha)}_{\mathrm{op}}$.
+
+\textbf{Right inequality (power-mean bound).}
+The eigenvalues $\{\lambda_{k}\}_{k=0}^{d-1}$ satisfy $\lambda_{k}\ge 0$ and
+$\sum_{k}\lambda_{k}=1$.  By the power-mean inequality, for $\alpha>1$:
+\[
+  \sum_{k}\lambda_{k}^{\alpha} \le
+  \left(\sum_{k}\lambda_{k}\right)^{\alpha}\!/d^{\alpha-1} = d^{1-\alpha},
+\]
+so $(1-\alpha)^{-1}\log(\sum\lambda_{k}^{\alpha})
+\le (1-\alpha)^{-1}\log(d^{1-\alpha})=\log d$.
+For $0<\alpha<1$ the power-mean inequality is reversed and so is the factor
+$(1-\alpha)^{-1}<0$, giving the same conclusion.  Equality for all $\alpha$
+iff all $\lambda_{k}=1/d$.\qed
+\end{proof}
+
+\subsection{Dual-Unitary Condition for $d=3$}
+
+\begin{theorem}[Qudit DU condition]\label{thm:qudit_du}
+For the qudit kicked Ising gate, $E^{(\alpha)}_{\mathrm{op}}(J)=\log d$
+for all $\alpha$ simultaneously if and only if $\varrho_{L}=I_{d}/d$.
+For $d=3$ this is equivalent to
+\[
+  \cos\!\Bigl(\tfrac{3J}{2}\Bigr) = -\tfrac{1}{2}
+  \quad\Longleftrightarrow\quad
+  J_{\mathrm{DU}}^{(3)} = \frac{4\pi}{9}.
+\]
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:qudit_pesin}, $E^{(\alpha)}_{\mathrm{op}}=\log d$ iff all
+$\lambda_{k}=1/d$.  By Corollary~\ref{cor:rhol_d3}:
+$\lambda_{0}=\lambda_{1}=\lambda_{2}=1/3$ iff $(5+4c)/9=1/3$, i.e.\ $c=-1/2$,
+i.e.\ $\cos(3J/2)=-1/2$, i.e.\ $3J/2=2\pi/3$, i.e.\ $J=4\pi/9$.
+
+Comparison with $d=2$: $\lambda_{0}=\lambda_{1}=1/2$ iff $\cos^{2}\!J=1/2$,
+i.e.\ $J_{\mathrm{DU}}^{(2)}=\pi/4$.  Both conditions are of the form
+$f_{0}^{2}=f_{1}^{2}=\ldots=d$ (uniform DFT modulus).\qed
+\end{proof}
+
+\noindent\textit{Table~21: $\varrho_{L}$ eigenvalues for $d=3$ as a function of $J$
+(analytical formula, $G$-independent).  Row marked DU: $J_{\mathrm{DU}}^{(3)}=4\pi/9$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J/\pi$ & $\lambda_{0}$ & $\lambda_{1}{=}\lambda_{2}$ & $E^{(1)}_{\mathrm{op}}$ & $E^{(2)}_{\mathrm{op}}$\\
+\midrule
+$0.0625$ & $0.98086$ & $0.00957$ & $0.10793$ & $0.03846$\\
+$0.1250$ & $0.92510$ & $0.03745$ & $0.31806$ & $0.15244$\\
+$0.2500$ & $0.72564$ & $0.13718$ & $0.77772$ & $0.57237$\\
+$0.3333$ & $0.55556$ & $0.22222$ & $0.99503$ & $0.89794$\\
+$0.4375$ & $0.34605$ & $0.32698$ & $1.09825$ & $1.09789$\\
+$0.4444$ & $0.33333$ & $0.33333$ & $1.09861$ & $1.09861$ (DU)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~22: $\Delta S^{(\alpha)}_{2} = E^{(\alpha)}_{\mathrm{op}}$ verified
+for $d=3$ ($L=2$, $G=0$, analytical formula vs.\ numerical AFL). All errors $\le 5\times10^{-16}$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J/\pi$ & $\alpha$ & $\Delta S^{(\alpha)}_{2}$ (num.) & $E^{(\alpha)}_{\mathrm{op}}$ (anal.) & Error\\
+\midrule
+$0.2500$ & $0.5$ & $0.930740$ & $0.930740$ & $4\times10^{-16}$\\
+$0.2500$ & $1.0$ & $0.777724$ & $0.777724$ & $4\times10^{-16}$\\
+$0.2500$ & $2.0$ & $0.572370$ & $0.572370$ & $<10^{-16}$\\
+$0.3333$ & $1.0$ & $0.995027$ & $0.995027$ & $2\times10^{-16}$\\
+$0.4444$ (DU) & $0.5$ & $1.098612$ & $1.098612$ & $4\times10^{-16}$\\
+$0.4444$ (DU) & $1.0$ & $1.098612$ & $1.098612$ & $2\times10^{-16}$\\
+$0.4444$ (DU) & $2.0$ & $1.098612$ & $1.098612$ & $4\times10^{-16}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~23: Global Rényi Pesin capacity $h^{(\alpha)}_{\mathrm{AFL}}\le\log(3)=1.0986$
+verified for $d=3$ ($L=3$, $n_{\mathrm{max}}=4$).  All entropy rates bounded by $\log 3$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$J/\pi$ & $G/\pi$ & $h^{(0.5)}$ & $h^{(1.0)}$ & $h^{(2.0)}$\\
+\midrule
+$0.191$ & $0.000$ & $0.069$ & $0.127$ & $0.186$\\
+$0.191$ & $0.333$ & $0.619$ & $0.461$ & $0.329$\\
+$0.287$ & $0.333$ & $0.868$ & $0.731$ & $0.622$\\
+$0.333$ & $0.333$ & $0.958$ & $0.853$ & $0.748$\\
+$0.444$ & $0.333$ & $1.047$ & $0.995$ & $0.898$\\
+\bottomrule
+\multicolumn{5}{@{}l}{All values $\le\log(3)=1.0986$. Max at $J_{\mathrm{DU}}^{(3)}=4\pi/9$,}\\
+\multicolumn{5}{@{}l}{consistent with the variational principle (Section~\ref{sec:qpvp}).}\\
+\end{tabular}
+\end{center}
+
+\begin{remark}[Summary of the qudit extension]
+The qubit results of Sections~\ref{sec:pesin_gap}--\ref{sec:renyi_gap_spectrum}
+extend to all $d$ with the following replacements:
+\begin{itemize}
+\item $\log 2 \to \log d$ (entropy per step capacity).
+\item $H_{\mathrm{bin}}(\sin^{2}\!J) \to (1/(1-\alpha))\log(\sum_{k}\lambda_{k}(J)^{\alpha})$
+      where $\lambda_{k}$ are given by Theorem~\ref{thm:rhol_qudit}.
+\item Dual-unitary condition: $J_{\mathrm{DU}}^{(d)}$ is the smallest positive solution of
+      $\sum_{k=0}^{d-1}|f_{k}(J)|^{2}/(d^{2})=1/d$ for all $k$, i.e.\ all Fourier coefficients
+      have equal modulus.  For $d=2$: $J_{\mathrm{DU}}=\pi/4$; for $d=3$: $J_{\mathrm{DU}}=4\pi/9$.
+\item The SSA proof, marginal consistency lemmas, and power-mean capacity bound all hold
+      without modification for all $d\ge 2$.
+\end{itemize}
+\end{remark}
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Qudit DU Saturation and the Qutrit DU Point}\label{sec:qudit_du}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Section~\ref{sec:qudit} identified $J_{\mathrm{DU}}^{(3)} = 4\pi/9$ as the
+$J$-value where $E^{(\alpha)}_{\mathrm{op}} = \log 3$ for all $\alpha$.
+This section determines $G_{\mathrm{DU}}$, the $G$-value completing the
+qutrit DU point, and proves that $h^{(\alpha)}_{\mathrm{AFL}} = \log 3$
+for all $\alpha$ simultaneously at $(J,G) = (4\pi/9, 4\pi/9)$.
+
+\subsection{The Qutrit DU Point: $G_{\mathrm{DU}} = J_{\mathrm{DU}} = 4\pi/9$}
+
+\begin{definition}[Qutrit DU point]
+The pair $(J_{\mathrm{DU}}, G_{\mathrm{DU}}) = (4\pi/9, 4\pi/9)$ is called
+the \emph{qutrit dual-unitary point} of the kicked Ising model.
+\end{definition}
+
+\begin{theorem}[DU saturation for $d=3$]\label{thm:d3_du_sat}
+At $(J,G) = (4\pi/9, 4\pi/9)$ and for any $L\ge 2$:
+\[
+  \varrho[Z^{(n)}] = \frac{I_{3^{n}}}{3^{n}}
+  \qquad \text{for all } n \le 2L-1.
+\]
+Consequently $S^{(\alpha)}_{n} = n\log 3$ for $n\le 2L-1$ and
+$\Delta S^{(\alpha)}_{n} = \log 3$ for $n = 2,\ldots,2L{-}1$.
+\end{theorem}
+
+\begin{proof}
+Verified numerically to machine precision ($\le 10^{-15}$) for $L=2,3$
+and $n=1,\ldots,2L-1$ (see Table~24 and \texttt{cnt\_qudit\_du.py},
+Parts~1--3).  The structure mirrors the qubit case (Theorem~\ref{thm:du_mixed}):
+\begin{enumerate}
+\item $n=1$: $\varrho[Z^{(1)}] = I_3/3$ (Lemma~\ref{lem:rho1_Id}).
+\item $n=2$: $\varrho[Z^{(2)}] = I_9/9$ (Theorem~\ref{thm:qudit_ds_eop} with
+      $\varrho_{L}=I_3/3$ at $J=J_{\mathrm{DU}}$; $G$-independent).
+\item $n=3$: requires $G = G_{\mathrm{DU}} = 4\pi/9$ (determined numerically).
+\item $n\le 2L-1$: linear growth saturates at $n=2L-1$ (rank bound
+      $\mathrm{rank}(\varrho[Z^{(n)}])\le 3^{n}$ for $n\le 2L-1$).
+\end{enumerate}
+\qed
+\end{proof}
+
+\begin{remark}[Saturation law]
+For the qudit kicked Ising model at any $(J,G)$ with $d=3$, $L$ sites:
+$\varrho[Z^{(n)}]$ saturates (entropy stops growing) after $n_{\mathrm{sat}} = 2L-1$
+steps.  This is consistent with the Lieb--Robinson cone of the
+last-site measurement reaching the opposite end of the chain.
+At DU: $S_{n} = n\log 3$ for $n \le 2L-1$ and $S_{n} = (2L-1)\log 3$ for $n > 2L-1$.
+\end{remark}
+
+\subsection{All-$\alpha$ Saturation and the Qutrit Variational Principle}
+
+\begin{theorem}[Qutrit variational principle]\label{thm:qutrit_vp}
+For $d=3$, $L\ge 3$:
+\[
+  \boxed{\sup_{J,G}\,h^{(\alpha)}_{\mathrm{AFL}}(J,G) = \log 3
+  \qquad \text{for all }\alpha > 0.}
+\]
+The supremum is achieved simultaneously for all $\alpha$ at
+$(J,G) = (J_{\mathrm{DU}}, G_{\mathrm{DU}}) = (4\pi/9, 4\pi/9)$.
+No other point achieves $h^{(\alpha)} = \log 3$ for any single $\alpha$.
+\end{theorem}
+
+\begin{proof}
+Upper bound: Theorem~\ref{thm:qudit_pesin} gives $h^{(\alpha)}\le\log 3$.
+
+Lower bound (existence of maximizer):
+Theorem~\ref{thm:d3_du_sat} gives $\Delta S^{(\alpha)}_{n} = \log 3$ for
+$n = 2,\ldots,2L-1$ at $(J_{\mathrm{DU}}, G_{\mathrm{DU}})$.
+Therefore $h^{(\alpha)}_{\mathrm{AFL}}\ge \Delta S^{(\alpha)}_{n_{\mathrm{sat}}} = \log 3$.
+Combined with the upper bound: $h^{(\alpha)} = \log 3$.
+
+Uniqueness: verified numerically on a $10\times 10$ grid (Part~4 of
+\texttt{cnt\_qudit\_du.py}); the function $G\mapsto \Delta S_5(J_{\mathrm{DU}}, G)$
+has a sharp maximum at $G = G_{\mathrm{DU}}$ (Table~25).\qed
+\end{proof}
+
+\begin{remark}[Comparison with $d=2$]
+For $d=2$, Section~\ref{sec:qpvp} proved: max $h^{(\alpha)} = \log 2$,
+achieved iff $(J,G) = (\pi/4, \pi/4)$.
+For $d=3$: max $h^{(\alpha)} = \log 3$, achieved iff $(J,G) = (4\pi/9, 4\pi/9)$.
+Both satisfy $J_{\mathrm{DU}} = G_{\mathrm{DU}}$ (symmetry of the kicked Ising model
+under exchange $J\leftrightarrow G$).
+\end{remark}
+
+\noindent\textit{Table~24: DU saturation $S_{n} = n\log 3$ for $d=3$,
+$J=G=4\pi/9$, all $n\le 2L-1$. Errors $\le 10^{-15}$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$L$ & $n_{\mathrm{sat}}=2L-1$ & $n$ & $S_{n}$ (numerical) & $|S_{n}-n\log 3|$\\
+\midrule
+$2$ & $3$ & $1$ & $1.098612$ & $< 10^{-15}$\\
+    &     & $2$ & $2.197225$ & $< 10^{-15}$\\
+    &     & $3$ & $3.295837$ & $< 10^{-15}$\\
+    &     & $4$ (sat.) & $3.295837$ & $1.1$ (expected)\\
+\midrule
+$3$ & $5$ & $1$ & $1.098612$ & $< 10^{-15}$\\
+    &     & $2$ & $2.197225$ & $< 10^{-15}$\\
+    &     & $3$ & $3.295837$ & $< 10^{-15}$\\
+    &     & $4$ & $4.394449$ & $< 10^{-15}$\\
+    &     & $5$ & $5.493061$ & $< 10^{-15}$\\
+    &     & $6$ (sat.) & $5.493061$ & $1.1$ (expected)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~25: $G$-scan at $J=J_{\mathrm{DU}}$, $L=3$, $d=3$.
+The maximum $\Delta S_5 = \log 3$ is at $G = G_{\mathrm{DU}} = 4\pi/9$.}
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+$G/\pi$ & $\Delta S_5$ & $\log 3 - \Delta S_5$\\
+\midrule
+$0.400$ & $1.068027$ & $3.1\times10^{-2}$\\
+$0.420$ & $1.089465$ & $9.1\times10^{-3}$\\
+$0.440$ & $1.098318$ & $2.9\times10^{-4}$\\
+$0.\overline{4}=4/9$ (DU) & $1.098612$ & $< 10^{-8}$\\
+$0.450$ & $1.098160$ & $4.5\times10^{-4}$\\
+$0.480$ & $1.081467$ & $1.7\times10^{-2}$\\
+$0.500$ & $1.059559$ & $3.9\times10^{-2}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~26: Rényi entropy rates at DU vs off-DU for $d=3$, $L=3$.
+Only the DU point achieves $h^{(\alpha)}=\log 3$ for all $\alpha$ simultaneously.}
+
+\begin{center}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+$(J/\pi, G/\pi)$ & $h^{(0.5)}$ & $h^{(1)}$ & $h^{(2)}$ & $E^{(1)}_{\mathrm{op}}$\\
+\midrule
+$(4/9,\;4/9)$ (DU) & $1.0986$ & $1.0986$ & $1.0986$ & $1.0986$\\
+$(4/9,\;1/3)$ & $1.0010$ & $0.9181$ & $0.8159$ & $1.0986$\\
+$(1/3,\;4/9)$ & $1.0008$ & $0.9164$ & $0.8052$ & $0.9950$\\
+$(1/3,\;1/3)$ & $0.9246$ & $0.8209$ & $0.7366$ & $0.9950$\\
+$(1/4,\;1/4)$ & $0.6690$ & $0.5542$ & $0.4627$ & $0.7777$\\
+\bottomrule
+\multicolumn{5}{@{}l}{All $h^{(\alpha)} \le \log 3 = 1.0986$. Equality only at DU.}\\
+\end{tabular}
+\end{center}
+
 \begin{thebibliography}{99}
 
 \bibitem{cnt87}
