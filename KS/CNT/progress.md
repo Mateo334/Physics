@@ -922,3 +922,146 @@ Python script: cnt_renyi_ssa.py.
   Key: g=0 exact proof (geometric purity, equality h_alpha=E_op^alpha); 5x5 grid no violations;
   weaker subadditivity bound proved; log-convexity conjecture remains open for g>0.
 
+## Session: 2026-06-05 (New task: CNT/AFL/KS three-way hierarchy — COMPLETE)
+
+### Step 49 — cnt_afl_ks_connection.py run and Section 33 written
+
+**KEY RESULTS (all numerically verified and analytically proved):**
+
+**Part 1 — Diagonality of rho[Z^n] (CORRECTED THEOREM):**
+- n=1,2: rho[Z^n] diagonal for ALL (J,G,L) (proved analytically; n=2 via cyclic trace).
+- n>=3, finite L, off-DU: coherences appear. Off-diag max = 0.058 (L=3, J=0.6*JDU, G=0.5*JDU). ✓
+- DU point: rho[Z^n] = I/d^n (diagonal) for all n < n_sat. ✓
+
+**Part 2 — Schur inequality h_AFL <= h_KS (PROVED):**
+- Schur's theorem: eigenvalue vector majorised by diagonal -> S(rho) <= H(diag).
+- Dividing by n and taking limit: h_AFL <= h_KS. ✓
+- Gap H-S at n=3 ranges from 0.0949 (off-DU) to 0.000 (DU). ✓
+- Equality iff rho[Z^n] diagonal for all n.
+
+**Part 3 — Exact equality g=0, L->inf (PROVED):**
+- Markov chain T = [[cos^2J, sin^2J],[sin^2J, cos^2J]].
+- h_KS(T) = H_bin(sin^2J) = E_op^(1)(J) = h_AFL. EXACT EQUALITY.
+- Verified on 5 J-values: all three agree to 6 decimal places. ✓
+
+**Part 4 — Three-way hierarchy (PROVED):**
+- SHIFT: h_CNT(shift) = h_KS(shift) = s(omega) < h_AFL(shift) = s(omega) + log d. ✓
+- TIME EVO: 0 = h_CNT(alpha) <= h_AFL(alpha) <= h_KS(alpha) [Schur]. ✓
+- At DU: h_AFL = h_KS = log d (equality in Schur, diagonal orbit states). ✓
+
+**Part 5 — Quantum coherence gap Q_n (DEFINED + VERIFIED):**
+- Q_n = H(diag) - S(rho[Z^n]) >= 0. Q_1 = Q_2 = 0. Q_n > 0 for n>=3 off-DU.
+- Q_3 phase diagram (4x4 grid): Q_3 = 0 on G=J_DU line; max Q_3 = 0.378 at (J_DU, 0.4*J_DU). ✓
+
+### Step 50 — Section 33 added to Output.tex
+
+New Section 33: "Connecting CNT, AFL, and KS Entropies: A Three-Way Hierarchy"
+Subsections:
+- 33.1: KS entropy of measurement process (Definition def:ks_meas)
+- 33.2: Orbit state diagonality (Lemma lem:diag_n2, Table 38)
+- 33.3: Schur inequality h_AFL <= h_KS (Theorem thm:schur, Table 39)
+- 33.4: Exact equality for g=0 Markov chain (Theorem thm:markov_equality, Table 40)
+- 33.5: Three-way hierarchy for shift and time evolution (Theorems thm:shift_hierarchy, thm:time_hierarchy, Table 41)
+- 33.6: Quantum coherence gap Q_n (Definition def:Qn, Proposition prop:Qn_phase, Table 42)
+New reference: Bhatia (Matrix Analysis) for Schur's theorem.
+
+Output.tex: 33 sections + bibliography, 592 balanced environments, 5765 lines.
+Python script: cnt_afl_ks_connection.py.
+
+  - [x] Connecting CNT with AFL/KS entropy: COMPLETE.
+  Key: Schur inequality h_AFL <= h_KS (universal); equality at DU and for g=0 Markov chain;
+  three-way hierarchy proved for both shift and time-evolution automorphisms;
+  quantum coherence gap Q_n characterises deviation from classical KS.
+
+## Session: 2026-06-05 (New task: Log-convexity conjecture for alpha=2 — COMPLETE)
+
+### Step 51 — cnt_logconvex_proof.py written and run
+
+**ANALYTICAL PROOF of log-convexity for alpha=2 (COMPLETE):**
+
+Key steps:
+1. Frame operator: G_n = sum_I |vec(Z_I^n)><vec(Z_I^n)| in H_D ⊗ H_D (size D^2).
+   P_n^(2) = D^{-2} Tr[G_n^2]. Proved via vec-trick.
+
+2. Channel recursion: G_{n+1} = E_hat(G_n) with Kraus ops F_j = P_j U^dag ⊗ U^T.
+   Proved from Kraus recursion Z_{(j,I)}^{n+1} = P_j U^dag Z_I^n U.
+
+3. Properties of E_hat (all verified numerically at L=3, errors < 4e-16):
+   - Trace-preserving: sum F_j^dag F_j = I (using P_j^2=P_j, sum P_j=I, U^* U^T = I).
+   - Unital: sum F_j F_j^dag = I (using U^T U^* = I).
+   - Self-adjoint in HS: <A, E_hat(B)> = <E_hat(A), B> (cyclicity of trace).
+   => All eigenvalues real in [-1,1]. Numerically: all eigenvalues in [0,1] (special structure).
+
+4. Spectral decomposition: Tr[G_n^2] = sum_k c_k * mu_k^{n-1}, c_k >= 0, mu_k = lambda_k^2 in [0,1].
+
+5. Cauchy-Schwarz: (sum c_k mu_k^n)^2 <= (sum c_k mu_k^{n-1})(sum c_k mu_k^{n+1}). QED.
+
+**Corollary**: h_2^AFL <= E_op^(2) (Rényi-2 Pesin bound) UNCONDITIONALLY PROVED.
+
+**Extension to integer alpha >= 2**: Same proof via m-copy channel with F_j^(m) = P_j U^dag ⊗ (U^T)^{⊗(m-1)}.
+
+**Numerical verification:**
+- 10x10 grid, L=4, n=2..7: 600 triples, 0 violations. ✓
+- 5x5 grid, L=5: 100 triples, 0 violations. ✓
+- 5x5 grid, L=6: 100 triples, 0 violations. ✓
+
+### Step 52 — Section 34 added to Output.tex
+
+New Section 34: "Proof of the Log-Convexity Conjecture for alpha=2"
+Subsections:
+- 34.1: Frame operator + purity formula (Definition def:frame_op, Lemma lem:purity_frame)
+- 34.2: Channel recursion (Lemma lem:channel_rec)
+- 34.3: Properties of E_hat (Proposition prop:Ehat_props: TP, unital, self-adjoint)
+- 34.4: Spectral decomp + Cauchy-Schwarz (Theorem thm:logconv2, boxed)
+- 34.5: Unconditional Rényi-2 Pesin bound (Corollary cor:renyi2_unconditional, boxed)
+- 34.6: Numerical verification (Tables 43-44)
+- 34.7: Remark on extension to integer alpha >= 2
+
+Output.tex: 34 sections + bibliography, 612 balanced environments, 6007 lines.
+Python script: cnt_logconvex_proof.py.
+
+  - [x] Log-convexity conjecture for alpha=2: PROVED ANALYTICALLY.
+  Key: sum-of-exponentials via doubly-stochastic self-adjoint channel + Cauchy-Schwarz.
+  Extends to integer alpha >= 2 via m-copy channel.
+  Rényi-2 Pesin bound h_2^AFL <= E_op^(2) now UNCONDITIONAL.
+
+## Session: 2026-06-05 (New task: Non-integer alpha log-convexity — COMPLETE)
+
+### Step 53 — cnt_renyi_noninteger.py written and run
+
+**KEY RESULTS:**
+
+**Integer alpha extension (PROVED):**
+m-copy channel with F_j^(m) = P_j U^dag ⊗ (U^T)^{⊗(m-1)}.
+All properties (TP, unital, self-adjoint HS) carry through. Cauchy-Schwarz gives log-convexity.
+h_m^AFL <= E_op^(m) UNCONDITIONAL for ALL positive integers m.
+
+**COUNTEREXAMPLE to conjecture for alpha=2.5:**
+  (J/JDU, G/JDU) = (0.6, 0.6), L=4, n=3:
+  [P_3^(2.5)]^2 - P_2^(2.5)*P_4^(2.5) = +7.55e-06 > 0 (VIOLATION).
+  4 total violations on 5x5 grid.
+  Conjecture conj:logconv is FALSE for non-integer alpha in (2,3).
+
+**Despite counterexample: Pesin bound h_{2.5} <= E_op^(2.5) still holds.**
+  Finite L: h=0 trivially. g=0 L->inf: h=E_op^alpha exactly.
+  Non-monotone ΔS_n but max always at n=1 (= dS_2 = E_op^alpha).
+
+**Alpha=1.5 (non-integer in (1,2)):** 10x10 grid, L=4, 500 triples: 0 violations.
+  Log-convexity holds numerically. No analytical proof.
+
+### Step 54 — Section 35 added to Output.tex
+
+New Section 35: "Log-Convexity for Non-Integer alpha: Integer Extension and a Counterexample"
+Subsections:
+- 35.1: Integer extension (Theorem thm:logconv_int, Corollary cor:renyi_m_unconditional)
+- 35.2: Counterexample for alpha=2.5 (Theorem thm:counterex, Table 45)
+- 35.3: Status of alpha in (1,2) (Proposition prop:logconv_15, Table 46)
+
+Output.tex: 35 sections + bibliography, 625 balanced environments, 6154 lines.
+Python script: cnt_renyi_noninteger.py.
+
+  - [x] Non-integer alpha log-convexity: COMPLETE.
+  Key: COUNTEREXAMPLE at alpha=2.5 (conjecture FALSE for non-integer alpha>2);
+  integer alpha all proved via m-copy; alpha in (1,2) remains open (numerically confirmed).
+
+
