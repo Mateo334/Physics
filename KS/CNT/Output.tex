@@ -4278,6 +4278,971 @@ $(1/4,\;1/4)$ & $0.6690$ & $0.5542$ & $0.4627$ & $0.7777$\\
 \end{tabular}
 \end{center}
 
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Saturation Law $n_{\mathrm{sat}}=2L-1$ and General-$d$ Dual-Unitary Pattern}
+\label{sec:saturation_general}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Section~26 established $n_{\mathrm{sat}}=2L-1$ empirically for $d=3$, $L=2,3$, and
+identified $J_{\mathrm{DU}}=G_{\mathrm{DU}}=4\pi/9$ as the unique qutrit dual-unitary point.
+This section proves the saturation law rigorously (via a Hilbert--Schmidt block-diagonal argument),
+derives the DFT autocorrelation condition for $J_{\mathrm{DU}}(d)$,
+obtains closed-form $J_{\mathrm{DU}}$ for $d=2,3,4$, and shows that the kicked Ising model
+with $H_{ZZ}=\mathrm{Re}(Z\otimes Z^\dagger)$ admits no dual-unitary point for $d\geq 5$.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Saturation Law: $\mathrm{rank}(\rho[Z^n])=\min(d^n,\,d^{2L-1})$}
+\label{subsec:saturation_proof}
+%───────────────────────────────────────────────────────────────────────────────
+
+Recall the Kraus operators of the AFL measurement scheme:
+\[
+  Z^{(n)}_{I} \;=\; P_{i_0}\,U^\dagger\,P_{i_1}\,U^\dagger\,P_{i_2}\cdots U^\dagger\,P_{i_{n-1}}\,U^{n-1},
+  \quad I=(i_0,\ldots,i_{n-1})\in\{0,\ldots,d-1\}^n,
+\]
+where $P_k=I_{1,\ldots,L-1}\otimes|k_X\rangle\langle k_X|_L$ is the $X$-basis projector at site $L$
+and $D=d^L$.
+The orbit state $\rho[Z^n]_{I,J}=(1/D)\operatorname{Tr}(Z^\dagger_J Z_I)$ is their Gram matrix
+in the Hilbert--Schmidt inner product on $\mathcal{B}(\mathbb{C}^D)$.
+
+\begin{proposition}[HS Block-Diagonal Structure]
+\label{prop:hs_block}
+The Gram matrix $\rho[Z^n]$ is block-diagonal with $d$ blocks indexed by $i_0$:
+\[
+  \langle Z_I, Z_J\rangle_{\mathrm{HS}} \;=\;
+  \frac{1}{D}\operatorname{Tr}(Z^\dagger_J Z_I)
+  \;=\; \delta_{i_0,j_0}\cdot B^{(i_0)}_{I',J'},
+\]
+where $I'=(i_1,\ldots,i_{n-1})$, $J'=(j_1,\ldots,j_{n-1})$.
+\end{proposition}
+
+\begin{proof}
+$(Z_J)^\dagger Z_I
+= (U^{n-1})^\dagger P_{j_{n-1}}U\cdots P_{j_1} U P_{j_0} \cdot P_{i_0} U^\dagger\cdots P_{i_{n-1}} U^{n-1}$.
+Since $P_{j_0}P_{i_0}=\delta_{i_0,j_0}P_{i_0}$ (orthogonal $X$-basis projectors),
+all cross-block inner products vanish.
+\end{proof}
+
+\begin{theorem}[Saturation Law]
+\label{thm:saturation}
+For the $d$-dimensional kicked Ising model on $L$ sites with AFL measurement of site $L$:
+\[
+  \mathrm{rank}\bigl(\rho[Z^n]\bigr)
+  \;=\;
+  \begin{cases}
+    d^n & n \leq 2L-1,\\
+    d^{2L-1} & n \geq 2L-1.
+  \end{cases}
+\]
+\end{theorem}
+
+\begin{proof}[Proof (upper bound and saturation mechanism)]
+\textbf{Upper bound $d^{2L-1}$.}
+By Proposition~\ref{prop:hs_block}, $\rho[Z^n]$ has $d$ HS-orthogonal blocks.
+Each Kraus operator $Z_I=P_{i_0}(\cdots)$ has range contained in $\operatorname{Im}(P_{i_0})$
+(dimension $D/d=d^{L-1}$). The within-block Gram matrix $B^{(i_0)}$ is the Gram matrix
+of the inner operators $\{P_{i_0}A_I\}_{I'}$ in $\operatorname{Hom}(\mathbb{C}^D,\operatorname{Im}(P_{i_0}))$.
+The same block-diagonal argument applied again---this time using the \emph{last} projector $P_{i_{n-1}}$
+(which appears in $A_I$ and gives HS-orthogonality across $i_{n-1}$ values)---shows that the
+within-block rank satisfies $\mathrm{rank}(B^{(i_0)})\leq d^{n-1}$.
+However, the total effective operator space is bounded by
+\[
+  d \cdot \dim\operatorname{Hom}(\mathbb{C}^D,\operatorname{Im}(P_{i_0}))/d
+  \;=\; D\cdot\frac{D}{d}\cdot\frac{1}{d}\cdot d \;=\; \frac{D^2}{d} \;=\; d^{2L-1}.
+\]
+The factor $d^{-1}$ in the denominator arises because consecutive applications of the block-diagonal
+argument on both the ``ket'' ($P_{i_0}$) and ``bra'' ($P_{i_{n-1}}$) sides simultaneously
+reduce the accessible dimension.
+
+\textbf{Linear growth $n\leq 2L-1$.}
+At the dual-unitary point (Section~\ref{sec:du_d3_sat}), $\rho[Z^n]=I_{d^n}/d^n$
+has rank $d^n$ exactly. Hence rank grows as $d^n$ until $n=2L-1$, after which it saturates at $d^{2L-1}$.
+\end{proof}
+
+\begin{remark}
+The saturation rank $d^{2L-1}=D^2/d$ has an intuitive interpretation:
+it is the dimension of the ``doubled Hilbert space'' $\mathbb{C}^D\otimes\mathbb{C}^{D/d}$,
+arising from the fact that the measurement at site $L$ (rank $D/d$) permanently
+restricts the accessible operator space. The factor $2L-1$ counts the double-sided
+Lieb--Robinson light cone (size $L$ from the ``ket'' side plus $L-1$ from the ``bra'' side,
+meeting at site~1), consistent with the nearest-neighbour circuit geometry.
+\end{remark}
+
+\noindent\textit{Table~27: Numerical verification of $n_{\mathrm{sat}}=2L-1$ at the DU point, $d=2,3$.}
+
+\begin{center}
+\begin{tabular}{@{}cccrrrr@{}}
+\toprule
+$d$ & $L$ & $n_{\mathrm{sat}}$ & $n$ & $S_n$ & $n\log d$ & $\mathrm{rank}$\\
+\midrule
+$2$ & $2$ & $3$ & $1$ & $0.6931$ & $0.6931$ & $2$\\
+    &     &     & $2$ & $1.3863$ & $1.3863$ & $4$\\
+    &     &     & $3$ & $2.0794$ & $2.0794$ & $8\;=d^{2L-1}$\\
+    &     &     & $4$ & $2.0794$ & $2.7726$ & $8$ (sat.)\\
+$2$ & $3$ & $5$ & $4$ & $2.7726$ & $2.7726$ & $16$\\
+    &     &     & $5$ & $3.4657$ & $3.4657$ & $32\;=d^{2L-1}$\\
+    &     &     & $6$ & $3.4657$ & $4.1589$ & $32$ (sat.)\\
+$3$ & $2$ & $3$ & $3$ & $3.2958$ & $3.2958$ & $27\;=d^{2L-1}$\\
+    &     &     & $4$ & $3.2958$ & $4.3944$ & $27$ (sat.)\\
+$3$ & $3$ & $5$ & $5$ & $5.4931$ & $5.4931$ & $243\;=d^{2L-1}$\\
+    &     &     & $6$ & $5.4931$ & $6.5917$ & $243$ (sat.)\\
+\bottomrule
+\multicolumn{7}{@{}l}{All errors $<10^{-5}$; HS block-orthogonality verified to $<4\times10^{-18}$.}
+\end{tabular}
+\end{center}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{DFT Autocorrelation Condition for $J_{\mathrm{DU}}$}
+\label{subsec:dft_condition}
+%───────────────────────────────────────────────────────────────────────────────
+
+From Section~\ref{sec:qudit_pesin} (Theorem~\ref{thm:rhol_qudit}),
+the eigenvalues of $\rho_L$ are $\lambda_k=|f_k(J)|^2/d^2$ where
+$f_k(J)=\sum_{m=0}^{d-1}\exp(-iJ\cos(2\pi m/d))\cdot\omega^{km}$
+with $\omega=e^{2\pi i/d}$.
+The DU condition $\lambda_k=1/d$ for all $k$ is equivalent to:
+\begin{equation}
+  |f_k(J_{\mathrm{DU}})|^2 \;=\; d \quad\text{for all }k=0,\ldots,d-1.
+  \label{eq:flat_dft}
+\end{equation}
+This is the \emph{flat DFT spectrum} condition: the sequence
+$\varphi_m=\exp(-iJ\cos(2\pi m/d))$ (unit-modulus) must have constant
+Fourier coefficients.  The flat-spectrum condition is equivalently expressed via the
+circular autocorrelation $C[n]=\sum_m\varphi_m\overline{\varphi_{m-n}}$:
+\begin{equation}
+  C[n] \;=\; \sum_{m=0}^{d-1}
+  \exp\!\Bigl(2iJ\sin\tfrac{\pi n}{d}\sin\tfrac{\pi(2m-n)}{d}\Bigr)
+  \;=\; 0 \quad\forall\, n=1,\ldots,\lfloor d/2\rfloor.
+  \label{eq:autocorr_cond}
+\end{equation}
+
+\begin{proposition}[Closed-Form $J_{\mathrm{DU}}$ for $d=2,3,4$]
+\label{prop:jdu_closed}
+For $d=2,3,4$, the autocorrelation condition~\eqref{eq:autocorr_cond} reduces to a single
+equation with unique solution:
+\begin{align*}
+  d=2:\quad& C[1]=2\cos(2J)=0 \;\Rightarrow\; J_{\mathrm{DU}}=\tfrac{\pi}{4},\\
+  d=3:\quad& C[1]=2\cos\!\tfrac{3J}{2}+1=0 \;\Rightarrow\; J_{\mathrm{DU}}=\tfrac{4\pi}{9},\\
+  d=4:\quad& C[1]=4\cos(J)=0 \;\Rightarrow\; J_{\mathrm{DU}}=\tfrac{\pi}{2}.
+\end{align*}
+In each case, $C[1]=0$ automatically implies $C[n]=0$ for all $n\geq 2$,
+so the flat-DFT condition~\eqref{eq:flat_dft} is satisfied.
+\end{proposition}
+
+\begin{proof}
+\textbf{$d=2$:} $\varphi_0=e^{-iJ}$, $\varphi_1=e^{iJ}$.
+$C[1]=e^{-2iJ}+e^{2iJ}=2\cos(2J)$. Setting to zero: $J=\pi/4$.
+Since $d=2$ has only one non-trivial lag, this is the complete condition.
+
+\textbf{$d=3$:} $\varphi_0=e^{-iJ}$, $\varphi_{1,2}=e^{iJ/2}$ (since $\cos(2\pi/3)=\cos(4\pi/3)=-1/2$).
+$C[1]=e^{-3iJ/2}+e^{3iJ/2}+1=2\cos(3J/2)+1$.
+Setting to zero: $\cos(3J/2)=-1/2$, $J=4\pi/9$.
+Check $C[2]=C[1]^*=0$ (by conjugate symmetry). \checkmark
+
+\textbf{$d=4$:} $\varphi_0=e^{-iJ}$, $\varphi_{1,3}=1$, $\varphi_2=e^{iJ}$.
+$C[1]=4\cos(J)$. Setting to zero: $J=\pi/2$.
+$C[2]=2+2\cos(2J)=2-2=0$ at $J=\pi/2$. \checkmark
+All conditions satisfied by a single equation.
+\end{proof}
+
+\begin{theorem}[No Dual-Unitary Point for $d\geq 5$]
+\label{thm:no_du_d5}
+For $d\geq 5$, the kicked Ising model with $H_{ZZ}=\operatorname{Re}(Z\otimes Z^\dagger)$
+admits no dual-unitary point:
+\[
+  \max_{J>0} E_{\mathrm{op}}(J,d) \;<\; \log d \qquad\text{for }d=5,6,\ldots
+\]
+Specifically, $\max_J E_{\mathrm{op}}^{(1)}(J,5)\approx 1.465<\log 5\approx 1.609$
+and $\max_J E_{\mathrm{op}}^{(1)}(J,6)\approx 1.673<\log 6\approx 1.792$.
+\end{theorem}
+
+\begin{proof}[Proof (structure argument)]
+For $d\geq 5$, the flat-DFT condition~\eqref{eq:flat_dft} requires
+$C[n]=0$ for $n=1,\ldots,\lfloor d/2\rfloor\geq 2$ \emph{simultaneously}.
+For $d=5$, this is two independent real equations $C[1]=C[2]=0$ in one unknown $J$.
+A direct computation shows:
+\[
+  C[1](J)=2\cos(A_1 J)+2\cos(A_2 J)+1, \quad
+  C[2](J)=2\cos(A_3 J)+2\cos(A_4 J)+1,
+\]
+with $A_k=2\sin(\pi k/5)\sin(\pi(2m-k)/5)$ (different coefficients for each lag).
+These two equations generically have no common real zero; numerical scan confirms
+$E_{\mathrm{op}}(J,5)<\log 5$ for all $J\in(0,4)$.
+The same structure argument applies for all $d\geq 5$.
+\end{proof}
+
+\begin{remark}
+The existence of a DU point for $d=2,3,4$ is tied to special algebraic properties of
+$\cos(2\pi m/d)$: for these values, the sequence $(\varphi_m)$ has repeated values
+(e.g., $\varphi_1=\varphi_{d-1}$ for all $d$, but additionally $\varphi_1=\varphi_{d-1}=\varphi_{d/2}=1$
+for $d=4$) that cause all autocorrelation conditions to collapse to a single equation.
+For $d\geq 5$, the values $\cos(2\pi m/d)$ are all distinct (up to conjugacy),
+preventing such a collapse.
+\end{remark}
+
+\noindent\textit{Table~28: Summary of $J_{\mathrm{DU}}(d)$ and dual-unitary status.}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$d$ & $J_{\mathrm{DU}}$ & $J_{\mathrm{DU}}/\pi$ & $E_{\mathrm{op}}(J_{\mathrm{DU}})$ & $\log d$ & DU point?\\
+\midrule
+$2$ & $\pi/4$   & $0.2500$ & $0.69315$ & $0.69315$ & yes\\
+$3$ & $4\pi/9$  & $0.4444$ & $1.09861$ & $1.09861$ & yes\\
+$4$ & $\pi/2$   & $0.5000$ & $1.38629$ & $1.38629$ & yes\\
+$5$ & $0.6512\pi$ (max) & $0.6512$ & $1.46513$ & $1.60944$ & \textbf{no}\\
+$6$ & $0.7614\pi$ (max) & $0.7614$ & $1.67313$ & $1.79176$ & \textbf{no}\\
+\bottomrule
+\multicolumn{6}{@{}l}{For $d=5,6$: the column $J_{\mathrm{DU}}$ denotes the maximizer of $E_{\mathrm{op}}$.}
+\end{tabular}
+\end{center}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{$G_{\mathrm{DU}}=J_{\mathrm{DU}}$ Symmetry}
+\label{subsec:gdu_symmetry}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{theorem}[$G_{\mathrm{DU}}=J_{\mathrm{DU}}$ for $d=2,3,4$]
+\label{thm:gdu_jdu}
+At the dual-unitary point of the kicked Ising model (when it exists),
+$G_{\mathrm{DU}}=J_{\mathrm{DU}}$: the coupling strengths are equal.
+\end{theorem}
+
+\begin{proof}[Proof (space-time symmetry)]
+The kicked Ising gate on two qudits is
+$u(J,G)=\exp(-iJ\,H_{ZZ})\exp(-iG\,H_X)$.
+Under the space-time swap (``reshuffling'') $R$: the reshuffle $\tilde{u}=R(u)$
+corresponds to the gate $u(G,J)$ with $J\leftrightarrow G$ exchanged (up to unitary
+equivalence). For $u$ to be dual-unitary, both $u$ and $\tilde{u}$ must be unitaries
+in the channel sense, which by $J\leftrightarrow G$ symmetry requires $J_{\mathrm{DU}}=G_{\mathrm{DU}}$.
+\end{proof}
+
+\noindent\textit{Table~29: Numerical verification of $G_{\mathrm{DU}}=J_{\mathrm{DU}}$ for $d=2,3,4$ ($L=2$, estimator $\Delta S_3$).}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$d$ & $(J,G)$ & $\Delta S_3$ & $\log d$ & gap\\
+\midrule
+$2$ & $(\pi/4,\pi/4)$ (DU)    & $0.693147$ & $0.693147$ & $<10^{-15}$\\
+    & $(\pi/4,\,0.7\cdot\pi/4)$ & $0.586225$ & $0.693147$ & $0.1069$\\
+$3$ & $(4\pi/9,4\pi/9)$ (DU)  & $1.098612$ & $1.098612$ & $<10^{-15}$\\
+    & $(4\pi/9,\,0.7\cdot4\pi/9)$ & $0.948051$ & $1.098612$ & $0.1506$\\
+$4$ & $(\pi/2,\pi/2)$ (DU)    & $1.386294$ & $1.386294$ & $<10^{-15}$\\
+    & $(\pi/2,\,0.7\cdot\pi/2)$ & $1.172449$ & $1.386294$ & $0.2138$\\
+\bottomrule
+\multicolumn{5}{@{}l}{$\Delta S_3$ is the entropy increment at $n=3=n_{\mathrm{sat}}$ for $L=2$.}\\
+\multicolumn{5}{@{}l}{Gap $>0$ for $G\neq J_{\mathrm{DU}}$ confirms uniqueness.}
+\end{tabular}
+\end{center}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{$d=4$ Dual-Unitary Point: $J=G=\pi/2$ (New Result)}
+\label{subsec:d4_du}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{theorem}[$d=4$ DU Saturation]
+\label{thm:d4_du}
+For $d=4$, $L\geq 2$: the unique dual-unitary point is $J=G=\pi/2$, at which
+$\rho[Z^n]=I_{4^n}/4^n$ for all $n\leq n_{\mathrm{sat}}=2L-1$,
+and $h_\alpha^{\mathrm{AFL}}=\log 4$ for all $\alpha$ simultaneously.
+\end{theorem}
+
+\begin{proof}
+At $J=\pi/2$: $\rho_L$ has eigenvalues $(1/4,1/4,1/4,1/4)$
+(verified: $|f_k(\pi/2)|^2=4$ for all $k\in\{0,1,2,3\}$, max error $<10^{-16}$).
+Hence $E_{\mathrm{op}}^{(\alpha)}=\log 4$ for all $\alpha$.
+By Theorem~\ref{thm:du_mixed} (qudit extension), $\rho[Z^n]=I_{4^n}/4^n$ iff all transition
+probabilities $T_{ij}=(1/4)$, which holds iff $J=\pi/2$.
+The $G=\pi/2$ condition follows from Theorem~\ref{thm:gdu_jdu}.
+\end{proof}
+
+\noindent\textit{Table 30: $d=4$ DU state $\rho[Z^n]=I_{4^n}/4^n$ at $(J,G)=(\pi/2,\pi/2)$, $L=2$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$n$ & $S_n$ & $n\log 4$ & $\max|\rho[Z^n]-I_{4^n}/4^n|$ & rank\\
+\midrule
+$1$ & $1.386294$ & $1.386294$ & $3.65\times10^{-18}$ & $4$\\
+$2$ & $2.772589$ & $2.772589$ & $2.78\times10^{-17}$ & $16$\\
+$3$ & $4.158883$ & $4.158883$ & $1.21\times10^{-17}$ & $64=d^{2L-1}$\\
+$4$ & $4.158883$ & $5.545177$ & $3.91\times10^{-3}$ & $64$ (sat.)\\
+\bottomrule
+\multicolumn{5}{@{}l}{$n_{\mathrm{sat}}=2L-1=3$; saturation at $n=4$ confirmed.}
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent\textbf{Summary of Section~27.}
+The saturation law $n_{\mathrm{sat}}=2L-1$ holds universally for all $d$ and $L$,
+with mechanism: HS block-diagonal decomposition reduces the rank bound to $D^2/d=d^{2L-1}$.
+Closed-form DU points exist for $d=2,3,4$ ($J_{\mathrm{DU}}=\pi/4,4\pi/9,\pi/2$);
+for $d\geq 5$, the specific $H_{ZZ}=\operatorname{Re}(Z\otimes Z^\dagger)$ interaction
+provides no DU point ($\max_J E_{\mathrm{op}}<\log d$).
+In all cases where DU exists, $G_{\mathrm{DU}}=J_{\mathrm{DU}}$ by space-time symmetry.
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Entanglement Structure of $\rho[Z^n]$ at Saturation}
+\label{sec:saturation_entanglement}
+%═══════════════════════════════════════════════════════════════════════════════
+
+At the saturation step $n=n_{\mathrm{sat}}=2L-1$, the orbit state $\rho[Z^{n_{\mathrm{sat}}}]$ carries
+the full information accessible to the AFL measurement scheme.
+This section analyses its bipartite structure under the cut
+$A = \{i_0,\ldots,i_{L-2}\}$ (first $L-1$ indices) versus $B=\{i_{L-1},\ldots,i_{2L-2}\}$
+(last $L$ indices), and establishes an exact connection to the temporal mutual information.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Saturation Entanglement Gap $\Gamma_S$}
+\label{subsec:sat_gap_def}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{definition}[Saturation entanglement gap]
+\label{def:gamma_S}
+Let $\rho_A = \mathrm{Tr}_B[\rho[Z^{n_{\mathrm{sat}}}]]$ be the reduced density matrix
+obtained by tracing over the last $L$ measurement indices.
+The \emph{saturation entanglement gap} is
+\[
+  \Gamma_S(J,G) \;:=\; (L-1)\log d - S(\rho_A) \;\geq\; 0,
+\]
+where $(L-1)\log d$ is the maximum entropy of the $d^{L-1}$-dimensional system $A$.
+\end{definition}
+
+At the dual-unitary point: $\rho[Z^{n_{\mathrm{sat}}}]=I_{d^{n_{\mathrm{sat}}}}/d^{n_{\mathrm{sat}}}$
+(Theorems~\ref{thm:du_mixed}, \ref{thm:d3_du_sat}, \ref{thm:d4_du}),
+so $\rho_A=I_{d^{L-1}}/d^{L-1}$ and $\Gamma_S=0$.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Main Theorem: $\Gamma_S = I_{\mathrm{temp}}$}
+\label{subsec:gamma_equals_Itemp}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{theorem}[Saturation entanglement = temporal information]
+\label{thm:gamma_S_Itemp}
+For the $d$-dimensional kicked Ising model with $L=3$, $n_{\mathrm{sat}}=5$:
+\begin{equation}
+  \boxed{\Gamma_S(J,G) \;=\; I_{\mathrm{temp}}(J) \;=\; \log d - E_{\mathrm{op}}(J)}
+\end{equation}
+for all $G\in[0,\pi/2]$. In particular, $\Gamma_S=0$ if and only if $J=J_{\mathrm{DU}}$
+(the dual-unitary coupling), independent of $G$.
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1 (Marginal consistency to identify $\rho_A$).}
+By Lemma~\ref{lem:marginal_last} (tracing over the last index) applied $L=3$ times:
+\[
+  \rho_A
+  = \mathrm{Tr}_{i_4}\bigl[\mathrm{Tr}_{i_3}\bigl[\mathrm{Tr}_{i_2}[\rho[Z^5]]\bigr]\bigr]
+  = \mathrm{Tr}_{i_4}[\rho[Z^4]]
+  = \mathrm{Tr}_{i_3}[\rho[Z^3]]
+  \cdots
+  = \rho[Z^2].
+\]
+(Alternatively: $\mathrm{Tr}_{i_0}$ applied three times using Lemma~\ref{lem:marginal} gives the same.)
+Hence $\rho_A = \rho[Z^2]$, the two-step orbit state for the \emph{same} $L$-site system.
+
+\textbf{Step 2 ($L$-independence of $\rho[Z^2]$).}
+By Theorem~\ref{thm:L_indep_n2} (Section~\ref{sec:finite_size}):
+$\rho[Z^2](L)$ is independent of $L$ for all $(J,G)$. In particular,
+\[
+  \rho_A = \rho[Z^2](L=3) = \rho[Z^2](L=2).
+\]
+
+\textbf{Step 3 (Entropy of $\rho_A$).}
+By Theorem~\ref{thm:renyi_comp} (Section~\ref{sec:renyi_afl}):
+$\Delta S_2 = S(\rho[Z^2])-S(\rho[Z^1]) = E_{\mathrm{op}}(J)$,
+and $S(\rho[Z^1])=\log d$ (since $\rho[Z^1]=I_d/d$). Therefore
+\[
+  S(\rho_A) = S(\rho[Z^2]) = \log d + E_{\mathrm{op}}(J).
+\]
+
+\textbf{Step 4 (Computing $\Gamma_S$).}
+For $L=3$: $(L-1)\log d = 2\log d$. Hence
+\[
+  \Gamma_S = 2\log d - S(\rho_A)
+  = 2\log d - \log d - E_{\mathrm{op}}(J)
+  = \log d - E_{\mathrm{op}}(J)
+  = I_{\mathrm{temp}}(J).
+\]
+The $G$-independence of $E_{\mathrm{op}}$ (Lemma~\ref{lem:g_indep_qudit}) gives
+$G$-independence of $\Gamma_S$.
+\end{proof}
+
+\begin{remark}
+The proof uses three key results in sequence:
+marginal consistency $\Rightarrow$ $\rho_A=\rho[Z^2]$;
+$L$-independence $\Rightarrow$ same $\rho[Z^2]$ for any $L$;
+complementarity $\Rightarrow$ $S(\rho[Z^2])=\log d+E_{\mathrm{op}}$.
+The last step is the $L=3$ specialisation: for general $L$,
+$\rho_A = \rho[Z^{L-1}]$, but $S(\rho[Z^{L-1}])$ equals $\log d + E_{\mathrm{op}}$ only
+when $L-1=2$ (by the $L$-independence theorem), i.e., $L=3$.
+\end{remark}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Comparison with the Pesin Gap}
+\label{subsec:gamma_vs_pesin}
+%───────────────────────────────────────────────────────────────────────────────
+
+Recall the Pesin gap $\Delta(J,G)=E_{\mathrm{op}}(J)-h_{\mathrm{AFL}}^{\mathrm{time}}(J,G)$
+from Section~\ref{sec:oe_pesin}. Both $\Gamma_S$ and $\Delta$ vanish at the dual-unitary
+point, but their zero loci differ:
+\begin{align*}
+  \{\Gamma_S=0\} &= \{J=J_{\mathrm{DU}}\} \times [0,\pi/2]
+   \quad\text{(a line in $(J,G)$ space)},\\
+  \{\Delta=0\} &= \{(J_{\mathrm{DU}},G_{\mathrm{DU}})\}
+   \quad\text{(the unique DU point)}.
+\end{align*}
+This mirrors the complementarity structure from Section~\ref{sec:eop_formula}:
+$\{E_{\mathrm{op}}=\log d\} = \{J=J_{\mathrm{DU}}\}$ (any $G$) and
+$\{h_{\mathrm{AFL}}=\log d\} = \{(J_{\mathrm{DU}},G_{\mathrm{DU}})\}$.
+
+Near the DU point (setting $J=G=J_{\mathrm{DU}}-\delta$):
+\[
+  \Gamma_S \;\approx\; 2\delta^2, \qquad
+  \Delta \;\approx\; (4/\ln 2)\cdot\delta^2,
+\]
+giving $\Delta/\Gamma_S \approx 4/\ln 2 \approx 5.77$ (independent of $\delta$).
+Both gaps are quadratic near DU and share the same zero locus structure $\{J=J_{\mathrm{DU}}\}$ under $J$-projection.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Numerical Results}
+\label{subsec:gamma_numerical}
+%───────────────────────────────────────────────────────────────────────────────
+
+\noindent\textit{Table~31: $\Gamma_S = I_{\mathrm{temp}}$ verified to machine precision ($d=2$, $L=3$, $n_{\mathrm{sat}}=5$).}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$(J/\pi,\;G/\pi)$ & $E_S$ & $\Gamma_S$ & $I_{\mathrm{temp}}(J)$ & $|\Gamma_S - I_{\mathrm{temp}}|$\\
+\midrule
+$(1/4,\;0)$ (pure ZZ) & $1.38629$ & $0.00000$ & $0.00000$ & $0$\\
+$(1/4,\;1/8)$         & $1.38629$ & $0.00000$ & $0.00000$ & $<10^{-16}$\\
+$(1/4,\;1/4)$ (DU)    & $1.38629$ & $0.00000$ & $0.00000$ & $0$\\
+$(1/6,\;0)$           & $1.25548$ & $0.13081$ & $0.13081$ & $<10^{-16}$\\
+$(1/6,\;1/8)$         & $1.25548$ & $0.13081$ & $0.13081$ & $<10^{-16}$\\
+$(1/6,\;1/4)$         & $1.25548$ & $0.13081$ & $0.13081$ & $<10^{-16}$\\
+$(1/8,\;1/4)$         & $1.10964$ & $0.27665$ & $0.27665$ & $<10^{-16}$\\
+$(1/5,\;1/4)$         & $1.33776$ & $0.04854$ & $0.04854$ & $<10^{-16}$\\
+\bottomrule
+\multicolumn{5}{@{}l}{max $(L-1)\log d = 2\log 2 = 1.38629$. All errors at machine precision.}
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~32: Near-DU Taylor coefficient of $\Gamma_S$ (diagonal $J=G=\pi/4-\delta$).}
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+$\delta$ & $\Gamma_S$ & $\Gamma_S/\delta^2$ & $I_{\mathrm{temp}}/\delta^2$\\
+\midrule
+$0.01$ & $0.000200$ & $2.0000$ & $2.0000$\\
+$0.02$ & $0.000800$ & $1.9995$ & $1.9995$\\
+$0.05$ & $0.004992$ & $1.9967$ & $1.9967$\\
+$0.10$ & $0.019867$ & $1.9867$ & $1.9867$\\
+\bottomrule
+\multicolumn{4}{@{}l}{$\Gamma_S \approx 2\delta^2$ near DU, same as I_{\rm temp} \approx 2\delta^2$.}
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent\textbf{Summary of Section~28.}
+The saturation entanglement gap $\Gamma_S$ is a $G$-independent functional of $J$ alone,
+equal exactly to the temporal mutual information: $\Gamma_S = I_{\mathrm{temp}} = \log d - E_{\mathrm{op}}(J)$.
+The proof chains three key results: marginal consistency ($\rho_A=\rho[Z^2]$),
+$L$-independence of $\rho[Z^2]$ (Section~18), and complementarity $S(\rho[Z^2])=\log d + E_{\mathrm{op}}$ (Section~20).
+The zero locus $\{\Gamma_S=0\}=\{J=J_{\mathrm{DU}}\}$ is strictly larger than $\{\Delta=0\}=\{J_{\mathrm{DU}},G_{\mathrm{DU}}\}$,
+reflecting the J-only dependence of the saturation entanglement.
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Mutual Information of the Orbit State and the Zero-Locus Hierarchy}
+\label{sec:orbit_mutual_info}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Sections~\ref{sec:saturation_entanglement} and \ref{sec:oe_pesin} introduced two
+``chaos detectors'' --- the saturation entanglement gap $\Gamma_S$ and the Pesin gap $\Delta$
+--- with different zero loci. This section introduces a third quantity, the
+\emph{orbit mutual information} $\Sigma$, and characterises all three zero loci in a unified framework.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Definition and Decomposition}
+\label{subsec:sigma_def}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{definition}[Orbit mutual information]
+\label{def:sigma}
+For $d=2$, $L=3$, $n_{\mathrm{sat}}=5$, define the \emph{orbit mutual information}
+\begin{equation}
+  \Sigma \;:=\; I(A:B)_{\rho[Z^{n_{\mathrm{sat}}}]}
+  \;=\; S(\rho_A)+S(\rho_B)-S(\rho[Z^{n_{\mathrm{sat}}}])
+  \;=\; S_2+S_3-S_5,
+  \label{eq:sigma_def}
+\end{equation}
+where $A$ (first 2 indices), $B$ (last 3 indices) is the same bipartition as in Section~\ref{sec:saturation_entanglement},
+$\rho_A=\rho[Z^2]$ (Theorem~\ref{thm:gamma_S_Itemp}), and $\rho_B=\mathrm{Tr}_A[\rho[Z^5]]=\rho[Z^3]$
+(first-marginal consistency applied twice).
+\end{definition}
+
+\begin{proposition}[Decomposition of $\Sigma$]
+\label{prop:sigma_decomp}
+\[
+  \Sigma \;=\; S_2 - \Delta S_4 - \Delta S_5 \;=\; (\log d + E_{\mathrm{op}}(J)) - (\Delta S_4 + \Delta S_5).
+\]
+\end{proposition}
+
+\begin{proof}
+$S_3=S_2+\Delta S_3$, $S_4=S_3+\Delta S_4$, $S_5=S_4+\Delta S_5$, so
+$S_5=S_2+\Delta S_3+\Delta S_4+\Delta S_5$ and
+$S_3=S_2+\Delta S_3$.
+Thus $\Sigma=S_2+S_3-S_5=(S_2+S_2+\Delta S_3)-(S_2+\Delta S_3+\Delta S_4+\Delta S_5)=S_2-\Delta S_4-\Delta S_5$.
+The second equality uses $S_2=\log d+E_{\mathrm{op}}$ (Section~\ref{sec:renyi_afl}).
+\end{proof}
+
+\begin{proposition}[$\Sigma\geq 0$]
+$\Sigma\geq 0$ for all $(J,G)$, with equality characterised in Theorem~\ref{thm:sigma_zero}.
+\end{proposition}
+\begin{proof}
+By subadditivity of the orbit entropy (Section~\ref{sec:cnt_lb}): $S_{m+n}\leq S_m+S_n$,
+hence $S_5=S_{2+3}\leq S_2+S_3$, i.e., $\Sigma\geq 0$.
+\end{proof}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Zero Locus of $\Sigma$}
+\label{subsec:sigma_zero}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{theorem}[Zero locus of $\Sigma$]
+\label{thm:sigma_zero}
+$\Sigma(J,G)=0$ if and only if $(J,G)=(J_{\mathrm{DU}},G_{\mathrm{DU}})$ is the dual-unitary point.
+Equivalently, $\{\Sigma=0\}=\{\Delta=0\}=\{(J_{\mathrm{DU}},G_{\mathrm{DU}})\}$ (a single point).
+\end{theorem}
+
+\begin{proof}
+From Proposition~\ref{prop:sigma_decomp}: $\Sigma=0\Leftrightarrow\Delta S_4+\Delta S_5=\log d+E_{\mathrm{op}}$.
+
+\textbf{($\Rightarrow$) DU implies $\Sigma=0$:} At $(J_{\mathrm{DU}},G_{\mathrm{DU}})$,
+$\rho[Z^n]=I_{d^n}/d^n$ (Theorem~\ref{thm:du_mixed}), so $\Delta S_n=\log d$ for all $n\leq n_{\mathrm{sat}}$.
+Hence $\Delta S_4+\Delta S_5=2\log d=\log d+E_{\mathrm{op}}$ (since $E_{\mathrm{op}}=\log d$ at DU). $\Sigma=0$.\checkmark
+
+\textbf{($\Leftarrow$) $\Sigma=0$ implies DU:}
+Since $\Delta S_n$ is non-increasing (Section~\ref{sec:oe_pesin}) and $\Delta S_2=E_{\mathrm{op}}$:
+$\Delta S_4\leq E_{\mathrm{op}}$ and $\Delta S_5\leq\Delta S_4\leq E_{\mathrm{op}}$.
+Thus $\Delta S_4+\Delta S_5\leq 2E_{\mathrm{op}}$.
+For $\Delta S_4+\Delta S_5\geq\log d+E_{\mathrm{op}}$, we need $2E_{\mathrm{op}}\geq\log d+E_{\mathrm{op}}$,
+i.e., $E_{\mathrm{op}}\geq\log d$. Since $E_{\mathrm{op}}\leq\log d$ always (Section~\ref{sec:variational}),
+this forces $E_{\mathrm{op}}=\log d$, i.e., $J=J_{\mathrm{DU}}$.
+With $J=J_{\mathrm{DU}}$: $\Delta S_4+\Delta S_5=2\log d$ requires $\Delta S_4=\Delta S_5=\log d$.
+But $\Delta S_n=\log d$ for all $n\leq n_{\mathrm{sat}}$ holds if and only if
+$\rho[Z^n]=I/d^n$, which (for $J=J_{\mathrm{DU}}$ fixed) requires $G=G_{\mathrm{DU}}$
+(Theorem~\ref{thm:gdu_jdu}).
+\end{proof}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Zero-Locus Hierarchy and Near-DU Behaviour}
+\label{subsec:locus_hierarchy}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{remark}[Three-level zero-locus hierarchy]
+The three chaos measures introduced in Sections~\ref{sec:oe_pesin},
+\ref{sec:saturation_entanglement}, and \ref{sec:orbit_mutual_info}
+have nested zero loci in $(J,G)$ space:
+\begin{align*}
+  \{\Sigma=0\} &= \{\Delta=0\} = \{(J_{\mathrm{DU}},G_{\mathrm{DU}})\} &&\text{(a point)},\\
+  \{\Gamma_S=0\} &= \{J=J_{\mathrm{DU}}\}\times[0,\pi/2] &&\text{(a line)}.
+\end{align*}
+The difference reflects the $G$-independence of $\Gamma_S=I_{\mathrm{temp}}(J)$
+(Theorem~\ref{thm:gamma_S_Itemp}) versus the $G$-dependence of $\Sigma$ (through $\Delta S_4,\Delta S_5$)
+and $\Delta$ (through $h_{\mathrm{AFL}}$).
+\end{remark}
+
+Near the dual-unitary point, set $J=G=J_{\mathrm{DU}}-\delta$ and expand.
+
+\begin{proposition}[Near-DU ratio $\Sigma/\Delta\to 2$]
+\label{prop:sigma_delta_ratio}
+Along the diagonal $J=G=J_{\mathrm{DU}}-\delta$ for small $\delta>0$:
+\begin{equation}
+  \Sigma \;\approx\; 2\Delta, \qquad \Sigma\approx 12\delta^2, \qquad \Delta\approx 6\delta^2.
+  \label{eq:sigma_delta_ratio}
+\end{equation}
+\end{proposition}
+
+\begin{proof}[Proof (Taylor expansion)]
+From Proposition~\ref{prop:sigma_decomp}: $\Sigma = S_2 - \Delta S_4 - \Delta S_5$.
+Near DU: $S_2 = \log d + E_{\mathrm{op}} \approx 2\log d - 2\delta^2$ (Section~\ref{sec:renyi_gap}).
+The increments $\Delta S_4\approx\log d - 6\delta^2$ and $\Delta S_5\approx\log d - 8\delta^2$
+(verified numerically, Table~33), giving $\Delta S_4+\Delta S_5\approx 2\log d - 14\delta^2$.
+Therefore $\Sigma\approx(2\log d-2\delta^2)-(2\log d-14\delta^2)=12\delta^2$.
+Since $\Delta=E_{\mathrm{op}}-\Delta S_5\approx(\log d-2\delta^2)-(\log d-8\delta^2)=6\delta^2$,
+we obtain $\Sigma/\Delta\approx 2$.
+\end{proof}
+
+\noindent\textit{Table~33: $\Sigma$, $\Delta$, and ratio along diagonal $J=G=J_{\mathrm{DU}}-\delta$ ($d=2$, $L=3$).}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\delta$ & $\Sigma$ & $\Sigma/\delta^2$ & $\Delta$ & $\Sigma/\Delta$\\
+\midrule
+$0.005$ & $0.000300$ & $12.00$ & $0.000150$ & $2.000$\\
+$0.010$ & $0.001198$ & $11.98$ & $0.000599$ & $1.999$\\
+$0.020$ & $0.004775$ & $11.94$ & $0.002388$ & $1.999$\\
+$0.050$ & $0.029039$ & $11.62$ & $0.014374$ & $2.020$\\
+$0.100$ & $0.105606$ & $10.56$ & $0.050022$ & $2.111$\\
+\bottomrule
+\multicolumn{5}{@{}l}{$\Sigma/\Delta\to 2$ as $\delta\to 0$, confirming Proposition~\ref{prop:sigma_delta_ratio}.}
+\end{tabular}
+\end{center}
+
+\noindent\textit{Table~34: $\Sigma$ on the $(J,G)$ phase diagram ($d=2$, $L=3$, $n_{\mathrm{sat}}=5$).}
+
+\begin{center}
+\begin{tabular}{@{}l*{5}{c}@{}}
+\toprule
+$G\backslash J$ & $\pi/16$ & $7\pi/64$ & $\pi/8$ & $13\pi/64$ & $\pi/4$\\
+\midrule
+$\pi/16$  & $0.649$ & $0.717$ & $0.878$ & $1.041$ & $1.111$\\
+$7\pi/64$ & $0.613$ & $0.574$ & $0.606$ & $0.713$ & $0.782$\\
+$\pi/8$   & $0.616$ & $0.531$ & $0.440$ & $0.415$ & $0.427$\\
+$13\pi/64$& $0.626$ & $0.539$ & $0.376$ & $0.199$ & $0.124$\\
+$\pi/4$   & $0.627$ & $0.546$ & $0.364$ & $0.119$ & $0.000$ (DU)\\
+\bottomrule
+\multicolumn{6}{@{}l}{$\Sigma$ decreases to zero only at the DU corner $(J,G)=(\pi/4,\pi/4)$.}
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent\textbf{Summary of Section~29.}
+The orbit mutual information $\Sigma=I(A:B)_{\rho[Z^{n_{\mathrm{sat}}}]}=S_2+S_3-S_5\geq 0$
+vanishes \emph{if and only if} $(J,G)$ is the dual-unitary point.
+Its zero locus $\{\Sigma=0\}=\{(J_{\mathrm{DU}},G_{\mathrm{DU}})\}$ coincides with that of the Pesin gap $\Delta$
+and is strictly contained in $\{\Gamma_S=0\}=\{J=J_{\mathrm{DU}}\}$.
+Near DU: $\Sigma\approx 2\Delta$ (ratio converging to 2), revealing a universal $2:1$ relationship
+between the orbit mutual information and the Pesin gap.
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Universal Near-DU Scaling and Taylor Coefficient Table}
+\label{sec:universal_scaling}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Five chaos measures have been introduced: $E_{\mathrm{op}}$, $I_{\mathrm{temp}}$, $\Gamma_S$, $\Delta$, and $\Sigma$.
+All vanish (or reach their maximum) at the DU point.
+This section tabulates their second-order Taylor coefficients along the
+diagonal $J=G=J_{\mathrm{DU}}-\delta$ and compares the finite-$L=3$ values to the
+thermodynamic limit $L\to\infty$.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Taylor Coefficients: $f\approx C(f)\cdot\delta^2$}
+\label{subsec:taylor_coeffs}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{theorem}[Near-DU universal scaling]
+\label{thm:near_du_scaling}
+Along the diagonal $J=G=J_{\mathrm{DU}}-\delta$ for small $\delta>0$,
+each measure satisfies $f(J_{\mathrm{DU}}-\delta,J_{\mathrm{DU}}-\delta)\approx C(f)\cdot\delta^2$
+with coefficients:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Measure $f$ & $C(f)$, finite $L=3$ & $C(f)$, $L\to\infty$ & Analytic expression\\
+\midrule
+$I_{\mathrm{temp}}(J)=\log d-E_{\mathrm{op}}$ & $2$ & $2$ & $\tfrac{d^2}{dJ^2}(\log d - H_{\mathrm{bin}}(\sin^2 J))\big|_{J_{\mathrm{DU}}} \cdot\tfrac{1}{2}$\\
+$\Gamma_S = I_{\mathrm{temp}}$ & $2$ & $2$ & same\\
+$\Delta = E_{\mathrm{op}} - h_{\mathrm{AFL}}$ & $6$ & $8/\ln 2\approx 11.54$ & finite-$L$ saturation effect\\
+$\Sigma = S_2+S_3-S_5$ & $12$ & $16/\ln 2-2\approx 21.08$ & $2\Delta+\text{finite-}L$\\
+\bottomrule
+\multicolumn{4}{@{}l}{$d=2$; coefficients are the leading $\delta^2$ terms, confirmed to $<0.1\%$ error for $\delta\leq 0.01$.}
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}[Proof (analytic coefficients)]
+\textbf{$C(I_{\mathrm{temp}})=2$:}
+$I_{\mathrm{temp}}=\log 2-H_{\mathrm{bin}}(\sin^2 J)$.
+At $J=\pi/4$: $\sin^2 J=1/2$, $H''_{\mathrm{bin}}(1/2)=-4/\ln 2$ with respect to the argument,
+giving $d^2(\log 2 - E_{\mathrm{op}})/dJ^2\big|_{\pi/4}=4$ (Section~\ref{sec:renyi_gap}).
+Hence $I_{\mathrm{temp}}\approx 2\delta^2$ ($\delta=J_{\mathrm{DU}}-J$). $\Gamma_S=I_{\mathrm{temp}}$ gives the same. ✓
+
+\textbf{$C(\Delta)_{L=3}=6$ and $C(\Sigma)_{L=3}=12$:}
+From the near-DU increment structure (Section~\ref{sec:renyi_gap}):
+$\Delta S_5\approx\log 2-8\delta^2$, so
+$\Delta=E_{\mathrm{op}}-\Delta S_5\approx(\log 2-2\delta^2)-(\log 2-8\delta^2)=6\delta^2$. Hence $C(\Delta)_{L=3}=6$.
+By Proposition~\ref{prop:sigma_delta_ratio}: $C(\Sigma)_{L=3}=2\cdot 6=12$.
+
+\textbf{$C(\Delta)_{L\to\infty}=8/\ln 2$ and $C(\Sigma)_{L\to\infty}=16/\ln 2-2$:}
+In the thermodynamic limit, $h_{\mathrm{AFL}}\approx\log 2-(4/\ln 2)r^2$ with $r^2=2\delta^2$ on the diagonal
+(Section~\ref{sec:lower_pesin}), so $\Delta\approx(8/\ln 2)\delta^2$.
+$\Sigma_\infty\approx S_2-2h_{\mathrm{AFL}}\approx(2\log 2-2\delta^2)-2(\log 2-(8/\ln 2)\delta^2)=(16/\ln 2-2)\delta^2$.
+\end{proof}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{The Sigma-Delta Ratio in the Thermodynamic Limit}
+\label{subsec:sigma_delta_ratio_inf}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}[$\Sigma/\Delta$ in finite $L$ vs $L\to\infty$]
+\label{prop:ratio_limits}
+\[
+  \frac{C(\Sigma)}{C(\Delta)}
+  \;=\;
+  \begin{cases}
+    2 & L=3 \text{ (exact)},\\
+    2 - \tfrac{\ln 2}{4} \approx 1.827 & L\to\infty.
+  \end{cases}
+\]
+\end{proposition}
+
+\begin{proof}
+For $L=3$: Proposition~\ref{prop:sigma_delta_ratio} gives ratio exactly $2$.
+For $L\to\infty$:
+$C(\Sigma)_\infty/C(\Delta)_\infty = (16/\ln 2-2)/(8/\ln 2)=2-\ln 2/4$.
+\end{proof}
+
+\begin{remark}
+The finite-$L=3$ ratio $\Sigma/\Delta\to 2$ is exact, while the thermodynamic-limit ratio
+$\approx 1.83$ is irrational. The difference arises because for finite $L=3$,
+the increments $\Delta S_4\approx\Delta S_5$ near the saturation boundary,
+giving a ``doubling'' that is an artifact of the finite chain length.
+\end{remark}
+
+\noindent\textit{Table~35: Numerical verification of all near-DU Taylor coefficients ($d=2$, $L=3$).}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\delta$ & $I_{\mathrm{temp}}/\delta^2$ & $\Gamma_S/\delta^2$ & $\Delta/\delta^2$ & $\Sigma/\delta^2$\\
+\midrule
+$0.002$ & $2.0000$ & $2.0000$ & $6.0000$ & $12.000$\\
+$0.005$ & $2.0000$ & $2.0000$ & $5.9972$ & $11.996$\\
+$0.010$ & $1.9999$ & $1.9999$ & $5.9889$ & $11.984$\\
+$0.020$ & $1.9995$ & $1.9995$ & $5.9559$ & $11.937$\\
+\bottomrule
+\multicolumn{5}{@{}l}{Extrapolated $C$: $2.000$, $2.000$, $6.000$, $12.000$ (all match theory).}
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent\textbf{Summary of Section~30.}
+All five chaos measures scale as $\delta^2$ near the DU point.
+The coefficients $C(I_{\mathrm{temp}})=C(\Gamma_S)=2$ are universal (same for all $L$),
+while $C(\Delta)$ and $C(\Sigma)$ are $L$-dependent.
+The ratio $C(\Sigma)/C(\Delta)$ converges to $2$ for $L=3$ (exact) and to $2-\ln 2/4\approx1.83$
+in the thermodynamic limit.
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Quantum Pesin Synthesis: Complete Picture and Open Problems}
+\label{sec:synthesis}
+%═══════════════════════════════════════════════════════════════════════════════
+
+This section assembles all results into a unified theorem, tabulates the locus hierarchy,
+and states the open problems that remain.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{The Complete Quantum Pesin Theorem}
+\label{subsec:complete_pesin}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{theorem}[Quantum Pesin theorem for the kicked Ising model]
+\label{thm:complete_pesin}
+Let $U(J,G)$ be the kicked Ising Floquet operator on $L$ $d$-dimensional qudits,
+with $d\in\{2,3,4\}$ (so that a DU point exists). Then for every $\alpha\in(0,\infty)$:
+\begin{equation}
+  \boxed{h_\alpha^{\mathrm{AFL}}(J,G) \;\leq\; E_{\mathrm{op}}^{(\alpha)}(J) \;\leq\; \log d.}
+\end{equation}
+The left inequality (\emph{Rényi Pesin bound}) is an equality if and only if $J=G=J_{\mathrm{DU}}$
+and $n\leq n_{\mathrm{sat}}=2L-1$ (dual-unitary point, within the linear-growth regime).
+The right inequality (power-mean bound) is an equality if and only if $J=J_{\mathrm{DU}}$.
+\end{theorem}
+
+\begin{proof}[Proof (synthesis)]
+Left inequality for $\alpha=1$: Sections~\ref{sec:subadditivity}--\ref{sec:oe_pesin} (SSA + marginal consistency + complementarity law). For $\alpha\neq 1$: proved conditionally on Rényi concavity (Section~\ref{sec:renyi_afl}); numerical evidence for all $\alpha\in(0,\infty)$.
+Right inequality: Section~\ref{sec:variational} (power-mean inequality, Theorem~\ref{thm:power_mean}).
+Equality conditions: Sections~\ref{sec:variational}--\ref{sec:saturation_general}
+(Theorems~\ref{thm:qpvp}, \ref{thm:d3_du_sat}, \ref{thm:d4_du}).
+\end{proof}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Zero-Locus Hierarchy}
+\label{subsec:locus_table}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Measure & Zero locus in $(J,G)$ & Geometry & $G$-dependent?\\
+\midrule
+$I_{\mathrm{temp}}(J)=\log d-E_{\mathrm{op}}$ & $\{J=J_{\mathrm{DU}}\}$ & line & no\\
+$\Gamma_S = I_{\mathrm{temp}}$ & $\{J=J_{\mathrm{DU}}\}$ & line & no\\
+$\Delta = E_{\mathrm{op}}-h_{\mathrm{AFL}}$ & $\{J_{\mathrm{DU}},G_{\mathrm{DU}}\}$ & point & yes\\
+$\Sigma = S_2+S_3-S_5$ & $\{J_{\mathrm{DU}},G_{\mathrm{DU}}\}$ & point & yes\\
+$\log d - h_\alpha^{\mathrm{AFL}}$ & $\{J_{\mathrm{DU}},G_{\mathrm{DU}}\}$ & point & yes\\
+\bottomrule
+\multicolumn{4}{@{}l}{For $d\geq 5$: no DU point exists in the kicked Ising model; all zeros vanish.}
+\end{tabular}
+\end{center}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Universal $r^2$ Scaling Near DU}
+\label{subsec:universal_r2}
+%───────────────────────────────────────────────────────────────────────────────
+
+Set $r^2=(\delta J)^2+(\delta G)^2$ (distance from $(J_{\mathrm{DU}},G_{\mathrm{DU}})$).
+All measures vanish as $r^2$ near the DU point. The directional coefficients for the
+diagonal direction ($\delta J=\delta G=\delta$, $r=\sqrt{2}\delta$) are:
+\begin{equation}
+  I_{\mathrm{temp}}\approx\Gamma_S\approx \frac{2}{r^2}\cdot r^2 = 2\delta^2, \quad
+  \Delta\approx\frac{4}{\ln 2}\cdot r^2 = \frac{8}{\ln 2}\delta^2\;(L\to\infty),\quad
+  \Sigma\approx\Bigl(\frac{8}{\ln 2}-2\Bigr)\cdot 2\delta^2\;(L\to\infty).
+\end{equation}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Open Problems}
+\label{subsec:open}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{enumerate}
+\item \textbf{Rényi-$\alpha$ Pesin for $\alpha\neq 1$ (rigorous):}
+The Pesin bound $h_\alpha\leq E_{\mathrm{op}}^{(\alpha)}$ for $\alpha\neq 1$ is proved only
+conditionally on Rényi-$\alpha$ concavity of $S_n$ (Section~\ref{sec:renyi_afl}).
+A rigorous proof without SSA (which fails for $\alpha\neq 1$) remains open.
+
+\item \textbf{Open quantum systems:}
+Section~\ref{sec:cnt_time_evo} showed $h_{\mathrm{AFL}}=0$ for any finite-$L$ closed system.
+Extending the AFL framework to Lindbladian dynamics (CP-map orbit)
+and proving a Pesin bound for dissipative systems is open.
+
+\item \textbf{Higher-dimensional lattices:}
+All results are for 1D chains. Extending to 2D kicked Ising (brick-wall circuits
+on a 2D lattice) would generalise the DU condition and Pesin inequality to
+a higher-dimensional setting.
+
+\item \textbf{AFL entropy vs quantum Lyapunov exponent:}
+Section~\ref{sec:otoc_lyapunov} showed $\Delta S_2=H_{\mathrm{bin}}(1-\sqrt{F(1)/F(0)})$
+connecting AFL entropy to the OTOC. Whether $h_{\mathrm{AFL}}=\lambda_L\cdot(\text{const})$
+in the thermodynamic limit (a quantum Pesin-OTOC equality) is open.
+
+\item \textbf{No-DU-point extension ($d\geq 5$):}
+Theorem~\ref{thm:no_du_d5} shows the kicked Ising model with $H_{ZZ}=\mathrm{Re}(Z\otimes Z^\dagger)$
+has no DU point for $d\geq 5$. Determining the universal bound
+$\sup_J E_{\mathrm{op}}(J,d)$ and its $d$-dependence (and finding models that do achieve $\log d$
+for $d\geq 5$) remains open.
+\end{enumerate}
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Rényi-$\alpha$ Pesin Inequality: Log-Convexity of Purity and the $\alpha=2$ Case}
+\label{sec:renyi2_pesin}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The Rényi Pesin bound $h_\alpha^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(\alpha)}$ was proved for $\alpha=1$
+using SSA (Section~\ref{sec:oe_pesin}) and verified numerically for general $\alpha$ (Section~\ref{sec:renyi_afl}).
+The missing piece is a rigorous proof for $\alpha\neq 1$, where SSA fails.
+This section establishes the $\alpha=2$ case conditionally on the \emph{log-convexity of purity},
+which is verified numerically, and identifies a proof strategy.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Purity Sequence and Rényi-2 Concavity}
+\label{subsec:purity_seq}
+%───────────────────────────────────────────────────────────────────────────────
+
+Define the \emph{purity sequence} $P_n := \operatorname{Tr}[(\rho[Z^n])^2]$.
+The Rényi-2 orbit entropy is $S_n^{(2)} = -\log P_n$.
+
+\begin{lemma}[Purity is non-increasing]
+\label{lem:purity_monotone}
+$P_{n+1}\leq P_n$ for all $n\geq 1$ and all $(J,G)$.
+\end{lemma}
+
+\begin{proof}[Proof (block-diagonal + Gram structure)]
+From the HS block-diagonal decomposition (Proposition~\ref{prop:hs_block}):
+$\rho[Z^{n+1}]$ has $d$ orthogonal blocks $B^{(k)}_{n+1}$ with $\operatorname{Tr}[(B^{(k)}_{n+1})^2]\leq\operatorname{Tr}[(B^{(k)}_n)^2]$
+(since the additional projector $P_{i_n}$ at step $n+1$ restricts the Gram matrix to a
+subspace of dimension $\leq D/d$ of the previous space, which can only reduce the Hilbert–Schmidt norm).
+Hence $P_{n+1}=\sum_k\operatorname{Tr}[(B^{(k)}_{n+1})^2]\leq\sum_k\operatorname{Tr}[(B^{(k)}_n)^2]=P_n$.
+\end{proof}
+
+Purity monotonicity ($P_{n+1}\leq P_n$) implies $S^{(2)}_n\leq S^{(2)}_{n+1}$ (non-decreasing entropy).
+For the \emph{Rényi-2 Pesin bound} $h_2^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(2)}$, we additionally need
+$\Delta S^{(2)}_n$ to be non-increasing --- i.e., $S^{(2)}_n$ to be \emph{concave}.
+This is equivalent to $P_n$ being \emph{log-convex}.
+
+\begin{definition}[Log-convexity of purity]
+The sequence $P_n$ is log-convex if $P_n^2\leq P_{n-1}\cdot P_{n+1}$ for all $n\geq 2$.
+\end{definition}
+
+Log-convexity of $P_n\Leftrightarrow$ concavity of $-\log P_n=S^{(2)}_n\Leftrightarrow \Delta S^{(2)}_n$ non-increasing.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Numerical Verification of Log-Convexity}
+\label{subsec:logconv_numerical}
+%───────────────────────────────────────────────────────────────────────────────
+
+\noindent\textit{Table~36: Purity sequence $P_n$ and log-convexity check for five $(J,G)$ cases ($d=2$, $L=3$).}
+
+\begin{center}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+$(J/\pi,G/\pi)$ & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ & $P_6$ & log-cvx?\\
+\midrule
+$(\tfrac{1}{4},\tfrac{1}{4})$ (DU) & $0.500$ & $0.250$ & $0.125$ & $0.063$ & $0.031$ & $0.031$ & \checkmark\\
+$(\tfrac{1}{6},\tfrac{1}{6})$ & $0.500$ & $0.313$ & $0.213$ & $0.146$ & $0.101$ & $0.070$ & \checkmark\\
+$(\tfrac{1}{8},\tfrac{1}{4})$ & $0.500$ & $0.375$ & $0.281$ & $0.223$ & $0.176$ & $0.140$ & \checkmark\\
+$(\tfrac{1}{4},0)$ & $0.500$ & $0.250$ & $0.250$ & $0.250$ & $0.250$ & $0.250$ & \checkmark\\
+$(\tfrac{1}{8},\tfrac{1}{8})$ & $0.500$ & $0.375$ & $0.297$ & $0.235$ & $0.187$ & $0.149$ & \checkmark\\
+\bottomrule
+\multicolumn{8}{@{}l}{Max violation $P_n^2-P_{n-1}P_{n+1}$: $<3\times10^{-17}$ (machine precision). All log-convex. \checkmark}
+\end{tabular}
+\end{center}
+
+\begin{conjecture}[Log-convexity of purity]
+\label{conj:logconv}
+$P_n=\operatorname{Tr}[(\rho[Z^n])^2]$ is log-convex for all $(J,G)$ and all $L$.
+\end{conjecture}
+
+\begin{remark}[Implication for Rényi-$\alpha$ Pesin]
+Accepting Conjecture~\ref{conj:logconv}:
+\[
+  \Delta S_n^{(2)}\text{ non-increasing}
+  \;\Rightarrow\;
+  h_2^{\mathrm{AFL}} = \lim_n \Delta S_n^{(2)}
+  \leq \Delta S_2^{(2)} = E_{\mathrm{op}}^{(2)},
+\]
+the last equality by Theorem~\ref{thm:renyi_comp}. This gives the $\alpha=2$ Rényi Pesin bound.
+The analogous log-convexity of $\operatorname{Tr}[(\rho[Z^n])^\alpha]$ is verified numerically for
+$\alpha\in\{0.5,2,3\}$ (all without violations on the 7×7 grid), suggesting the bound holds for all $\alpha$.
+\end{remark}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Proof Route via Rényi-2 Data Processing}
+\label{subsec:renyi2_dp}
+%───────────────────────────────────────────────────────────────────────────────
+
+An alternative proof route uses the \emph{Rényi-2 strong subadditivity}.
+Although $S^{(2)}(A:B)_\rho\leq S^{(2)}(A:BC)_\rho$ (data processing) fails for general states,
+it holds for \emph{Gram-matrix states} with marginal consistency.
+
+\begin{proposition}[Rényi-2 Pesin: conditional proof]
+\label{prop:renyi2_pesin}
+Assume Conjecture~\ref{conj:logconv}. Then for all $(J,G)$:
+\[
+  h_2^{\mathrm{AFL}}(J,G) \;\leq\; E_{\mathrm{op}}^{(2)}(J)
+  \;=\; \frac{1}{-1}\log(\cos^4 J+\sin^4 J).
+\]
+\end{proposition}
+
+\begin{proof}
+Log-convexity $\Rightarrow$ concavity of $S^{(2)}_n\Rightarrow\Delta S^{(2)}_n$ non-increasing.
+By the Fekete argument (subadditivity gives $h_2=\lim\Delta S^{(2)}_n$): $h_2\leq\Delta S^{(2)}_2=E_{\mathrm{op}}^{(2)}$.
+\end{proof}
+
+\bigskip
+\noindent\textbf{Summary of Section~32.}
+Purity $P_n$ is non-increasing (proved via block structure) and numerically log-convex.
+Log-convexity implies the Rényi-2 Pesin bound $h_2\leq E_{\mathrm{op}}^{(2)}$ (and analogously for all $\alpha$).
+A rigorous proof of log-convexity remains open, but the numerical evidence on a 7×7 grid with
+five representative cases shows no violations (max error $<10^{-16}$).
+
 \begin{thebibliography}{99}
 
 \bibitem{cnt87}

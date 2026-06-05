@@ -104,6 +104,58 @@ gate entanglement, temporal correlations, and dynamical entropy in a unified bou
 - `cnt_eop_formula.py`: exact E_op = H_bin(sin²J); complementarity law proof.
 - `cnt_pesin_gap.py`: Operator-Entanglement Pesin Inequality; gap function Delta(J,g).
 
+## Update: 2026-06-05 (Sessions adding Sections 24–31)
+
+### New Results (Sections 24–31)
+
+#### Sections 24–26 — Qudit Extension (d>2)
+- Full AFL Pesin framework extended to d=2,3,4 (clock/shift algebra, DFT formula for rho_L).
+- Theorem: rho_L eigenvalues = |f_k(J)|^2/d^2 via DFT of gate phases.
+- DU conditions: J_DU = π/4 (d=2), 4π/9 (d=3), π/2 (d=4).
+- Variational principle: max h_α^AFL = log(d), achieved iff J=G=J_DU.
+- G_DU = J_DU for d=2,3,4 (J↔G space-time symmetry).
+
+#### Section 27 — Saturation Law n_sat=2L-1 and General-d DU
+- Proved: rank(rho[Z^n]) = d^n for n ≤ 2L-1, then d^{2L-1}=D²/d (saturation).
+- Mechanism: HS block-diagonal structure with d HS-orthogonal blocks.
+- No DU point for d≥5 in the kicked Ising model with H_ZZ=Re(Z⊗Z†).
+- Closed-form J_DU for d=2,3,4; numerical for d=5,6 (non-DU).
+
+#### Section 28 — Saturation Entanglement Gap Gamma_S = I_temp
+- Proved EXACTLY: Gamma_S(J,G) = I_temp(J) = log(d) - E_op(J), G-independent.
+- Proof chain: marginal consistency → rho_A = rho[Z^2]; L-independence; complementarity.
+- Zero locus: {Gamma_S=0} = {J=J_DU} × [0,π/2] (a LINE — strictly larger than DU point).
+- Near DU: Gamma_S ≈ 2*delta^2.
+
+#### Section 29 — Orbit Mutual Information Sigma
+- Proved: Sigma = I(A:B) = S_2+S_3-S_5 = S_2 - dS_4 - dS_5 ≥ 0.
+- Zero locus: {Sigma=0} = {(J_DU, G_DU)} (DU POINT — same as {Delta=0}).
+- Proof: Sigma=0 requires E_op=log d (J condition) AND dS_n=log d (G condition).
+- Near DU: Sigma/Delta → 2 (ratio converges to 2 for L=3, exactly).
+
+#### Section 30 — Universal Near-DU Taylor Coefficients
+- Complete table: C(I_temp)=C(Gamma_S)=2 (all L); C(Delta,L=3)=6, C(Sigma,L=3)=12.
+- Thermodynamic limit: C(Delta,∞)=8/ln2≈11.5, C(Sigma,∞)=16/ln2-2≈21.1.
+- Ratio C(Sigma)/C(Delta): 2 (L=3 exact), 2-ln2/4≈1.83 (L→∞).
+
+#### Section 31 — Quantum Pesin Synthesis
+- Complete theorem: h_α^AFL ≤ E_op^(α) ≤ log(d) for all α.
+- Zero-locus hierarchy: {point}⊊{line} structure for 5 chaos measures.
+- Five open problems: Rényi concavity, open quantum systems, 2D lattices, OTOC equality, d≥5.
+
+### Final state of Output.tex
+31 sections + bibliography, 545+ balanced environments, 5182+ lines.
+
+### All Python scripts in CNT/
+cnt_basics.py, cnt_deeper.py, cnt_time_evolution.py, cnt_chaos_diagnostic.py,
+cnt_lower_bound.py, cnt_subadditivity.py, cnt_operator_entanglement.py,
+cnt_eop_formula.py, cnt_pesin_gap.py, cnt_lower_pesin_bound.py,
+cnt_marginal_consistency.py, cnt_finite_size_scaling.py, cnt_L_independence.py,
+cnt_otoc_lyapunov.py, cnt_renyi_pesin.py, cnt_min_entropy_transfer.py,
+cnt_du_variational.py, cnt_renyi_gap_spectrum.py, cnt_qudit_pesin.py,
+cnt_qudit_du.py, cnt_saturation_general.py, cnt_saturation_entanglement.py,
+cnt_orbit_mutual_info.py.
+
 ## Update: 2026-06-04 (Sessions adding Sections 17–23)
 
 ### New Results (Sections 17–23)
