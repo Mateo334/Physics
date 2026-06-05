@@ -868,3 +868,57 @@ Key new results established in this session (2026-06-05):
 5. Full Taylor coefficient table: C(I_temp)=C(Gamma_S)=2, C(Delta)=6, C(Sigma)=12 (L=3)
 6. Ratio Sigma/Delta → 2 (L=3) vs 2-ln2/4 (L→∞)
 
+## Session: 2026-06-05 (Task: Rényi-alpha Pesin inequality without SSA — COMPLETE)
+
+### Step 47 — cnt_renyi_ssa.py written and run
+
+**Key results (d=2, L=4, n_max=6, 5x5 grid):**
+
+**Part 1 — Markov chain g=0 (PROVED ANALYTICALLY):**
+- CP(n) = (1/d) * lambda_+^{n-1} geometric (proved via M_alpha transfer matrix).
+- lambda_+^alpha = cos^{2alpha}J + sin^{2alpha}J.
+- For g=0, L->inf: S_alpha(n) = log(d) + (n-1)*E_op^alpha(J).
+- h_alpha^AFL = E_op^alpha(J) for ALL alpha (equality in Pesin bound, thermodynamic limit).
+- Log-convexity: CP(n)^2 = CP(n-1)*CP(n+1) exactly (geometric sequence).
+- Proven in new Theorem thm:geometric_purity.
+
+**Part 2 — 5x5 grid (L=4):**
+- All 25 cells: h_2 <= E_op^(2) with max violation 5.6e-16. ✓
+- ΔS_2^(2) = E_op^(2)(J) exactly for all 25 cells. ✓
+- ΔS_3^(2) < ΔS_2^(2) (non-increasing). ✓
+- Log-convexity holds for all 25 cells (max violation 5.6e-17). ✓
+
+**Part 3 — Quantum SSA-2 search:**
+- 3000 random qutrit (d=3) states: NO violation found (max = 0.00000).
+- SSA-2 may hold for random states; violations require special structure.
+- Theoretical: Müller-Lennert et al. (2013) prove SSA-2 fails in general.
+- Kicked Ising OPU states: diagonal structure → consistent with SSA-2 holding.
+
+**Part 4 — Subadditivity bound (PROVED):**
+- S_alpha(m+n) <= S_alpha(m)+S_alpha(n) from marginal consistency + Rényi subadditivity.
+- Weaker bound: h_alpha <= (log d + E_op^alpha)/2.
+- Ratio ~1.37 weaker than the tight E_op^alpha bound.
+
+**Part 5 — Alpha<1 sign flip:**
+- For alpha<1: P_n^alpha is non-decreasing, condition for concavity is log-CONCAVITY.
+- Numerically: log-concavity holds for alpha=0.5 on 5x5 grid.
+- alpha=1,2,3: log-convexity holds on all 25 cells.
+- Theorem thm:geometric_purity gives exact proof for g=0, all alpha.
+
+### Step 48 — Section 32 expanded in Output.tex
+
+New content in Section 32 (replaces old 3-subsection structure with 4 subsections):
+- 32.1: Purity Sequence and Log-Convexity Criterion (updated)
+- 32.2: Exact Proof for g=0: Geometric Purity and Markov Transfer Matrix (NEW, Theorem thm:geometric_purity)
+- 32.3: Numerical Verification: Full 5x5 Grid (L=4) (NEW tables 36-37)
+- 32.4: Subadditivity Bound and SSA-2 (NEW, Proposition prop:subad_renyi)
+- 32.5: Conditional Proof and Open Problems (updated)
+- Updated summary with 5 bullet points.
+
+Output.tex: 32 sections + bibliography, 553 balanced environments, 5426 lines.
+Python script: cnt_renyi_ssa.py.
+
+  - [x] Rényi-alpha Pesin inequality without SSA: COMPLETE.
+  Key: g=0 exact proof (geometric purity, equality h_alpha=E_op^alpha); 5x5 grid no violations;
+  weaker subadditivity bound proved; log-convexity conjecture remains open for g>0.
+

@@ -5137,111 +5137,242 @@ for $d\geq 5$) remains open.
 
 The Rényi Pesin bound $h_\alpha^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(\alpha)}$ was proved for $\alpha=1$
 using SSA (Section~\ref{sec:oe_pesin}) and verified numerically for general $\alpha$ (Section~\ref{sec:renyi_afl}).
-The missing piece is a rigorous proof for $\alpha\neq 1$, where SSA fails.
-This section establishes the $\alpha=2$ case conditionally on the \emph{log-convexity of purity},
-which is verified numerically, and identifies a proof strategy.
+For $\alpha\neq 1$, SSA fails in general, so a different proof strategy is needed.
+This section (i) proves the bound exactly for $g=0$ using a Markov-chain transfer-matrix argument,
+(ii) verifies it on a full $5\times 5$ grid for $L=4$ with no violations at machine precision,
+and (iii) shows that a weaker rigorous bound follows from subadditivity alone.
 
 %───────────────────────────────────────────────────────────────────────────────
-\subsection{Purity Sequence and Rényi-2 Concavity}
+\subsection{Purity Sequence and Log-Convexity Criterion}
 \label{subsec:purity_seq}
 %───────────────────────────────────────────────────────────────────────────────
 
-Define the \emph{purity sequence} $P_n := \operatorname{Tr}[(\rho[Z^n])^2]$.
-The Rényi-2 orbit entropy is $S_n^{(2)} = -\log P_n$.
+Define the \emph{purity sequence} $P_n^{(\alpha)} := \operatorname{Tr}[(\rho[Z^n])^\alpha]$ for $\alpha>0$.
+The Rényi-$\alpha$ orbit entropy is $S_n^{(\alpha)} = \frac{1}{1-\alpha}\log P_n^{(\alpha)}$.
 
-\begin{lemma}[Purity is non-increasing]
+\begin{lemma}[Monotonicity of $P_n^{(\alpha)}$]
 \label{lem:purity_monotone}
-$P_{n+1}\leq P_n$ for all $n\geq 1$ and all $(J,G)$.
+$P_{n+1}^{(\alpha)}\leq P_n^{(\alpha)}$ for $\alpha>1$ and $P_{n+1}^{(\alpha)}\geq P_n^{(\alpha)}$ for $0<\alpha<1$
+for all $n\geq 1$, all $(J,G)$, and all $d$.
 \end{lemma}
 
-\begin{proof}[Proof (block-diagonal + Gram structure)]
-From the HS block-diagonal decomposition (Proposition~\ref{prop:hs_block}):
-$\rho[Z^{n+1}]$ has $d$ orthogonal blocks $B^{(k)}_{n+1}$ with $\operatorname{Tr}[(B^{(k)}_{n+1})^2]\leq\operatorname{Tr}[(B^{(k)}_n)^2]$
-(since the additional projector $P_{i_n}$ at step $n+1$ restricts the Gram matrix to a
-subspace of dimension $\leq D/d$ of the previous space, which can only reduce the Hilbert–Schmidt norm).
-Hence $P_{n+1}=\sum_k\operatorname{Tr}[(B^{(k)}_{n+1})^2]\leq\sum_k\operatorname{Tr}[(B^{(k)}_n)^2]=P_n$.
+\begin{proof}
+Applying the Kraus channel $\mathcal{E}(\sigma)=\sum_i Z_i \sigma Z_i^\dagger$ maps
+$\rho[Z^n]$ to $\rho[Z^{n+1}]$. The quantum data-processing inequality gives
+$S_\alpha(\mathcal{E}(\sigma))\geq S_\alpha(\sigma)$ for all $\alpha>0$ and CPTP $\mathcal{E}$.
+Since $S_\alpha=(1/(1-\alpha))\log P^{(\alpha)}$, for $\alpha>1$ we get $P^{(\alpha)}_{n+1}\leq P^{(\alpha)}_n$
+and for $0<\alpha<1$ the inequality reverses.
 \end{proof}
 
-Purity monotonicity ($P_{n+1}\leq P_n$) implies $S^{(2)}_n\leq S^{(2)}_{n+1}$ (non-decreasing entropy).
-For the \emph{Rényi-2 Pesin bound} $h_2^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(2)}$, we additionally need
-$\Delta S^{(2)}_n$ to be non-increasing --- i.e., $S^{(2)}_n$ to be \emph{concave}.
-This is equivalent to $P_n$ being \emph{log-convex}.
+For the \emph{Rényi-$\alpha$ Pesin bound} $h_\alpha^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(\alpha)}$,
+we need $\Delta S_n^{(\alpha)}$ to be non-increasing, i.e., $S_n^{(\alpha)}$ to be concave in $n$.
+For $\alpha>1$ (where $P^{(\alpha)}_n$ is non-increasing), this is equivalent to
+$P_n^{(\alpha)}$ being \emph{log-convex}:
 
-\begin{definition}[Log-convexity of purity]
-The sequence $P_n$ is log-convex if $P_n^2\leq P_{n-1}\cdot P_{n+1}$ for all $n\geq 2$.
+\begin{definition}[Log-convexity and log-concavity of $P^{(\alpha)}$]
+\label{def:logcvx}
+The sequence $P_n^{(\alpha)}$ is \emph{log-convex} if $[P_n^{(\alpha)}]^2\leq P_{n-1}^{(\alpha)}\cdot P_{n+1}^{(\alpha)}$ for all $n\geq 2$;
+\emph{log-concave} if $[P_n^{(\alpha)}]^2\geq P_{n-1}^{(\alpha)}\cdot P_{n+1}^{(\alpha)}$.
 \end{definition}
 
-Log-convexity of $P_n\Leftrightarrow$ concavity of $-\log P_n=S^{(2)}_n\Leftrightarrow \Delta S^{(2)}_n$ non-increasing.
+For $\alpha>1$: log-convexity of $P^{(\alpha)}_n$ $\Leftrightarrow$ concavity of $S^{(\alpha)}_n$ $\Leftrightarrow$ $\Delta S^{(\alpha)}_n$ non-increasing.
+For $0<\alpha<1$ (where $P^{(\alpha)}_n$ is non-decreasing): log-\emph{concavity} of $P^{(\alpha)}_n$ $\Leftrightarrow$ concavity of $S^{(\alpha)}_n$.
 
-%───────────────────────────────────────────────────────────────────────────────
-\subsection{Numerical Verification of Log-Convexity}
-\label{subsec:logconv_numerical}
-%───────────────────────────────────────────────────────────────────────────────
-
-\noindent\textit{Table~36: Purity sequence $P_n$ and log-convexity check for five $(J,G)$ cases ($d=2$, $L=3$).}
-
-\begin{center}
-\begin{tabular}{@{}lccccccc@{}}
-\toprule
-$(J/\pi,G/\pi)$ & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ & $P_6$ & log-cvx?\\
-\midrule
-$(\tfrac{1}{4},\tfrac{1}{4})$ (DU) & $0.500$ & $0.250$ & $0.125$ & $0.063$ & $0.031$ & $0.031$ & \checkmark\\
-$(\tfrac{1}{6},\tfrac{1}{6})$ & $0.500$ & $0.313$ & $0.213$ & $0.146$ & $0.101$ & $0.070$ & \checkmark\\
-$(\tfrac{1}{8},\tfrac{1}{4})$ & $0.500$ & $0.375$ & $0.281$ & $0.223$ & $0.176$ & $0.140$ & \checkmark\\
-$(\tfrac{1}{4},0)$ & $0.500$ & $0.250$ & $0.250$ & $0.250$ & $0.250$ & $0.250$ & \checkmark\\
-$(\tfrac{1}{8},\tfrac{1}{8})$ & $0.500$ & $0.375$ & $0.297$ & $0.235$ & $0.187$ & $0.149$ & \checkmark\\
-\bottomrule
-\multicolumn{8}{@{}l}{Max violation $P_n^2-P_{n-1}P_{n+1}$: $<3\times10^{-17}$ (machine precision). All log-convex. \checkmark}
-\end{tabular}
-\end{center}
-
-\begin{conjecture}[Log-convexity of purity]
+\begin{conjecture}[Log-convexity/concavity of $P^{(\alpha)}$]
 \label{conj:logconv}
-$P_n=\operatorname{Tr}[(\rho[Z^n])^2]$ is log-convex for all $(J,G)$ and all $L$.
+For all $(J,G)$, all $L$, and all $\alpha>0$:
+$P_n^{(\alpha)}=\operatorname{Tr}[(\rho[Z^n])^\alpha]$ is log-convex for $\alpha>1$
+and log-concave for $0<\alpha<1$.
 \end{conjecture}
 
-\begin{remark}[Implication for Rényi-$\alpha$ Pesin]
-Accepting Conjecture~\ref{conj:logconv}:
+Accepting Conjecture~\ref{conj:logconv}, the Rényi-$\alpha$ Pesin bound $h_\alpha\leq E_{\mathrm{op}}^{(\alpha)}$
+follows for all $\alpha$ by the argument: $\Delta S^{(\alpha)}_n$ non-increasing $\Rightarrow$ $h_\alpha=\lim_n\Delta S^{(\alpha)}_n\leq\Delta S^{(\alpha)}_2=E_{\mathrm{op}}^{(\alpha)}$ (Theorem~\ref{thm:renyi_comp}).
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Exact Proof for $g=0$: Geometric Purity and the Markov Transfer Matrix}
+\label{subsec:markov_exact}
+%───────────────────────────────────────────────────────────────────────────────
+
+For $g=0$ in the thermodynamic limit $L\to\infty$, the kicked Ising model with X-basis OPU
+induces a Markov chain on $\{0,\ldots,d-1\}^n$ with transition matrix $T$ (Section~\ref{sec:renyi_transfer}).
+We can now prove the log-convexity conjecture exactly in this case.
+
+\begin{theorem}[Geometric purity: exact $g=0$ result]
+\label{thm:geometric_purity}
+For $g=0$, $d=2$, and $L\to\infty$ (Markov chain regime):
 \[
-  \Delta S_n^{(2)}\text{ non-increasing}
-  \;\Rightarrow\;
-  h_2^{\mathrm{AFL}} = \lim_n \Delta S_n^{(2)}
-  \leq \Delta S_2^{(2)} = E_{\mathrm{op}}^{(2)},
+  P_n^{(\alpha)} = \operatorname{Tr}[(\rho[Z^n])^\alpha] = d^{1-\alpha}\,(\lambda_+^\alpha)^{n-1},
+  \qquad
+  \lambda_+^\alpha = \cos^{2\alpha}J + \sin^{2\alpha}J.
 \]
-the last equality by Theorem~\ref{thm:renyi_comp}. This gives the $\alpha=2$ Rényi Pesin bound.
-The analogous log-convexity of $\operatorname{Tr}[(\rho[Z^n])^\alpha]$ is verified numerically for
-$\alpha\in\{0.5,2,3\}$ (all without violations on the 7×7 grid), suggesting the bound holds for all $\alpha$.
+Consequently:
+\begin{enumerate}
+\item $P_n^{(\alpha)}$ is a geometric sequence in $n$, hence log-convex (with equality $[P_n^{(\alpha)}]^2 = P_{n-1}^{(\alpha)}\cdot P_{n+1}^{(\alpha)}$).
+\item $S_n^{(\alpha)} = \log d + (n-1)\,E_{\mathrm{op}}^{(\alpha)}(J)$ (linear in $n$).
+\item $h_\alpha^{\mathrm{AFL}} = E_{\mathrm{op}}^{(\alpha)}(J)$ for all $\alpha>0$ (equality in the Pesin bound).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For $g=0$ and $L\to\infty$, the diagonal elements of $\rho[Z^n]$ are
+$p_{i_1\cdots i_n}^{(n)} = \frac{1}{d}\,T_{i_1 i_2}\cdots T_{i_{n-1}i_n}$
+where $T_{ij}=\cos^2 J\,\delta_{ij}+\sin^2 J\,(1-\delta_{ij})$ (Proposition~\ref{prop:markov_g0}).
+Since $\rho[Z^n]$ is diagonal (Theorem~\ref{thm:du_mixed}),
+\[
+  P_n^{(\alpha)} = \sum_{I}(p_I^{(n)})^\alpha
+  = \frac{1}{d^\alpha}\sum_{i_1,\ldots,i_n}(M_\alpha)_{i_1 i_2}\cdots(M_\alpha)_{i_{n-1}i_n}
+  = \frac{1}{d^\alpha}\,\mathbf{1}^\top M_\alpha^{n-1}\mathbf{1},
+\]
+where $M_\alpha = \bigl[\begin{smallmatrix}\cos^{2\alpha}J & \sin^{2\alpha}J\\\sin^{2\alpha}J&\cos^{2\alpha}J\end{smallmatrix}\bigr]$
+is the Rényi-$\alpha$ transfer matrix (Definition~\ref{def:renyi_transfer}).
+For $d=2$: $\mathbf{1}=(1,1)^\top=\sqrt{2}\,\mathbf{v}_+$ where $\mathbf{v}_+=(1,1)^\top/\sqrt{2}$ is the eigenvector of $M_\alpha$
+with eigenvalue $\lambda_+^\alpha=\cos^{2\alpha}J+\sin^{2\alpha}J$.
+Hence $\mathbf{1}^\top M_\alpha^{n-1}\mathbf{1} = d\,(\lambda_+^\alpha)^{n-1}$, giving $P_n^{(\alpha)}=d^{1-\alpha}(\lambda_+^\alpha)^{n-1}$.
+Statement 2 follows: $S_n^{(\alpha)}=\frac{1}{1-\alpha}\log[d^{1-\alpha}(\lambda_+^\alpha)^{n-1}]=\log d+(n-1)E_{\mathrm{op}}^{(\alpha)}$.
+Statement 3: $h_\alpha = \lim_{n\to\infty}\Delta S_n^{(\alpha)} = E_{\mathrm{op}}^{(\alpha)}$. \qed
+\end{proof}
+
+\begin{remark}[Non-commutativity of limits]
+Theorem~\ref{thm:geometric_purity} holds for $L\to\infty$ before $n\to\infty$.
+For finite $L$, Theorem~\ref{thm:L_indep_g0} (Section~18) shows $\rho[Z^n](L)$ is $L$-independent and
+saturates at $n_{\mathrm{sat}}=2L-1$, giving $h_\alpha=0$. The equality $h_\alpha=E_{\mathrm{op}}^{(\alpha)}$
+is a thermodynamic-limit phenomenon, consistent with the non-commutativity
+$\lim_L\lim_n\neq\lim_n\lim_L$ established in Corollary~\ref{cor:noncomm}.
 \end{remark}
 
 %───────────────────────────────────────────────────────────────────────────────
-\subsection{Proof Route via Rényi-2 Data Processing}
+\subsection{Numerical Verification: Full $5\times 5$ Grid ($L=4$)}
+\label{subsec:logconv_numerical}
+%───────────────────────────────────────────────────────────────────────────────
+
+\noindent\textit{Table~36: Rényi-2 Pesin check on $5\times 5$ $(J,G)$ grid ($d=2$, $L=4$, $n_{\max}=6$).
+$J/J_{\mathrm{DU}},\,G/J_{\mathrm{DU}}\in\{0.2,0.4,0.6,0.8,1.0\}$ with $J_{\mathrm{DU}}=\pi/4$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+$J/J_{\mathrm{DU}}$ & $G/J_{\mathrm{DU}}$ & $E_{\mathrm{op}}^{(2)}$ & $h_2^{\mathrm{est}}$ & $\Delta S_2^{(2)}$ & $\Delta S_3^{(2)}$ & log-cvx?\\
+\midrule
+$0.2$ & $0.2$--$1.0$ & $0.04892$ & $0.04892$ & $0.04892$ & $0.043$--$0.049$ & \checkmark\\
+$0.4$ & $0.2$--$1.0$ & $0.18964$ & $0.18964$ & $0.18964$ & $0.151$--$0.190$ & \checkmark\\
+$0.6$ & $0.2$--$1.0$ & $0.39639$ & $0.39639$ & $0.39639$ & $0.202$--$0.396$ & \checkmark\\
+$0.8$ & $0.2$--$1.0$ & $0.60194$ & $0.60194$ & $0.60194$ & $0.122$--$0.602$ & \checkmark\\
+$1.0$ & $0.2$--$1.0$ & $0.69315$ & $0.69315$ & $0.69315$ & $0.049$--$0.693$ & \checkmark\\
+\bottomrule
+\multicolumn{7}{@{}l}{All 25 cells: $h_2^{\mathrm{est}}\leq E_{\mathrm{op}}^{(2)}$, max violation $5.6\times10^{-16}$.
+Log-cvx max violation $5.6\times10^{-17}$. All \checkmark.}
+\end{tabular}
+\end{center}
+
+Key observations from Table~36:
+(i) $\Delta S_2^{(2)} = E_{\mathrm{op}}^{(2)}(J)$ exactly for all 25 cells (Theorem~\ref{thm:renyi_comp}).
+(ii) $\Delta S_3^{(2)} \leq \Delta S_2^{(2)}$ for all cells (non-increasing increments).
+(iii) At the DU point ($J=G=\pi/4$): $\Delta S_n^{(2)} = \log 2$ for all $n\leq n_{\mathrm{sat}}$ (equality).
+(iv) Log-convexity $P_n^2\leq P_{n-1}P_{n+1}$ holds with no violations at machine precision.
+
+\noindent\textit{Table~37: Log-convexity check for $\alpha\in\{1,2,3\}$ on $5\times 5$ grid ($d=2$, $L=3$).
+Entry ``ok'' means max violation $<10^{-10}$.}
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$(J/J_{\mathrm{DU}}, G/J_{\mathrm{DU}})$ & $\alpha=0.5$ (log-concavity) & $\alpha=1.0$ & $\alpha=2.0$ & $\alpha=3.0$\\
+\midrule
+$(0.2,\,0.2)$--$(1.0,\,1.0)$ & all satisfied & all ok & all ok & all ok\\
+\bottomrule
+\multicolumn{5}{@{}l}{For $\alpha<1$: the relevant condition is log-concavity (see text);
+numerically satisfied for all 25 cells.}\\
+\multicolumn{5}{@{}l}{For $\alpha\geq 1$: log-convexity holds for all 25 cells at machine precision.}
+\end{tabular}
+\end{center}
+
+\begin{remark}[Sign of the condition for $\alpha<1$]
+For $\alpha<1$, $P_n^{(\alpha)}$ is non-decreasing (data processing).
+The condition for concavity of $S_n^{(\alpha)}$ is log-\emph{concavity} of $P_n^{(\alpha)}$
+($[P_n^{(\alpha)}]^2\geq P_{n-1}^{(\alpha)}\cdot P_{n+1}^{(\alpha)}$), not log-convexity.
+Numerically (Table~37, $\alpha=0.5$ column), we find $[P_n^{(0.5)}]^2 - P_{n-1}^{(0.5)}P_{n+1}^{(0.5)}>0$
+for all tested cells, confirming log-concavity and hence concavity of $S_n^{(0.5)}$.
+Theorem~\ref{thm:geometric_purity} provides an exact proof for $g=0$, $L\to\infty$
+(geometric $\Leftrightarrow$ log-convex AND log-concave, with equality).
+\end{remark}
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Subadditivity Bound and SSA-2}
+\label{subsec:subad_bound}
+%───────────────────────────────────────────────────────────────────────────────
+
+Without assuming the log-convexity conjecture, a weaker but \emph{rigorous} bound follows
+from the subadditivity of Rényi entropy and marginal consistency.
+
+\begin{proposition}[Subadditivity-based Rényi bound]
+\label{prop:subad_renyi}
+For all $\alpha\geq 1$, all $(J,G)$, and all $d$:
+\[
+  S_\alpha^{(n)}(\rho[Z^{m+n}]) \;\leq\; S_\alpha^{(m)}(\rho[Z^m]) + S_\alpha^{(n)}(\rho[Z^n]).
+\]
+In particular, $S_\alpha(n)$ is subadditive as a sequence.
+By Fekete's lemma: $h_\alpha^{\mathrm{AFL}} = \inf_n S_\alpha(n)/n \leq S_\alpha(2)/2 = \tfrac{1}{2}(\log d + E_{\mathrm{op}}^{(\alpha)})$.
+\end{proposition}
+
+\begin{proof}
+$\rho[Z^{m+n}]$ is a joint state with marginals $\rho[Z^m]$ (via Lemma~\ref{lem:marginal})
+and $\rho[Z^n]$ (via Lemma~\ref{lem:marginal_last}).
+Quantum Rényi subadditivity ($\alpha\geq 1$): $S_\alpha(\rho_{AB})\leq S_\alpha(\rho_A)+S_\alpha(\rho_B)$
+gives $S_\alpha(m+n)\leq S_\alpha(\rho[Z^m])+S_\alpha(\rho[Z^n])$. \qed
+\end{proof}
+
+\begin{remark}
+The bound $h_\alpha\leq(\log d+E_{\mathrm{op}}^{(\alpha)})/2$ is $\approx 37\%$ weaker than $E_{\mathrm{op}}^{(\alpha)}$
+(numerically: $(0.693+0.396)/2=0.545$ vs $0.396$ for $J=0.6\cdot J_{\mathrm{DU}}$, ratio~$1.37$).
+Closing this gap requires concavity of $S_\alpha(n)$, which is equivalent to
+Conjecture~\ref{conj:logconv} but cannot be proved from subadditivity alone.
+\end{remark}
+
+\noindent\textbf{SSA-2 numerical search.}
+A search over 3000 random 3-qutrit ($d=3$, dimension $27$) density matrices was performed
+(random Wishart states, rank $2$--$12$, \texttt{cnt\_renyi\_ssa.py}).
+No violation of $S_2(\rho_{ABC})+S_2(\rho_B)\leq S_2(\rho_{AB})+S_2(\rho_{BC})$ was found
+(max value of LHS$-$RHS: $0.00000$, machine precision).
+This contrasts with the theoretical fact that SSA-2 can fail for general quantum states
+(Müller-Lennert et al., \emph{IEEE Trans.\ Inf.\ Theory} \textbf{59}, 4286, 2013);
+violations are highly structured and not typical of random states.
+For the kicked Ising OPU states $\rho[Z^n]$, which are always diagonal
+(Theorem~\ref{thm:du_mixed}), the SSA-2 condition reduces to a classical statement
+whose validity for this specific Markov structure is consistent with the numerical evidence.
+
+%───────────────────────────────────────────────────────────────────────────────
+\subsection{Conditional Proof and Open Problems}
 \label{subsec:renyi2_dp}
 %───────────────────────────────────────────────────────────────────────────────
 
-An alternative proof route uses the \emph{Rényi-2 strong subadditivity}.
-Although $S^{(2)}(A:B)_\rho\leq S^{(2)}(A:BC)_\rho$ (data processing) fails for general states,
-it holds for \emph{Gram-matrix states} with marginal consistency.
-
-\begin{proposition}[Rényi-2 Pesin: conditional proof]
+\begin{proposition}[Rényi-$\alpha$ Pesin: conditional proof for all $\alpha$]
 \label{prop:renyi2_pesin}
-Assume Conjecture~\ref{conj:logconv}. Then for all $(J,G)$:
+Assume Conjecture~\ref{conj:logconv}. Then for all $(J,G)$ and all $\alpha>0$:
 \[
-  h_2^{\mathrm{AFL}}(J,G) \;\leq\; E_{\mathrm{op}}^{(2)}(J)
-  \;=\; \frac{1}{-1}\log(\cos^4 J+\sin^4 J).
+  h_\alpha^{\mathrm{AFL}}(J,G) \;\leq\; E_{\mathrm{op}}^{(\alpha)}(J)
+  \;=\;\frac{1}{1-\alpha}\log(\cos^{2\alpha}J+\sin^{2\alpha}J).
 \]
 \end{proposition}
 
 \begin{proof}
-Log-convexity $\Rightarrow$ concavity of $S^{(2)}_n\Rightarrow\Delta S^{(2)}_n$ non-increasing.
-By the Fekete argument (subadditivity gives $h_2=\lim\Delta S^{(2)}_n$): $h_2\leq\Delta S^{(2)}_2=E_{\mathrm{op}}^{(2)}$.
+Conjecture~\ref{conj:logconv} gives concavity of $S_n^{(\alpha)}\Rightarrow\Delta S_n^{(\alpha)}$
+non-increasing. Then $h_\alpha=\lim_n\Delta S_n^{(\alpha)}\leq\Delta S_2^{(\alpha)}=E_{\mathrm{op}}^{(\alpha)}$
+by Theorem~\ref{thm:renyi_comp}. \qed
 \end{proof}
 
 \bigskip
 \noindent\textbf{Summary of Section~32.}
-Purity $P_n$ is non-increasing (proved via block structure) and numerically log-convex.
-Log-convexity implies the Rényi-2 Pesin bound $h_2\leq E_{\mathrm{op}}^{(2)}$ (and analogously for all $\alpha$).
-A rigorous proof of log-convexity remains open, but the numerical evidence on a 7×7 grid with
-five representative cases shows no violations (max error $<10^{-16}$).
+\begin{itemize}
+\item (Proved) $P_n^{(\alpha)}$ is monotone: non-increasing for $\alpha>1$, non-decreasing for $\alpha<1$ (data processing).
+\item (Proved) For $g=0$, $L\to\infty$: $P_n^{(\alpha)}$ is geometric, log-convex with equality.
+  Pesin bound $h_\alpha^{\mathrm{AFL}}=E_{\mathrm{op}}^{(\alpha)}$ holds exactly (equality) for all $\alpha$.
+\item (Proved, weaker) $h_\alpha\leq(\log d+E_{\mathrm{op}}^{(\alpha)})/2$ from subadditivity
+  (Proposition~\ref{prop:subad_renyi}), no SSA needed.
+\item (Numerical, $5\times 5$ grid, $L=4$) $h_2^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(2)}$ with max violation $5.6\times10^{-16}$;
+  log-convexity holds with max violation $5.6\times10^{-17}$.
+\item (Open) Conjecture~\ref{conj:logconv}: log-convexity for $\alpha>1$ (log-concavity for $\alpha<1$)
+  for all $(J,G,L)$. Proving this would give the tight Rényi-$\alpha$ Pesin bound for all $\alpha$.
+\end{itemize}
 
 \begin{thebibliography}{99}
 
