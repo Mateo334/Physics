@@ -1567,3 +1567,116 @@ Output.tex: 46 sections + bibliography, ~1000 environments, ~8700 lines.
   - [x] Variance and concentration: COMPLETE.
   Key: Var[r_2]=1/45 (exact D=2); sigma/mean~O(1/sqrt(D)); Chebyshev Pr[|r_2-2/(D+1)|>eps]<=Var/eps^2.
   New Python script: cnt_variance_concentration.py.
+
+## Session: 2026-06-06 (New task: Exact F(D) and Var[r_2] — COMPLETE)
+
+### Step 77 — cnt_exact_variance.py rewritten and run
+
+**KEY RESULTS:**
+
+**Bug found in Section 46:** The Weingarten linear system for D<m=4 is SINGULAR
+(representation (1^4) with ell=4>D=3 causes degeneracy). The code gave F(D=3)=3/32=0.09375,
+but the correct value is F(D=3)=1/27≈0.03704 (MC confirmed to <2e-4).
+Impact: old Var[r_2] formula gave 0.236 for D=3 (factor ~25 wrong).
+
+**Closed-form F(D) PROVED (Beta-Dirichlet approach):**
+  F(D) = 4 / [(D-1) * D^2 * (D+3)]
+
+Proof:
+1. Given first column u_1, second column u_2 has |u_2[2]|^2 = (1-|u_1[2]|^2)*d,
+   d ~ Beta(1,D-2), independent of direction of u_1.
+2. E[d^2] = 2/[(D-1)*D] (second moment of Beta(1,D-2)).
+3. (x_1,...,x_D) ~ Dir(1,...,1): E[x_1^2(1-x_2)^2] = 2/[D(D+3)]
+   (via: 2/D(D+1) - 4/D(D+1)(D+2) + 4/D(D+1)(D+2)(D+3) = 2/[D(D+3)]).
+4. F = E[d^2] * E[x_1^2(1-x_2)^2] = 4/[(D-1)D^2(D+3)]. QED.
+
+Verified: F(2)=1/5, F(3)=1/27, F(4)=1/84, F(5)=1/200. All match MC to <5e-4.
+
+**Exact Var[r_2] PROVED:**
+  Var[r_2] = 4(D-1) / [D^2 * (D+1)^2 * (D+3)]
+
+Derivation: substitute F into the Section 46 variance decomposition. Numerator
+(D^2+2D-1)(D+1) - D^2(D+3) = D-1 after expansion.
+
+Exact values: 1/45 (D=2), 1/108 (D=3), 3/700 (D=4), 1/450 (D=5). All verified by MC.
+
+**Concentration corrected:**
+  sigma/mean = sqrt(D-1)/[D*sqrt(D+3)] ~ 1/D  (NOT O(1/sqrt(D)) as stated in Sec 46!)
+  sigma ~ 2/D^2, sigma*D^2 → 2 as D→∞.
+
+### Step 78 — Section 47 added to Output.tex; Section 46 corrected
+
+**Section 47:** "Exact Formula for F(D) and the Closed-Form Var[r_2]"
+Subsections:
+- 47.1: Beta-Dirichlet derivation (Prop prop:col_conditional, Lemma lem:dir_moment)
+- 47.2: Theorem thm:F_exact: F(D)=4/[(D-1)D^2(D+3)] (boxed)
+        Remark: D=3 Weingarten degeneracy explained
+- 47.3: Theorem thm:exact_var_all_D: Var[r_2]=4(D-1)/[D^2(D+1)^2(D+3)] (boxed)
+        Corollary: exact values D=2,3,4,5; Prop prop:exact_concentration: sigma/mu=1/D
+- Table tab:exact_var_all_D: F(D), Var[r_2], sigma/mu, sigma*D^2 for D=2..16
+- Summary bullets
+
+**Section 46 corrections:**
+- Table tab:concentration: column sigma*D^{3/2} corrected to sigma*D^2 (with new values).
+- Prop prop:conc_r2: "O(D^{-1/2})" corrected to "O(D^{-1})".
+- Proof: O(D^{-3}) → O(D^{-4}) for Var, O(D^{-3/2}) → O(D^{-2}) for sigma.
+- Summary bullet for F: now cites Section 47 for exact F formula.
+
+Output.tex: 47 sections + bibliography, 822 balanced environments, 8582 lines.
+Python script: cnt_exact_variance.py (5 parts, all COMPLETE).
+
+  - [x] Exact F(D) and Var[r_2] formula: COMPLETE.
+  Key: F(D)=4/[(D-1)D^2(D+3)] (proved via Beta-Dir, not Weingarten);
+  Var[r_2]=4(D-1)/[D^2(D+1)^2(D+3)] (exact, all D>=2);
+  sigma/mean~1/D (corrects prior O(1/sqrt(D)) claim in Sec 46).
+
+## Session: 2026-06-06 (New task: Exact Var[r_alpha] — COMPLETE)
+
+### Step 79 — cnt_var_alpha.py written and run
+
+**KEY RESULTS:**
+
+**F_alpha(D) PROVED (Beta-Dirichlet):**
+  F_alpha(D) = (D-1) * Gamma(alpha+1)^2 * Gamma(D-1)^2 / [Gamma(D-1+alpha)^2 * (D-1+2alpha)]
+
+Proof:
+- Given x_2, x_1 = (1-x_2)*d' with d' ~ Beta(1,D-2) independent.
+- E[x_1^alpha (1-x_2)^alpha] = E[(d')^alpha] * E[(1-x_2)^{2alpha}]
+- E[d'^alpha] = Gamma(alpha+1)*Gamma(D-1)/Gamma(D-1+alpha)
+- E[(1-x_2)^{2alpha}] = (D-1)/(D-1+2alpha) for x_2 ~ Beta(1,D-1)
+- F_alpha = E[d^alpha]*E[d'^alpha]*E[(1-x_2)^{2alpha}] = formula above.
+
+Recovers F_2 = 4/[(D-1)D^2(D+3)] at alpha=2. ✓
+
+**Var[r_alpha] = A_alpha + 2(D-1)*B_alpha + (D-1)^2*F_alpha - (E[r_alpha])^2**
+- A_alpha = Gamma(2alpha+1)*Gamma(D)/Gamma(D+2alpha)
+- B_alpha = Gamma(alpha+1)^2*Gamma(D)/Gamma(D+2alpha)
+- F_alpha: as above
+- E[r_alpha] = Gamma(alpha+1)*Gamma(D+1)/Gamma(D+alpha)
+
+Special cases:
+- alpha=1: Var=0 ✓ (r_1=1)
+- alpha=2: Var=4(D-1)/[D^2(D+1)^2(D+3)] ✓ (recovers Section 47)
+- alpha=3: D=2: 1/20, D=3: 43/2800, D=4: 23/4200, D=5: 83/36750 (exact rational).
+
+MC verification: all alphas in {0.5,1,1.5,2,3}, D in {2,3,4,5}: max error <1.5e-4. ✓
+
+Concentration: sigma/mu ~ C(alpha)/D for all alpha>0 (C(2)=1 exact, C(0.5)≈0.152, C(1.5)≈0.375).
+
+### Step 80 — Section 48 added to Output.tex
+
+New Section 48: "Exact Var[r_alpha] for All alpha>0"
+Subsections:
+- 48.1: Closed-form F_alpha (Theorem thm:F_alpha, boxed)
+- 48.2: Exact Var[r_alpha] (Theorem thm:var_alpha_all, boxed)
+        Corollary cor:var_special: alpha=1,2,3 explicit
+        Proposition prop:conc_alpha: sigma/mu ~ C(alpha)/D
+Tables: tab:var_alpha (Var for alpha in {0.5,1,1.5,2,3} and D=2..5)
+        tab:cov_alpha (sigma/mu for large D)
+
+Output.tex: 48 sections + bibliography, 835 balanced environments, 8738 lines.
+Python script: cnt_var_alpha.py (5 parts, all COMPLETE).
+
+  - [x] Exact Var[r_alpha]: COMPLETE.
+  Key: F_alpha via Beta-Dirichlet; Var formula exact for all alpha>0, D>=2;
+  alpha=2 recovers Section 47; alpha=3 gives exact rationals.

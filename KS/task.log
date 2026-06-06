@@ -12,3 +12,11 @@ You've hit your session limit · resets 3:50am (Europe/Prague)
 You've hit your session limit · resets 9:50am (Europe/Prague)
 You've hit your session limit · resets 3:30pm (Europe/Prague)
 You've hit your session limit · resets 9:40pm (Europe/Prague)
+All tasks completed. Output.tex now has 48 sections, 835 balanced environments, and 8738 lines. Here's a summary of what was accomplished this session:
+
+**New results proved and added to Output.tex:**
+
+1. **Section 47** — Exact `F(D) = 4/[(D-1)D²(D+3)]` via Beta-Dirichlet conditional argument (Weingarten system singular for D<m=4, bypassed). Exact `Var[r₂] = 4(D-1)/[D²(D+1)²(D+3)]` for all D≥2. Corrected prior Section 46 claim: σ/μ ~ 1/D (not 1/√D).
+
+2. **Section 48** — Exact `F_α(D)` for all α>0 via same Beta-Dirichlet method. General exact `Var[r_α]` in closed Gamma-function form; special cases α=1 (Var=0), α=2 (recovers Section 47), α=3 (exact rationals 1/20, 43/2800, 23/4200, 83/36750 for D=2,3,4,5). All verified by Monte Carlo.
+You've hit your session limit · resets 3:30am (Europe/Prague)

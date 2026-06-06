@@ -8244,18 +8244,19 @@ $\operatorname{Var}[r_2] = 0.02220 \approx 1/45 = 0.02\overline{2}$ (error $2\ti
 \begin{table}[h!]
 \centering
 \caption{Concentration of $r_2$ under Haar measure: standard deviation, coefficient of variation
-$(\sigma/\mu)$, and $\sigma D^{3/2}$ for $D=2,4,8,16,32,64$.
-All from $2\times10^5$ Haar-random $\mathrm{U}(D)$ unitaries.}
+$(\sigma/\mu)$, and $\sigma D^{2}$ for $D=2,4,8,16,32,64$.
+Exact values from Theorem~\ref{thm:exact_var_all_D} (Section~47).
+$\sigma\cdot D^2\to 2$ confirms $\sigma\sim 2/D^2$.}
 \label{tab:concentration}
 \begin{tabular}{c|c|c|c|c}
-$D$ & $\mathbb{E}[r_2]$ & $\sigma[r_2]$ & $\sigma/\mathbb{E}[r_2]$ & $\sigma\cdot D^{3/2}$ \\
+$D$ & $\mathbb{E}[r_2]$ & $\sigma[r_2]$ & $\sigma/\mathbb{E}[r_2]$ & $\sigma\cdot D^{2}$ \\
 \hline
-2 & 0.6666 & 0.1490 & 0.2235 & 0.421 \\
-4 & 0.4000 & 0.0654 & 0.1636 & 0.524 \\
-8 & 0.2222 & 0.0221 & 0.0994 & 0.500 \\
-16 & 0.1176 & 0.0065 & 0.0556 & 0.418 \\
-32 & 0.0606 & 0.0018 & 0.0294 & 0.322 \\
-64 & 0.0308 & 0.0005 & 0.0152 & 0.239 \\
+2 & 0.6667 & 0.1491 & 0.2236 & 0.596 \\
+4 & 0.4000 & 0.0655 & 0.1637 & 1.048 \\
+8 & 0.2222 & 0.0222 & 0.0997 & 1.419 \\
+16 & 0.1176 & 0.0065 & 0.0555 & 1.672 \\
+32 & 0.0606 & 0.0018 & 0.0294 & 1.826 \\
+64 & 0.0308 & 0.0005 & 0.0152 & 1.909 \\
 \end{tabular}
 \end{table}
 
@@ -8265,7 +8266,7 @@ As $D\to\infty$:
 \[
   \frac{\sigma[r_2]}{\mathbb{E}[r_2]} \to 0.
 \]
-Asymptotically, $\sigma[r_2]/\mathbb{E}[r_2] = O(D^{-1/2})$ (Table~\ref{tab:concentration}).
+Asymptotically, $\sigma[r_2]/\mathbb{E}[r_2] = O(D^{-1})$ (exact formula in Theorem~\ref{thm:exact_var_all_D}).
 By Chebyshev's inequality:
 \[
   \Pr\!\left[\left|r_2 - \frac{2}{D+1}\right| > \varepsilon\right]
@@ -8279,8 +8280,9 @@ From Proposition~\ref{prop:var_formula}, the leading contribution to $\operatorn
 the diagonal term $D^2(A-\mu^2)/D^2 = A-\mu^2$ and the same-column covariance,
 both of order $1/D^4$.
 The cross-term $(D-1)^2(F-\mu^2)$ involves a positive correlation $F>\mu^2$ of order $(D-1)^2\cdot O(1/D^5)=O(1/D^3)$.
-The dominant cancellation leaves $\operatorname{Var}[r_2]=O(D^{-3})$, giving $\sigma=O(D^{-3/2})$
-and $\sigma/\mu=O(D^{-3/2})/O(D^{-1})=O(D^{-1/2})$.
+The exact formula (Section~47, Theorem~\ref{thm:exact_var_all_D}) gives
+$\operatorname{Var}[r_2]=4(D-1)/[D^2(D+1)^2(D+3)]=O(D^{-4})$,
+hence $\sigma=O(D^{-2})$ and $\sigma/\mu=O(D^{-2})/O(D^{-1})=O(D^{-1})$.
 Chebyshev then gives concentration for any $\varepsilon>0$.
 \end{proof}
 
@@ -8304,14 +8306,374 @@ and the $|U_{k,1}|^2$ are $\mathrm{Beta}(1,1)$; all moments are thus rational.
 \noindent\textbf{Summary of Section~46.}
 \begin{itemize}
 \item Proposition~\ref{prop:var_formula}: $\operatorname{Var}[r_2]=(A-\mu^2)+2(D-1)(B-\mu^2)+(D-1)^2(F-\mu^2)$,
-  where $A=24/\mathrm{poch}(D,4)$, $B=4/\mathrm{poch}(D,4)$ (exact), $F=\mathbb{E}[|U_{11}|^4|U_{22}|^4]$ (numerical).
+  where $A=24/\mathrm{poch}(D,4)$, $B=4/\mathrm{poch}(D,4)$ (exact),
+  $F=4/[(D-1)D^2(D+3)]$ (proved in Section~47, Theorem~\ref{thm:exact_var_all_D}).
 \item Theorem~\ref{thm:var_D2}: $\operatorname{Var}[r_2]=1/45$ for $D=2$ (exact proof, using $F=A$ for $2\times2$ unitaries).
   Verified numerically ($0.02220\approx 1/45=0.0\overline{2}$).
-\item Proposition~\ref{prop:conc_r2}: $\sigma[r_2]/\mathbb{E}[r_2]=O(D^{-1/2})\to0$;
+\item Proposition~\ref{prop:conc_r2}: $\sigma[r_2]/\mathbb{E}[r_2]=O(D^{-1})\to0$
+  (exact: $\sqrt{(D-1)/(D^2(D+3))}$);
   Chebyshev gives $\Pr[|r_2-2/(D+1)|>\varepsilon]\leq\operatorname{Var}[r_2]/\varepsilon^2\to0$.
-\item Table~\ref{tab:concentration}: $\sigma/\mu$ decreases from $0.22$ ($D=2$) to $0.015$ ($D=64$).
+\item Table~\ref{tab:concentration}: $\sigma/\mu$ decreases from $0.22$ ($D=2$) to $0.015$ ($D=64$);
+  $\sigma D^2\to 2$ (confirmed by exact formula).
 \item Typicality: for $L=6$ qubits ($D=64$), $\approx95\%$ of Haar circuits satisfy
   $|r_2-2/(D+1)|<0.003$.
+\end{itemize}
+
+%=============================================================================
+\section{Exact Formula for $F(D)$ and the Closed-Form $\operatorname{Var}[r_2]$}
+\label{sec:exact_var}
+%=============================================================================
+
+This section provides the exact closed-form expressions for
+$F(D)=\mathbb{E}_{\mathrm{Haar}}[|U_{11}|^4|U_{22}|^4]$ and
+$\operatorname{Var}[r_2]$ for all $D\geq2$, closing the open problem
+stated in Section~46.
+
+%-----------------------------------------------------------------------------
+\subsection{Beta-Dirichlet derivation of $F(D)$}
+\label{sec:F_exact}
+%-----------------------------------------------------------------------------
+
+The key observation is that the columns of a Haar-random unitary
+are orthonormal, but their joint distribution can be analysed
+via a conditional Beta structure.
+
+\begin{proposition}[Conditional structure of columns]
+\label{prop:col_conditional}
+Let $U\sim\mathrm{Haar}(D)$.  Write $u_1,u_2\in\mathbb{C}^D$ for the first and
+second columns.  Given $u_1$, the second column $u_2$ is uniform on the
+$(D-1)$-dimensional complex unit sphere orthogonal to $u_1$, and
+\[
+  |u_2[2]|^2 \;=\; \bigl(1-|u_1[2]|^2\bigr)\cdot d,
+  \qquad d\sim\mathrm{Beta}(1,D-2),
+\]
+independently of the direction of $u_1$.
+\end{proposition}
+
+\begin{proof}
+The second component of $u_2$ satisfies
+$|u_2[2]|^2=|(P_{u_1^\perp}e_2)^\dagger u_2|^2/\|P_{u_1^\perp}e_2\|^2\cdot\|P_{u_1^\perp}e_2\|^2$,
+where $P_{u_1^\perp}e_2$ has norm $\sqrt{1-|u_1[2]|^2}$.
+Since $u_2$ is uniform on a $(D-1)$-dimensional complex sphere,
+the squared inner product with any fixed unit vector in that sphere
+is $\mathrm{Beta}(1,D-2)$.
+\end{proof}
+
+\begin{lemma}[Dirichlet moment]
+\label{lem:dir_moment}
+For $(x_1,\ldots,x_D)\sim\mathrm{Dir}(1,\ldots,1)$,
+\[
+  \mathbb{E}\!\left[x_1^2(1-x_2)^2\right] = \frac{2}{D(D+3)}.
+\]
+\end{lemma}
+
+\begin{proof}
+Expand $(1-x_2)^2=1-2x_2+x_2^2$ and use the Dirichlet moment formula
+$\mathbb{E}[x_1^a x_2^b]=a!\,b!\,(D-1)!/(D+a+b-1)!$ for $\mathrm{Dir}(1^D)$:
+\begin{align*}
+  \mathbb{E}[x_1^2] &= \frac{2}{D(D+1)},\\
+  \mathbb{E}[x_1^2 x_2] &= \frac{2}{D(D+1)(D+2)},\\
+  \mathbb{E}[x_1^2 x_2^2] &= \frac{4}{D(D+1)(D+2)(D+3)}.
+\end{align*}
+Combining:
+$\mathbb{E}[x_1^2]-2\mathbb{E}[x_1^2 x_2]+\mathbb{E}[x_1^2 x_2^2]
+=\frac{2}{D(D+1)}\Bigl(1-\frac{2}{D+2}+\frac{2}{(D+2)(D+3)}\Bigr)
+=\frac{2}{D(D+1)}\cdot\frac{(D+1)}{D+3}=\frac{2}{D(D+3)}$.
+\end{proof}
+
+\begin{theorem}[Exact formula for $F(D)$]
+\label{thm:F_exact}
+\[
+  \boxed{F(D) \;=\; \mathbb{E}_{\mathrm{Haar}}\!\left[|U_{11}|^4|U_{22}|^4\right]
+  \;=\; \frac{4}{(D-1)\,D^2\,(D+3)}}, \qquad D\geq 2.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:col_conditional} and independence:
+\[
+  F = \mathbb{E}_{u_1}\!\left[|u_1[1]|^4\cdot\mathbb{E}[|u_2[2]|^4\mid u_1]\right]
+  = \mathbb{E}_{u_1}\!\left[|u_1[1]|^4\cdot(1-|u_1[2]|^2)^2\right]\cdot\mathbb{E}[d^2],
+\]
+where $d\sim\mathrm{Beta}(1,D-2)$ and $\mathbb{E}[d^2]=2/[(D-1)D]$.
+With $(x_i)=(|u_1[i]|^2)\sim\mathrm{Dir}(1^D)$:
+\[
+  F = \frac{2}{(D-1)D}\cdot\mathbb{E}\!\left[x_1^2(1-x_2)^2\right]
+    = \frac{2}{(D-1)D}\cdot\frac{2}{D(D+3)}
+    = \frac{4}{(D-1)D^2(D+3)}.  \qedhere
+\]
+\end{proof}
+
+\begin{remark}[Verification]
+$F(2)=4/(1\cdot4\cdot5)=1/5=A(2)$ (confirming the $D=2$ result of Section~46).
+$F(3)=4/(2\cdot9\cdot6)=1/27$.
+$F(4)=4/(3\cdot16\cdot7)=1/84$.
+$F(5)=4/(4\cdot25\cdot8)=1/200$.
+All confirmed to $<5\times10^{-4}$ by $5\times10^5$ Monte Carlo samples.
+\end{remark}
+
+\begin{remark}[Weingarten system degeneracy]
+The Weingarten linear system for $\mathrm{U}(D)$ at order $m=4$ involves a
+$5\times5$ Gram matrix $M_{ij}=\sum_{\tau\in C_j}D^{c(\sigma_i\tau)}$.
+For $D<m=4$, the representation $(1^4)$ (with $\ell=4>D$) causes the
+$5\times5$ system to be singular.  For $D=3$, the system yields the
+spurious value $F=3/32$ instead of the correct $F=1/27$;
+the Beta-Dirichlet derivation above bypasses this issue entirely.
+For $D\geq4$ (i.e.\ $D\geq m$) the Weingarten system is non-singular
+and gives consistent results.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{Exact $\operatorname{Var}[r_2]$ for all $D$}
+\label{sec:var_exact}
+%-----------------------------------------------------------------------------
+
+\begin{theorem}[Exact $\operatorname{Var}[r_2]$ for all $D\geq2$]
+\label{thm:exact_var_all_D}
+\[
+  \boxed{\operatorname{Var}_{\mathrm{Haar}}\!\left[r_2(U,D)\right]
+  \;=\; \frac{4(D-1)}{D^2\,(D+1)^2\,(D+3)}}, \qquad D\geq2.
+\]
+\end{theorem}
+
+\begin{proof}
+From Proposition~\ref{prop:var_formula} (Section~46):
+$\operatorname{Var}[r_2] = A + 2(D-1)B + (D-1)^2 F - (E[r_2])^2$
+with $A=24/\mathrm{poch}(D,4)$, $B=4/\mathrm{poch}(D,4)$, and $F$ from
+Theorem~\ref{thm:F_exact}.
+
+Combining the first two terms:
+\[
+  A+2(D-1)B = \frac{24+8(D-1)}{D(D+1)(D+2)(D+3)} = \frac{8}{D(D+1)(D+3)}.
+\]
+The third term:
+\[
+  (D-1)^2 F = \frac{4(D-1)}{D^2(D+3)}.
+\]
+So:
+\[
+  \mathbb{E}[r_2^2] = \frac{8}{D(D+1)(D+3)}+\frac{4(D-1)}{D^2(D+3)}
+  = \frac{8D+4(D^2-1)}{D^2(D+1)(D+3)} = \frac{4(D^2+2D-1)}{D^2(D+1)(D+3)}.
+\]
+Subtracting $(\mathbb{E}[r_2])^2=4/(D+1)^2$:
+\begin{align*}
+  \operatorname{Var}[r_2] &= \frac{4}{D+1}\cdot
+  \frac{(D^2+2D-1)(D+1)-D^2(D+3)}{D^2(D+1)^2(D+3)}.
+\end{align*}
+The bracket equals
+$(D^3+3D^2+D-1)-(D^3+3D^2)=D-1$,
+giving the claimed formula. \qedhere
+\end{proof}
+
+\begin{corollary}[Exact values for small $D$]
+$\operatorname{Var}[r_2]=1/45$ ($D=2$),\; $1/108$ ($D=3$),\; $3/700$ ($D=4$),\; $1/450$ ($D=5$).
+\end{corollary}
+
+\begin{proposition}[Exact concentration]
+\label{prop:exact_concentration}
+\[
+  \frac{\sigma[r_2]}{\mathbb{E}[r_2]}
+  = \frac{\sqrt{D-1}}{D\sqrt{D+3}}
+  \;\sim\; \frac{1}{D}
+  \quad\text{as }D\to\infty.
+\]
+In particular $\sigma[r_2]\sim 2/D^2$ and $\sigma\cdot D^2\to 2$.
+\end{proposition}
+
+\begin{proof}
+$\sigma/\mu=\sqrt{\operatorname{Var}[r_2]}/\mathbb{E}[r_2]
+=\sqrt{4(D-1)/[D^2(D+1)^2(D+3)]}\cdot(D+1)/2
+=\sqrt{(D-1)/[D^2(D+3)]}$.
+For large $D$: $\sqrt{(D-1)/(D^2(D+3))}\sim\sqrt{D/D^3}=D^{-1}$.
+\end{proof}
+
+\begin{table}[h!]
+\centering
+\caption{Exact $F(D)$, $\operatorname{Var}[r_2]$, $\sigma/\mu$, and $\sigma D^2$ for $D=2,\ldots,16$.
+All values from closed-form formulas (Theorems~\ref{thm:F_exact} and~\ref{thm:exact_var_all_D}).
+Monte Carlo verification: max error $<5\times10^{-4}$ at $N=5\times10^5$.}
+\label{tab:exact_var_all_D}
+\begin{tabular}{c|c|c|c|c}
+$D$ & $F(D)=4/[(D-1)D^2(D+3)]$ & $\operatorname{Var}[r_2]=4(D-1)/[\cdots]$ & $\sigma/\mu$ & $\sigma D^2$ \\
+\hline
+2 & $1/5=0.2000$ & $1/45=0.02222$ & $0.2236$ & $0.596$ \\
+3 & $1/27=0.03704$ & $1/108=0.009259$ & $0.1925$ & $0.966$ \\
+4 & $1/84=0.01190$ & $3/700=0.004286$ & $0.1637$ & $1.048$ \\
+5 & $1/200=0.005000$ & $1/450=0.002222$ & $0.1414$ & $1.118$ \\
+8 & $1/1232\approx 8.1\times10^{-4}$ & $\approx4.9\times10^{-4}$ & $0.0997$ & $1.419$ \\
+16 & $\approx5.5\times10^{-5}$ & $\approx4.3\times10^{-5}$ & $0.0555$ & $1.672$ \\
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Summary of Section~47.}
+\begin{itemize}
+\item Theorem~\ref{thm:F_exact}: $F(D)=4/[(D-1)D^2(D+3)]$ (exact, all $D\geq2$).
+  Proved via Beta-Dirichlet conditional structure of Haar unitary columns.
+\item Theorem~\ref{thm:exact_var_all_D}: $\operatorname{Var}[r_2]=4(D-1)/[D^2(D+1)^2(D+3)]$ (exact, all $D\geq2$).
+  Derived by substituting exact $F(D)$ into the variance decomposition of Section~46.
+\item Exact corollaries: $\operatorname{Var}[r_2]=1/45,\,1/108,\,3/700,\,1/450$ for $D=2,3,4,5$.
+\item Proposition~\ref{prop:exact_concentration}: $\sigma/\mu=\sqrt{(D-1)/(D^2(D+3))}\sim1/D$
+  (not $O(D^{-1/2})$ as earlier stated; the correct decay is $O(D^{-1})$).
+  $\sigma D^2\to2$ as $D\to\infty$.
+\item Remark: the Weingarten linear-system approach fails for $D<m=4$
+  due to matrix degeneracy; the Beta-Dirichlet approach works for all $D\geq2$.
+\end{itemize}
+Python script: \texttt{cnt\_exact\_variance.py}.
+
+%=============================================================================
+\section{Exact $\operatorname{Var}[r_\alpha]$ for All $\alpha>0$}
+\label{sec:var_alpha}
+%=============================================================================
+
+Section~47 established the exact $\operatorname{Var}[r_2]$.
+Here we extend the Beta-Dirichlet method to derive a closed-form
+$\operatorname{Var}[r_\alpha]$ for all $\alpha>0$ and $D\geq2$.
+
+%-----------------------------------------------------------------------------
+\subsection{Closed-form $F_\alpha(D)$}
+\label{sec:F_alpha}
+%-----------------------------------------------------------------------------
+
+\begin{theorem}[Exact $F_\alpha(D)$ for all $\alpha>0$]
+\label{thm:F_alpha}
+\[
+  F_\alpha(D) \;=\; \mathbb{E}_{\mathrm{Haar}}\!\left[|U_{11}|^{2\alpha}|U_{22}|^{2\alpha}\right]
+  \;=\;
+  \frac{(D-1)\,\Gamma(\alpha+1)^2\,\Gamma(D-1)^2}
+       {\Gamma(D-1+\alpha)^2\,(D-1+2\alpha)},
+  \qquad D\geq2,\;\alpha>0.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:col_conditional}:
+\[
+  F_\alpha = \mathbb{E}_{u_1}\!\left[|u_1[1]|^{2\alpha}\,(1-|u_1[2]|^2)^\alpha\right]
+  \cdot \mathbb{E}[d^\alpha],
+\]
+where $d\sim\mathrm{Beta}(1,D-2)$.
+The first factor: by the same conditional argument,
+given $x_2=|u_1[2]|^2$, we have $x_1=|u_1[1]|^2=(1-x_2)\cdot d'$ with
+$d'\sim\mathrm{Beta}(1,D-2)$ independent of $x_2$.  Therefore
+\[
+  \mathbb{E}[x_1^\alpha(1-x_2)^\alpha] = \mathbb{E}[(d')^\alpha]\cdot\mathbb{E}[(1-x_2)^{2\alpha}].
+\]
+Both $d,d'\sim\mathrm{Beta}(1,D-2)$ and $(1-x_2)\sim\mathrm{Beta}(D-1,1)$, giving
+\[
+  \mathbb{E}[d^\alpha]=\mathbb{E}[(d')^\alpha]=\frac{\Gamma(\alpha+1)\,\Gamma(D-1)}{\Gamma(D-1+\alpha)},
+  \qquad
+  \mathbb{E}[(1-x_2)^{2\alpha}]=\frac{D-1}{D-1+2\alpha}.
+\]
+Multiplying the three factors yields the formula.
+\end{proof}
+
+\begin{remark}[$\alpha=2$ recovers Section~47]
+$F_2(D)=(D-1)\cdot4\cdot(D-2)!^2/[(D)!^2/(D-1)]\cdot1/(D+3)
+=4/[(D-1)D^2(D+3)]$. \checkmark
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{Exact $\operatorname{Var}[r_\alpha]$}
+\label{sec:var_alpha_exact}
+%-----------------------------------------------------------------------------
+
+The three building blocks for $\operatorname{Var}[r_\alpha]$:
+\begin{align*}
+  A_\alpha &= \mathbb{E}[|U_{11}|^{4\alpha}]
+  = \frac{\Gamma(2\alpha+1)\,\Gamma(D)}{\Gamma(D+2\alpha)},\\
+  B_\alpha &= \mathbb{E}[|U_{11}|^{2\alpha}|U_{21}|^{2\alpha}]
+  = \frac{\Gamma(\alpha+1)^2\,\Gamma(D)}{\Gamma(D+2\alpha)},\\
+  F_\alpha &= \mathbb{E}[|U_{11}|^{2\alpha}|U_{22}|^{2\alpha}]
+  \quad\text{(Theorem~\ref{thm:F_alpha})}.
+\end{align*}
+$A_\alpha$ and $B_\alpha$ follow from the Dirichlet distribution on
+a single column (or row).
+
+\begin{theorem}[Exact $\operatorname{Var}[r_\alpha]$ for all $\alpha>0$]
+\label{thm:var_alpha_all}
+\[
+  \boxed{\operatorname{Var}_{\mathrm{Haar}}[r_\alpha]
+  = A_\alpha + 2(D-1)B_\alpha + (D-1)^2 F_\alpha
+  - \left(\frac{\Gamma(\alpha+1)\,\Gamma(D+1)}{\Gamma(D+\alpha)}\right)^{\!2}}.
+\]
+Substituting the closed forms, this is a ratio of products of Gamma
+functions, giving a closed-form rational expression in $D$ for integer $\alpha$.
+\end{theorem}
+
+\begin{proof}
+$r_\alpha = D^{-1}\sum_{j,k}|U_{kj}|^{2\alpha}$.
+$\mathbb{E}[r_\alpha^2]=D^{-2}\mathbb{E}[(\sum_{jk}|U_{kj}|^{2\alpha})^2]$.
+Expanding the square, the $D^4$ pairs $(j,k),(j',k')$ split into:
+(i) same entry ($D^2$ pairs): contribution $A_\alpha$;
+(ii) same column, different row ($D^2(D-1)$ pairs): $B_\alpha$ each
+   (same-column Dirichlet);
+(iii) same row, different column ($D^2(D-1)$ pairs): $B_\alpha$ each
+   (by row-column transpose symmetry of Haar);
+(iv) different row and column ($D^2(D-1)^2$ pairs): $F_\alpha$ each.
+Summing and subtracting $(\mathbb{E}[r_\alpha])^2$ gives the formula.
+\end{proof}
+
+\begin{corollary}[Special cases]
+\label{cor:var_special}
+$\alpha=1$: $\operatorname{Var}[r_1]=0$ (since $r_1=1$ for all $U$).\\
+$\alpha=2$: $\operatorname{Var}[r_2]=4(D-1)/[D^2(D+1)^2(D+3)]$ (Section~47).\\
+$\alpha=3$: $\operatorname{Var}[r_3]=720/\mathrm{poch}(D,6)+72(D-1)/\mathrm{poch}(D,6)+36(D-1)^3/[(D-1)D^2(D+1)(D+5)] - 36/(D+1)^2(D+2)^2$.
+Exact values: $1/20$ ($D=2$), $43/2800$ ($D=3$), $23/4200$ ($D=4$), $83/36750$ ($D=5$).
+\end{corollary}
+
+\begin{proposition}[Concentration for all $\alpha$]
+\label{prop:conc_alpha}
+For all $\alpha>0$ and $D\to\infty$:
+$\sigma[r_\alpha]/\mathbb{E}[r_\alpha]\to0$.
+More precisely, numerics confirm $\sigma[r_\alpha]/\mathbb{E}[r_\alpha]\sim C(\alpha)/D$
+where $C(2)=1$ (exact, Section~47), $C(1.5)\approx0.375$, $C(3)\lesssim3$.
+\end{proposition}
+
+\begin{table}[h!]
+\centering
+\caption{Exact $\operatorname{Var}[r_\alpha]$ from Theorem~\ref{thm:var_alpha_all},
+verified by $2\times10^5$ Monte Carlo samples.
+All errors $<1.5\times10^{-4}$.}
+\label{tab:var_alpha}
+\begin{tabular}{c|c|c|c|c|c}
+$\alpha$ & $D=2$ & $D=3$ & $D=4$ & $D=5$ & MC error \\
+\hline
+$0.5$ & $0.007620$ & $0.005716$ & $0.004424$ & $0.003584$ & $<3\times10^{-5}$ \\
+$1.0$ & $0$ & $0$ & $0$ & $0$ & exact \\
+$1.5$ & $0.007262$ & $0.003606$ & $0.001940$ & $0.001147$ & $<2\times10^{-5}$ \\
+$2.0$ & $1/45$ & $1/108$ & $3/700$ & $1/450$ & exact \\
+$3.0$ & $1/20$ & $43/2800$ & $23/4200$ & $83/36750$ & $<1.5\times10^{-4}$ \\
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Coefficient of variation $\sigma[r_\alpha]/\mathbb{E}[r_\alpha]$ for large $D$.
+For $\alpha=2$: exact formula $\sqrt{(D-1)/(D^2(D+3))}$ (Section~47).
+For other $\alpha$: from Theorem~\ref{thm:var_alpha_all}.
+All ratios $\to0$ as $D\to\infty$; numerics suggest $\sim C(\alpha)/D$.}
+\label{tab:cov_alpha}
+\begin{tabular}{c|c|c|c|c|c}
+$D$ & $\alpha=0.5$ & $\alpha=1.5$ & $\alpha=2.0$ & $\alpha=3.0$ & $\sigma\cdot D/\mathbb{E}[r_\alpha]$\\
+\hline
+4   & $0.0364$ & $0.0723$ & $0.1637$ & $0.3700$ & growing \\
+16  & $0.0094$ & $0.0222$ & $0.0555$ & $0.1544$ & $\to C(\alpha)$ \\
+64  & $0.0024$ & $0.0059$ & $0.0152$ & $0.0462$ & $C(0.5)\approx0.152$; $C(2)=1$\\
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Summary of Section~48.}
+\begin{itemize}
+\item Theorem~\ref{thm:F_alpha}: $F_\alpha(D)=(D-1)\Gamma(\alpha+1)^2\Gamma(D-1)^2/[\Gamma(D-1+\alpha)^2(D-1+2\alpha)]$
+  (exact for all $\alpha>0$, $D\geq2$).  Recovers $F_2=4/[(D-1)D^2(D+3)]$ at $\alpha=2$.
+\item Theorem~\ref{thm:var_alpha_all}: $\operatorname{Var}[r_\alpha]=A_\alpha+2(D-1)B_\alpha+(D-1)^2F_\alpha-(\mathbb{E}[r_\alpha])^2$
+  in closed form via Gamma functions.
+\item Corollary~\ref{cor:var_special}: special cases $\alpha=1$ (Var=0),
+  $\alpha=2$ (Section~47), $\alpha=3$ (exact rational values).
+\item Proposition~\ref{prop:conc_alpha}: $\sigma/\mathbb{E}[r_\alpha]\to0$ for all $\alpha>0$;
+  numerics confirm $\sim C(\alpha)/D$ with $C(2)=1$ (exact).
+\item Table~\ref{tab:var_alpha}: exact values for $\alpha\in\{0.5,1,1.5,2,3\}$, $D=2,\ldots,5$.
+\item Python script: \texttt{cnt\_var\_alpha.py}.
 \end{itemize}
 
 \begin{thebibliography}{99}
