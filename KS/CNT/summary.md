@@ -225,3 +225,39 @@ cnt_du_variational.py, cnt_renyi_gap_spectrum.py.
 3. Study the AFL entropy for non-kicked Ising systems (continuous-time Hamiltonian).
 4. Extend the Rényi Pesin inequality to general qudit systems (d > 2).
 5. Connect the dual-unitary characterization to quantum error correction.
+
+## Session: 2026-06-06 (Final)
+
+### New Results (Sections 39–42)
+
+**Section 39 (CRI Disproof)**:
+- CRI (Tr[Ê(A)^α]/Tr[A^α] ≥ r_α for all positive A) is FALSE for J ≠ π/4.
+- Exact counterexample: rank-1 A with equal orthogonal splitting gives ratio = 2^{1-α} < r_α.
+- Minimum over all positive A is 2^{1-α} (independent of J!).
+- CRI holds globally iff J = π/4 (DU point): r_α = 2^{1-α} there.
+- FID for orbit states survives: orbit structure avoids the extremal region.
+
+**Section 40 (Orbit-Monotonicity)**:
+- Orbit-monotonicity (R_n non-decreasing in n) implies FID by simple induction.
+- Proved for α=2 (weighted-average/Cauchy-Schwarz, Theorem thm:om_alpha2).
+- Proved for integer α via m-copy.
+- Gibbs-average criterion: orbit-monotonicity ⟺ <log G_{n+1}>_α - <log G_n>_α ≥ d/dα log r_α.
+- Conjecture + 4720 triples, 0 violations (L=3,4).
+- Conditional Rényi Pesin Theorem: orbit-monotonicity ⟹ h_α ≤ E_op^(α) for all α ≥ 1.
+
+**Section 41 (Log-Convexity in n)**:
+- Equivalence: orbit-monotonicity ⟺ log-convexity of {Tr[G_n^α]}_n ⟺ 2nd diffs ≥ 0.
+- Proved for g=0 (geometric sequence, Theorem thm:g0_logconv_n).
+- Gibbs-average convexity WRONG (not equivalent to orbit-monotonicity).
+- Fine-grid: 65000 triples, 1999 α values in [1.001,1.999], 0 violations.
+
+**Section 42 (Final Status)**:
+- Trace-integral representation: Tr[G^α] = sin(πα)/π ∫ λ^{α-1} ψ(G,λ) dλ (verified).
+- ψ_n(λ) is log-CONCAVE (not convex) in n → term-by-term proof impossible.
+- Complete status table: α=1,2,integers proved; α∈(1,2) conditional on orbit-monotonicity.
+- One remaining gap precisely identified.
+
+### Remaining open problem
+Prove log-convexity of {Tr[G_n^α]}_n for α∈(1,2) and g>0.
+All approaches (Riesz-Thorin, Gibbs-average, trace-integral, Hadamard) have been tried and fail.
+The difficulty: no bilinear representation exists for non-integer α (unlike α=2).
