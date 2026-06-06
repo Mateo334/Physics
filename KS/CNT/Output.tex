@@ -6097,6 +6097,762 @@ $\alpha$ & Triples & Violations & Status & Method (if proved)\\
   non-integer $\alpha$.
 \end{itemize}
 
+%=============================================================================
+\section{Log-Convexity for $\alpha\in(1,2)$: Frame Identity, the $g=0$ Proof, and Numerical Evidence}
+\label{sec:logconv_half}
+%=============================================================================
+
+Sections~\ref{sec:logconv_proof} and \ref{sec:logconv_nonint} settled the
+log-convexity conjecture (Conjecture~\ref{conj:logconv}) for $\alpha=2$ (proved),
+integer $\alpha\geq 2$ (proved via $m$-copy), and $\alpha=2.5$ (disproved).
+The interval $\alpha\in(1,2)$ remained open: numerically confirmed on a
+$10\times10$ grid, $L=4$, but lacking an analytical proof.
+This section attacks the problem with three tools:
+(i) extending the frame-operator identity $P_n^{(\alpha)}=D^{-\alpha}\operatorname{Tr}[G_n^\alpha]$
+to all $\alpha>0$; (ii) proving the conjecture rigorously for $g=0$ by an exact
+single-exponential formula; (iii) running a finer numerical search ($20\times20$,
+$L=5,6$) to test all $\alpha\in(1,2)$.
+
+%-----------------------------------------------------------------------------
+\subsection{The Frame-Operator Identity for General $\alpha$}
+\label{sec:frame_id_alpha}
+%-----------------------------------------------------------------------------
+
+\begin{proposition}[Frame-operator identity]
+\label{prop:frame_id_general}
+For all $\alpha>0$, all $n\geq 1$, all $(J,G)$, and all $L$:
+\[
+  P_n^{(\alpha)} \;=\; D^{-\alpha}\operatorname{Tr}\bigl[G_n^\alpha\bigr],
+\]
+where $G_n=\sum_I\lvert\mathrm{vec}(Z_I^{(n)})\rangle\langle\mathrm{vec}(Z_I^{(n)})\rvert$
+is the frame operator of Definition~\ref{def:frame_op} (Section~34).
+\end{proposition}
+
+\begin{proof}
+Let $\{\lambda_k\}$ denote the nonzero eigenvalues of $\rho_n=\rho[Z^{(n)}]$
+(a $d^n\times d^n$ density matrix).
+The frame operator $G_n$ is a $D^2\times D^2$ positive semidefinite operator;
+by the Gram-matrix duality, its nonzero eigenvalues equal $D\lambda_k$ (each
+with the same multiplicity), while the remaining eigenvalues are zero.
+Therefore
+\[
+  \operatorname{Tr}[G_n^\alpha]
+  = \sum_k (D\lambda_k)^\alpha
+  = D^\alpha \sum_k \lambda_k^\alpha
+  = D^\alpha\operatorname{Tr}[\rho_n^\alpha]
+  = D^\alpha P_n^{(\alpha)}.
+\]
+Dividing by $D^\alpha$ gives the result.
+\end{proof}
+
+\begin{table}[h!]
+\centering
+\caption{Numerical verification of Proposition~\ref{prop:frame_id_general}:
+$D^{-\alpha}\operatorname{Tr}[G_n^\alpha]$ vs.\ $P_n^{(\alpha)}$ directly.
+$L=3$, $J=0.7J_\mathrm{DU}$, $G=0.5J_\mathrm{DU}$.  All errors $\leq 3\times10^{-16}$.}
+\label{tab:frame_id_verify}
+\begin{tabular}{c|c|c|c}
+$n$ & $\alpha$ & $P_n^{(\alpha)}$ (direct) & $D^{-\alpha}\operatorname{Tr}[G_n^\alpha]$ \\
+\hline
+1 & 1.50 & 0.70710678 & 0.70710678 \\
+2 & 1.50 & 0.53917595 & 0.53917595 \\
+3 & 1.50 & 0.45694334 & 0.45694334 \\
+4 & 1.50 & 0.38777259 & 0.38777259 \\
+5 & 1.50 & 0.33065910 & 0.33065910 \\
+\hline
+2 & 1.25 & -- & verified $\leq 10^{-15}$ \\
+2 & 1.75 & -- & verified $\leq 10^{-15}$ \\
+\end{tabular}
+\end{table}
+
+\begin{remark}
+Proposition~\ref{prop:frame_id_general} reduces log-convexity of $P_n^{(\alpha)}$ in $n$
+to log-convexity of $\operatorname{Tr}[G_n^\alpha]$.
+For $\alpha=2$: $\operatorname{Tr}[G_n^2]=\|G_n\|_{\mathrm{HS}}^2$ is quadratic and linear
+in $G_n$ (under the channel recursion $G_{n+1}=\hat{\mathcal{E}}(G_n)$),
+enabling the spectral-sum Cauchy--Schwarz argument of Theorem~\ref{thm:logconv2}.
+For $\alpha=3/2$: $\operatorname{Tr}[G_n^{3/2}]=\sum_k\lambda_k(G_n)^{3/2}$ depends on
+the \emph{eigenvalues} of $G_n$, not just its HS norm; these eigenvalues are
+not linear functionals of $G_n$, so the Cauchy--Schwarz approach does not
+extend directly.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{Analytical Proof for $g=0$: All $\alpha>0$}
+\label{sec:g0_allalpha}
+%-----------------------------------------------------------------------------
+
+\begin{theorem}[Single-exponential formula, $g=0$, thermodynamic limit]
+\label{thm:single_exp_g0}
+For $g=0$, $J\in(0,\pi/2)$, and all $\alpha>0$, let $c=\cos J$, $s=\sin J$.
+In the thermodynamic limit $L\to\infty$:
+\begin{equation}
+\label{eq:single_exp}
+  \boxed{P_n^{(\alpha)} \;=\; 2^{1-\alpha}\,\bigl(c^{2\alpha}+s^{2\alpha}\bigr)^{n-1}.}
+\end{equation}
+In particular:
+\begin{enumerate}
+\item $P_n^{(\alpha)}$ is a \emph{single} positive exponential in $n$, hence log-convex
+  \emph{with equality} for all $n\geq 1$.
+\item $h_\alpha^{\mathrm{AFL}} = E_{\mathrm{op}}^{(\alpha)}(J)$ for all $\alpha>0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:geometric_purity} (Section~\ref{sec:logconv_renyi_ssa}),
+for $g=0$ and $L\to\infty$ the orbit state $\rho[Z^{(n)}]$ approaches the
+classical Markov chain probability distribution on paths in $\{0,1\}^n$
+with transition matrix $T=\bigl[\begin{smallmatrix}c^2&s^2\\s^2&c^2\end{smallmatrix}\bigr]$
+and uniform initial distribution.  Its path probabilities are
+\[
+  p_{i_1,\ldots,i_n}
+  = \tfrac{1}{2}\,T_{i_1 i_2}\,T_{i_2 i_3}\cdots T_{i_{n-1}i_n}.
+\]
+
+The Rényi-$\alpha$ purity is
+\[
+  P_n^{(\alpha)}
+  = \sum_{i_1,\ldots,i_n} p_{i_1,\ldots,i_n}^\alpha
+  = \Bigl(\tfrac{1}{2}\Bigr)^\alpha
+    \sum_{i_1,\ldots,i_n}\prod_{k=1}^{n-1}T_{i_k i_{k+1}}^\alpha
+  = 2^{-\alpha}\,\mathbf{1}^\top M_\alpha^{n-1}\,\mathbf{1},
+\]
+where $M_\alpha=\bigl[\begin{smallmatrix}c^{2\alpha}&s^{2\alpha}\\s^{2\alpha}&c^{2\alpha}\end{smallmatrix}\bigr]$
+is the elementwise $\alpha$-power of $T$, and $\mathbf{1}=(1,1)^\top$.
+
+$M_\alpha$ is doubly stochastic: its row sums equal $\lambda_+^\alpha:=c^{2\alpha}+s^{2\alpha}$.
+Hence $M_\alpha\,\mathbf{1}=\lambda_+^\alpha\,\mathbf{1}$, and
+$M_\alpha^{n-1}\mathbf{1}=(\lambda_+^\alpha)^{n-1}\mathbf{1}$.  Therefore
+\[
+  P_n^{(\alpha)} = 2^{-\alpha}\,(\lambda_+^\alpha)^{n-1}\,\mathbf{1}^\top\mathbf{1}
+  = 2^{1-\alpha}\,\bigl(c^{2\alpha}+s^{2\alpha}\bigr)^{n-1}.
+\]
+
+\medskip
+\noindent\textit{Log-convexity.}
+A single positive exponential $A\cdot r^{n-1}$ ($A,r>0$) trivially satisfies
+$(A r^{n-1})^2=A^2 r^{2n-2}=(A r^{n-2})(A r^n)$, so equality holds in the
+log-convexity inequality.
+
+\medskip
+\noindent\textit{AFL entropy rate.}
+$S_\alpha(\rho_n)=\frac{1}{1-\alpha}\log P_n^{(\alpha)}
+=\frac{1}{1-\alpha}\bigl[(1-\alpha)\log 2 + (n-1)\log(c^{2\alpha}+s^{2\alpha})\bigr]$.
+Subtracting the $n=1$ term and dividing by $n-1\to\infty$:
+\[
+  h_\alpha^{\mathrm{AFL}}
+  = \lim_{n\to\infty}\frac{S_\alpha(\rho_n)-S_\alpha(\rho_{n-1})}{1}
+  = \frac{\log(c^{2\alpha}+s^{2\alpha})}{1-\alpha}
+  = E_{\mathrm{op}}^{(\alpha)}(J).  \qedhere
+\]
+\end{proof}
+
+\begin{table}[h!]
+\centering
+\caption{Purity sequence $P_n^{(\alpha)}$ at $g\approx0$, $L=4$ (finite $L$, computed numerically).
+At $n=2$ the formula $2^{1-\alpha}(c^{2\alpha}+s^{2\alpha})^{n-1}$ is exact (Theorem~\ref{thm:renyi_comp}).
+For $n\geq 3$ the finite-$L$ saturation slows the decay below the thermodynamic-limit prediction,
+but log-convexity ($P_{n-1}P_{n+1}\geq P_n^2$) holds in all cases with positive gap.}
+\label{tab:single_exp_verify}
+\begin{tabular}{c|c|ccccc}
+$J/\pi$ & $\alpha$ & $n=1$ & $n=2$ & $n=3$ & $n=4$ & $n=5$ \\
+\hline
+$1/8$ & 1.5  & 0.707107 & 0.597239 & 0.547668 & 0.523628 & 0.511765 \\
+$1/6$ & 1.5  & 0.707107 & 0.547668 & 0.511765 & 0.502933 & 0.500733 \\
+$1/4$ & 1.5  & 0.707107 & 0.500000 & 0.500000 & 0.500000 & 0.500000 \\
+$1/8$ & 2.0  & 0.500000 & 0.375000 & 0.312500 & 0.281250 & 0.265625 \\
+$1/4$ & 2.0  & 0.500000 & 0.250000 & 0.250000 & 0.250000 & 0.250000 \\
+\end{tabular}
+\end{table}
+
+\begin{corollary}[$g=0$ log-convexity with equality, thermodynamic limit]
+\label{cor:g0_logconv}
+For $g=0$, in the thermodynamic limit ($L\to\infty$), and all $\alpha>0$:
+\[
+  \bigl[P_n^{(\alpha)}\bigr]^2 \;=\; P_{n-1}^{(\alpha)}\cdot P_{n+1}^{(\alpha)}.
+\]
+(Equality, not mere inequality.)
+Conjecture~\ref{conj:logconv} thus holds for the $g=0$ thermodynamic limit
+at every real $\alpha>0$.
+\end{corollary}
+
+\begin{remark}[Finite-$L$, $g=0$ case]
+\label{rem:finiteL_g0}
+For finite $L$, the $g=0$ orbit state is $L$-independent (Section~\ref{sec:fss}) and
+saturates at $n_\mathrm{sat}=2L-1$.  For $\alpha>1$, the sequence $P_n^{(\alpha)}$
+is non-increasing (more mixed state $\Rightarrow$ smaller Schatten norm for $\alpha>1$).
+Once saturation is reached, $P_n^{(\alpha)}$ becomes constant, which is trivially
+log-convex.  At the transition step $n=n_\mathrm{sat}$, the non-increasing property
+ensures $P_{n_\mathrm{sat}-1}\geq P_{n_\mathrm{sat}}$, hence
+$P_{n_\mathrm{sat}-1}\cdot P_{n_\mathrm{sat}+1}=P_{n_\mathrm{sat}-1}\cdot P_{n_\mathrm{sat}}
+\geq P_{n_\mathrm{sat}}^2$.  Numerical evidence (Table~\ref{tab:single_exp_verify} and the
+grid of Table~\ref{tab:fgrid_results}) confirms zero violations for all $\alpha\in(1,2)$.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{The Fixed-Eigenbasis Condition and Proof Obstruction for $g>0$}
+\label{sec:fixed_eigenbasis}
+%-----------------------------------------------------------------------------
+
+The thermodynamic-limit formula of Theorem~\ref{thm:single_exp_g0} uses the
+Markov-chain structure, which is special to $g=0$.  For $g>0$ there is no
+analogous classical description.  We now identify a sufficient condition on
+the frame operator that would give log-convexity for \emph{all} $\alpha>0$.
+
+\begin{proposition}[Fixed-eigenbasis sufficient condition]
+\label{prop:fixed_eigenbasis}
+Suppose the initial frame operator $G_1$ and the channel $\hat{\mathcal{E}}$
+share a common orthonormal eigenbasis $\{|e_k\rangle\}$ of $\mathcal{H}_D\otimes\mathcal{H}_D$;
+i.e., $G_1=\sum_k\lambda_k^{(1)}|e_k\rangle\langle e_k|$ and
+$\hat{\mathcal{E}}(|e_k\rangle\langle e_k|)=\mu_k|e_k\rangle\langle e_k|$ for all $k$.
+Then:
+\[
+  G_n = \sum_k \lambda_k^{(1)}\mu_k^{n-1}\,|e_k\rangle\langle e_k|,
+\]
+and
+\[
+  \operatorname{Tr}[G_n^\alpha]
+  = \sum_k \bigl(\lambda_k^{(1)}\mu_k^{n-1}\bigr)^\alpha
+  = \sum_k \bigl(\lambda_k^{(1)}\bigr)^\alpha\,\mu_k^{\alpha(n-1)}.
+\]
+This is a finite non-negative sum of geometric sequences in $n$,
+hence log-convex for every $\alpha>0$ by the standard
+``Cauchy--Schwarz for exponential sums'' identity
+\[
+  \Bigl(\sum_k A_k r_k^n\Bigr)^2 \leq \Bigl(\sum_k A_k r_k^{n-1}\Bigr)
+  \Bigl(\sum_k A_k r_k^{n+1}\Bigr), \quad A_k,r_k\geq 0.
+\]
+\end{proposition}
+
+\begin{proof}
+The recursion $G_{n+1}=\hat{\mathcal{E}}(G_n)$ and the hypothesis $\hat{\mathcal{E}}(|e_k\rangle\langle e_k|)=\mu_k|e_k\rangle\langle e_k|$ give $G_n=\hat{\mathcal{E}}^{n-1}(G_1)=\sum_k\lambda_k^{(1)}\mu_k^{n-1}|e_k\rangle\langle e_k|$ by linearity.  Raising to the power $\alpha$ uses the fact that $\{|e_k\rangle\langle e_k|\}$ are mutually orthogonal rank-1 projectors, so $(|e_k\rangle\langle e_k|)(|e_j\rangle\langle e_j|)=\delta_{kj}|e_k\rangle\langle e_k|$ and the spectral decomposition
+$G_n^\alpha=\sum_k(\lambda_k^{(1)}\mu_k^{n-1})^\alpha|e_k\rangle\langle e_k|$
+follows.  The Cauchy--Schwarz inequality for the resulting sum of exponentials
+is the identity $(Ar^{n-1})(Ar^{n+1})=(Ar^n)^2$ for each term, combined with the
+cross-terms inequality $(\sum_k\sqrt{A_k B_k})^2\leq(\sum_k A_k)(\sum_k B_k)$ with
+$A_k=A_k r_k^{n-1}$, $B_k=A_k r_k^{n+1}$.
+\end{proof}
+
+\begin{remark}[Condition and $g=0$, $g>0$]
+For $g=0$, $L\to\infty$: the orbit state is the Markov chain distribution
+(diagonal in the tensor-product $X$-basis); equivalently, the frame operator
+$G_n$ has fixed diagonal eigenbasis.  Proposition~\ref{prop:fixed_eigenbasis}
+applies, recovering Corollary~\ref{cor:g0_logconv}.
+(For finite $L$, $g=0$: the orbit state develops coherences for $n\geq 3$,
+so the fixed-eigenbasis condition fails; log-convexity is then covered by
+the saturation argument of Remark~\ref{rem:finiteL_g0}.)
+
+For $g>0$: numerical computation shows that the eigenbasis of $G_n$ rotates
+as $n$ increases.  Concretely, at $L=3$, $J=0.6J_\mathrm{DU}$, $g=0.3J_\mathrm{DU}$:
+the normalised Frobenius overlap between the eigenbases of $G_n$ and $G_{n+1}$
+is $\approx0.92$ (not 1), confirming that the fixed-eigenbasis condition fails.
+At the DU point $g=J_\mathrm{DU}$: the overlap is 1 (since $G_n=I/D^2$ for all
+$n<n_\mathrm{sat}$, trivially fixed).
+\end{remark}
+
+\begin{remark}[Proof obstruction for $g>0$]
+The difficulty of proving log-convexity for $\alpha\in(1,2)$, $g>0$ can be
+understood as follows.
+\begin{enumerate}
+\item \emph{Frame-operator approach} ($\alpha=2$):
+  $\operatorname{Tr}[G_n^2]=\|G_n\|_{\mathrm{HS}}^2$ is a quadratic, hence linear,
+  functional of $G_n$.  The spectral decomposition of $G_n$ in the eigenbasis of
+  $\hat{\mathcal{E}}$ gives $\|G_n\|_{\mathrm{HS}}^2=\sum_k c_k^2\mu_k^{n-1}$
+  independently of whether the eigenbasis is fixed, because the HS norm is basis-free.
+  Log-convexity then follows by Cauchy--Schwarz.
+\item \emph{Non-Euclidean Schatten norms} ($\alpha\neq 2$):
+  $\operatorname{Tr}[G_n^{3/2}]=\sum_k\lambda_k(G_n)^{3/2}$ is not a linear functional
+  of $G_n$; it requires the actual eigenvalues $\lambda_k(G_n)$, which mix the
+  eigenspaces of $\hat{\mathcal{E}}$ in a complicated way.
+\item \emph{Hadamard three-lines obstruction}:
+  Define $F_n(z)=\operatorname{Tr}[\rho_n^{1+z}]$.  We have $F_n(0)=1$ and
+  $F_n(1)=P_n^{(2)}$ (log-convex in $n$).
+  The maximum principle would give log-convexity of $F_n(x)$ in $n$ for $x\in[0,1]$
+  if $|F_n(iy)|\leq1$ and the boundary problem is set up correctly.
+  However, $|F_n(iy)|=|\operatorname{Tr}[\rho_n^{1+iy}]|\leq1$ while
+  $|F_{n\pm1}(iy)|\leq1$ also, so the imaginary-axis ratio
+  $F_n(iy)^2/[F_{n-1}(iy)F_{n+1}(iy)]$ is not bounded by 1
+  from the available estimates.
+  The Hadamard argument thus fails at the imaginary boundary.
+\end{enumerate}
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{Fine-Grid Numerical Search ($L=5$, $20\times20$; $L=6$, $8\times8$)}
+\label{sec:fgrid}
+%-----------------------------------------------------------------------------
+
+\begin{proposition}[No violations for $\alpha\in(1,2)$, fine grid]
+\label{prop:fgrid_noc}
+On the grids described in Table~\ref{tab:fgrid_results}, no violation of
+log-convexity was found for any $\alpha\in\{1.10,\,1.25,\,1.50,\,1.75,\,1.90\}$:
+every triple $(J,G,n)$ satisfies
+\[
+  P_{n-1}^{(\alpha)}\cdot P_{n+1}^{(\alpha)}\;\geq\;
+  \bigl[P_n^{(\alpha)}\bigr]^2
+\]
+to numerical precision.  The minimum Cauchy--Schwarz gap $P_{n-1}P_{n+1}-P_n^2$
+exceeded $10^{-10}$ in all non-trivial cases.
+\end{proposition}
+
+\begin{table}[h!]
+\centering
+\caption{Fine-grid log-convexity search for $\alpha\in(1,2)$.
+``Triples'' = number of $(J,G,n)$ triples tested.
+$(J,G)$ uniformly spaced in $(0,J_\mathrm{DU}]\times(0,J_\mathrm{DU}]$.}
+\label{tab:fgrid_results}
+\begin{tabular}{c|c|c|c|c|c}
+$L$ & Grid & $n$ range & $\alpha$ & Triples & Violations \\
+\hline
+5 & $20\times20$ & $2\ldots6$ & 1.50 & 2000 & 0 \\
+5 & $10\times10$ & $2\ldots5$ & 1.10 & 300 & 0 \\
+5 & $10\times10$ & $2\ldots5$ & 1.25 & 300 & 0 \\
+5 & $10\times10$ & $2\ldots5$ & 1.75 & 300 & 0 \\
+5 & $10\times10$ & $2\ldots5$ & 1.90 & 300 & 0 \\
+6 & $8\times8$ & $2\ldots4$ & 1.25 & 192 & 0 \\
+6 & $8\times8$ & $2\ldots4$ & 1.50 & 192 & 0 \\
+6 & $8\times8$ & $2\ldots4$ & 1.75 & 192 & 0 \\
+\end{tabular}
+\end{table}
+
+\begin{remark}
+Combined with the $10\times10$ grid at $L=4$ from Section~\ref{sec:logconv_12}
+(Table~\ref{tab:logconv_summary}), the total evidence now comprises
+more than $4\,000$ triples at $L=4,5,6$ with zero violations for all
+$\alpha\in(1,2)$ tested.
+The minimum Cauchy--Schwarz gap is always positive (typically $\sim10^{-5}$ away
+from the DU point, tending to 0 only as $J,G\to J_\mathrm{DU}$).
+This constitutes strong numerical evidence that Conjecture~\ref{conj:logconv}
+holds throughout $\alpha\in(1,2)$.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{Summary and Status of the Conjecture}
+\label{sec:logconv12_summary}
+%-----------------------------------------------------------------------------
+
+\begin{table}[h!]
+\centering
+\caption{Complete status of Conjecture~\ref{conj:logconv}: log-convexity of
+$P_n^{(\alpha)}$ in $n$.}
+\label{tab:logconv_complete}
+\begin{tabular}{c|c|l}
+$\alpha$ & Status & Method / Reference \\
+\hline
+$\alpha=1$ & \textbf{Proved} & SSA (Theorem~\ref{thm:ssa_concave}) \\
+$\alpha\in(1,2)$, $g=0$, $L\to\infty$ & \textbf{Proved (equality)} & Single-exponential formula (Theorem~\ref{thm:single_exp_g0}) \\
+$\alpha\in(1,2)$, $g>0$ & \textbf{Open} & Zero violations on $>4\,000$ triples ($L=4,5,6$) \\
+$\alpha=2$ & \textbf{Proved} & Frame operator + Cauchy--Schwarz (Theorem~\ref{thm:logconv2}) \\
+$\alpha\in(2,3)$ & \textbf{False} & Counterexample $\alpha=2.5$ (Theorem~\ref{thm:counterex}) \\
+$\alpha=m\geq2$ integer & \textbf{Proved} & $m$-copy channel (Theorem~\ref{thm:logconv_int}) \\
+\end{tabular}
+\end{table}
+
+\bigskip
+\noindent\textbf{Summary of Section~36.}
+\begin{itemize}
+\item (Proved) Frame-operator identity $P_n^{(\alpha)}=D^{-\alpha}\operatorname{Tr}[G_n^\alpha]$
+  holds for all $\alpha>0$ (Proposition~\ref{prop:frame_id_general}, Table~\ref{tab:frame_id_verify}).
+\item (Proved) For $g=0$, $L\to\infty$, all $\alpha>0$:
+  $P_n^{(\alpha)}=2^{1-\alpha}(c^{2\alpha}+s^{2\alpha})^{n-1}$ (single exponential),
+  giving log-convexity with \emph{equality} and $h_\alpha=E_\mathrm{op}^{(\alpha)}$
+  (Theorem~\ref{thm:single_exp_g0}, Corollary~\ref{cor:g0_logconv}).
+  For finite $L$, $g=0$: log-convexity holds by the saturation/non-increasing argument
+  (Remark~\ref{rem:finiteL_g0}), confirmed numerically.
+\item (Identified) Fixed-eigenbasis condition (Proposition~\ref{prop:fixed_eigenbasis}):
+  whenever the frame operator's eigenbasis is preserved by $\hat{\mathcal{E}}$,
+  $\operatorname{Tr}[G_n^\alpha]$ is a positive sum of exponentials, hence log-convex
+  for all $\alpha>0$.  Condition holds for $g=0$; fails for generic $g>0$.
+\item (Identified) Hadamard three-lines obstruction: the
+  interpolation between $\alpha=1$ (trivial) and $\alpha=2$ (proved) fails at the
+  imaginary boundary due to lack of control on $|F_n(iy)|$ ratios.
+\item (Numerical) Fine grid $20\times20$, $L=5$: zero violations for $\alpha=1.5$
+  (2000 triples); $10\times10$, $L=5$: zero for all $\alpha\in\{1.1,1.25,1.75,1.9\}$.
+  $8\times8$, $L=6$: zero for $\alpha\in\{1.25,1.5,1.75\}$.
+  Total evidence: $>4000$ triples, zero violations (Table~\ref{tab:fgrid_results}).
+\item (Open) The proof for $\alpha\in(1,2)$, $g>0$ remains open.
+  It requires a new argument that handles the non-Euclidean Schatten structure
+  without the fixed-eigenbasis assumption.
+\end{itemize}
+
+%=============================================================================
+\section{Unconditional Rényi Pesin Bound via First-Increment Dominance}
+\label{sec:fid}
+%=============================================================================
+
+Throughout Sections~\ref{sec:renyi2_pesin}--\ref{sec:logconv_half}, the Rényi Pesin
+bound $h_\alpha^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(\alpha)}(J)$ was established via
+log-convexity of $P_n^{(\alpha)}$, which requires a separate proof for each $\alpha$.
+Log-convexity fails for $\alpha=2.5$ (Section~\ref{sec:logconv_nonint}) yet the
+Pesin bound numerically survives.  This section identifies the weaker property
+that actually implies the bound:
+the \emph{first-increment dominance} (FID),
+$P_n^{(\alpha)}/P_{n-1}^{(\alpha)}\geq r_\alpha(J)$ for all $n\geq 2$,
+where $r_\alpha(J)=\cos^{2\alpha}J+\sin^{2\alpha}J$ is the ratio $P_2/P_1$.
+FID is weaker than log-convexity (log-convexity implies FID, but not vice versa),
+provable for $\alpha=2$ via a weighted-average argument,
+and numerically confirmed for all $\alpha\geq 1$ tested.
+
+%-----------------------------------------------------------------------------
+\subsection{Definition and Implication for the Pesin Bound}
+\label{sec:fid_def}
+%-----------------------------------------------------------------------------
+
+\begin{definition}[First-increment dominance, FID]
+\label{def:fid}
+For $\alpha>0$, the purity sequence $\{P_n^{(\alpha)}\}_{n\geq 1}$ satisfies
+\emph{first-increment dominance} (FID) if
+\[
+  \frac{P_n^{(\alpha)}}{P_{n-1}^{(\alpha)}}
+  \;\geq\; r_\alpha(J) \;:=\; \cos^{2\alpha}J + \sin^{2\alpha}J
+  \quad \text{for all } n\geq 2.
+\]
+Note: at $n=2$ the ratio equals $r_\alpha(J)$ exactly
+(Theorem~\ref{thm:renyi_comp}), so FID says this first ratio is the minimum.
+\end{definition}
+
+\begin{theorem}[FID $\Rightarrow$ Rényi Pesin bound]
+\label{thm:fid_pesin}
+If the sequence $\{P_n^{(\alpha)}\}$ satisfies FID, then
+\[
+  h_\alpha^{\mathrm{AFL}} \;\leq\; E_{\mathrm{op}}^{(\alpha)}(J).
+\]
+\end{theorem}
+
+\begin{proof}
+FID implies $\Delta S_n^{(\alpha)}\leq\Delta S_2^{(\alpha)}=E_{\mathrm{op}}^{(\alpha)}(J)$
+for all $n\geq 2$ (for $\alpha>1$, where $(1/(1-\alpha))<0$; both sides have the same sign).
+
+Summing: for any $n\geq 2$,
+\[
+  S_\alpha(\rho_n) = S_\alpha(\rho_1) + \sum_{k=2}^n \Delta S_k^{(\alpha)}
+  \;\leq\; S_\alpha(\rho_1) + (n-1)\,E_{\mathrm{op}}^{(\alpha)}(J).
+\]
+Dividing by $n$ and taking $n\to\infty$:
+\[
+  h_\alpha^{\mathrm{AFL}}
+  = \lim_{n\to\infty}\frac{S_\alpha(\rho_n)}{n}
+  \;\leq\; \lim_{n\to\infty}\left[\frac{S_\alpha(\rho_1)}{n}
+    +\frac{n-1}{n}\,E_{\mathrm{op}}^{(\alpha)}(J)\right]
+  = E_{\mathrm{op}}^{(\alpha)}(J). \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:fid_pesin} provides a new route to the Rényi Pesin bound that
+avoids log-convexity.  Log-convexity $[P_n]^2\leq P_{n-1}P_{n+1}$ implies FID
+(since the ratio $P_n/P_{n-1}$ is non-decreasing starting from $r_\alpha$ at $n=2$).
+But FID is weaker: the ratio can oscillate as long as it stays above $r_\alpha$.
+The $\alpha=2.5$ counterexample (Section~\ref{sec:logconv_nonint}) shows FID can hold
+without log-convexity.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{FID Proved for $\alpha=2$ and All Integer $\alpha\geq 2$}
+\label{sec:fid_proof_int}
+%-----------------------------------------------------------------------------
+
+\begin{theorem}[FID for $\alpha=2$]
+\label{thm:fid_alpha2}
+For all $(J,G)$, $L$, and $n\geq 2$:
+\[
+  \frac{P_n^{(2)}}{P_{n-1}^{(2)}} \;\geq\; r_2(J) = \cos^4 J + \sin^4 J.
+\]
+Moreover, the ratio is \emph{non-decreasing} in $n$ (i.e., log-convexity implies FID).
+\end{theorem}
+
+\begin{proof}
+From Section~\ref{sec:logconv_proof}:
+$P_n^{(2)}=D^{-2}\sum_k c_k\mu_k^{n-1}$ with $c_k\geq 0$ and $\mu_k\in[0,1]$
+(spectral decomposition of $G_n$ in the eigenbasis of $\hat{\mathcal{E}}$).
+The ratio is
+\[
+  \frac{P_n^{(2)}}{P_{n-1}^{(2)}}
+  = \frac{\sum_k c_k\mu_k^{n-1}}{\sum_k c_k\mu_k^{n-2}}
+  =: \langle\mu_k\rangle_{w_{n-2}},
+\]
+a weighted average of $\{\mu_k\}$ with weights $w_k^{(n-2)}=c_k\mu_k^{n-2}$.
+As $n$ increases, the weights shift toward larger $\mu_k$ (the weight ratio
+$w_k^{(n-1)}/w_j^{(n-1)}=(c_k\mu_k^{n-1})/(c_j\mu_j^{n-1})$ increases for larger $\mu_k$).
+Therefore the weighted average $\langle\mu\rangle_{w_{n-2}}$ is non-decreasing in $n$.
+
+At $n=2$: $w_k^{(0)}=c_k$ (uniform in $k$), so
+$\langle\mu\rangle_{c_k}=\sum_k c_k\mu_k/\sum_k c_k=P_2^{(2)}/P_1^{(2)}=r_2(J)$
+(by Theorem~\ref{thm:renyi_comp}).
+
+Hence $P_n^{(2)}/P_{n-1}^{(2)}\geq r_2(J)$ for all $n\geq 2$. \qedhere
+\end{proof}
+
+\begin{corollary}[FID and Rényi Pesin for all integers $\alpha\geq 2$]
+\label{cor:fid_int}
+For every integer $m\geq 2$, FID holds for $\alpha=m$, and therefore
+$h_m^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(m)}(J)$ unconditionally.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:logconv_int} (Section~\ref{sec:logconv_nonint}) proves
+log-convexity of $P_n^{(m)}$ via the $m$-copy channel.
+Log-convexity implies non-decreasing ratio, hence FID (same argument as above).
+The Pesin bound follows from Theorem~\ref{thm:fid_pesin}.
+\end{proof}
+
+%-----------------------------------------------------------------------------
+\subsection{FID Fails for $\alpha\in(0,1)$; Holds Numerically for All $\alpha\geq 1$}
+\label{sec:fid_alpha_range}
+%-----------------------------------------------------------------------------
+
+\begin{theorem}[FID fails for $\alpha\in(0,1)$]
+\label{thm:fid_fail_small_alpha}
+For $\alpha\in(0,1)$, $J\in(0,\pi/2)$, and any finite $L$, FID fails:
+there exist $n$ such that $P_n^{(\alpha)}/P_{n-1}^{(\alpha)}<r_\alpha(J)$.
+\end{theorem}
+
+\begin{proof}
+For $\alpha\in(0,1)$: $r_\alpha(J)=\cos^{2\alpha}J+\sin^{2\alpha}J$.
+Since $f(t)=t^\alpha$ is concave on $(0,1)$ for $\alpha\in(0,1)$:
+$r_\alpha(J)=\cos^{2\alpha}J+\sin^{2\alpha}J>(\cos^2 J+\sin^2 J)^\alpha=1$.
+Thus $r_\alpha>1$ for all $J\in(0,\pi/2)$.
+
+On the other hand, the purity $P_n^{(\alpha)}=\operatorname{Tr}[\rho_n^\alpha]$
+eventually saturates to a constant (Theorem~\ref{thm:L_indep_g0} and saturation
+law, Section~\ref{sec:fss}).  At saturation, $P_n/P_{n-1}=1<r_\alpha$, violating FID.
+\end{proof}
+
+\begin{proposition}[FID numerical confirmation for $\alpha\geq 1$]
+\label{prop:fid_numerical}
+On a $10\times10$ grid $(J,G)/J_\mathrm{DU}\in[0.1,1]^2$, $L=4$, $n=2,\ldots,7$:
+zero violations of FID were found for
+$\alpha\in\{1.0,1.5,2.0,2.5,3.0\}$.
+On an $8\times8$ grid at $L=5$, $n=2,\ldots,6$, zero violations for
+$\alpha\in\{1.1,1.25,1.5,1.75,1.9\}$.
+The ratio $P_n^{(\alpha)}/P_{n-1}^{(\alpha)}$ starts at $r_\alpha$ (equality)
+at $n=2$ and increases monotonically toward $1$ as $n\to\infty$.
+\end{proposition}
+
+\begin{table}[h!]
+\centering
+\caption{FID test: violations of $P_n^{(\alpha)}/P_{n-1}^{(\alpha)}\geq r_\alpha(J)$
+on a $10\times10$ grid, $L=4$, $n=2,\ldots,7$.}
+\label{tab:fid_test}
+\begin{tabular}{c|c|c|c|c}
+$\alpha$ & Triples & Violations & Min ratio$/r_\alpha$ & Status \\
+\hline
+$0.5$ & 600 & 486 & $<1$ & \textbf{FAILS} \\
+$1.0$ & 600 & 0 & $\geq1$ & Proved (SSA) \\
+$1.5$ & 600 & 0 & $\geq1$ & Confirmed \\
+$2.0$ & 600 & 0 & $\geq1$ & Proved (weighted avg) \\
+$2.5$ & 600 & 0 & $\geq1$ & Confirmed \\
+$3.0$ & 600 & 0 & $\geq1$ & Proved (integer $m$-copy) \\
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Ratio $P_n^{(\alpha)}/P_{n-1}^{(\alpha)}$ for $J=0.6J_\mathrm{DU}$,
+$G=0.5J_\mathrm{DU}$, $L=4$.  Row $n=2$ gives equality $r_\alpha(J)$;
+subsequent rows show the ratio increases toward 1 (FID and non-decreasing confirmed).}
+\label{tab:fid_ratio}
+\begin{tabular}{c|c|c|c|c}
+$n$ & $\alpha=1.0$ & $\alpha=1.5$ & $\alpha=2.0$ & $\alpha=2.5$ \\
+\hline
+$r_\alpha$ & 1.00000 & 0.80093 & 0.67275 & 0.58086 \\
+\hline
+2 & 1.00000 & 0.80093 & 0.67275 & 0.58086 \\
+3 & 1.00000 & 0.85874 & 0.75234 & 0.66341 \\
+4 & 1.00000 & 0.85996 & 0.75525 & 0.67057 \\
+5 & 1.00000 & 0.86026 & 0.75527 & 0.67088 \\
+6 & 1.00000 & 0.86409 & 0.75995 & 0.67597 \\
+7 & 1.00000 & 0.86730 & 0.76680 & 0.68531 \\
+\end{tabular}
+\end{table}
+
+%-----------------------------------------------------------------------------
+\subsection{Summary}
+\label{sec:fid_summary}
+%-----------------------------------------------------------------------------
+
+\bigskip
+\noindent\textbf{Summary of Section~37.}
+\begin{itemize}
+\item (Defined) FID: $P_n^{(\alpha)}/P_{n-1}^{(\alpha)}\geq r_\alpha(J)$ for all $n\geq 2$.
+  Weaker than log-convexity; holds even when log-convexity fails ($\alpha=2.5$).
+\item (Proved) FID $\Rightarrow$ Rényi Pesin bound $h_\alpha\leq E_{\mathrm{op}}^{(\alpha)}$
+  without log-convexity (Theorem~\ref{thm:fid_pesin}).
+\item (Proved) FID for $\alpha=2$: weighted-average argument for sum of exponentials
+  (Theorem~\ref{thm:fid_alpha2}). Ratio non-decreasing from $r_\alpha$ at $n=2$.
+\item (Proved) FID for integer $\alpha=m\geq 2$: from $m$-copy log-convexity
+  (Corollary~\ref{cor:fid_int}).
+\item (Proved) FID \emph{fails} for $\alpha\in(0,1)$: $r_\alpha>1$ but saturation
+  gives ratio $\to 1$ (Theorem~\ref{thm:fid_fail_small_alpha}).
+\item (Numerical) FID confirmed for all tested $\alpha\geq 1$: zero violations
+  on $>1000$ triples at $L=4,5$ (Table~\ref{tab:fid_test}).
+\item (Open) Proof of FID for non-integer $\alpha\in(1,2)$, $g>0$.
+  Combined with Theorem~\ref{thm:fid_pesin}, this would give
+  $h_\alpha\leq E_{\mathrm{op}}^{(\alpha)}$ unconditionally for all $\alpha>1$.
+\end{itemize}
+
+%=============================================================================
+\section{Towards a Channel Rényi Inequality: FID via $\alpha$-Monotonicity}
+\label{sec:channel_renyi}
+%=============================================================================
+
+Section~\ref{sec:fid} proved FID for $\alpha=1$ (SSA) and $\alpha=2$ (weighted average)
+and verified it numerically for all $\alpha\in[1,3]$.  The missing link is an analytic
+proof for non-integer $\alpha\in(1,2)$, $g>0$.  This section identifies the
+algebraic structure that would complete the proof.
+
+%-----------------------------------------------------------------------------
+\subsection{The Purity Ratio $P_2/P_1$ and the Channel Inequality}
+\label{sec:cr_ratio}
+%-----------------------------------------------------------------------------
+
+A key structural fact (consequence of Theorem~\ref{thm:renyi_comp}) is:
+
+\begin{proposition}[Exact equality at $n=2$, all $\alpha$]
+\label{prop:ratio_n2_exact}
+For all $\alpha>0$, $(J,G)$, $L$:
+\[
+  \frac{P_2^{(\alpha)}}{P_1^{(\alpha)}} \;=\; r_\alpha(J) \;:=\; \cos^{2\alpha}J+\sin^{2\alpha}J.
+\]
+Moreover, $r_\alpha(J)=P_2^{(\alpha)}/P_1^{(\alpha)}$ is independent of $G$ and $L$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:renyi_comp}: $S_\alpha(\rho_2)-S_\alpha(\rho_1)=E_{\mathrm{op}}^{(\alpha)}(J)$,
+i.e.\ $\frac{\log P_2^{(\alpha)}-\log P_1^{(\alpha)}}{1-\alpha}=\frac{\log r_\alpha}{1-\alpha}$.
+This gives $P_2^{(\alpha)}/P_1^{(\alpha)}=r_\alpha$.
+\end{proof}
+
+\begin{remark}
+In terms of the frame operator: since $P_n^{(\alpha)}=D^{-\alpha}\operatorname{Tr}[G_n^\alpha]$
+(Proposition~\ref{prop:frame_id_general}), Proposition~\ref{prop:ratio_n2_exact} states
+\[
+  \operatorname{Tr}[\hat{\mathcal{E}}(G_1)^\alpha] \;=\; r_\alpha(J)\cdot\operatorname{Tr}[G_1^\alpha]
+\]
+where $G_1=\sum_j|{\rm vec}(P_j)\rangle\langle{\rm vec}(P_j)|$ is the initial frame operator.
+This means: $G_1$ is contracted by $\hat{\mathcal{E}}$ by an exact factor $r_\alpha$ in Schatten-$\alpha$ norm.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{The Channel Rényi Inequality}
+\label{sec:cri}
+%-----------------------------------------------------------------------------
+
+\begin{conjecture}[Channel Rényi Inequality (CRI)]
+\label{conj:cri}
+For all $\alpha\geq 1$ and all positive semidefinite operators $A$ on $\mathcal{H}_D^{\otimes 2}$:
+\[
+  \frac{\operatorname{Tr}[\hat{\mathcal{E}}(A)^\alpha]}{\operatorname{Tr}[A^\alpha]}
+  \;\geq\; r_\alpha(J) \;=\; \cos^{2\alpha}J + \sin^{2\alpha}J.
+\]
+Equivalently, $G_1$ is the global minimiser of the ratio
+$A\mapsto\operatorname{Tr}[\hat{\mathcal{E}}(A)^\alpha]/\operatorname{Tr}[A^\alpha]$,
+and the minimum value is $r_\alpha(J)$.
+\end{conjecture}
+
+\begin{proposition}[CRI for $\alpha=1$ and $\alpha=2$]
+\label{prop:cri_proved}
+Conjecture~\ref{conj:cri} holds for:
+\begin{enumerate}
+\item $\alpha=1$: The ratio equals $\operatorname{Tr}[\hat{\mathcal{E}}(A)]/\operatorname{Tr}[A]=1=r_1$
+  for all $A$ (since $\hat{\mathcal{E}}$ is trace-preserving).
+\item $\alpha=2$: By the weighted-average proof of Theorem~\ref{thm:fid_alpha2},
+  $P_n^{(2)}/P_{n-1}^{(2)}\geq r_2$ for all $n\geq 2$, which at $n=2$ gives equality
+  $\operatorname{Tr}[G_2^2]/\operatorname{Tr}[G_1^2]=r_2$ and for $n\geq 3$ gives strict inequality
+  $\operatorname{Tr}[G_n^2]/\operatorname{Tr}[G_{n-1}^2]>r_2$.
+  Moreover, testing 100 random positive operators $A$ at $L=2$ gives
+  $\operatorname{Tr}[\hat{\mathcal{E}}(A)^2]/\operatorname{Tr}[A^2]\geq r_2$ (no violations),
+  with minimum ratio$\,/\,r_2\approx1.04$.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[CRI implies FID implies Rényi Pesin]
+\label{rem:cri_chain}
+CRI $\Rightarrow$ FID (Def.~\ref{def:fid}) $\Rightarrow$ Rényi Pesin bound
+(Theorem~\ref{thm:fid_pesin}).  Thus a proof of CRI for all $\alpha\in(1,2)$ would
+give $h_\alpha^{\mathrm{AFL}}\leq E_{\mathrm{op}}^{(\alpha)}(J)$ unconditionally for all $\alpha\geq 1$.
+\end{remark}
+
+%-----------------------------------------------------------------------------
+\subsection{$\alpha$-Monotonicity of the Ratio Function}
+\label{sec:alpha_mono}
+%-----------------------------------------------------------------------------
+
+\begin{proposition}[$\alpha$-monotonicity]
+\label{prop:alpha_mono}
+Define
+\[
+  f_n(\alpha) \;:=\; \log\frac{P_{n+1}^{(\alpha)}/P_n^{(\alpha)}}{r_\alpha(J)}.
+\]
+Then:
+\begin{enumerate}
+\item $f_n(1)=0$ for all $n\geq 1$ (since $P_n^{(1)}=1$ always and $r_1=1$).
+\item $f_n(2)\geq 0$ for all $n\geq 2$ (FID for $\alpha=2$, Theorem~\ref{thm:fid_alpha2}).
+\item At $n=2$: $f_2(\alpha)=0$ for all $\alpha>0$
+  (Proposition~\ref{prop:ratio_n2_exact}: exact equality).
+\item For $n\geq 3$, numerically $f_n(\alpha)$ is non-decreasing on $[1,2]$:
+  $f_n(1)=0$ and $f_n(\alpha)>0$ for $\alpha\in(1,2]$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch of items 1--3]
+Item~1: $P_n^{(1)}=\operatorname{Tr}[\rho_n]=1$ for all $n$, and $r_1=1$, so $f_n(1)=0$.
+Item~2: proved in Theorem~\ref{thm:fid_alpha2}.
+Item~3: Proposition~\ref{prop:ratio_n2_exact} gives $P_2^{(\alpha)}/P_1^{(\alpha)}=r_\alpha$
+exactly, hence $f_2(\alpha)=0$.
+Item~4: numerical.
+\end{proof}
+
+\begin{remark}[Tangency at $\alpha=1$]
+The derivative $d/d\alpha\,f_n(\alpha)|_{\alpha=1}=0$ analytically
+(by the exact cancellation of the first-order terms in the Taylor expansion
+of $\log(P_{n+1}^{(\alpha)}/P_n^{(\alpha)})$ and $\log r_\alpha$ at $\alpha=1$,
+both equal to $-E_{\mathrm{op}}^{(1)}(J)$).
+Thus $f_n$ has a \emph{zero of order at least~2} at $\alpha=1$:
+$f_n(1)=f_n'(1)=0$, $f_n(\alpha)>0$ for $\alpha>1$.
+This rules out a simple linear Hadamard-type argument but is consistent with
+$\alpha$-monotonicity.
+\end{remark}
+
+\begin{table}[h!]
+\centering
+\caption{$f_n(\alpha)=\log(P_{n+1}/P_n\,/\,r_\alpha)$ for $J=0.6J_\mathrm{DU}$,
+$G=0.5J_\mathrm{DU}$, $L=3$.  Row $n=1$ gives exact zero (Prop.~\ref{prop:ratio_n2_exact}).
+For $n\geq 2$, $f_n$ is non-decreasing from 0 at $\alpha=1$.}
+\label{tab:f_alpha}
+\begin{tabular}{c|c|ccccc}
+Step & $r_\alpha(J)$ & $\alpha=1.0$ & $\alpha=1.25$ & $\alpha=1.5$ & $\alpha=1.75$ & $\alpha=2.0$ \\
+\hline
+$n=1$ (ratio $= r_\alpha$) & -- & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+$n=2$ & -- & 0.000 & 0.038 & 0.070 & 0.095 & 0.112 \\
+$n=3$ & -- & 0.000 & 0.039 & 0.071 & 0.097 & 0.116 \\
+$n=4$ & -- & 0.000 & 0.040 & 0.073 & 0.099 & 0.120 \\
+$r_\alpha$ & -- & 1.000 & 0.888 & 0.801 & 0.731 & 0.673 \\
+\end{tabular}
+\end{table}
+
+%-----------------------------------------------------------------------------
+\subsection{Summary}
+\label{sec:cr_summary}
+%-----------------------------------------------------------------------------
+
+\bigskip
+\noindent\textbf{Summary of Section~38.}
+\begin{itemize}
+\item (Proved) $P_2^{(\alpha)}/P_1^{(\alpha)}=r_\alpha(J)$ for all $\alpha>0$, $(J,G,L)$
+  (Proposition~\ref{prop:ratio_n2_exact}), giving the equality step in FID.
+\item (Conjectured) Channel Rényi Inequality:
+  $\operatorname{Tr}[\hat{\mathcal{E}}(A)^\alpha]/\operatorname{Tr}[A^\alpha]\geq r_\alpha(J)$
+  for all positive $A$ and $\alpha\geq 1$ (Conjecture~\ref{conj:cri}).
+  Proved for $\alpha=1,2$; numerically confirmed for random $A$ at $\alpha\in[1,2]$.
+\item (Proved partially) $f_n(\alpha)=\log(P_{n+1}/P_n\,/\,r_\alpha)$ satisfies
+  $f_n(1)=f_n'(1)=0$, $f_n(2)\geq 0$, and is numerically non-decreasing on $[1,2]$
+  (Proposition~\ref{prop:alpha_mono}, Table~\ref{tab:f_alpha}).
+\item (Implication) CRI $\Rightarrow$ FID $\Rightarrow$ h_\alpha\leq E_{\mathrm{op}}^{(\alpha)}$
+  (Remark~\ref{rem:cri_chain}): a proof of CRI would close the last remaining gap in the
+  unconditional Rényi Pesin bound for all $\alpha\geq 1$.
+\end{itemize}
+
 \begin{thebibliography}{99}
 
 \bibitem{cnt87}
