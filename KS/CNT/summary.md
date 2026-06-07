@@ -261,3 +261,77 @@ cnt_du_variational.py, cnt_renyi_gap_spectrum.py.
 Prove log-convexity of {Tr[G_n^α]}_n for α∈(1,2) and g>0.
 All approaches (Riesz-Thorin, Gibbs-average, trace-integral, Hadamard) have been tried and fail.
 The difficulty: no bilinear representation exists for non-integer α (unlike α=2).
+
+## Session: 2026-06-07
+
+### New Section 49: Exact Distribution of r_alpha and CLT
+
+**D=2 exact representation**: r_alpha = x^alpha + (1-x)^alpha with x ~ U(0,1). Proved from the 2x2 unitary structure.
+
+**Exact PDF**: p_alpha(r) = 2 / (alpha * |x_1^{alpha-1} - (1-x_1)^{alpha-1}|) where x_1 = x_1(r) is the inverse function on (0, 1/2). Special case alpha=2: p_2(r) = 1/sqrt(2r-1) proved analytically and verified by quadrature (error < 3e-11).
+
+**All integer moments**: E[r_alpha^k] = sum_j C(k,j) * Gamma(alpha*j+1)*Gamma(alpha*(k-j)+1)/Gamma(alpha*k+2) via Beta function. Exact rationals for alpha=2: m1=2/3, m2=7/15, m3=12/35, Var=1/45.
+
+**Third central moment and skewness** (D=2):
+- kappa_3 = 2/945 (exact rational, proved), skewness = 2*sqrt(5)/7 ≈ 0.6389.
+- Sign: left-skewed for alpha<1, right-skewed for alpha>1. Sign flip at alpha=1 (delta function).
+
+**Min-entropy limit**: r_alpha^{1/alpha} → Uniform(1/2, 1) as alpha → ∞ (PDF = 2). Proved: P(max(x,1-x) <= t) = 2t-1. Mean → 3/4 (verified for alpha up to 50).
+
+**CLT (Lyapunov)**: (r_alpha - E)/sigma → N(0,1). Column decomposition r_alpha = (1/D)*sum W_j. Lyapunov condition: E[|W_j-mu|^3]/(Var^{3/2}*sqrt(D)) = O(1/sqrt(D)) → 0. Proved.
+
+**Berry-Esseen rate**: O(1/D) (D^2 terms). KS distance decreasing: 0.14→0.03 as D goes 2→32.
+
+Output.tex: 49 sections + bibliography, 864 balanced environments, 9055 lines.
+Python script: cnt_distribution_alpha.py (9 parts, all complete).
+
+## Session: 2026-06-07 (Sections 49-54)
+
+### What was accomplished
+
+**Section 49:** Exact distribution of r_alpha for Haar-random D=2 circuits.
+- D=2 exact PDF: p_2(r)=1/sqrt(2r-1). kappa_3=2/945 (exact), skewness=2*sqrt(5)/7.
+- Min-entropy limit: r_alpha^{1/alpha} → U(1/2,1) as alpha→∞.
+- CLT + Berry-Esseen: KS distance O(1/D).
+
+**Section 50:** Large-D universal distribution and RMT connections.
+- Gamma fits better than Normal for small D.
+- Eigenvalues of G_2 → Exp(1) (NOT Marchenko-Pastur).
+- Probabilistic Pesin bound via delta method.
+- C_infty(2) = 2 = Gamma(3) proved.
+
+**Section 51:** Two-sided Rényi Pesin theorem.
+- DU equality: ΔS_n^alpha = log(d) for ALL n, ALL alpha at DU (max err 1e-16).
+- Near-DU: E_op - alpha*r^2 <= ΔS_3 <= E_op; C(alpha) ≈ alpha confirmed.
+- Exact n=2 equality: ΔS_2 = E_op for all (J,G,L,alpha).
+- g=0 thermodynamic limit: ΔS_n = E_op for all n.
+- CORRECTION: global half-bound ΔS_3 >= E_op/2 restricted to G=JDU direction (fails at G=0).
+
+**Section 52:** Quantum mixing time and domain of half-bound.
+- T^2=T at G=0, J=JDU: forces ΔS_n=0 for n>=3 (rigorous proof).
+- T_mix defined: DU maximises, G=0/J=JDU minimises.
+- Decay ratio R(n) = ΔS_{n+1}/ΔS_n: non-decreasing, equals 1 only at DU.
+
+**Section 53:** Threshold curve G_th(J) and L-independence.
+- G_th = 0 for J <= 0.37*JDU; G_th ≈ 0.55*J - 0.045*JDU (linear fit).
+- KEY: G_th is L-independent for all L >= 2.
+- ΔS_3/E_op monotone in G (0 violations); G_th decreases with alpha.
+
+**Section 54:** Finite-depth representation theorem.
+- THEOREM: rho[Z^n] is L-independent for L >= L_min(n) = ceil((n+1)/2).
+- Verified: n=1,2,3 for all L>=2; n=4,5 for all L>=3.
+- Proof: light-cone + trace factorisation over distant sites.
+- Explains G_th L-independence and extends Section 18.
+
+### Output.tex state
+54 sections + bibliography, 943 balanced environments, 9908 lines.
+
+### New Python scripts
+cnt_distribution_alpha.py (extended), cnt_rmt_comparison.py, cnt_lower_pesin_improved.py,
+cnt_mixing_time.py, cnt_threshold_curve.py, cnt_lindep_n3.py.
+
+### Open problems
+1. Analytical proof of half-bound ΔS_3 >= E_op/2 for G >= G_th(J) (rigorous).
+2. Log-convexity of {Tr[G_n^alpha]}_n for alpha in (1,2) and g>0.
+3. Orbit-monotonicity for alpha in (1,2) (FID conjecture).
+4. Finite-depth representation for general quantum systems beyond kicked Ising.
