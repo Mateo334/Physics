@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\title{Measured relative entropy and its derivatives}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Setup}
+Work in finite dimension with a full-rank density matrix $\rho$. Let $V=U_\epsilon$ and $U_t$ be fixed unitaries. We vary the initial state as $\rho+hA$, where $A=A^\dagger$ and $\Tr A=0$, in both occurrences. All logarithms are natural. A POVM consists of nonzero effects $M_i\geq0$ with $\sum_iM_i=I$; these are effects, not Kraus operators. Define
+\[D_M(\rho_1\Vert\rho_2)=\sum_i p_i\log\frac{p_i}{q_i},\qquad p_i=\Tr(M_i\rho_1),\qquad q_i=\Tr(M_i\rho_2).\]
+
+\section{Checking the derivatives}
+For independent final-state directions $A_1,A_2$, set $a_i=\Tr(M_iA_1)$ and $b_i=\Tr(M_iA_2)$. Direct differentiation gives
+\[DD_M{}_{(\rho_1,\rho_2)}[(A_1,A_2)]=\sum_i a_i\left(\log\frac{p_i}{q_i}+1\right)-\sum_i\frac{p_i}{q_i}b_i.\]
+The $+1$ contribution vanishes when $\Tr A_1=0$, since $\sum_i a_i=\Tr A_1$. The second differential along this pair is
+\[D^2D_M{}_{(\rho_1,\rho_2)}[(A_1,A_2),(A_1,A_2)]=\sum_i p_i\left(\frac{a_i}{p_i}-\frac{b_i}{q_i}\right)^2.\]
+Thus the proposed formula is correct if the same direction $A$ is applied directly to both final states:
+\[D^2D_M{}_{(\rho_1,\rho_2)}[(A,A),(A,A)]=\sum_i\frac{\Tr(M_iA)^2(p_i-q_i)^2}{p_iq_i^2}.\]
+This is not generally the variation of the initial state in both arguments. A unitary state map differentiates to the conjugated direction, not to the state itself:
+\[D_\rho(U\rho U^\dagger)[A]=UAU^\dagger.\]
+
+\section{Substitution for the two state pairs}
+Before common time evolution the states are $\rho$ and $V\rho V^\dagger$; afterwards they are $U_t\rho U_t^\dagger$ and $U_tV\rho V^\dagger U_t^\dagger$. Both cases have the same expression if we define
+\[P_i=\begin{cases}M_i,&\text{before evolution},\\U_t^\dagger M_iU_t,&\text{after evolution},\end{cases}\qquad Q_i=V^\dagger P_iV.\]
+Cyclicity of the trace gives the probabilities and their initial-state variations:
+\[p_i=\Tr(P_i\rho),\qquad q_i=\Tr(Q_i\rho),\qquad a_i=\Tr(P_iA),\qquad b_i=\Tr(Q_iA).\]
+Let $\Phi_M(\rho)$ denote the divergence for the chosen state pair. Substitution yields
+\[D\Phi_M(\rho)[A]=\sum_i\Tr(P_iA)\log\frac{\Tr(P_i\rho)}{\Tr(Q_i\rho)}-\sum_i\frac{\Tr(P_i\rho)}{\Tr(Q_i\rho)}\Tr(Q_iA).\]
+\[D^2\Phi_M(\rho)[A,A]=\sum_i\Tr(P_i\rho)\left(\frac{\Tr(P_iA)}{\Tr(P_i\rho)}-\frac{\Tr(Q_iA)}{\Tr(Q_i\rho)}\right)^2.\]
+Both state maps are linear in $\rho$, so they contribute no second derivatives. At $V=I$, both derivatives vanish. For a fixed measurement, the dependence on $t$ generally remains.
+
+\section{Supremum over all measurements}
+Define the single-copy optimized quantity by
+\[F(\rho)=D_{\rm meas}(\rho\Vert V\rho V^\dagger)=\sup_M D_M(\rho\Vert V\rho V^\dagger).\]
+At an optimal measurement $M^*$, the first derivative is the fixed-measurement formula evaluated at $M^*$, not the supremum of the derivatives. Equivalently, use the positive-operator variational formula
+\[F(\rho)=\max_{Z>0}\{\Tr(\rho\log Z)+1-\Tr(V\rho V^\dagger Z)\}.\]
+It follows from the classical variational formula, operator Jensen's inequality, and the spectral measurement of $Z$. Full rank gives a unique positive optimizer $Z_*$ by strict concavity and compact upper level sets. Its spectral projections form an optimal POVM, with eigenvalues $p_i^*/q_i^*$.
+Stationarity cancels the optimizer's contribution to the first derivative:
+\[\boxed{DF(\rho)[A]=\Tr[A(\log Z_*-V^\dagger Z_*V)].}\]
+The second derivative does require the optimizer's response. Put $Z=Z_*$ and define
+\[R_s=(Z+sI)^{-1},\qquad\mathcal T_Z(X)=\int_0^\infty R_sXR_s\,ds,\qquad\mathcal T_Z(\rho)=V\rho V^\dagger.\]
+\[\mathcal L(H)=\int_0^\infty(R_sHR_s\rho R_s+R_s\rho R_sHR_s)\,ds,\qquad C_A=\mathcal T_Z(A)-VAV^\dagger.\]
+Differentiating stationarity gives $\mathcal L(H)=C_A$ for $H=DZ_*[A]$. The operator $\mathcal L$ is positive definite on Hermitian matrices, so
+\[\boxed{D^2F(\rho)[A,A]=\Tr[C_A\mathcal L^{-1}(C_A)]\geq0.}\]
+These formulas are implicit: first solve for $Z_*$, then solve the linear equation for $H$. One cannot generally replace $Z_*$ by $(V\rho V^\dagger)^{-1}\rho$.
+Optimizing over all POVMs removes common unitary evolution, since $M_i\mapsto U_t^\dagger M_iU_t$ is a bijection of POVMs. As an identity in $\rho$,
+\[F_t(\rho)=D_{\rm meas}(U_t\rho U_t^\dagger\Vert U_tV\rho V^\dagger U_t^\dagger)=F(\rho).\]
+Consequently the optimized quantity and both initial-state derivatives are independent of $t$. This statement concerns common unitary evolution, not protocols constrained to include intermediate measurements.
+
+\section{A time-independent upper bound}
+Set $\sigma=V\rho V^\dagger$, $\rho_t=U_t\rho U_t^\dagger$, and $\sigma_t=U_t\sigma U_t^\dagger$. The quantum relative entropy is
+\[D(\rho\Vert\sigma)=\Tr[\rho(\log\rho-\log\sigma)].\]
+A POVM defines a completely positive trace-preserving channel
+\[\mathcal M(X)=\sum_i\Tr(M_iX)|i\rangle\langle i|.\]
+Its outputs are diagonal states, whose quantum relative entropy equals the classical outcome relative entropy. Data processing and unitary invariance give
+\[\begin{aligned}D_M(\rho_t\Vert\sigma_t)&=D(\mathcal M(\rho_t)\Vert\mathcal M(\sigma_t))\\&\leq D(\rho_t\Vert\sigma_t)=D(\rho\Vert\sigma).\end{aligned}\]
+The right-hand side is finite under our full-rank assumption and independent of time. Taking the supremum over measurements preserves the bound. For the noisy coherent state and perturbation used in our spin-10 calculation, it evaluates to approximately $0.04460889$ nats.
+The same proof applies to a full repeated-measurement record: replace $\mathcal M$ by the channel producing that record, using the same instrument protocol for both states. A fixed final-measurement curve may still oscillate below the bound, because data processing does not compare separate experiments at different times. This bounds the relative entropy itself, not automatically its derivatives. For rank-deficient states the bound can be infinite.
+\end{document}

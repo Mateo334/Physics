@@ -1,0 +1,16 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\begin{document}
+\section*{Projective POVMs used in the simulations}
+For spin $j=199.5$ ($d=400$), we sample 20 independent directions $\mathbf n_r$ uniformly on the sphere. Each measurement resolves the spin component $J_{\mathbf n_r}=\mathbf n_r\cdot\mathbf J$. Write its ordered eigenstates as
+\[J_{\mathbf n_r}|q;r\rangle=(-j+q)|q;r\rangle,\qquad q=0,\ldots,399.\]
+We group the lower half of this basis into pairs and the upper half into quadruples:
+\[P_{a,r}=\sum_{q=2a}^{2a+1}|q;r\rangle\langle q;r|,\qquad a=0,\ldots,99,\]
+\[P_{100+b,r}=\sum_{q=200+4b}^{203+4b}|q;r\rangle\langle q;r|,\qquad b=0,\ldots,49.\]
+The disjoint cells give orthogonal projectors summing to the identity. Each POVM therefore has 100 outcomes of volume $\Tr P_{a,r}=2$ and 50 of volume $\Tr P_{a,r}=4$.
+
+This rank prescription follows the $J_z$ measurement in Sreeram PG, Modak, and Aravinda, arXiv:2212.01585v3, pp.~5--6. Small ranks leave room for entropy growth; unequal ranks make the volume contribution state-dependent. Rotating the measurement to random spin directions is our extension, not a sampling of arbitrary Hilbert-space bases.
+
+Each POVM stays fixed throughout evolution. The plotted entropy is averaged over these 20 POVMs and 20 coherent initial states, using the same samples for every kicking strength. Entropies are averaged after evaluation, not after mixing states or measurement effects.
+\end{document}

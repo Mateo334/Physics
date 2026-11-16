@@ -1,0 +1,46 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\begin{document}
+\title{Towards positive ALF entropy from the algebraic K-property}
+\author{}
+\date{}
+\maketitle
+\section{What we want to understand}
+The classical K-property says, roughly, that the remote past contains no nontrivial information, although the translates of the past together describe the whole system. For a nontrivial classical K-system this forces positive Kolmogorov--Sinai entropy. The natural question is whether the analogous algebraic condition forces positive Alicki--Fannes--Lindblad (ALF) entropy. We should regard this as a conjecture to investigate, not as a consequence of the classical argument: in the quantum setting the observables at different times need not commute.
+There is a useful encouraging example. For a tracial binary shift the partition $(I/\sqrt2,u_0/\sqrt2)$ has an ALF history matrix equal to $2^{-n}I_{2^n}$, even for bitstreams for which CNT entropy vanishes. Its entropy is therefore $n\log2$. This rules out that family as a counterexample, but it does not yet identify which part of the K-property is responsible for the entropy production. The binary-shift setup and the existence of zero-CNT examples are described in E.~St\o rmer, \emph{A survey of noncommutative dynamical entropy}, arXiv:math/0007010, Section 9, pp.~31--33. The ALF calculation is given separately in our note \texttt{binary\_shift\_alf.tex}.
+\section{A precise first version of the question}
+We begin with a deliberately restricted setting. Let $\mathcal M\ne\mathbb CI$ be a finite von Neumann algebra with a faithful normal tracial state $\tau$, and let $\alpha$ be a trace-preserving automorphism. Here ``finite'' is an operator-algebraic condition, not finite vector-space dimension. Suppose a von Neumann subalgebra $\mathcal M_0$ satisfies
+\[\mathcal M_0\subseteq\alpha(\mathcal M_0),\qquad\bigvee_{k\in\mathbb Z}\alpha^k(\mathcal M_0)=\mathcal M,\qquad\bigcap_{k\in\mathbb Z}\alpha^k(\mathcal M_0)=\mathbb CI.\]
+Put $\mathcal N_k=\alpha^k(\mathcal M_0)$. This is an increasing family of algebras. With this convention $\mathcal N_{-r}$ represents a progressively more remote past. Fix the partition class as well: initially we allow all finite operational partitions in $\mathcal M$. If a smaller physically motivated algebra is imposed, the partition constructed in the proof must belong to that algebra.
+The conjecture in this setting is that the unrestricted ALF entropy is strictly positive. The scalar algebra is excluded because it satisfies the displayed conditions but has zero entropy. General faithful nontracial states require additional care, particularly concerning state-preserving conditional expectations; no reduction to that case is asserted here.
+\section{What a proof must actually produce}
+An operational partition is a fixed finite family $X=(x_1,\ldots,x_m)$ satisfying $\sum_i x_i^*x_i=I$. Its histories and correlation matrix are
+\[K_{\boldsymbol i}=\alpha^{n-1}(x_{i_{n-1}})\cdots\alpha(x_{i_1})x_{i_0},\qquad R_n(\boldsymbol i,\boldsymbol j)=\tau(K_{\boldsymbol j}^*K_{\boldsymbol i}).\]
+The matrix $R_n$ is positive and has trace one. Transposing this indexing convention gives the usual Gram convention and leaves its spectrum unchanged. Define
+\[S_n(X)=-\Tr(R_n\log R_n),\qquad h_{\rm ALF}(\alpha,\tau)=\sup_X\limsup_{n\to\infty}\frac{S_n(X)}n.\]
+A sufficient target is to find one partition $X$, a number $c>0$, and a constant $C$ such that $S_n(X)\geq cn-C$ for every $n$. This target is stronger than necessary for the upper-limit definition, but it is clear and robust. The partition must be chosen once, independently of $n$. A positive one-step entropy, or even an unbounded sequence of entropies, does not establish this linear lower bound.
+The full correlation matrix matters. Its diagonal gives the outcome probabilities, but dephasing can increase entropy. A large Shannon entropy of the outcome record therefore does not provide a lower bound on ALF entropy. We need control of the overlaps between different history operators, not only their probabilities.
+\section{What the K-property gives us}
+In the tracial setting let $E_k:\mathcal M\to\mathcal N_k$ be the trace-preserving conditional expectation. The tail condition implies
+\[\lim_{r\to\infty}\|E_{-r}(a)-\tau(a)I\|_{2,\tau}=0,\qquad\|a\|_{2,\tau}^2=\tau(a^*a).\]
+One way to see this is to regard the expectations as orthogonal projections onto the decreasing subspaces $L^2(\mathcal N_{-r},\tau)$. Their limit is the projection onto the scalar subspace. Thus a fixed centered observable eventually becomes invisible to the remote past.
+This is a promising starting point, but it is not yet an entropy estimate. The convergence is for each fixed observable. It supplies neither an exponential rate nor a bound uniform over the increasing collection of products that occur in $n$-step histories. Passing from this pointwise loss of past information to sufficiently many distinguishable histories is the central missing step.
+\section{A sufficient condition that makes the mechanism explicit}
+Here is a concrete result we can already prove. Suppose, in addition to the filtration above, that there is a unitary $u\in\mathcal N_0$ with
+\[E_{-1}(u)=0.\]
+This says more than $\tau(u)=0$: the observable has zero conditional expectation onto the entire previous algebra. It is an exactly centered new degree of freedom. Under this extra assumption the partition $X=(I/\sqrt2,u/\sqrt2)$ has rate $\log2$.
+To prove this, write $u_k=\alpha^k(u)$. Uniqueness of trace-preserving conditional expectation gives $E_{k-1}(u_k)=0$. The normalized history words are
+\[w_{\boldsymbol a}=u_{n-1}^{a_{n-1}}\cdots u_0^{a_0},\qquad K_{\boldsymbol a}=2^{-n/2}w_{\boldsymbol a},\qquad a_k\in\{0,1\}.\]
+Take two different binary strings and let $k$ be their largest differing index. In $w_{\boldsymbol b}^*w_{\boldsymbol a}$ all higher-index factors cancel. What remains has the form $L u_k R$ or $L u_k^*R$, with $L,R\in\mathcal N_{k-1}$. The bimodule property of conditional expectation gives
+\[\tau(Lu_kR)=\tau\bigl(LE_{k-1}(u_k)R\bigr)=0.\]
+The adjoint case is identical. Equal strings have unit norm, so the histories are orthogonal and
+\[R_n=2^{-n}I_{2^n},\qquad S_n(X)=n\log2,\qquad h_{\rm ALF}(\alpha,\tau)\geq\log2.\]
+No commutation between $u_k$ and the earlier algebra was used. This is why the argument survives in genuinely noncommutative examples. The tracial binary shift realizes precisely this mechanism: distinct monomials are orthogonal, and the new generator has zero conditional expectation onto the algebra of earlier sites.
+\section{Where the general proof remains open}
+We have not shown that the K-property provides such a unitary. Strict inclusion of algebras alone is insufficient: for example, in the inclusion $\mathbb C\subset\mathbb C^2$ with trace weights $0.9$ and $0.1$, a unitary $(z_1,z_2)$ cannot have zero expectation, since $|0.9z_1+0.1z_2|\geq0.8$. This inclusion is not a counterexample to the K-conjecture; it only shows why one cannot obtain the needed unitary from strict inclusion without further argument.
+A general proof may therefore need a less rigid partition than two equally weighted unitaries. One possible quantitative target is a bound on history purity:
+\[\Tr(R_n^2)\leq Ce^{-cn},\qquad c>0.\]
+Indeed $S_n(X)\geq-\log\Tr(R_n^2)\geq cn-\log C$. The purity is the sum of the squared absolute values of all history overlaps. This turns the desired conclusion into a concrete estimate, but obtaining that estimate from the K-property remains unproved. Approximate independence of a few observables is not enough, since the number of history pairs grows exponentially.
+The next task is thus narrow and well defined: use the K-filtration to construct one admissible finite partition with a uniform linear entropy lower bound, perhaps through an overlap estimate weaker than exact orthogonality. Until that bridge is supplied, the result above is a sufficient-condition theorem and a guide to the mechanism, not a proof of the general implication. Neither a comparison with zero CNT entropy nor the absence of a known counterexample closes this gap.
+\end{document}

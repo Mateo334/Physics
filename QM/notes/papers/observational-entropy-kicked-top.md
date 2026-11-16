@@ -1,0 +1,23 @@
+# Witnessing quantum chaos using observational entropy
+
+## Bibliography and source
+
+Sreeram PG, Ranjan Modak, S. Aravinda, *Witnessing quantum chaos using observational entropy*. Local `papers/2212.01585v3.pdf`; arXiv:2212.01585v3, version dated 7 June 2023 on PDF p. 1. Source URL: https://arxiv.org/abs/2212.01585 (not fetched). Checked printed/PDF pp. 1–7 using pypdf; no new download. PyMuPDF unavailable.
+
+## Measurements and motivation [From source]
+
+P. 2 Eq. (1): projective observational entropy -sum p_i log(p_i/V_i); general POVMs are mentioned but the verified simulations use projectors. P. 3 Eqs. (8)–(10): same kicked-top ordering as our scripts, z twist after y rotation. P. 4: contiguous Jz-basis coarse-graining, equal-rank cells, d=1024, ranks powers of two, for the kinematical resolution study. The printed projector indexing appears inconsistent with the stated orthogonal partition; rely on the explicit disjoint-subspace specification rather than reproducing that indexing literally. Equal ranks make the Boltzmann term log(mu).
+
+P. 5 Fig. 3 and pp. 5–6: time-dependent study uses d=400, averages over 100 coherent initial states, and nonuniform projective coarse-graining: rank 2 cells covering half the Hilbert space and rank 4 cells covering the other half (100 rank-2 plus 50 rank-4 projectors). The rationale on p. 6: small cell ranks leave sufficient growth range before saturation; ranks >1 distinguish OE from rank-one Shannon entropy; nonuniform ranks make the Boltzmann contribution state dependent rather than a constant offset. They report qualitatively robust findings for other cell sizes provided mu is much smaller than d. P. 4 describes sampling theta and phi uniformly in their respective intervals; do not identify this with our sphere-uniform sampling of cos(theta) and phi. Dynamics text refers back to random coherent states but gives no more detailed sampling algorithm in checked pages.
+
+## Rate distinction [From source, with mathematical interpretation]
+
+Additional check: p. 6 Eqs. (14)–(15), p. 8 Conclusions, and p. 10 bibliography entry [28]. Their explicit numerical comparison is short-time OE slope versus OTOC growth as k varies, not a direct equality to the classical positive Lyapunov exponent. Eq. (15) defines C(t) approximately exp(2 lambda_q t), so a log-OTOC slope is 2 lambda_q; Fig. 4's caption describes plotting a log-OTOC slope, while the body calls the compared rate lambda_q. This normalization should not be silently resolved without their numerical procedure. They report similar dependence on k and weak change between d=400 and 1000, not identical numerical rates or a Pesin identity. P. 8 reiterates the chaos-diagnostic interpretation. The earlier classical entropy/Lyapunov connection is attributed to Ref. [28]: Vito Latora and Michel Baranger, "Kolmogorov-Sinai entropy rate versus physical entropy," Physical Review Letters 82, 520 (1999), as listed in this paper; the original reference has not been read here.
+
+P. 5 Fig. 3(b) plots log(OEmax-OE), with OEmax=log(400), not log(OE) or an affine-entropy fit. Caption gives slopes -0.445, -0.395, -0.326 for k=7,4.5,4 and approximate linearity through step 5. A straight line in that plotted quantity means S(n) approximately log(d)-C exp(-r n): exponential relaxation of the entropy deficit, not entropy proportional to exp(r n), and not a constant entropy-production slope. The paper calls this an exponential increase towards saturation; read that language in light of its plotted ordinate. Also, log(d) is a bound, not automatically an actual plateau for any POVM/state.
+
+P. 6 defines lambda_OE as a short-time OE slope; Fig. 4 caption specifies the third time step and compares it with a log-OTOC slope for d=400 and 1000. The caption's 0.09182/0.08560 are slopes of OE-rate-versus-k fits, not entropy-time slopes. An exact finite-difference stencil is not specified in the checked text. The plotted relaxation exponent, the short-time OE slope, and the slope of rate versus k are distinct quantities. P. 7 notes that saddle instabilities can imitate early chaotic growth, motivating long-time checks. No universal linear OE-growth theorem follows from these results.
+
+## Relation to our plots
+
+Our fine Jz PVM has rank-one effects; our coarse PVM uses 10 bins, one rank 41 and nine rank 40 at d=401. Neither replicates Fig. 3's rank-2/rank-4 partition. Our two nonprojective POVMs, E_a=0.75 P_a+0.25 Tr(P_a)I/d, are exploratory choices, not taken from this paper. Our 20-state sphere-uniform coherent ensemble differs from their described 100-state ensemble. Compare using matched coarse-graining and sampling before equating numerical rates. No SYK measurement protocol was sourced from this paper.
