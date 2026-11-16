@@ -1,0 +1,7 @@
+# Distinct meanings of chaos and related diagnostics
+
+[Proved/standard definitions] For an invariant measure and discrete map, Lyapunov exponents measure asymptotic tangent growth along typical orbits; KS entropy is the supremum over finite-partition Shannon history-entropy rates; topological entropy characterizes growth of distinguishable orbit segments without fixing a measure. Under appropriate smoothness and invariant-measure hypotheses, Pesin's formula identifies KS entropy with the measure-average sum of positive Lyapunov exponents. Ergodicity, mixing, decay of correlations, hyperbolicity, and transport refer to different properties and are not interchangeable definitions.
+
+[Scope distinction] The Bethe ansatz is a method for particular quantum integrable models, not a classical chaos diagnostic. Raw eigenenergy densities differ from symmetry-resolved level-spacing statistics and Floquet eigenphase statistics. Finite-time observational entropy and OTOC growth do not automatically equal classical KS entropy or a Lyapunov sum.
+
+Standalone explanatory document (aimed at 3--5 pages): `latex/classical_chaos_characterizations.tex`. No local LaTeX compiler was found during preparation, so its rendering and actual page count remain unverified. This overview uses standard mathematical definitions rather than claiming a new proof or an exhaustive classification of all notions of chaos.
