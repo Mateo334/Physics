@@ -17,6 +17,7 @@ This is a curated navigation index for reusable mathematical and literature find
 ## Numerical calculations
 - [Kicked-top Husimi phase space and parameter animations](calculations/kicked-top-husimi-k3-k6.md) — same initial coherent state after five kicks, two static densities and k-sweep animations, including a 50-fps 1080p version.
 - [Four-model observational entropy, one graph](calculations/four-model-obsen-100-states.md) — SYK, kicked tops at k=2,4,5,6, Bose--Hubbard and GOE; 100 coherent preparations each, five kicks and normalized fixed-PVM observational entropy.
+- [Kicked-top Chernoff observational entropy across POVM ranks](calculations/kicked-top-chernoff-observational-povm-ranks.md) — fixed Jx/Jz PVM blocks and an unsharp full-rank Jz POVM with discarded Lüders backaction; k-distinction beyond rank-one Jz.
 - [Coupled kicked tops: OE versus positive classical exponents](calculations/coupled-kicked-tops-obsen-lyapunov.md) — product phase-space PGM, 100-state mean, two-top tangent-map QR exponents, and short pre-Ehrenfest slope comparison.
 - [Kicked-top outcome relative entropy](calculations/kicked-top-relative-entropy.md) — matched 100-state fixed-POVM comparison with/without unrecorded Lüders backaction, plus exact full-record history comparison.
 - [Simple kicked-top code and classical Lyapunov comparison](calculations/kicked-top-simple-povms-lyapunov.md) — paper/random-axis POVMs, 20-state and 20-PVM averages, tangent-map exponents, and window-sensitive short-time entropy slopes.

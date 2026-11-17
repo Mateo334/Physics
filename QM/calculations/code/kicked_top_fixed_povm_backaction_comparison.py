@@ -28,7 +28,7 @@ for _ in range(number_of_states):
     rho = (1 - noise) * np.outer(psi, psi.conj()) + noise * identity / d
     reference.append(rho)
     perturbed.append(V @ rho @ V.conj().T)
-reference, perturbed = np.array(reference), np.array(perturbed)
+initial_states = np.array([reference, perturbed])
 
 # Choose one random rank-7 POVM, then hold it fixed for all states and kicks.
 rng = np.random.default_rng(20261116)
@@ -57,8 +57,8 @@ def outcome_divergence(rho, sigma):
     p = np.einsum("aij,sji->sa", effects, rho).real
     q = np.einsum("aij,sji->sa", effects, sigma).real
     assert np.all(p > 0) and np.all(q > 0)
-    assert np.allclose(p.sum(axis=1), 1, atol=1e-10)
-    assert np.allclose(q.sum(axis=1), 1, atol=1e-10)
+    for probabilities in (p, q):
+        assert np.allclose(probabilities.sum(axis=1), 1, atol=1e-10)
     return np.sum(rel_entr(p, q), axis=1).mean()
 
 
@@ -70,22 +70,17 @@ def unrecorded_measurement(states):
 fig, axes = plt.subplots(1, 2, figsize=(11, 4), sharey=True)
 for kappa in (1.3, 4, 6.0, 10):
     U = expm(-1j * kappa * Jz @ Jz / (2 * j)) @ expm(-1j * np.pi / 2 * Jy)
-    free_rho, free_sigma = reference.copy(), perturbed.copy()
-    measured_rho, measured_sigma = reference.copy(), perturbed.copy()
+    free, measured = initial_states.copy(), initial_states.copy()
     without_backaction, with_backaction = [], []
 
     for _ in range(kicks):
-        # Both protocols evolve first, then evaluate the same POVM.
-        free_rho, free_sigma = U @ free_rho @ U.conj().T, U @ free_sigma @ U.conj().T
-        measured_rho = U @ measured_rho @ U.conj().T
-        measured_sigma = U @ measured_sigma @ U.conj().T
-        without_backaction.append(outcome_divergence(free_rho, free_sigma))
-        with_backaction.append(outcome_divergence(measured_rho, measured_sigma))
-
-        # Only the second protocol feeds the post-measurement states into
-        # the next kick. The first uses independent copies at each time.
-        measured_rho = unrecorded_measurement(measured_rho)
-        measured_sigma = unrecorded_measurement(measured_sigma)
+        # Evolve both state pairs, then evaluate the same POVM before backaction.
+        free = U @ free @ U.conj().T
+        measured = U @ measured @ U.conj().T
+        without_backaction.append(outcome_divergence(*free))
+        with_backaction.append(outcome_divergence(*measured))
+        # Only the measured pair feeds discarded-outcome states into the next kick.
+        measured = unrecorded_measurement(measured)
 
     assert np.isclose(without_backaction[0], with_backaction[0], atol=1e-12)
     axes[0].plot(range(1, kicks + 1), without_backaction, label=f"kappa={kappa}")
