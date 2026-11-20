@@ -1,0 +1,17 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\Tr}{Tr}
+\begin{document}
+\section*{Instantaneous observational-entropy rate for unrestricted POVMs}
+Let $\rho=|0\rangle\langle0|$ be pure, let $\dot\rho=\Delta H(|1\rangle\langle0|+|0\rangle\langle1|)$ with $\langle0|1\rangle=0$, and optimize over $m$ positive effects $E_i$ summing to $I_d$; a sign change of $|1\rangle$ has no effect on the optimization.
+Write $p_i=\Tr(\rho E_i)$, $\dot p_i=\Tr(\dot\rho E_i)$, and $v_i=\Tr(E_i)$, omitting identically zero effects; for positive $p_i,v_i$ the instantaneous rate is
+\[R(E)=-\sum_i\dot p_i\log(p_i/v_i).\]
+For any pure state and Hamiltonian $H$, the normalized tangent $|1\rangle=-i(H-\langle H\rangle)|0\rangle/\Delta H$ is orthogonal to $|0\rangle$, where $\Delta H^2=\langle H^2\rangle-\langle H\rangle^2$; hence the unrestricted supremum is $C_{d,m}\Delta H$ for a dimension- and outcome-count-dependent constant $C_{d,m}$, independent of the Hamiltonian otherwise.
+Set $\mathcal S=\operatorname{span}\{|0\rangle,|1\rangle\}$ and $n=d-2$; twirling each effect by unitaries $I_{\mathcal S}\oplus W$ preserves positivity, completeness, $p_i$, $\dot p_i$, and $v_i$, and produces the block form
+\[E_i=A_i\oplus\alpha_iI_n,\qquad A_i\succeq0,\quad\sum_iA_i=I_2,\quad\alpha_i\geq0,\quad\sum_i\alpha_i=1.\]
+Therefore optimization of these small blocks is exactly equivalent to optimization over all $d$-dimensional POVMs for the stated pure-state objective; it is not a physical restriction to rank-one or phase-space measurements.
+A two-outcome projective candidate has $E_1=|u\rangle\langle u|$ with $|u\rangle=\sqrt p|0\rangle-\sqrt{1-p}|1\rangle$ and $E_2=I_d-E_1$; splitting $E_2$ proportionally into $m-1$ effects preserves the rate, giving the rigorous lower bound
+\[C_{d,m}\geq\max_{1/d<p<1}2\sqrt{p(1-p)}\log\!\left(\frac{(d-1)p}{1-p}\right).\]
+For $d=1024$ and $m=10$, numerical projected-gradient optimization of the reduced blocks and 16 starts attained $7.206288499393891$; the displayed projective candidate attained $7.206288499393892$ at $p\simeq0.633713508662$.
+Agreement among numerical starts and a small projected-gradient residual do not prove that the projective candidate is a global maximizer; the number is an attained lower bound on $C_{1024,10}$, not a certified exact value.
+\end{document}

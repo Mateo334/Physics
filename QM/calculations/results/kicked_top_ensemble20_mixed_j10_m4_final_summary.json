@@ -1,0 +1,47 @@
+{
+  "strict_feasibility_mixture": 1e-06,
+  "results": [
+    {
+      "K": 3,
+      "rate": 13.057936563276375,
+      "mean_entropy": 2.5707796245173236,
+      "pure_mean_rate": 23.304224098248902,
+      "mixed_mean_rate": 2.8116490283038464,
+      "min_individual_rate": -0.3607858694363584,
+      "max_individual_rate": 53.265881757473714,
+      "minimum_eigenvalues": [
+        2.498934195126144e-07,
+        2.49157138685819e-07,
+        2.4915674224746817e-07,
+        2.491567565908959e-07
+      ],
+      "normalization_error": 6.099559370622799e-16,
+      "projected_gradient_residual": 0.005619270664976306,
+      "central_difference_rate": 13.057936559590644,
+      "original_90step_rate": 11.694362432736256,
+      "refined_unmixed_rate": 13.057969597690768,
+      "file": "C:\\Users\\matej\\Desktop\\GIT\\Physics\\QM\\calculations\\results\\kicked_top_ensemble20_mixed_j10_m4_final_K3.npz"
+    },
+    {
+      "K": 6,
+      "rate": 18.004983663841514,
+      "mean_entropy": 2.5388601858556106,
+      "pure_mean_rate": 32.01495329143418,
+      "mixed_mean_rate": 3.995014036248854,
+      "min_individual_rate": -0.20099897939519656,
+      "max_individual_rate": 52.915274291752404,
+      "minimum_eigenvalues": [
+        2.4347946018799124e-07,
+        2.3331010393369164e-07,
+        2.3329885833280196e-07,
+        2.3334835045859389e-07
+      ],
+      "normalization_error": 6.700059221060127e-16,
+      "projected_gradient_residual": 0.001093560158424629,
+      "central_difference_rate": 18.0049836555618,
+      "original_90step_rate": 16.31290009368901,
+      "refined_unmixed_rate": 18.00503016187542,
+      "file": "C:\\Users\\matej\\Desktop\\GIT\\Physics\\QM\\calculations\\results\\kicked_top_ensemble20_mixed_j10_m4_final_K6.npz"
+    }
+  ]
+}

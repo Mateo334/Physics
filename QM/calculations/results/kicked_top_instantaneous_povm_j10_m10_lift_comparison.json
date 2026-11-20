@@ -1,0 +1,18 @@
+{
+  "3": {
+    "optimized_m10_rate": 23.222628599271122,
+    "lifted_m4_to_m10_rate": 23.2226327761134,
+    "gap_lifted_minus_optimized": 4.1768422782695325e-06,
+    "optimized_entropy": 1.3291139024842749,
+    "lifted_entropy": 1.3291006794063738,
+    "lifted_file": "calculations\\results\\kicked_top_instantaneous_povm_j10_m10_K3_lifted_from_m4.npz"
+  },
+  "6": {
+    "optimized_m10_rate": 56.41412025327992,
+    "lifted_m4_to_m10_rate": 56.414130674411425,
+    "gap_lifted_minus_optimized": 1.0421131506177517e-05,
+    "optimized_entropy": 1.3291086217038883,
+    "lifted_entropy": 1.3290740876856106,
+    "lifted_file": "calculations\\results\\kicked_top_instantaneous_povm_j10_m10_K6_lifted_from_m4.npz"
+  }
+}

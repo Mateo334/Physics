@@ -1,0 +1,69 @@
+{
+  "kick_strength": 10.0,
+  "hbar_eff_fixed": 0.09817477042468103,
+  "q0": 1.5707963267948966,
+  "p0": 0,
+  "position_gaussian_sigma": 0.22155673136318949,
+  "time_schedule": "prepare t=0; free [0,1); delta kicks t=1,2,3; free H=p\u00b2/2 between kicks",
+  "outcomes": 4,
+  "results": [
+    {
+      "d": 64,
+      "coefficient_attained": 4.573808360217963,
+      "coefficient_residual": 1.5811521274321903e-08,
+      "after_kicks": [
+        {
+          "after_kick": 1,
+          "momentum_mean": -1.6796990616089098,
+          "momentum_variance": 4.3860011645864265,
+          "physical_energy_uncertainty": 0.9722677147909496,
+          "generator_uncertainty": 9.903437620329006,
+          "edge_probability_outer_20_percent": 0.756691189157687,
+          "candidate_max_instant_rate": 45.29642578275789,
+          "local_time_difference": 45.29642578132709,
+          "S_at_left_endpoint": 1.8521981408667259
+        },
+        {
+          "after_kick": 2,
+          "momentum_mean": 0.3255809633390203,
+          "momentum_variance": 1.8549057162968754,
+          "physical_energy_uncertainty": 1.3272674079587994,
+          "generator_uncertainty": 13.519434802010249,
+          "edge_probability_outer_20_percent": 0.12981555518303275,
+          "candidate_max_instant_rate": 61.835303922856156,
+          "local_time_difference": 61.835303923896134,
+          "S_at_left_endpoint": 1.8521981408667272
+        }
+      ]
+    },
+    {
+      "d": 512,
+      "coefficient_attained": 6.539866994104168,
+      "coefficient_residual": 6.845747933215401e-09,
+      "after_kicks": [
+        {
+          "after_kick": 1,
+          "momentum_mean": 9.520979267837044,
+          "momentum_variance": 0.4862890683233445,
+          "physical_energy_uncertainty": 6.087576785851702,
+          "generator_uncertainty": 62.00754796286533,
+          "edge_probability_outer_20_percent": 8.481635694528976e-30,
+          "candidate_max_instant_rate": 405.5211163076741,
+          "local_time_difference": 405.521116277896,
+          "S_at_left_endpoint": 2.85603463673808
+        },
+        {
+          "after_kick": 2,
+          "momentum_mean": 1.8215384933299354,
+          "momentum_variance": 9.83595040079281,
+          "physical_energy_uncertainty": 20.721106171260896,
+          "generator_uncertainty": 211.06345430324157,
+          "edge_probability_outer_20_percent": 2.0412823754188368e-08,
+          "candidate_max_instant_rate": 1380.3269184593828,
+          "local_time_difference": 1380.326915356722,
+          "S_at_left_endpoint": 2.856034636738076
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "6": {
+    "before": 16.31290009368901,
+    "rate": 18.00503016187542,
+    "mean_entropy": 2.5388589831882973,
+    "pure_mean_rate": 32.015037236498614,
+    "mixed_mean_rate": 3.9950230872522257,
+    "residual_alpha_0.05": 0.0010911720857762282,
+    "iterations": 300,
+    "status": "small improvement and residual",
+    "minimum_eigenvalues": [
+      -6.52054628608571e-09,
+      -1.6689912738503642e-08,
+      -1.6701158372409225e-08,
+      -1.6651666219323338e-08
+    ],
+    "normalization_error": 5.559268815036402e-16,
+    "finite_difference": 18.00503015392252,
+    "effects_file": "C:\\Users\\matej\\Desktop\\GIT\\Physics\\QM\\calculations\\results\\kicked_top_ensemble20_mixed_j10_m4_refined_K6.npz"
+  }
+}

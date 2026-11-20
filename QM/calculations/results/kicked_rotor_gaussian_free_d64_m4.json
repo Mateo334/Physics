@@ -1,0 +1,30 @@
+{
+  "d": 64,
+  "outcomes": 4,
+  "q0": 1.5707963267948966,
+  "p0": 0.0,
+  "hbar_eff_assumed": 0.09817477042468103,
+  "initial_position_width_parameter": 0.22155673136318949,
+  "position_variance_measured": 0.049087385212340545,
+  "momentum_mean_measured": 0.0,
+  "momentum_variance_measured": 0.04908738521234053,
+  "momentum_width_measured": 0.22155673136318954,
+  "hbar_from_measured_widths": 0.09817477042468109,
+  "energy_uncertainty_exact_discrete_phys": 0.034710022954362235,
+  "energy_uncertainty_gaussian_from_varp": 0.03471002295436224,
+  "energy_uncertainty_ideal_continuous": 0.034710022954362235,
+  "generator_uncertainty": 0.3535533905932738,
+  "four_outcome_coefficient_attained": 4.573808360217963,
+  "attained_instantaneous_rate_nats_per_free_time": 1.6170854536789228,
+  "time_central_difference": 1.617085453364808,
+  "minimum_effect_eigenvalues": [
+    -2.9400178640021856e-16,
+    5.551115123125783e-17,
+    5.551115123125783e-17,
+    5.551115123125783e-17
+  ],
+  "completeness_hs_error": 7.585597851673206e-16,
+  "povm_file": "C:\\Users\\matej\\Desktop\\GIT\\Physics\\QM\\calculations\\results\\kicked_rotor_gaussian_free_d64_m4.npz",
+  "conventions": "torus momentum p_n=hbar_eff*n; norm=ortho FFT; kinetic free interval H_phys=p\u00b2/2; generator H_phys/hbar_eff; before the first delta kick",
+  "coefficient_is_not_globally_certified": true
+}

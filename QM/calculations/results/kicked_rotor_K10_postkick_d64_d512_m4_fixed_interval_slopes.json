@@ -1,0 +1,69 @@
+{
+  "slope_definition": "endpoint entropy difference per unit free interval; also sampled OLS fit",
+  "same_povm_retained_across_kick": true,
+  "instant_optimized_povms_not_interval_slope_optimized": true,
+  "results": [
+    {
+      "d": 64,
+      "measurements": [
+        {
+          "povm_optimized_instantaneously_at": "1+",
+          "S_1_plus": 1.8521981408667259,
+          "S_2_minus": 4.14504689614507,
+          "S_2_plus": 4.150242287341388,
+          "S_3_minus": 4.14923627039758,
+          "first_free_interval_secant": 2.292848755278344,
+          "second_free_interval_secant": -0.0010060169438075306,
+          "first_free_interval_OLS": 0.48164035054164517,
+          "second_free_interval_OLS": 0.010322342877595057,
+          "second_kick_entropy_jump": 0.0051953911963176225,
+          "two_kick_window_secant_including_jump": 1.148519064765427
+        },
+        {
+          "povm_optimized_instantaneously_at": "2+",
+          "S_1_plus": 4.1482287410031145,
+          "S_2_minus": 4.15365281213715,
+          "S_2_plus": 1.8521981408667272,
+          "S_3_minus": 4.098758887078591,
+          "first_free_interval_secant": 0.005424071134035202,
+          "second_free_interval_secant": 2.246560746211864,
+          "first_free_interval_OLS": -0.006744507551835897,
+          "second_free_interval_OLS": 0.6550258470017609,
+          "second_kick_entropy_jump": -2.3014546712704225,
+          "two_kick_window_secant_including_jump": -0.02473492696226165
+        }
+      ]
+    },
+    {
+      "d": 512,
+      "measurements": [
+        {
+          "povm_optimized_instantaneously_at": "1+",
+          "S_1_plus": 2.85603463673808,
+          "S_2_minus": 6.2378502810179866,
+          "S_2_plus": 6.236369590212698,
+          "S_3_minus": 6.236840528987562,
+          "first_free_interval_secant": 3.3818156442799068,
+          "second_free_interval_secant": 0.0004709387748640381,
+          "first_free_interval_OLS": 0.0012318662755032364,
+          "second_free_interval_OLS": 0.00026477188679551795,
+          "second_kick_entropy_jump": -0.0014806908052884538,
+          "two_kick_window_secant_including_jump": 1.6904029461247412
+        },
+        {
+          "povm_optimized_instantaneously_at": "2+",
+          "S_1_plus": 6.236369590204323,
+          "S_2_minus": 6.237649624932434,
+          "S_2_plus": 2.856034636738076,
+          "S_3_minus": 6.093108089506966,
+          "first_free_interval_secant": 0.0012800347281114455,
+          "second_free_interval_secant": 3.2370734527688905,
+          "first_free_interval_OLS": 0.0008150747886515317,
+          "second_free_interval_OLS": 1.0233929008922649,
+          "second_kick_entropy_jump": -3.3816149881943582,
+          "two_kick_window_secant_including_jump": -0.07163075034867816
+        }
+      ]
+    }
+  ]
+}
