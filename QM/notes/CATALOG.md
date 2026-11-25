@@ -8,7 +8,7 @@ The full pre-cleanup index is retained here. Start with `INDEX.md`; use this cat
 - [Matej's notebook research map](matejs-notes-research-map.md) — primary user ideas, golden-braid priority, parameter-space geometry, conditional tangents, generating history cones, OE gaps and K-property; source-section/line pointers and explicit status caveats.
 - [Current results summary](../latex/current_results_summary.tex) — standalone concise LaTeX summary with definitions, proved results, numerical checks and open gaps; not compile-tested (2026-11-22).
 - [OpenCode LaTeX rendering fix](opencode-latex-fix.md) — concise cross-PC workaround for the obsolete `yogaNode` API; user-confirmed working.
-- [Research context and concise conversation handoff](RESEARCH_CONTEXT.md) — conventions, completed computations, pending requests, proof gaps, user scope preferences, OpenCode plugin inventory and LaTeX cell-rendering workaround (2026-11-22).
+- [Current research context](RESEARCH_CONTEXT.md) — scope, conclusions and boundaries; [workspace operations](workspace-operations.md) holds sync checkpoints and technical history.
 
 ## Definitions and theorem notes
 - [Observable sensitivity with exact closed dynamics](theorems/observable-sensitivity-closed-dynamics.md) — retain rho and its tangent; accessibility fraction, hidden-tangent infinite-gain criterion, regular-qubit counterexample, transport geometry and fixed quadratic strain.

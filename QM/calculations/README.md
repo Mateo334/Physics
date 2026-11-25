@@ -2,7 +2,7 @@
 
 - `code/`: runnable scripts and shared helpers; existing imports and filenames are unchanged.
 - `results/`: preserved data, figures, tables and logs. Read the associated note/JSON summary before opening arrays or full logs.
-- [Command catalog](CATALOG.md): all existing commands, dependencies, fixtures, parameters and overwrite warnings. Search for the model/task; do not load it routinely.
+- [Command catalog](CATALOG.md): selected commands, dependencies, fixtures, parameters and overwrite warnings. Search for the model/task; do not load it routinely.
 - [Calculation-note catalog](../notes/CATALOG.md#numerical-calculations): interpretation, convergence and numerical limitations.
 
 ## Common entry points
@@ -15,4 +15,4 @@
 | Husimi phase-space plots | [static and animation notes](../notes/calculations/kicked-top-husimi-k3-k6.md) |
 | Other top / rotor / SYK / coupled models | [full catalog](CATALOG.md) |
 
-Run commands from the workspace root. Reuse existing scripts. Do not infer convergence from a saved plot or overwrite old results. `kicked_top_random_pvms.py` needs saved simple data **and** the existing k=4..7 regression fixture; see [exact prerequisites](../notes/calculations/kicked-top-simple-povms-lyapunov.md#run-and-find-results).
+Run commands from the workspace root. Reuse existing scripts. Do not infer convergence from a saved plot or overwrite old results. The historical `kicked_top_simple.py` and `kicked_top_random_pvms.py` scripts are absent from this checkout (2026-11-25); see [recovery prerequisites](../notes/calculations/kicked-top-simple-povms-lyapunov.md#run-and-find-results).

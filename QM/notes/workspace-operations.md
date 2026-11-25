@@ -16,3 +16,12 @@
 
 ## Preservation
 See [cleanup record](archive/reorganization-2026-11-25/README.md). Original archives are historical snapshots with original relative paths, not active navigation trees. Do not routinely read them or repeat already resolved diagnostic steps.
+
+## Workflow audit — 2026-11-25
+- Preserved primary `quantum-research` plus programmer/skeptic/writer, scientific validation requirements, result statuses and standalone TeX default. Shortened primary/writer prompts; bounded delegation now uses supplied context first and returns evidence/paths rather than repeated background or full artifacts.
+- Fixed programmer's writer-role typo and canonical-note ownership conflict; reconciled AGENTS.md's fragment-only rule with writer's standalone default. Writer now defines the nonstandard trace macro and separates TeX-file from chat formatting.
+- Renamed `SKILL,md` to `SKILL.md`; OpenCode advertised `github-sync` after the change. Corrected its checkpoint pointer to this file. No synchronization performed.
+- Navigation audit checked 135 local Markdown targets across 66 nonarchive Markdown files, including six fragments, with no broken targets reported. Independently confirmed the missing `kicked_top_simple.py` / `kicked_top_random_pvms.py`; marked historical commands unavailable, without reconstructing scripts or changing recorded scientific findings. Corrected stale catalog descriptions and added QFI/prototype retrieval pointers.
+- [Numerically tested] Text-size proxy, not tokenizer/billing measurement: primary prompt 4282 → 3236 characters (24.4% reduction); shared rules plus primary 5422 → 4607 (15.0%); shared rules plus all four agent files 9911 → 8703 (12.2%). The last total is not a per-request prompt size. Retrieval/handoff savings remain unmeasured.
+- Validation: four agent frontmatter headers and corrected skill filename checked; SHA-256 baseline of 307 files confirmed no changes to papers, manuscripts, Python scripts or result artifacts. Only workflow/navigation documents and the calculation note's reproducibility warning changed. No scientific runs, TeX compilation, global/ancestor configuration audit or end-to-end research-output equivalence test.
+- Original edited prompts/startup files and full hash baseline: `C:\Users\matej\AppData\Local\Temp\opencode\workflow-audit-20261125-202349`. This is a local temporary backup, not portable research memory. Existing sync checkpoint above is unchanged.

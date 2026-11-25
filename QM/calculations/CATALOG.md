@@ -4,6 +4,7 @@
 - `code/four_model_setup.py` holds the four-model observational-entropy preparations; `code/chernoff_utils.py` evaluates classical outcome Chernoff entropy.
 - `results/`: generated PNG/PDF figures, NPZ data, JSON summaries and CSV tables. Existing filenames are retained.
 - [Calculation notes](../notes/CATALOG.md#numerical-calculations): current summaries, interpretation and historical details.
+- Root-level prototypes: `../Benettin_QR.py`, `../Parallelogram.py`; execution/validation status not checked by the workflow audit.
 
 ## Entry points
 Run from the workspace root with NumPy, SciPy and Matplotlib installed:
@@ -25,6 +26,8 @@ Run from the workspace root with NumPy, SciPy and Matplotlib installed:
 - `py -3.11 calculations/code/syk_instantaneous_pga_pair.py` — two N=16 quartic-SYK disorder realizations, ten-outcome instantaneous OE PGA using the exact pure-state reduction, energy uncertainty and physical-time QFI; full-space effect and finite-difference checks, refuses overwrite.
 
 ### QFI and preparation sensitivity
+
+- [QFI follow-ups](../notes/calculations/kicked-top-qfi-100-coherent.md): `code/kicked_top_Jz2_probe_qfi_mean100.py`, `code/plot_kicked_top_probe_qfi_normalized.py`, `code/plot_kicked_top_qfi_log_rate_mean100.py`; consult the note for conventions and saved-data dependencies.
 
 - `py -3.11 calculations/code/syk_majorana_probe_qfi.py` — N=16 quartic SYK vacuum, final single-Majorana probe QFI through Jt=40; exact parity-based constant checked numerically.
 

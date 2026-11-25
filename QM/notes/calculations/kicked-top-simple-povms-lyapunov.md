@@ -1,6 +1,7 @@
 # Kicked-top entropy and classical exponents: current summary
 
 ## Run and find results
+- [Unresolved] Reproducibility blocker (2026-11-25): both scripts below are absent from this checkout. Commands are historical, not runnable here; recover verified originals before rerunning. Recorded scientific results below were not reassessed by the workflow audit.
 - From the workspace: `python calculations/code/kicked_top_simple.py`, then `python calculations/code/kicked_top_random_pvms.py`.
 - Dependencies: NumPy, SciPy, Matplotlib. Outputs: `calculations/results/`.
 - Random-PVM execution requires `kicked_top_simple_data.npz`, `kicked_top_simple_summary.json` and the saved prior `kicked_top_random_pvms_data.npz` regression fixture. It does not independently regenerate that fixture from scratch.

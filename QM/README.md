@@ -10,14 +10,9 @@ Research notes, source papers, LaTeX fragments and reproducible calculations for
 - [Full research catalog](notes/CATALOG.md) and [command catalog](calculations/CATALOG.md) — load selectively, not as startup context.
 
 ## Main calculations
-From the workspace root, with Python, NumPy, SciPy and Matplotlib installed:
+Choose a topic in the [calculation guide](calculations/README.md), then inspect its prerequisites and overwrite warnings before running from the workspace root.
 
-```powershell
-python calculations/code/kicked_top_simple.py
-python calculations/code/kicked_top_random_pvms.py
-```
-
-The random-PVM run needs saved simple data/summary **and the existing k=4..7 random-PVM regression fixture**; it is not a standalone fresh-fixture generator. See the [authoritative calculation note](notes/calculations/kicked-top-simple-povms-lyapunov.md#run-and-find-results) for filenames.
+The previously advertised `kicked_top_simple.py` and `kicked_top_random_pvms.py` are absent from this checkout (2026-11-25). Their [historical results and prerequisites](notes/calculations/kicked-top-simple-povms-lyapunov.md#run-and-find-results) remain documented; recover verified originals before rerunning.
 
 ## OpenCode
-Run `opencode` here and select `quantum-research`. Project instructions are in `AGENTS.md`; specialist configuration is in `.opencode/agents/quantum-research.md`. A configured model is required; downloading papers requires network access. Review research output before incorporating it into the thesis.
+Run `opencode` here and select `quantum-research`. Shared rules: `AGENTS.md`; primary and three specialist prompts: `.opencode/agents/`; on-demand GitHub sync: `.opencode/skills/github-sync/SKILL.md`. A configured model is required; downloading papers requires network access. Review research output before incorporating it into the thesis.

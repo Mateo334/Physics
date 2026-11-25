@@ -1,6 +1,6 @@
 # Research navigation
 
-Read [current context](RESEARCH_CONTEXT.md), then **one task-relevant note**. Do not preload the catalogs, notebook, archive, PDF corpus or result arrays.
+Select the task-relevant note below; consult [current context](RESEARCH_CONTEXT.md) for current scope/status. Expand only for missing evidence. Do not preload catalogs, notebook, archive, PDFs or arrays, or reread unchanged context.
 
 ## Current question: quantum Lyapunov dynamics
 - [Decision ledger](open-problems/quantum-lyapunov-programme.md) — current scope, proposed probability spectrum, what failed, what remains open; includes the November 25 corrections.
