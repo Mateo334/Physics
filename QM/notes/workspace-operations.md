@@ -1,6 +1,7 @@
 # Workspace operations — read only when needed
 
 ## GitHub synchronization
+- 2026-11-25 published the workspace to `main` in `7f953567c574d544789283e111e2ff428af4b177` (154 changed files); remote hash verified. This supersedes the older comparison bases below, including research context. Python bytecode was excluded, remote-only files preserved, and no repository files deleted. The following bookkeeping commit records this checkpoint; scientific tests and TeX compilation were not rerun.
 - Default repository https://github.com/Mateo334/Physics.git, branch `main`, subfolder `QM`. Workspace root maps directly to `QM/`.
 - No local `.git` as of the last check. Pull through a temporary clone, compare against the recorded checkpoint, and preserve local edits and unrelated files. Never blindly mirror or delete.
 - 2026-11-18 checkpoint: `8ac98d6d6bf5fbf258c563cc3700111310f9d8db`.
