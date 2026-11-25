@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=25mm]{geometry}
+\usepackage{hyperref}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Op}{\operatorname{Op}}
+\newcommand{\id}{\mathbf{1}}
+\title{What replaces a classical point and its tangent in quantum mechanics?}
+\author{Research note}
+\date{24 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+There is an exact quantum Hamiltonian geometry, but its natural metric has no unitary stretching. The most useful analogue of the classical variational equation is instead an operator-valued response to initial canonical displacements. Its coefficient is a noncommutative derivative, reducing to the classical Hessian only after a controlled semiclassical localization. We derive these statements, distinguish three geometries often conflated, and give an exact Gaussian example. No universal quantum Lyapunov exponent or entropy identity is asserted.
+\end{abstract}
+
+\section{First identify what the classical equations say}
+Work initially on a canonical phase space with $z=(q,p)$, a smooth real Hamiltonian $H$, and a flow $\Phi_t$ defined for the times considered. The user's two equations, with their indices made explicit, are
+\[\dot z_i=J_{ij}\partial_jH(z),\qquad\dot{\delta z}_i=J_{ik}\partial_k\partial_jH(z(t))\delta z_j.\]
+Here $J=\left(\begin{smallmatrix}0&I\\-I&0\end{smallmatrix}\right)$. The second equation is not a second dynamics: it is the derivative of the first with respect to the initial point. Defining $M(t,z_0)=D\Phi_t(z_0)$ gives
+\[\dot M=A(t)M,\qquad A(t)=JD^2H(z(t)),\qquad M(0)=I.\]
+The symplectic identity $M^TJM=J$ does not prevent singular values from growing. Lyapunov exponents require a norm and an asymptotic limit, with suitable existence and integrability assumptions; symplecticity alone does not establish chaos. On a general symplectic manifold the intrinsic equation is $\nabla_t\xi=\nabla_\xi X_H$ for a torsion-free connection. The displayed constant-$J$ Hessian formula uses canonical coordinates.
+
+\textbf{A point is not a probability distribution.} Classically, $z$ defines the multiplicative evaluation functional $f\mapsto f(z)$, whereas a density defines an average. Quantum states are positive averaging functionals, not simultaneous sharp assignments of all canonical coordinates. Indeed a multiplicative assignment to $Q,P$ would send $[Q,P]$ to zero, contradicting $[Q,P]=i\hbar\id$. Thus replacing the entries of $z$ by entries of a density matrix changes both the space and the meaning of localization. Pure states do not remove this distinction.
+
+\section{Exact state geometry: correct, but not classical instability}
+For a finite-dimensional closed system, the pure-state manifold is projective Hilbert space $\mathbb{P}(\mathcal H)$, not the vector space of density matrices. Its Hamiltonian is the expectation $h([\psi])=\langle\psi,\widehat H\psi\rangle$ for normalized representatives. Horizontal tangent vectors satisfy $\langle\psi,\eta\rangle=0$; the geometric structures can be normalized as
+\[g(\eta,\xi)=2\hbar\operatorname{Re}\langle\eta,\xi\rangle,\qquad\Omega(\eta,\xi)=2\hbar\operatorname{Im}\langle\eta,\xi\rangle.\]
+With $\Omega(X_h,\cdot)=dh$ and complex structure $I\eta=i\eta$, one has $X_h=-I\operatorname{grad}_g h$. The horizontal Schr\"odinger vector field is
+\[X_h(\psi)=-\frac{i}{\hbar}(\widehat H-h)\psi.\]
+Its genuine variational equation is
+\[\nabla_t\eta=\nabla_\eta X_h=-I\operatorname{Hess}_g h[\eta].\]
+This is the geometrically faithful counterpart of the user's second equation. The last equality uses the K\"ahler property $\nabla I=0$. Nevertheless, the quantum Hamiltonians furnished by Hermitian operators form a very special class of functions on projective space: their flows are also isometries. They are not arbitrary classical Hamiltonians on that manifold \cite{ashtekar}.
+
+\textbf{Exact obstruction.} For a common unitary $U_t$ independent of the initial-state parameter, $\psi_t=U_t\psi_0$ and $\eta_t=U_t\eta_0$ remain horizontal and preserve their inner products. Equivalently $X_h$ is Killing, so
+\[\frac{d}{dt}g(\eta_t,\eta_t)=2g(\eta_t,\nabla_{\eta_t}X_h)=0.\]
+All finite-dimensional pure-state tangent exponents in the Fubini--Study metric therefore vanish. On the full mixed-state affine space,
+\[\dot\rho=-\frac{i}{\hbar}[\widehat H,\rho],\qquad\dot{\delta\rho}=-\frac{i}{\hbar}[\widehat H,\delta\rho],\qquad\delta\rho_t=U_t\delta\rho_0U_t^\dagger.\]
+Every unitarily invariant norm is preserved. Restriction to a fixed-spectrum coadjoint orbit gives another valid Hamiltonian geometry, not an escape from the isometry. On finite-dimensional compact pure-state space, any fixed smooth positive metric is uniformly equivalent to the Fubini--Study metric, so a different such metric cannot produce positive asymptotic exponents either.
+
+\textbf{Why this is not uniquely a quantum failure.} Classical Hamiltonian transport also preserves total variation and appropriate statistical divergences between two densities transported by the same invertible flow. Classical Koopman evolution is unitary in invariant $L^2$, yet spatial derivatives of transported observables can grow. Norm preservation on a space of distributions or functions is not the same question as stretching in physical phase space. The right comparison must retain the distinguished physical coordinates and derivatives.
+
+\section{An exact operator-valued variational equation}
+\subsection{The objects and their operational meaning}
+Take canonical operators $R=(Q_1,\ldots,Q_n,P_1,\ldots,P_n)$ on an infinite-dimensional representation, with $[R_a,R_b]=i\hbar J_{ab}\id$. Let $R_a(t)=U_t^\dagger R_aU_t$, where $U_t=\exp(-it\widehat H/\hbar)$. For unbounded operators all identities below require a common invariant core and existence of the stated products and moments; alternatively they may be read as polynomial algebra identities before analytic realization.
+
+For each canonical direction introduce an initial displacement generator and its derivation:
+\[G_b=\sum_c(J^{-1})_{cb}R_c,\qquad\partial_b^{\rm q}A=\frac{[A,G_b]}{i\hbar},\qquad\mathcal M_{ab}(t)=\partial_b^{\rm q}R_a(t).\]
+Then $\partial_b^{\rm q}R_a=\delta_{ab}\id$, so $\mathcal M(0)=I\id$. This is the operator counterpart of $D\Phi_t$, not a density matrix. The familiar commutator matrix $\mathcal C_{ac}=[R_a(t),R_c]/(i\hbar)$ satisfies $\mathcal M=\mathcal C J^{-1}$. A closely related commutator matrix and state-weighted Gram spectrum appear in Gharibyan et al.\ \cite[Sec.~3, Eqs.~(10)--(11)]{gharibyan}; this is not proposed as a new spectrum construction.
+
+For $\psi_\epsilon=\exp(-i\epsilon G_b/\hbar)\psi$, the interpretation is exact:
+\[\left.\frac{d}{d\epsilon}\langle\psi_\epsilon,R_a(t)\psi_\epsilon\rangle\right|_{\epsilon=0}=\langle\psi,\mathcal M_{ab}(t)\psi\rangle.\]
+Thus $\mathcal M$ measures sensitivity of specified physical observables to an initial canonical displacement. It does not measure growth of the distinguishability of the two full states. Expectations of unbounded observables can change substantially while state overlap stays fixed.
+
+\subsection{What replaces the Hessian}
+Suppose the Heisenberg equations close as a noncommutative polynomial vector field with scalar coefficients:
+\[\dot R_a(t)=F_a(R(t)),\qquad F_a(R)=\frac{[R_a,\widehat H]}{i\hbar}.\]
+For a Weyl-ordered polynomial Hamiltonian, $F_a=\sum_cJ_{ac}\Op^{\rm W}(\partial_ch)$, where $h$ is its classical polynomial symbol. Apply the fixed initial derivation $\partial_b^{\rm q}$ and the product rule. The exact result is
+\[\boxed{\dot{\mathcal M}_{ab}=DF_a(R(t))[\mathcal M_{\cdot b}],\qquad\mathcal M_{ab}(0)=\delta_{ab}\id.}\]
+The derivative $DF$ is a linear map on operator-valued directions. On each monomial it inserts the direction in every possible slot, preserving the other factors' order:
+\[D(R_{i_1}\cdots R_{i_k})[V]=\sum_{\ell=1}^kR_{i_1}\cdots R_{i_{\ell-1}}V_{i_\ell}R_{i_{\ell+1}}\cdots R_{i_k}.\]
+This proof is an algebraic identity, not a semiclassical approximation. It is the meaningful replacement of $JD^2H$: a left/right multiplication superoperator rather than an ordinary matrix of scalar Hessian entries. The variables are the observable coordinates and their derivations; the state is used only to evaluate responses.
+
+For example, let $\widehat H=P^2/(2m)+gQ^4/4$, and set $V_b=\partial_b^{\rm q}Q(t)$ and $W_b=\partial_b^{\rm q}P(t)$. Then
+\[\dot V_b=W_b/m,\qquad\dot W_b=-g(Q^2V_b+QV_bQ+V_bQ^2).\]
+The tempting expression $-3gQ^2V_b$ is generally wrong. Only when the products commute, or at leading order in a justified symbol limit, does the classical Hessian reappear. For quadratic Hamiltonians $\widehat H=R^TKR/2$ with real symmetric $K$, the derivative is already scalar:
+\[\dot R=JKR,\qquad\dot{\mathcal M}=JK\mathcal M,\qquad\mathcal M(t)=e^{tJK}\id.\]
+This quadratic case gives an exact quantum realization of the classical tangent equation. The construction uses a chosen coordinate algebra and is not claimed to be a unique coordinate-free definition of quantum chaos. Operator-valued matrices cannot simply inherit ordinary symplectic singular-value arguments.
+
+\section{Recovering a classical tangent and a metric}
+Let $\widehat H=\Op_\hbar^{\rm W}(h)$ and use a family of wave packets localized near $z_0$ as $\hbar\to0$. Under symbol regularity and propagation estimates strong enough to control derivatives, Egorov correspondence gives the following fixed-time statement:
+\[R_a(t)\sim\Op_\hbar^{\rm W}(\Phi_t^a),\qquad\mathcal M_{ab}(t)\sim\Op_\hbar^{\rm W}(\partial_b\Phi_t^a).\]
+For symbols for which the Weyl operations are defined, commutation with a linear $G_b$ implements its canonical derivative exactly \cite[Sec.~2.1]{robert}. Writing $r_a(t)$ for the exact symbol of $R_a(t)$ and $\star$ for the Weyl product gives
+\[\sigma_{\rm W}(\mathcal M_{ab})=\partial_b r_a(t),\qquad\partial_t r_a=\frac{r_a\star h-h\star r_a}{i\hbar}.\]
+Thus the approximation lies in replacing the evolved quantum symbol by the classical flow, not in differentiating a symbol against a linear generator. Products of responses introduce star products, not ordinary pointwise products. In particular, under the stated localization assumptions,
+\[\langle\mathcal M_{ab}(t)\rangle_{z_0,\hbar}\longrightarrow M_{ab}(t,z_0).\]
+For unbounded coordinates one needs moment control or local cutoffs; a zeroth-order Egorov assertion alone is not automatically sufficient for this differentiated claim.
+
+Once coordinate units and the classical Euclidean metric have been fixed, a useful positive response Gram matrix is
+\[\Gamma_{bc}(t)=\operatorname{Re}\sum_a\Tr\!\left(\rho\,\mathcal M_{ab}(t)^\dagger\mathcal M_{ac}(t)\right).\]
+For a real displacement $v$, $v^T\Gamma v=\sum_a\Tr(\rho B_a^\dagger B_a)\geq0$, where $B_a=\sum_b\mathcal M_{ab}v_b$. In a localized, fixed-time semiclassical limit $\Gamma\to M^TM$, provided the required product estimates hold. At finite $\hbar$, $\Gamma$ includes response fluctuations; it is not generally $\langle\mathcal M\rangle^T\langle\mathcal M\rangle$. We take the real part to describe real displacements; its spectrum need not equal that of the complex Hermitian Gram matrix in \cite{gharibyan}. Eigenvalues are squared-response indicators, not automatically quantum Lyapunov exponents. Changing physical units requires a corresponding input/output metric.
+
+The scalar squared commutators in out-of-time-order correlators retain only parts of this information. They may show a classical instability window, but a phase-space average of squared derivatives is not the average logarithmic stretching rate \cite{rozenbaum}. Neither such growth nor $\Gamma$ supplies a KS or ALF entropy identity without additional hypotheses \cite{goldfriend}.
+
+\textbf{Order of limits matters.} Fixed-time correspondence does not establish $t\to\infty$ correspondence. Hyperbolic dynamics can make semiclassical errors grow rapidly, often leaving a logarithmic-in-$1/\hbar$ window; its precise endpoint is model- and observable-dependent. In finite dimension exact canonical commutation is impossible by taking a trace. For bounded $R_a,G_b$ at fixed $\hbar$,
+\[\|\mathcal M_{ab}(t)\|\leq\frac{2\|R_a\|\|G_b\|}{\hbar}.\]
+Hence no positive long-time exponent can arise from this bounded response at fixed finite system size. Spin systems need rotation derivations and local sphere tangents, not fictitious finite-dimensional canonical operators. Semiclassical or many-body limits must be specified before interpreting a finite-time growth rate.
+
+\section{Exact example: stretching without distinguishability growth}
+Use dimensionless canonical coordinates and $\widehat H=(P^2-Q^2)/2$, with $\hbar=1$. This inverted oscillator is unstable but integrable, so it also guards against equating instability with chaos. Its self-adjoint quadratic evolution preserves Gaussianity. For the mean $\mu$ and symmetrized covariance $\Sigma$,
+\[\mu(t)=M(t)\mu_0,\qquad\Sigma(t)=M(t)\Sigma_0M(t)^T,\qquad M(t)=\begin{pmatrix}\cosh t&\sinh t\\\sinh t&\cosh t\end{pmatrix}.\]
+Prepare two pure Gaussians with the same initial covariance $\Sigma_0=I/2$, and mean difference $\delta\mu_0=\epsilon v$, where $v=(1,1)^T/\sqrt2$. Their centroid separation grows as $\|\delta\mu(t)\|=|\epsilon|e^t$, and the operator tangent $\mathcal M=M\id$ has singular values $e^{\pm t}$. Nevertheless,
+\[\delta\mu(t)^T\Sigma(t)^{-1}\delta\mu(t)=2\epsilon^2,\qquad|\langle\psi_t,\phi_t\rangle|^2=e^{-\epsilon^2/2}.\]
+The displacement-parameter quantum Fisher information is $F_Q=(M v)^T\Sigma^{-1}(M v)=2$, also constant. The packet expands along the same direction as the separation. An observable-coordinate metric sees stretching; the full-state information metric normalizes by the evolving uncertainty and sees no increase in distinguishability. There is no contradiction and no density-matrix replacement of $z$ is required.
+
+More generally, a Gaussian or coherent-state manifold can be used as a reduced phase space: pull back the projective symplectic form and use the expectation Hamiltonian. Where that form is nondegenerate this gives variational Hamilton equations; in canonical coordinates their tangent equation has the ordinary Hessian form. But exact quantum evolution need not preserve the chosen manifold. Quadratic bosonic Hamiltonians preserve the full pure Gaussian manifold, not generally its fixed-width coherent-state submanifold. Nonlinear Hamiltonians generate higher cumulants; a center-only or Gaussian closure is then an approximation, not an exact quantum instability theorem. Projected variational flow need not be isometric, and differentiating it must include the derivative of the tangent projector \cite[pp.~35--37]{hackl}.
+
+\section{Assessment and reproducible checks}
+\textbf{Recommended object.} To retain the content of both classical equations, use $(R(t),\partial^{\rm q}R(t))$ together with a localized preparation and a specified observable metric. Use projective state geometry to describe exact state dynamics, but do not demand classical stretching from its unitary-invariant metric. Use coherent-state coordinates only with an explicit closure error. These answer different questions rather than competing to replace the same symbol.
+
+\textbf{Numerical checks, not proofs.} The companion script \texttt{calculations/code/quantum\_tangent\_geometry.py} samples the Gaussian formula on $121$ points in $0\leq t\leq3$. Maximum QFI error is $8.9\times10^{-16}$, symplectic error $1.3\times10^{-13}$, and covariance-determinant error $2.5\times10^{-12}$. A separate seeded $5\times5$ Hermitian-matrix check of the cubic product rule gives relative ordered-derivative error $1.8\times10^{-16}$; a central difference with step $10^{-5}$ agrees to $1.9\times10^{-9}$. The naive commuting derivative has relative error $1.99$. This matrix test checks the product rule only, not canonical commutation in finite dimension.
+
+\textbf{Remaining limitation.} A convincing nonlinear application still needs a controlled localization window and comparison of the entire response matrix with the classical tangent map. None of the identities here proves a quantum Pesin theorem, a universal chaos criterion, or positive asymptotic finite-dimensional Lyapunov exponents. The accompanying literature notes distinguish directly checked sources from this note's elementary derivations.
+
+\begin{thebibliography}{9}
+\bibitem{ashtekar} A. Ashtekar and T. A. Schilling, \emph{Geometrical formulation of quantum mechanics}, arXiv:gr-qc/9706069.
+\bibitem{hackl} L. Hackl, T. Guaita, T. Shi, J. Haegeman, E. Demler, and J. I. Cirac, \emph{Geometry of variational methods: dynamics of closed quantum systems}, SciPost Phys.\ \textbf{9}, 048 (2020), doi:10.21468/SciPostPhys.9.4.048.
+\bibitem{gharibyan} H. Gharibyan, M. Hanada, B. Swingle, and M. Tezuka, \emph{Quantum Lyapunov Spectrum}, JHEP \textbf{04} (2019) 082, arXiv:1809.01671.
+\bibitem{robert} D. Robert, \emph{When Poisson and Moyal Brackets are equal?}, arXiv:2207.08798v2.
+\bibitem{rozenbaum} E. B. Rozenbaum, S. Ganeshan, and V. Galitski, \emph{Lyapunov exponent and out-of-time-ordered correlator's growth rate in a chaotic system}, arXiv:1609.01707.
+\bibitem{goldfriend} T. Goldfriend and J. Kurchan, \emph{Quantum Kolmogorov--Sinai entropy and Pesin relation}, Phys.\ Rev.\ Research \textbf{3}, 023234 (2021), doi:10.1103/PhysRevResearch.3.023234.
+\end{thebibliography}
+\end{document}

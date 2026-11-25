@@ -1,0 +1,59 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\dd}{\mathrm{d}}
+\begin{document}
+\title{Current research results}
+\author{}
+\date{22 November 2026}
+\maketitle
+\noindent All logarithms are natural. Statements labelled proved are analytical results; numerical checks are not proofs of chaos.
+
+\section*{1. Observational entropy and statistical speed}
+In a Hilbert space of finite dimension $d$, let $\rho(t)$ be a differentiable density matrix and $E=\{E_i\}_{i=1}^m$ a fixed positive-operator-valued measure (POVM), meaning $E_i\geq0$ and $\sum_iE_i=I$. Omit zero effects and define probabilities, trace volumes, and observational entropy by
+\[p_i=\Tr(\rho E_i),\qquad v_i=\Tr E_i,\qquad S_E=-\sum_i p_i\log(p_i/v_i).\]
+For positive probabilities, put $\ell_i=\log(p_i/v_i)$ and define classical time Fisher information and symmetric-logarithmic-derivative quantum Fisher information (QFI) by
+\[I_E^{(t)}=\sum_i\frac{\dot p_i^2}{p_i},\qquad \dot\rho=\frac{\rho L+L\rho}{2},\qquad F_Q^{(t)}=\Tr(\rho L^2).\]
+\textbf{Proved.} With $\Var_p(\ell)=\sum_i p_i(\ell_i-\sum_jp_j\ell_j)^2$,
+\[|\dot S_E|\leq\sqrt{I_E^{(t)}\Var_p(\ell)}\leq\sqrt{F_Q^{(t)}\Var_p(\ell)}.\]
+This follows from $\dot S_E=-\sum_i\dot p_i\ell_i$, Cauchy--Schwarz, and $I_E^{(t)}\leq F_Q^{(t)}$. QFI bounds speed, not the sign or actual size of entropy growth. Zero probabilities require separate regularity arguments.
+
+\section*{2. Exact instantaneous pure-state optimization}
+For a normalized pure state obeying $i\hbar|\dot\psi\rangle=H|\psi\rangle$, define $(\Delta H)^2=\langle H^2\rangle-\langle H\rangle^2$. The phase-independent speed is $s=\|(I-|\psi\rangle\langle\psi|)|\dot\psi\rangle\|=\Delta H/\hbar$.
+\textbf{Proved.} Optimizing over all $m$-outcome POVMs gives
+\[\sup_E\dot S_E=C_{d,m}s=\frac{C_{d,m}}{2}\sqrt{F_Q^{(t)}}=C_{d,m}\frac{\Delta H}{\hbar}.\]
+Here $C_{d,m}$ is the supremum for a canonical unit-speed pure-state tangent in dimension $d$; its exact value is not established. The proof uses unitary equivalence of pure-state tangents of equal speed and linearity in speed. Each POVM is held fixed during differentiation but may be reselected at each instant. Thus the formula is not a sustained growth law for one fixed measurement, nor a chaos criterion. The equality with energy uncertainty does not generally hold for mixed states.
+
+\section*{3. Which parameter does QFI measure?}
+For any normalized pure family $|\psi(\theta)\rangle$, parameter QFI is
+\[F_Q^{(\theta)}=4\bigl(\langle\partial_\theta\psi|\partial_\theta\psi\rangle-|\langle\psi|\partial_\theta\psi\rangle|^2\bigr).\]
+\textbf{Preparation parameter.} If $|\psi_t(\theta)\rangle=U_t|\psi_0(\theta)\rangle$ with $U_t$ independent of $\theta$, QFI is exactly conserved. \textbf{Physical time.} Pure-state time QFI equals $4(\Delta H)^2/\hbar^2$ and is constant for autonomous $H$. \textbf{Final probe.} For $e^{-i\theta G}|\psi_t\rangle$, QFI is $4\Var_{\psi_t}(G)$ and can vary with $t$. These are different parameter families.
+\textbf{Numerically checked.} Kicked-top calculations at spin $j=10$, including an ensemble of 100 coherent initial states, distinguish these protocols; conservation of preparation QFI was checked separately. No asymptotic chaos exponent was established.
+\textbf{Exact SYK check.} In the Sachdev--Ye--Kitaev model, take Majoranas normalized by $\{\chi_i,\chi_j\}=\delta_{ij}I$. An even Hamiltonian preserves fermion parity. For any parity-definite pure initial state, $\langle\chi_1\rangle=0$ and $\chi_1^2=I/2$, so the final probe $e^{-i\theta\chi_1}$ has $F_Q^{(\theta)}=2$. The $N=16$ numerical run confirmed this to approximately $3\times10^{-15}$. This constant is not a chaos signature; operational access to an odd probe requires care under parity superselection.
+
+\section*{4. Optimized measured relative entropy}
+For states $\rho,\sigma$ and a POVM $E$, let $p_i=\Tr(\rho E_i)$ and $q_i=\Tr(\sigma E_i)$. Define the single-copy measured relative entropy by
+\[D_{\mathrm{meas}}(\rho\Vert\sigma)=\sup_E\sum_i p_i\log(p_i/q_i).\]
+\textbf{Proved.} For every common unitary $U$,
+\[D_{\mathrm{meas}}(U\rho U^\dagger\Vert U\sigma U^\dagger)=D_{\mathrm{meas}}(\rho\Vert\sigma).\]
+Indeed, conjugating all POVM effects is a bijection of the optimization domain. Thus unrestricted optimization removes common-unitary time dependence, including initial-state derivatives wherever defined. Fixed-POVM divergences need not be time independent. Derivative formulas require regularity; full-rank states suffice in finite dimension, whereas distinct pure states can have infinite measured relative entropy.
+
+\section*{5. Binary shifts: a separate ALF result}
+For a state $\omega$ invariant under an algebra automorphism $\alpha$, an operational partition $X=\{X_i\}$ satisfies $\sum_iX_i^\dagger X_i=I$. Define histories, their correlation matrix, and the fixed-partition Alicki--Fannes--Lindblad (ALF) rate by
+\[X_{\boldsymbol i}^{(n)}=\alpha^{n-1}(X_{i_n})\cdots\alpha(X_{i_2})X_{i_1},\qquad \Gamma_{\boldsymbol i,\boldsymbol j}^{(n)}=\omega\bigl((X_{\boldsymbol j}^{(n)})^\dagger X_{\boldsymbol i}^{(n)}\bigr).\]
+\[S(\Gamma)=-\Tr(\Gamma\log\Gamma),\qquad h(\alpha,\omega,X)=\limsup_{n\to\infty}\frac{S(\Gamma^{(n)})}{n}.\]
+ALF entropy is the supremum of this rate over the specified admissible partitions. For canonical tracial binary shifts, generators $u_j$ are self-adjoint unitaries, $\alpha(u_j)=u_{j+1}$, and distinct ordered binary monomials are orthogonal in the trace inner product.
+\textbf{Proved.} The partition $X=(I,u_0)/\sqrt2$ gives
+\[\Gamma^{(n)}=2^{-n}I_{2^n},\qquad S(\Gamma^{(n)})=n\log2,\qquad h(\alpha,\omega,X)=\log2.\]
+For partitions supported in a finite interval of $L$ sites, history rank is at most $2^{n+L-1}$. Consequently the strictly local partition supremum is exactly $\log2$. This includes source-established examples of zero Connes--Narnhofer--Thirring (CNT) entropy, a different operator-algebraic dynamical entropy. For unrestricted nonlocal partitions, only the lower bound $\log2$ is established here.
+
+\section*{6. What remains unproved}
+Classical Lyapunov exponents measure exponential growth of infinitesimal initial-condition perturbations. Classical Pesin's formula, under its invariant-measure and regularity hypotheses, identifies Kolmogorov--Sinai partition-history entropy with the invariant-measure average of the positive-exponent sum. Neither scalar time QFI nor final-time observational entropy is automatically this quantity.
+\textbf{Open here.} No general quantum observational-entropy/Pesin identity has been proved. At fixed finite $d$,
+\[0\leq S_E(\rho_t)\leq\log d,\qquad \lim_{t\to\infty}\frac{S_E(\rho_t)-S_E(\rho_0)}{t}=0.\]
+A nonzero intermediate growth correspondence requires a specified semiclassical measurement, resolution, ensemble, controlled propagation, and a pre-saturation time window. Finite-time numerical growth alone does not establish chaos.
+
+\section*{Workspace provenance}
+\noindent Main records: \texttt{notes/theorems/observational-entropy-qfi-pesin.md}, \texttt{notes/theorems/fixed-povm-relative-entropy-derivative.md}, \texttt{notes/papers/binary-shift-alf.md}, and the kicked-top and SYK QFI notes under \texttt{notes/calculations/}. This summary introduces no new simulations or proofs. Compilation was not tested: neither \texttt{pdflatex} nor \texttt{tectonic} was found on PATH.
+\end{document}

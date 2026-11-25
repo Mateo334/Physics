@@ -1,0 +1,12 @@
+{
+  "generator": "Jz\u00b2, hypothetical probe AFTER complete kick; not applied",
+  "family": "exp(-i parameter Jz\u00b2) U_K^n |coherent>",
+  "j": 10,
+  "count": 100,
+  "seed": 20261122,
+  "statistic": "mean_s log(FQ_s(n)/FQ_s(0))/n, n=1..5",
+  "norm_error_max": 6.5503158452884236e-15,
+  "twist_population_error": 4.440892098500626e-16,
+  "precision": "complex128",
+  "source_angles": "kicked_top_j10_Jy_time_translation_qfi_50kicks_mean100.npz"
+}

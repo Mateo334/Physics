@@ -1,0 +1,25 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\title{Observational-entropy rates as quantum speed limits}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\paragraph{Source.} Sebastian Deffner, \emph{Quantum speed limits and the maximal rate of information production}, Physical Review Research \textbf{2}, 013161 (2020), DOI 10.1103/PhysRevResearch.2.013161, arXiv:1910.06811v3. Page and equation references below refer to that arXiv PDF.
+\paragraph{Our hypotheses.} Let $d\ge2$ be finite, let $\rho(t)$ be a smooth pure-state unitary trajectory, and hold a finite POVM $\mathcal E=\{E_i\}$ fixed throughout the interval. Use full-space volumes $V_i=\Tr E_i$ and natural logarithms. Our all-outcome theorem gives the sharp instantaneous coefficient
+\[C_d=2\sqrt{p(1-p)}\log\frac{(d-1)p}{1-p},\qquad (2p-1)\log\frac{(d-1)p}{1-p}=2,\quad p>1/2.\]
+\paragraph{Identification of speed.} In a state--tangent frame, $\dot\rho$ has eigenvalues $\Delta H/\hbar$ and $-\Delta H/\hbar$, with all others zero. Applying our theorem to both the tangent and its negative therefore gives
+\[|\dot S_{\mathrm{obs}}|\le C_d\frac{\Delta H}{\hbar}=\frac{C_d}{2}\|\dot\rho\|_1=\frac{C_d}{2}\sqrt{F_{Q,\mathrm{time}}}.\]
+Deffner's Eqs.~(8)--(10), p.~2, use precisely the trace-norm speed, with
+\[\Lambda_\tau=\frac1\tau\int_0^\tau\|\dot\rho(t)\|_1\,dt.\]
+Integration with the same fixed POVM yields
+\[|\Delta S_{\mathrm{obs}}|\le\frac{C_d}{2}\tau\Lambda_\tau,\qquad \tau\ge\frac{2|\Delta S_{\mathrm{obs}}|}{C_d\Lambda_\tau}\quad(\Lambda_\tau>0).\]
+For a constant Hamiltonian this becomes $\tau\ge\hbar|\Delta S_{\mathrm{obs}}|/(C_d\Delta H)$ when $\Delta H>0$. If the speed vanishes throughout, the entropy change is zero. The coefficient is sharp instantaneously; integration does not assert that one fixed POVM saturates the bound throughout an interval.
+\paragraph{Which entropy is compared?} Deffner's Eq.~(24), p.~4, is Shannon entropy in an observable eigenbasis. For finite-dimensional rank-one projective measurements it is exactly observational entropy, since all $V_i=1$. For general POVMs,
+\[S_{\mathrm{obs}}=H(p)+\sum_i p_i\log V_i.\]
+Consequently our general POVM theorem is not a bound on unrestricted outcome Shannon entropy with the volume term simply omitted. Unitary von Neumann entropy is constant and is not the observable being bounded here.
+\paragraph{Rate conventions.} In Eqs.~(14)--(16), p.~3, and Eq.~(33), p.~5, the paper divides a finite entropy change by a quantum-speed-limit time, not generally by actual elapsed time and not by an infinitesimal increment. Its Eq.~(15) also suppresses an additive Fannes term, which cannot be dropped uniformly in the short-time limit. Thus our result is a sharp pure-state instantaneous analogue of its programme, not a direct substitution into its approximate finite-time formulas. Rates in bits require division by $\log2$.
+\paragraph{Source caveat.} As written, Eq.~(26), p.~5, defines an $L^p$ norm of differences, not a Wasserstein transport distance. Genuine Wasserstein distances obey $W_1\le W_2$ when finite, opposite to Eq.~(28). Therefore the unitary derivation using Eqs.~(25)--(29) must not be adopted without correction and verification of the cited continuity theorem's hypotheses. This does not affect our independent effectwise certificate.
+\paragraph{Status.} No claim of literature novelty, a communication-capacity theorem, or a chaos criterion is made. The source's cited continuity paper was not separately audited. This standalone file has not been compile-tested because no LaTeX compiler was available.
+\end{document}

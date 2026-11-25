@@ -1,0 +1,209 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\dd}{\mathrm{d}}
+\begin{document}
+\title{Observational-entropy rate, Fisher speed, and tangent dynamics: what can connect to Pesin's formula?}
+\author{Research note}
+\date{22 November 2026}
+\maketitle
+\begin{abstract}
+The instantaneous observational-entropy rate is a directional derivative of entropy, whereas quantum Fisher information is the squared statistical speed of the underlying state family. Their exact connection is a covariance identity and a Fisher-speed bound. For pure states and unrestricted measurements, unitary equivalence of state--tangent pairs strengthens this to an exact proportionality between the optimized instantaneous rate and the square root of time QFI. This is not an instability theorem. We distinguish orbit velocity from initial-condition perturbations, exhibit a Hamiltonian formulation using wavefunction coordinates rather than density matrices, and give a solvable coarse-grained Gaussian model in which a positive Lyapunov sum emerges. A general quantum observational-entropy/Pesin correspondence remains unproved.
+\end{abstract}
+
+\section{Conventions and scope}
+Except in the explicitly classical Gaussian example, the quantum Hilbert space has finite dimension $d$. Logarithms are natural; rates are in nats per unit time. A POVM consists of $m$ nonzero positive effects $E_a$ with $\sum_aE_a=I_d$, fixed while taking the derivative. Write $v_a=\Tr E_a>0$ and $p_a(t)=\Tr(\rho(t)E_a)$. The entropy under discussion is the single-time observational entropy, not ALF, CNT, or a history entropy:
+\[S_E(\rho)=-\sum_a p_a\log(p_a/v_a).\]
+We first assume positive probabilities in a neighborhood of the time considered. Section~\ref{sec:boundary} discusses zero probabilities. A pointwise optimization over POVMs means choosing a measurement for the selected state and tangent, then differentiating with that measurement held fixed. It does not mean differentiating through a time-dependent optimizer. Statements below are marked as exact results, examples, or conjectural bridges; numerical agreement from earlier workspace calculations is not used as a proof.
+
+\section{Exact connection: entropy change is a covariance}
+\subsection{The derivation does not require density-matrix coordinates}
+Let $x^\mu$ be any smooth state coordinates and $p_a(x)$ any normalized observation model with fixed positive volumes $v_a$. They could describe classical probability densities, quantum rays, wavepacket parameters, or density matrices. Along a curve $x(t)$ define the score $u_a$ and log occupancy $\ell_a$:
+\[u_a=\frac{\dot p_a}{p_a},\qquad\ell_a=\log(p_a/v_a),\qquad\sum_a p_au_a=0.\]
+Differentiating the entropy and using normalization gives the exact identity
+\[\dot S_E=-\sum_a\dot p_a\ell_a=-\Cov_p(u,\ell).\]
+Consequently, with classical time Fisher information $I_E^{(t)}=\sum_a\dot p_a^2/p_a$,
+\[\boxed{|\dot S_E|^2\le I_E^{(t)}\Var_p(\ell).}\]
+This is Cauchy--Schwarz in the real weighted space with inner product $\langle f,g\rangle_p=\sum_ap_af_ag_a$. It explains precisely why Fisher information appears: the entropy rate is the pairing of the probability velocity with an entropy gradient; Fisher information measures the squared length of that velocity. A large speed need not point up the entropy gradient.
+
+For a coordinate model, the observation induces a possibly degenerate Fisher metric:
+\[g^E_{\mu\nu}(x)=\sum_a\frac{\partial_\mu p_a\,\partial_\nu p_a}{p_a},\qquad I_E^{(t)}=g^E_{\mu\nu}\dot x^\mu\dot x^\nu.\]
+Repeated coordinate indices are summed. Equivalently, the entropy derivative is $\dd S_E(\dot x)$. Neither this identity nor its inequality singles out density matrices as the necessary variables.
+
+\subsection{Quantum Fisher information bounds the accessible speed}
+For a differentiable quantum curve, let $L$ be a symmetric logarithmic derivative (SLD):
+\[\dot\rho=\tfrac12(\rho L+L\rho),\qquad F_Q^{(t)}=\Tr(\rho L^2).\]
+For full rank the SLD is unique. For a smooth constant-rank unitary family it exists and the QFI is independent of its arbitrary kernel block. To verify the measurement bound, set $A_a=\sqrt{E_a}\sqrt{\rho}$ and $B_a=\sqrt{E_a}L\sqrt{\rho}$. Then
+\[\dot p_a=\operatorname{Re}\Tr(A_a^\dagger B_a),\qquad p_a=\Tr(A_a^\dagger A_a).\]
+Hilbert--Schmidt Cauchy--Schwarz and completeness give
+\[I_E^{(t)}\le\sum_a\Tr(B_a^\dagger B_a)=\Tr(\rho L^2)=F_Q^{(t)}.\]
+Thus the general quantum result is
+\[\boxed{|\dot S_E|\le\sqrt{I_E^{(t)}\Var_p(\ell)}\le\sqrt{F_Q^{(t)}\Var_p(\ell)}.}\]
+This is an upper bound, not a lower bound, positivity statement, or differential equation for the entropy. For nonzero variances the first inequality is an equality precisely when $u_a=c(\ell_a-\langle\ell\rangle_p)$ for a real constant $c$. Measurement saturation of QFI additionally requires $B_a=u_aA_a$ for every positive-probability outcome. An SLD eigenbasis measurement can attain QFI without attaining the entropy-rate bound: the alignment condition is separate.
+
+There is also a crude uniform finite-dimensional bound. Since $0\le p_a/v_a\le1$ and $x(\log x)^2\le4/e^2$ for $0\le x\le1$,
+\[\Var_p(\ell)\le\sum_ap_a\ell_a^2\le\frac{4d}{e^2},\qquad|\dot S_E|\le\frac{2\sqrt d}{e}\sqrt{F_Q^{(t)}}.\]
+This verifies finiteness without asserting that the bound is optimal. If effects or volumes depend on time, their derivatives contribute; the above bound in terms of the state QFI alone no longer controls measurement-induced changes.
+
+\section{Exact pure-state optimization: why energy uncertainty appears}
+For a normalized differentiable pure-state family, choose a horizontal tangent at the selected point:
+\[|w\rangle=(I-|\psi\rangle\langle\psi|)|\dot\psi\rangle,\qquad s=\|w\|.\]
+When $s>0$, take $|0\rangle=|\psi\rangle$ and $|1\rangle=|w\rangle/s$. The density operator is only a convenient way to express measurement probabilities; the geometry already lives on rays. At this instant,
+\[\rho=|0\rangle\langle0|,\qquad\dot\rho=s(|1\rangle\langle0|+|0\rangle\langle1|),\qquad F_Q^{(t)}=4s^2.\]
+For Schr\"odinger evolution, including a smooth time-dependent Hamiltonian,
+\[|w\rangle=-\frac{i}{\hbar}(H-\langle H\rangle)|\psi\rangle,\qquad s=\frac{\Delta H}{\hbar}.\]
+Every pure-state state--tangent pair with the same $s$ is related to this canonical pair by a unitary transformation. Conjugating all effects preserves positivity, completeness, and their traces. Since the entropy derivative is linear in the tangent, optimization over all $m$-outcome POVMs therefore gives the exact structural result
+\[\boxed{\sup_E\dot S_E=C_{d,m}s=\frac{C_{d,m}}2\sqrt{F_Q^{(t)}}=C_{d,m}\frac{\Delta H}{\hbar}.}\]
+For $s=0$ both sides vanish. The coefficient $C_{d,m}$ is defined by the canonical $s=1$ optimization; $d\ge2$ is understood. Reversing the phase of $|1\rangle$ reverses the entropy rate, so the same supremum is obtained for its absolute value. For $m=1$, $C_{d,1}=0$. The preceding general bound implies $C_{d,m}\le4\sqrt d/e$.
+
+This proof explains the proportionality, rather than merely inferring it from optimization data. It applies to any differentiable pure-state curve: Schr\"odinger evolution identifies the speed with energy uncertainty, but is not required for the geometric coefficient argument. It does not determine the exact numerical value of $C_{d,m}$.
+
+An explicit lower bound, valid for $m\ge2$, follows from $E_1=|u\rangle\langle u|$ and $E_2=I-E_1$, with $|u\rangle=\sqrt p|0\rangle-\sqrt{1-p}|1\rangle$. The probabilities are $p,1-p$, the volumes are $1,d-1$, and the derivatives are $-2s\sqrt{p(1-p)},2s\sqrt{p(1-p)}$. Therefore
+\[C_{d,m}\ge\max_{1/d<p<1}2\sqrt{p(1-p)}\log\frac{(d-1)p}{1-p}.\]
+Splitting $E_2$ proportionally into $m-1$ nonzero effects preserves the entropy and rate. Prior numerical agreement with this candidate is an attained lower bound, not a global-optimality proof.
+
+\subsection{What the optimization does not say}
+A fixed physical measurement need not attain this supremum. A measurement optimized for one state need not be optimal for another, or remain optimal later. In fact, $\sup_ES_E(\rho)=\log d$ is attained by uninformative effects $E_a=c_aI_d$, whereas $\sup_E\dot S_E$ can be strictly positive. Thus differentiating an optimized entropy and optimizing its derivative are distinct operations.
+
+For an ensemble of $N$ pure preparations, independently optimized measurements give
+\[\frac1N\sum_b\sup_E\dot S_E(\rho_b)=\frac{C_{d,m}}{2N}\sum_b\sqrt{F_{Q,b}^{(t)}}.\]
+For one common measurement only the upper bound by this expression follows. In particular, the quantity relevant to the independently optimized mean rate is the mean square root of QFI, not the square root of its mean:
+\[\overline{\sqrt{F_Q^{(t)}}}\le\sqrt{\overline{F_Q^{(t)}}}.\]
+The previously plotted mean QFI therefore cannot simply be square-rooted to obtain the mean optimal rate.
+
+\subsection{Mixed states are different}
+For unitary evolution of $\rho=\sum_a r_a|a\rangle\langle a|$, the time QFI is
+\[F_Q^{(t)}=\frac{2}{\hbar^2}\sum_{a,b:r_a+r_b>0}\frac{(r_a-r_b)^2}{r_a+r_b}|H_{ab}|^2\le\frac{4(\Delta_\rho H)^2}{\hbar^2}.\]
+The pure-state equality need not hold. A state commuting with $H$ has zero time QFI and zero entropy derivative for every fixed POVM, but can have nonzero energy variance. Thus energy uncertainty alone is not a universal mixed-state entropy-rate predictor, and equal mixed-state QFI does not establish unitary equivalence of state--tangent pairs.
+
+\section{The classical equations: velocity is not a generic perturbation}
+For a $C^2$ autonomous Hamiltonian in canonical coordinates $z=(q,p)$, let $J$ be the constant canonical symplectic matrix. The two equations in the discussion are
+\[\dot z=X_H(z)=J\nabla H(z),\qquad\dot\xi=J D^2H(z(t))\xi.\]
+Here $\xi=\partial_\epsilon z_\epsilon|_{\epsilon=0}$ is an infinitesimal initial-condition variation. Its equation is exact as a first-variation equation; only its identification with a finite separation is approximate. The exact finite-separation equation is
+\[\dot{\Delta z}=J\bigl[\nabla H(z+\Delta z)-\nabla H(z)\bigr].\]
+Writing $\Phi_t$ for the flow and $M_t=D\Phi_t(z_0)$,
+\[\dot M_t=J D^2H(z(t))M_t,\qquad M_0=I,\qquad\xi(t)=M_t\xi(0).\]
+Lyapunov exponents concern long-time growth of singular directions of $M_t$ in a fixed smooth reference metric, not the speed of one orbit.
+
+For an autonomous flow, the velocity itself is one particular solution of the variational equation:
+\[X_H(z(t))=M_tX_H(z_0).\]
+On a compact invariant region without equilibria, its norm stays bounded above and away from zero, so this direction has zero Lyapunov exponent. Transverse perturbations may nevertheless grow exponentially. This already explains classically why a time-speed indicator cannot by itself supply a positive Lyapunov sum.
+
+For an observation metric $g^E$, time sensitivity and initial-label sensitivity are respectively
+\[I_E^{(t)}=g^E_{z(t)}(X_H,X_H),\qquad I_E^{(\theta)}=g^E_{z(t)}(M_t\xi_0,M_t\xi_0).\]
+They involve different tangents. Metric degeneracy, its position dependence, and measurement resolution must be controlled before either expression can be used to extract a Lyapunov exponent.
+
+\section{Quantum variables need not be density matrices}
+\subsection{Wavefunction coordinates give an exact Hamiltonian system}
+Write a Hermitian matrix as $H=A+iB$, where $A$ is real symmetric and $B$ is real antisymmetric, and write $\psi=(q+ip)/\sqrt2$. The real coordinates $q,p\in\mathbb R^d$ obey
+\[\frac{\dd}{\dd t}\begin{pmatrix}q\\p\end{pmatrix}=\frac1\hbar\begin{pmatrix}B&A\\-A&B\end{pmatrix}\begin{pmatrix}q\\p\end{pmatrix}.\]
+These are Hamilton equations with the standard $J$ and Hamilton function
+\[\mathcal H(q,p)=\frac{q^{\mathsf T}Aq+p^{\mathsf T}Ap-2q^{\mathsf T}Bp}{2\hbar}=\frac{\langle\psi|H|\psi\rangle}{\hbar}.\]
+Normalization restricts $q^{\mathsf T}q+p^{\mathsf T}p=2$; quotienting the irrelevant overall phase gives projective Hilbert space. Initial perturbations satisfy exactly the same linear equation as the amplitudes. Crucially, its real matrix is antisymmetric as well as Hamiltonian: its propagator is orthogonal. Thus Euclidean distances of amplitudes, and the induced projective distances, are preserved. Time-dependent state-independent $H(t)$ retains this property.
+
+The formal pair $\dot x=J\nabla\mathcal H$, $\dot{\delta x}=JD^2\mathcal H\,\delta x$ therefore exists for quantum amplitudes, but does not imply chaotic tangent expansion. Generic classical Hamiltonian flows are symplectic, not metric isometries; quantum unitary flows are both. A nonlinear mean-field or variational closure can have growing perturbations, but then the approximation and its time window are part of the model, not an exact property of finite-dimensional linear Schr\"odinger dynamics.
+
+\subsection{Fubini--Study geometry makes the distinction invariant}
+Use the convention
+\[\dd s_{\rm FS}^2=\langle\dd\psi|\dd\psi\rangle-|\langle\psi|\dd\psi\rangle|^2,\qquad F_Q^{(\theta)}=4g_{\rm FS}(\partial_\theta\psi,\partial_\theta\psi).\]
+For any preparation family $\psi_0(\theta)$ and a parameter-independent unitary $U_t$, the initial-label QFI is exactly conserved:
+\[|\psi_t(\theta)\rangle=U_t|\psi_0(\theta)\rangle\quad\Longrightarrow\quad F_Q^{(\theta)}(t)=F_Q^{(\theta)}(0).\]
+The same holds for the full multiparameter QFI matrix and for mixed-state SLD QFI under common unitary conjugation. Finite-dimensional unitary dynamics therefore has zero tangent Lyapunov exponents in this metric. This does not exclude quantum chaos in semiclassical, spectral, or operator-growth senses; those use different structures.
+
+Time QFI instead measures the velocity generated by the current $H(t)$. For autonomous evolution, $\Delta H$ is conserved and time QFI is constant. For the already used two-half-period kicked-top interpolation, it is constant on each open half-period and can jump when the generator changes. Its large twist-phase values also contain the explicit square of the kicking strength. A Floquet operator alone does not specify continuous-time QFI; interpolation within a period must be supplied.
+
+An integrable qubit is a decisive counterexample to interpreting the optimal rate as a chaos indicator: take $H=\hbar\omega\sigma_z/2$ and an initial positive $\sigma_x$ eigenstate. Its motion is periodic, but $F_Q^{(t)}=\omega^2$ and its unrestricted optimal instantaneous OE rate is $C_{2,m}|\omega|/2>0$ for $m\ge2$.
+
+\subsection{Which perturbation experiment could probe instability?}
+A parameter encoded before a common evolution, a small rotation encoded after evolution, and a parameter perturbing the evolution itself define different state families. Our original $4\Var(J_y)$ plots used the second choice. For $|\psi_\theta(t)\rangle=U_\theta(t)|\psi_0\rangle$ with fixed preparation, define the Hermitian response generator
+\[G_\theta(t)=iU_\theta(t)^\dagger\partial_\theta U_\theta(t),\qquad F_Q^{(\theta)}=4\Var_{\psi_0}(G_\theta(t)).\]
+For a differentiable Hamiltonian family and $U_\theta(0)=I$,
+\[G_\theta(t)=\frac1\hbar\int_0^tU_\theta(s)^\dagger\partial_\theta H_\theta(s)U_\theta(s)\,\dd s.\]
+This contains dynamical response correlations and is more relevant to perturbation growth than autonomous time QFI, but still does not give Pesin's formula. If $\|\partial_\theta H_\theta(s)\|\le B$ uniformly at fixed dimension, then $F_Q^{(\theta)}\le4B^2t^2/\hbar^2$; any exponential-looking regime must be transient or involve a changing limit.
+
+\section{A coherent-state shortcut that fails}
+Let $z$ label initial coherent states and consider $U_t|z\rangle$. Its exact initial-label QFI is invariant under $U_t$. Replacing the evolved family by undeformed coherent states at classical centers,
+\[U_t|z\rangle\approx e^{i\phi_t(z)}|\Phi_t(z)\rangle,\]
+and differentiating this approximation would predict growth through $D\Phi_t$. That inference is unjustified without derivative-uniform approximation estimates; packet deformation and derivatives of the approximation error cannot be discarded. Pointwise semiclassical accuracy is not enough.
+
+The corresponding classical distinction is equally important. For a Gaussian family with mean derivative $\xi_0$, covariance $\Sigma_0$, and an invertible parameter-independent linear flow $M_t$, both mean and covariance deform. The full statistical Fisher information remains
+\[I_{\rm fine}^{(\theta)}=(M_t\xi_0)^{\mathsf T}(M_t\Sigma_0M_t^{\mathsf T})^{-1}M_t\xi_0=\xi_0^{\mathsf T}\Sigma_0^{-1}\xi_0.\]
+Thus classical point separation and distinguishability of a fully transported statistical family are not the same quantity either. This example removes an apparent quantum/classical contradiction.
+
+\section{An exact coarse-grained model with a positive-exponent sum}
+\label{sec:gaussian}
+\subsection{Stretching plus a resolution floor}
+The following is an exactly solvable classical model, not a general quantum theorem. On $\mathbb R^{2r}$ take
+\[H(q,p)=\sum_{i=1}^r\lambda_iq_ip_i,\qquad\lambda_i>0.\]
+The flow stretches $q_i$ by $e^{\lambda_it}$ and contracts $p_i$ by $e^{-\lambda_it}$. Start with a centered Gaussian of covariance $\sigma^2I$ and observe through convolution with a fixed Gaussian blur of covariance $\epsilon^2I$, with $\sigma,\epsilon>0$. The observed covariance is
+\[C_t=\sigma^2M_tM_t^{\mathsf T}+\epsilon^2I.\]
+Writing the $2r$ signed rates as $\gamma_j\in\{\lambda_1,\ldots,\lambda_r,-\lambda_1,\ldots,-\lambda_r\}$, its eigenvalues are $c_j(t)=\sigma^2e^{2\gamma_jt}+\epsilon^2$. The observed differential entropy satisfies
+\[h_\epsilon(t)=\tfrac12\log\bigl[(2\pi e)^{2r}\det C_t\bigr],\qquad\dot h_\epsilon(t)=\sum_{j=1}^{2r}\frac{\gamma_j\sigma^2e^{2\gamma_jt}}{\sigma^2e^{2\gamma_jt}+\epsilon^2}.\]
+Expanding directions ultimately dominate the blur; contracting directions become invisible below its fixed resolution. Hence
+\[\lim_{t\to\infty}\dot h_\epsilon(t)=\sum_{i=1}^r\lambda_i.\]
+Without the blur, $\epsilon=0$, the positive and negative terms cancel and the fine-grained entropy is constant. Therefore the limits $\epsilon\to0$ and $t\to\infty$ do not commute for this rate. The source of entropy growth is not Hamiltonian volume expansion, but loss of resolved contraction.
+
+This unbounded linear system has no normalized invariant Liouville probability measure on the whole phase space; the calculation is not an application of Pesin's theorem. Differential entropy is not finite-dimensional quantum OE. Nevertheless, it gives an explicit mechanism that a valid semiclassical measurement argument would need to reproduce.
+
+\subsection{Fisher information appears, but does not determine the exponent sum}
+Let $a_j(t)=\dot c_j/(2c_j)$. Differentiating the Gaussian log density and using the independent centered squared Gaussian coordinates gives its classical time Fisher information:
+\[I_\epsilon^{(t)}=\tfrac12\Tr[(C_t^{-1}\dot C_t)^2]=2\sum_ja_j(t)^2,\qquad\dot h_\epsilon=\sum_ja_j(t).\]
+Indeed the score is $\sum_ja_j(x_j^2/c_j-1)$, each bracket has variance $2$, and the brackets are independent. Also $\Var(\log p)=r$, reproducing $(\dot h_\epsilon)^2\le rI_\epsilon^{(t)}$. At long times,
+\[\dot h_\epsilon\longrightarrow\sum_i\lambda_i,\qquad I_\epsilon^{(t)}\longrightarrow2\sum_i\lambda_i^2.\]
+The entropy rate involves a sum of positive rates, whereas scalar Fisher speed involves their quadratic sum. With more than one unstable direction the latter cannot determine the former without additional spectral information. This is a concrete reason that a universal scalar-QFI/Pesin identity is not supplied by the entropy-rate bound.
+
+\section{What a Pesin-type statement would actually require}
+\subsection{The classical theorem and its observable}
+As a standard sufficient setting, let $T$ be a $C^{1+\alpha}$ diffeomorphism of a compact smooth manifold preserving an absolutely continuous probability measure $\mu$. Pesin's entropy formula identifies the KS entropy with the positive Lyapunov sum:
+\[h_\mu(T)=\int\sum_{\lambda_i(z)>0}m_i(z)\lambda_i(z)\,\dd\mu(z).\]
+Here $m_i$ denotes multiplicity, not a POVM outcome count. KS entropy is defined through successive partition histories. A fixed final-time observational entropy is a different observable. For a flow, the time-one map gives a per-unit-time convention; neutral flow directions contribute zero.
+
+At fixed quantum dimension, $S(\rho)\le S_E(\rho)\le\log d$, and therefore
+\[\lim_{t\to\infty}\frac{S_E(\rho(t))-S_E(\rho(0))}{t}=0.\]
+This says nothing about pointwise convergence of the instantaneous derivative, which may oscillate. It rules out a positive asymptotic net entropy-production rate of this bounded single-time quantity at fixed $d$, even though a separately optimized instantaneous rate can remain positive.
+
+\subsection{A plausible but unproved semiclassical bridge}
+\textbf{Conjectural programme.} Fix a semiclassically meaningful phase-space POVM, rather than optimizing over all effects. Choose localized initial states sampled according to an explicitly specified classical measure. If propagation and measurement errors are controlled in a window where unstable stretching is resolved, stable contraction is below resolution, and folding/saturation do not dominate, the mean OE slope may approximate the corresponding classical positive-exponent sum. The Gaussian calculation establishes the mechanism only for its stated linear, blurred model.
+
+To turn this into a theorem one needs: (i) a measurement-resolution scale and its dependence on the effective Planck constant; (ii) control of evolved probability distributions and their entropy, not just expectation values; (iii) a treatment of folding, overlap, and nonuniform cell weights; (iv) an initial ensemble that samples the measure appearing in the claimed Lyapunov average; and (v) an order of limits and a nonempty window before saturation. For a derivative claim, pointwise entropy approximation is insufficient without stronger regularity or difference-quotient control. Classical KS entropy, ALF/CNT entropy, and this finite-time OE slope must not be identified by notation.
+
+A multiparameter response matrix or an unstable-subspace volume is structurally closer to Pesin's formula than scalar time QFI. In classical tangent dynamics the relevant object is the growth of unstable volume:
+\[\log|\det(M_t|_{E^u})|\sim t\sum_{\lambda_i>0}\lambda_i.\]
+The determinant is understood between orthonormal unstable-volume elements, not as the determinant of the full symplectic map, which is one. A quantum analogue would require specified perturbations, a response/observation metric, and a justified semiclassical comparison. Exact initial-preparation QFI under a common unitary cannot serve as an exponentially growing metric because it is conserved.
+
+\section{A source-backed lead: perturbation-QFI determinants}
+The local paper by Goldfriend and Kurchan~\cite{GK} supplies a more specific lead than scalar time QFI. Their entropy is a second-R\'enyi entropy of a state averaged over a weak auxiliary noise, not fixed-POVM observational entropy. Their weak-noise expansion leads to a half-log-determinant involving a positive time-integrated response Gram matrix; see printed pp.~4--5, Eqs.~(18)--(29).
+
+For pure initial states, their endpoint covariance construction suggests an exact QFI interpretation that can be derived independently. Let $X_\alpha(t)$ be Hermitian Heisenberg observables, center them in $|\psi_0\rangle$, and define a local multiparameter perturbation family at $\eta=0$:
+\[|\psi_\eta^{[t]}\rangle=\exp\!\left[-\frac{i}{\hbar}\sum_\alpha\eta^\alpha X_\alpha(t)\right]|\psi_0\rangle.\]
+Its QFI matrix and the real symmetric covariance matrix $C$ obey
+\[F_{\alpha\beta}^{[t]}=\frac4{\hbar^2}\operatorname{Re}\langle X_{\alpha,c}(t)X_{\beta,c}(t)\rangle=\frac2{\hbar^2}C_{\alpha\beta}(t).\]
+Here $C_{\alpha\beta}=\langle\{X_{\alpha,c},X_{\beta,c}\}\rangle$. This identity does not require commuting generators, but a single measurement need not attain all components of a multiparameter QFI matrix simultaneously. The parameters $\eta$ describe perturbations, not physical time or initial labels subsequently evolved by a common unitary.
+
+In the paper, discarding early positive response contributions gives a determinant lower bound, followed by an additional endpoint approximation on a late-time interval: printed pp.~7--8, Eqs.~(42)--(48). The corresponding expression has the structure
+\[\tfrac12\log\det(I+cC(t))=\tfrac12\log\det\!\left(I+\tfrac12c\hbar^2F^{[t]}\right),\qquad c>0.\]
+This is a QFI-volume expression, not a scalar-speed expression. With dimensionless, consistently normalized perturbations, eigenvalues growing as $e^{2\lambda_it}$ contribute $\lambda_it$ when they dominate the identity term. The factor $1/2$ is essential. Turning the lower bound and endpoint approximation into an equality needs further assumptions; the authors explicitly qualify the interpretation of their individual rates after Eq.~(48), and check semiclassical consistency in Eq.~(49).
+
+The separation of limits is also essential: see pp.~6--7, Eqs.~(32)--(34), and the discussion after Eq.~(41). At fixed quantum scales, taking noise to zero first eliminates noise-induced entropy production; the classical comparison requires a semiclassical or large-system hierarchy. The observable choice and bath assumptions matter. We use the positive covariance form and the explicit half-log determinant, not potentially ambiguous bare-commutator signs or exponent conventions in the source.
+
+\textbf{Precisely what is established here:} the endpoint covariance equals one half of $\hbar^2$ times a pure-state multiparameter perturbation-QFI matrix. \textbf{What is not established:} that its determinant rate equals a specified observational-entropy rate, that scalar physical-time QFI determines this determinant, or that the resulting rates universally equal classical Lyapunov exponents. Linking this perturbation metric to a fixed semiclassical observation is a concrete research direction, not a completed theorem.
+
+\section{Boundary and protocol caveats}
+\label{sec:boundary}
+Differentiability of $\rho(t)$ alone does not justify differentiating entropy at a zero probability. For example, set $p(t)=|t|/\log(1/|t|)$ near zero, with $p(0)=0$, and $\rho(t)=\diag(1-p(t),p(t))$. This density curve is continuously differentiable with $\dot\rho(0)=0$, but its two-outcome entropy is $|t|[1+o(1)]$, which has no two-sided derivative there.
+
+For differentiable pure-state amplitudes under bounded smooth unitary evolution, a zero outcome probability opens at most quadratically; its entropy contribution is then $o(|t-t_0|)$. The rate may be computed over positive outcomes, with the omitted contributions treated by this limit. Pointwise Fisher information formed by omitting zeros can differ from its neighboring limits, and equality claims require attention to those zero channels. Switching times of the two-stage kicked-top Hamiltonian have only one-sided velocity and QFI in general.
+
+All relations here concern final-time measurement probabilities without repeated-measurement backaction. Recorded histories or discarded-outcome instruments change the state dynamics and the relevant statistical family. They are not silently included.
+
+\section{Conclusion and provenance}
+The rigorous chain is: an entropy derivative pairs an observation score with a log occupancy; Cauchy--Schwarz bounds it by classical Fisher speed; measurement monotonicity bounds that speed by QFI. For pure states, unrestricted measurement optimization removes directional dependence and leaves a coefficient times Fubini--Study speed, hence energy uncertainty. None of these steps supplies classical instability. The promising Pesin connection is instead through resolved unstable-volume growth and suppressed stable contraction, with coarse graining and semiclassical limits explicitly present.
+
+The pure-state optimization argument refines the existing workspace note \texttt{obsen\_instantaneous\_unrestricted\_reduction.tex} in the \texttt{latex/} directory; its numerical coefficient estimates are not used as exact values here. The time-QFI protocol is the two-half-period drive used in the workspace kicked-top calculations. The covariance/QFI bounds, real-amplitude equations, and Gaussian example above are derived explicitly in this note. The stated classical Pesin formula is a standard theorem under the displayed sufficient hypotheses, not a theorem newly proved here. The local PDF of Ref.~\cite{GK} was checked on printed pp.~1--9 and Appendix~B, p.~12; its source-specific claims are separated from our QFI deduction. No new numerical experiment or general quantum Pesin theorem is claimed.
+\begin{thebibliography}{1}
+\bibitem{GK} T.~Goldfriend and J.~Kurchan, \emph{Quantum Kolmogorov-Sinai entropy and Pesin relation}, Physical Review Research \textbf{3}, 023234 (2021), doi:10.1103/PhysRevResearch.3.023234.
+\end{thebibliography}
+\end{document}

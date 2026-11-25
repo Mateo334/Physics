@@ -1,0 +1,54 @@
+{
+  "seed": 20261123,
+  "python": "3.11.9",
+  "numpy": "2.2.3",
+  "scipy": "1.15.1",
+  "results": [
+    {
+      "d": 2,
+      "optimal_p": 0.9167782798004834,
+      "binary_global_coefficient": 1.325486838698363,
+      "KKT_minimum_slack_eigenvalue": -3.885780586188048e-16,
+      "KKT_complementarity_residual": 1.6983388852655253e-14,
+      "highest_random_candidate": 0.9675557949519281,
+      "random_candidates": 2000
+    },
+    {
+      "d": 3,
+      "optimal_p": 0.8766963617811565,
+      "binary_global_coefficient": 1.7456256616924488,
+      "KKT_minimum_slack_eigenvalue": -1.5265566588595902e-15,
+      "KKT_complementarity_residual": 1.5293958245529722e-15,
+      "highest_random_candidate": 1.0305182038046456,
+      "random_candidates": 2000
+    },
+    {
+      "d": 21,
+      "optimal_p": 0.7456296371824903,
+      "binary_global_coefficient": 3.5460435469884457,
+      "KKT_minimum_slack_eigenvalue": -1.1102230246251565e-15,
+      "KKT_complementarity_residual": 1.0753570373483637e-15,
+      "highest_random_candidate": 2.154669389362923,
+      "random_candidates": 2000
+    },
+    {
+      "d": 256,
+      "optimal_p": 0.6610502641680461,
+      "binary_global_coefficient": 5.878322996400121,
+      "KKT_minimum_slack_eigenvalue": 0.0,
+      "KKT_complementarity_residual": 1.2678536038564274e-15,
+      "highest_random_candidate": 3.0790537667700564,
+      "random_candidates": 2000
+    },
+    {
+      "d": 4096,
+      "optimal_p": 0.6138799987841947,
+      "binary_global_coefficient": 8.550380330460195,
+      "KKT_minimum_slack_eigenvalue": -3.1086244689504383e-15,
+      "KKT_complementarity_residual": 3.800027776638594e-15,
+      "highest_random_candidate": 2.8370703120212815,
+      "random_candidates": 2000
+    }
+  ],
+  "scope": "Numerical sanity checks only; the global guarantee comes from the analytic proof."
+}

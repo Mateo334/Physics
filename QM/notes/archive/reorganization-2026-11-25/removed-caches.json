@@ -1,0 +1,19 @@
+{
+  "removed": [
+    "calculations/code/__pycache__/canonical_instantaneous_obsen_coefficient.cpython-311.pyc",
+    "calculations/code/__pycache__/four_model_setup.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_models_d256_m10_compare.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_rotor_K10_postkick_instantaneous.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_instantaneous_povm_pga.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_physical_time_qfi_100_states.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_time_translation_qfi_100_states.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_time_translation_qfi_j10.cpython-311.pyc"
+  ],
+  "retained_source_not_at_expected_path": [
+    "calculations/__pycache__/kicked_top_frechet.cpython-311.pyc",
+    "calculations/__pycache__/kicked_top_random_pvms.cpython-311.pyc",
+    "calculations/__pycache__/kicked_top_simple.cpython-311.pyc",
+    "calculations/__pycache__/plot_kicked_top_four_k.cpython-311.pyc",
+    "calculations/__pycache__/syk_observational_entropy.cpython-311.pyc"
+  ]
+}

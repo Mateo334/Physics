@@ -1,0 +1,774 @@
+=== PDF PAGE 1 ===
+SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS
+This note characterizes which part of the recurrent connectivity𝑊is con-
+strained by a target sequence. At a prescribed accuracy𝜀, the target activity
+and the recurrent input required to generate it are well approximated by a fi-
+nite set of Fourier modes. Requiring𝑊to generate these modes fixes its action
+on the corresponding active subspace and, in particular, fixes the associated
+low-frequency Fourier components of the connectivity profile. The action of𝑊
+outside this active subspace remains undetermined by the sequence. We then
+relate this constrained component of𝑊to regularized learning and to down-
+stream readouts.
+Concretely, we show:
+(1) The active Fourier modes of the connectivity profile are fixed by the
+target sequence (section 3).
+(2) The full connectivity matrix is degenerate with respect to the target
+sequence and we characterize the family of matrices that generate the
+target sequence (section 4).
+(3) Regularizedlearningpreservessequence-relevantFouriermodeswhile
+shrinking weakly represented modes (section 5).
+1.Problem formulation
+We consider𝑁neurons with the standard rate model
+𝜏 ̇ 𝑥= −𝑥+𝑊𝜙(𝑥),
+where𝑥∈ℝ 𝑁 is the pre-activation vector and the sigmoid𝜙(𝑥) = 1∕(1 +𝑒−𝑥)is
+applied elementwise.
+Let𝑇be the period of the target sequence. The target activity of neuron
+𝑛∈ {0,…,𝑁− 1 } peaks at𝑡=𝜇 𝑛 =𝑇𝑛∕𝑁. In particular, the target activity of
+neuron𝑛is
+𝑓𝑛(𝑡;𝑎,𝑏,𝜎) =𝑎𝑔 𝜎,𝑇(𝑡−𝜇 𝑛) +𝑏,
+𝑔𝜎,𝑇(𝑡) =
+∑
+𝑚∈ℤ
+𝖾𝗑𝗉
+(
+−(𝑡−𝑚𝑇) 2
+2𝜎2
+)
+,(1)
+where𝑔 𝜎,𝑇 is a wrapped, i.e., periodically repeated, Gaussian. Here,𝑎 >0
+controls the amplitude,𝑏≥0the offset and𝜎 >0the width of the Gaussian
+bump. At each time𝑡,𝑓(𝑡) = (𝑓 𝑛(𝑡))𝑁−1
+𝑛=0 ∈ℝ 𝑁 is the vector of target activity
+across the population. We define thetarget sequenceas the trajectory𝑡↦𝑓(𝑡).
+Assuming𝛿 <𝑓𝑛(𝑡)<1 −𝛿for some𝛿 >0and all𝑛,𝑡, thetarget pre-activationis
+𝑥⋆(𝑡) =𝜙−1(𝑓(𝑡)), 𝜙 −1(𝑥) =𝗅𝗈𝗀(𝑥∕(1 −𝑥)) .
+Definition 1.1.A target sequence𝑓of period𝑇issupportedby𝑊if
+𝑊𝑓(𝑡) =𝑥 ⋆(𝑡) +𝜏 ̇ 𝑥⋆(𝑡)≔𝑦 ⋆(𝑡)for all𝑡∈ [0,𝑇).
+This is exactly the condition for𝑥⋆ to solve the dynamics with𝜙(𝑥⋆) =𝑓.
+1
+=== PDF PAGE 2 ===
+2 SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS
+2.Fourier representation and the𝜀-active sequence subspace
+In the continuum limit we index neurons by𝜃∈ [0,2𝜋), with their activity
+peaking at time𝜇(𝜃) =𝑇𝜃∕(2𝜋), so that the population activity is a bump of
+activity moving along a ring of neurons with frequency2𝜋∕𝑇:
+𝑓(𝜃,𝑡) =𝑓 0(𝑡−𝜇(𝜃)), 𝑓 0(𝑡) =𝑎𝑔𝜎,𝑇(𝑡) +𝑏.
+Set𝜔= 2𝜋∕𝑇and expand𝑓 0(𝑡) =∑
+𝑘∈ℤ ̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡. Since𝜔𝜇(𝜃) =𝜃,
+𝑓(𝜃,𝑡) =𝑓 0(𝑡−𝜇(𝜃)) =
+∑
+𝑘∈ℤ
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑒−𝑖𝑘𝜃.
+The Fourier coefficients follow from𝑓0:
+̂𝑓𝑘 = 1
+𝑇 ∫
+𝑇
+0
+𝑓0(𝑡)𝑒−𝑖𝑘𝜔𝑡𝖽𝑡
+= 1
+𝑇 ∫
+𝑇
+0
+(𝑎𝑔𝜎,𝑇(𝑡) +𝑏)𝑒−𝑖𝑘𝜔𝑡𝖽𝑡
+=
+{
+𝑎̂ 𝑔0 +𝑏, 𝑘= 0,
+𝑎̂ 𝑔𝑘, 𝑘∈ℤ⧵{0}.(2)
+The Fourier coefficients of the wrapped Gaussian𝑔𝜎,𝑇 are
+̂ 𝑔𝑘 = 1
+𝑇 ∫
+𝑇
+0
+𝑔𝜎,𝑇(𝑡)𝑒−𝑖𝑘𝜔𝑡 𝖽𝑡,
+since𝑔𝜎,𝑇 isperiodicwithperiod𝑇. Substituting𝑔 𝜎,𝑇 withtheexpressionin (1),
+we get
+̂ 𝑔𝑘 = 1
+𝑇 ∫
+𝑇
+0
+∑
+𝑚∈ℤ
+𝖾𝗑𝗉
+(
+−(𝑡−𝑚𝑇) 2
+2𝜎2
+)
+𝑒−𝑖𝑘𝜔𝑡 𝖽𝑡.
+By Fubini’s theorem, we may interchange the sum and the integral
+̂ 𝑔𝑘 = 1
+𝑇
+∑
+𝑚∈ℤ ∫
+𝑇
+0
+𝖾𝗑𝗉
+(
+−(𝑡−𝑚𝑇) 2
+2𝜎2
+)
+𝑒−𝑖𝑘𝜔𝑡𝖽𝑡.
+Now make the change of variables𝑠=𝑡−𝑚𝑇. Since𝜔𝑇= 2𝜋, we have
+𝑒−𝑖𝑘𝜔𝑡 =𝑒−𝑖𝑘𝜔(𝑠+𝑚𝑇) =𝑒−𝑖𝑘𝜔𝑠𝑒−2𝜋𝑖𝑘𝑚 =𝑒−𝑖𝑘𝜔𝑠.
+Therefore,
+̂ 𝑔𝑘 = 1
+𝑇
+∑
+𝑚∈ℤ ∫
+(1−𝑚)𝑇
+−𝑚𝑇
+𝖾𝗑𝗉
+(
+− 𝑠2
+2𝜎2
+)
+𝑒−𝑖𝑘𝜔𝑠𝖽𝑠.
+The intervals[−𝑚𝑇,(1 −𝑚)𝑇)tile the real line as𝑚ranges overℤ. Hence, the
+wrapped Gaussian unwraps to a Gaussian onℝ
+̂ 𝑔𝑘 = 1
+𝑇 ∫ℝ
+𝖾𝗑𝗉
+(
+− 𝑠2
+2𝜎2
+)
+𝑒−𝑖𝑘𝜔𝑠𝖽𝑠.
+Using the Fourier transform of a Gaussian, we obtain
+̂ 𝑔𝑘 = 𝜎
+√
+2𝜋
+𝑇 𝖾𝗑𝗉
+(
+−1
+2𝜎2(𝑘𝜔)2
+)
+.
+Hence, for𝑘≠0, the coefficient
+(3) ̂𝑓𝑘 =𝑎 𝜎
+√
+2𝜋
+𝑇 𝑒− 1
+2 𝜎2(𝑘𝜔)2
+,
+decays like a Gaussian in𝑘.
+=== PDF PAGE 3 ===
+SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS 3
+The target pre-activation has the same travelling-bump structure. Because
+𝑓(𝜃,𝑡) =𝑓 0 (𝑡−𝜇(𝜃) ) ,
+applying the elementwise inverse nonlinearity gives
+𝑥⋆(𝜃,𝑡) =𝜙−1(𝑓(𝜃,𝑡)) =𝑥 ⋆
+0 (𝑡−𝜇(𝜃)),
+which is again a shifted copy of a single bump𝑥⋆
+0 (𝑡) =∑
+𝑘 ̂ 𝑥𝑘𝑒𝑖𝑘𝜔𝑡. Using Defini-
+tion 1.1 and differentiating in𝑡gives
+𝑦⋆(𝜃,𝑡) =𝑥⋆ +𝜏𝜕𝑡𝑥⋆ =
+∑
+𝑘∈ℤ
+(1 +𝑖𝑘𝜔𝜏)̂ 𝑥𝑘𝑒𝑖𝑘𝜔𝑡𝑒−𝑖𝑘𝜃, ̂ 𝑦 𝑘 = (1 +𝑖𝑘𝜔𝜏)̂ 𝑥𝑘.
+Because𝑓is bounded away from the saturation of𝜙, i.e.,𝑓 0 ∈ (𝛿,1 −𝛿), the
+inverse𝜙−1 is smooth on the range of𝑓0. Hence, the bump𝑥⋆(𝑡) = (𝜙−1◦𝑓0)(𝑡)is
+smooth and periodic, implying rapid decay of its Fourier coefficientŝ 𝑥𝑘. Since
+̂ 𝑦𝑘 = (1 +𝑖𝑘𝜔𝜏) ̂ 𝑥𝑘 it follows that̂ 𝑦𝑘 also exhibits rapid decay.
+The wrapped Gaussian, and hence the target𝑓, has nonzero Fourier coeffi-
+cients at arbitrarily large|𝑘|. Hence, to identify the Fourier modes relevant to
+the sequence at a prescribed accuracy𝜀, we introduce a cutoff using Parseval’s
+identity. By Parseval’s identity on[0,𝑇) × [0,2𝜋),
+1
+2𝜋𝑇 ∫
+𝑇
+0 ∫
+2𝜋
+0
+|||𝑓(𝜃,𝑡) −𝑓 (𝐷)(𝜃,𝑡) |||
+2
+𝖽𝜃𝖽𝑡=
+∑
+|𝑘|>𝐷
+| ̂𝑓𝑘|2,
+the truncated sequence𝑓(𝐷)(𝜃,𝑡) = ∑
+|𝑘|≤𝐷 ̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑒−𝑖𝑘𝜃 has mean-square error∑
+|𝑘|>𝐷| ̂𝑓𝑘|2, and likewise for𝑦⋆. Since both ̂𝑓𝑘 and̂ 𝑦𝑘 decay rapidly, for any
+𝜀>0we may define the cutoffs
+𝐷𝑓(𝜀)≔𝗆𝗂𝗇
+{
+𝐷∣ ∑
+|𝑘|>𝐷| ̂𝑓𝑘|2 ≤𝜀2
+}
+,
+and
+𝐷𝑦⋆(𝜀)≔𝗆𝗂𝗇
+{
+𝐷∣ ∑
+|𝑘|>𝐷|̂ 𝑦𝑘|2 ≤𝜀2
+}
+.
+We define thesequence cutoffas𝐷 𝗌𝖾𝗊(𝜀) =𝗆𝖺𝗑{𝐷𝑓(𝜀),𝐷𝑦⋆(𝜀)}. The associated
+𝜀-active sequence subspaceis
+𝗌𝖾𝗊(𝜀)≔𝗌𝗉𝖺𝗇{𝑒 −𝑖𝑘𝜃 ∣|𝑘|≤𝐷 𝗌𝖾𝗊(𝜀)}.
+That is, the space spanned by the Fourier modes needed to approximate both
+𝑓and𝑦 ⋆ to an error controlled by𝜀.
+Remark2.1 (Finite𝑁and aliasing).A finite network samples𝜃 𝑛 = 2𝜋𝑛∕𝑁, so
+the continuum mode𝑒−𝑖𝑘𝜃 becomes
+(
+𝑣(𝑁)
+𝑘
+)
+𝑛
+=𝑒−2𝜋𝑖𝑘𝑛∕𝑁.
+These are𝑁-periodic in𝑘, i.e.,𝑣 (𝑁)
+𝑘+𝑁 =𝑣(𝑁)
+𝑘 . Thus, a finite population contains
+only𝑁distinctmodes. Representing 𝗌𝖾𝗊(𝜀)withoutaliasingthereforerequires
+𝐷𝗌𝖾𝗊(𝜀)< 𝑁∕2, in whcih case each active continuum mode maps to a distinct
+sampled mode.
+Note that this means that the number of neurons required to support a se-
+quence𝑓(𝑡)at accuracy𝜀is bounded below by2𝐷 𝗌𝖾𝗊, i.e.,𝑁 >2𝐷𝗌𝖾𝗊(𝜀).
+=== PDF PAGE 4 ===
+4 SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS
+3.The active sequence subspace constrains the connectivity profile
+In the following we write𝑣𝑘 ≔𝑣 (𝑁)
+𝑘 for brevity. Assume throughout that
+𝐷≔𝐷 𝗌𝖾𝗊(𝜀)< 𝑁∕2. Equivalently, as noted in Remark 2.1, we assume that the
+number of neurons in the circuit is bounded below by twice the sequence cutoff
+𝐷𝗌𝖾𝗊(𝜀), i.e.,𝑁 >2𝐷𝗌𝖾𝗊(𝜀). Then for|𝑘|≤𝐷the sampled modes(𝑣 𝑘)𝑛 =𝑒−2𝜋𝑖𝑘𝑛∕𝑁
+are orthogonal. Let
+(𝑁)
+𝗌𝖾𝗊 (𝜀)≔𝗌𝗉𝖺𝗇{𝑣 𝑘 ∣|𝑘|≤𝐷},
+be the discrete𝜀-active sequence subspace. Write the𝐷-mode approximations
+𝑓(𝐷)(𝑡) =
+∑
+|𝑘|≤𝐷
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘, 𝑦 ⋆,(𝐷)(𝑡) =
+∑
+|𝑘|≤𝐷
+̂ 𝑦𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘.
+We say𝑊supports the active𝐷-mode sequenceif𝑊𝑓 (𝐷)(𝑡) =𝑦 ⋆,(𝐷)(𝑡)for all
+𝑡∈ [0,𝑇).
+Let𝑆be the cyclic shift,(𝑆𝑎) 𝑛 =𝑎(𝑛+1)𝗆𝗈𝖽𝑁 . Then, more generally,
+(𝑆𝑟𝑎)𝑛 =𝑎(𝑛+𝑟)𝗆𝗈𝖽𝑁 .
+Since𝜇(𝑛+𝑟)𝗆𝗈𝖽𝑁 =𝜇𝑛 + 𝑟𝑇
+𝑁 𝗆𝗈𝖽𝑇we get
+𝑆𝑟𝑓(𝐷)(𝑡) =𝑓(𝐷)
+(
+𝑡− 𝑟𝑇
+𝑁
+)
+, 𝑆 𝑟𝑦⋆,(𝐷)(𝑡) =𝑦⋆,(𝐷)
+(
+𝑡− 𝑟𝑇
+𝑁
+)
+.
+Because𝜇𝑛 are uniformly spaced on the interval[0,𝑇), shifting the neuron la-
+bels forward by𝑟positions is equivalent to shifting the sequence backward in
+time by𝑟𝑇∕𝑁.
+Thecirculant componentof𝑊is the circulant matrix given by
+𝑊𝖼𝗉 ≔ 1
+𝑁
+𝑁−1∑
+𝑟=0
+𝑆−𝑟𝑊𝑆𝑟.
+Let𝑑= (𝑚−𝑛)𝗆𝗈𝖽𝑁denote the position of the presynaptic neuron relative to
+the postsynaptic neuron in the sequence ordering. We define the connectivity
+profile𝖼𝗉= (𝖼𝗉 𝑑)𝑁−1
+𝑑=0 ∈ℝ 𝑁 of𝑊by
+𝖼𝗉𝑑 = (𝑊𝖼𝗉)𝑛𝑚.
+This is well defined as𝑊𝖼𝗉 is circulant.
+Proposition3.1(Theconnectivityprofilesupportstheactive𝐷-modesequence).
+If𝑊supports the𝐷-mode sequence then it follows that
+𝑊𝖼𝗉𝑓(𝐷)(𝑡) =𝑦⋆,(𝐷)(𝑡),
+for all𝑡, and in particular𝑊𝑓(𝐷)(𝑡) =𝑊𝖼𝗉𝑓(𝐷)(𝑡).
+Proof.Suppose that𝑊supports the𝐷-mode sequence, i.e.,𝑊𝑓 (𝐷)(𝑡) =𝑦⋆,(𝐷)(𝑡)
+for all𝑡. Using the shift identity
+𝑆−𝑟𝑦⋆,(𝐷)(𝑡−𝑟𝑇∕𝑁) =𝑦 ⋆,(𝐷)(𝑡),
+=== PDF PAGE 5 ===
+SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS 5
+it follows that
+𝑊𝖼𝗉𝑓(𝐷)(𝑡) = 1
+𝑁
+𝑁−1∑
+𝑟=0
+𝑆−𝑟𝑊𝑆𝑟𝑓(𝐷)(𝑡)
+= 1
+𝑁
+𝑁−1∑
+𝑟=0
+𝑆−𝑟𝑊𝑓 (𝐷)
+(
+𝑡− 𝑟𝑇
+𝑁
+)
+= 1
+𝑁
+𝑁−1∑
+𝑟=0
+𝑆−𝑟𝑦⋆,(𝐷)
+(
+𝑡− 𝑟𝑇
+𝑁
+)
+= 1
+𝑁
+𝑁−1∑
+𝑟=0
+𝑦⋆,(𝐷)(𝑡)
+=𝑦⋆,(𝐷)(𝑡)
+=𝑊𝑓 (𝐷)(𝑡)
+where the third equality follows from the support condition.□
+Thus the complementary part𝑊⟂≔𝑊−𝑊 𝖼𝗉 acts trivially on the𝐷-mode
+sequence, i.e.,𝑊⟂𝑓(𝐷)(𝑡) = 0for all𝑡. Since𝑊 𝖼𝗉 is circulant, its action on the
+𝐷-mode sequence depends only on the Fourier modes of𝖼𝗉with|𝑘|≤𝐷. These
+modes are therefore fixed by the target sequence. We call the low-pass com-
+ponent of the connectivity profile corresponding to these modes the𝐷-mode
+connectivity profileand denote it by𝖼𝗉(≤𝐷).
+Corollary 3.2(The𝐷-mode connectivity profile is fixed by the sequence).If𝑊
+supports the𝐷-mode sequence then for every|𝑘|≤𝐷with ̂𝑓𝑘 ≠0,
+𝑊𝖼𝗉𝑣𝑘 =𝜆𝑘𝑣𝑘, 𝜆 𝑘 = ̂ 𝑦𝑘
+̂𝑓𝑘
+= (1 +𝑖𝑘𝜔𝜏)̂ 𝑥𝑘
+̂𝑓𝑘
+.
+Proof.Since𝑊 𝖼𝗉 iscirculant,the𝑘theigenvectorof𝑊 𝖼𝗉 isthe𝑘thFouriermode
+𝑣𝑘. In particular, we have𝑊𝖼𝗉𝑣𝑘 =𝜆𝑘𝑣𝑘. Therefore,
+𝑊𝖼𝗉𝑓(𝐷)(𝑡) =𝑊𝖼𝗉
+∑
+|𝑘|≤𝐷
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘
+=
+∑
+|𝑘|≤𝐷
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑊𝖼𝗉𝑣𝑘
+=
+∑
+|𝑘|≤𝐷
+𝜆𝑘 ̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘.
+But Proposition 3.1 gives
+𝑊𝖼𝗉𝑓(𝐷)(𝑡) =𝑦⋆,(𝐷)(𝑡) =
+∑
+|𝑘|≤𝐷
+̂ 𝑦𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘.
+Matching the Fourier components therefore gives
+𝜆𝑘 ̂𝑓𝑘 =̂ 𝑦𝑘,
+and hence, sincê𝑓𝑘 ≠0,
+𝜆𝑘 = ̂ 𝑦𝑘
+̂𝑓𝑘
+= (1 +𝑖𝑘𝜔𝜏)̂ 𝑥𝑘
+̂𝑓𝑘
+.□
+=== PDF PAGE 6 ===
+6 SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS
+With the convention(𝑊𝖼𝗉)𝑛𝑚 =𝖼𝗉 𝑑 with𝑑= (𝑚−𝑛)𝗆𝗈𝖽𝑁, the eigenvalues
+of the circulant matrix𝑊𝖼𝗉 are given by the Discrete Fourier Transform of the
+connectivity profile𝖼𝗉. That is,
+𝜆𝑘 =
+𝑁−1∑
+𝑑=0
+𝖼𝗉𝑑𝑒−2𝜋𝑖𝑘𝑑∕𝑁.
+Applying the Inverse Discrete Fourier Transform, the part of the connectivity
+profile fixed by the active modes with|𝑘|≤𝐷is
+𝖼𝗉(≤𝐷)
+𝑑 = 1
+𝑁
+∑
+|𝑘|≤𝐷
+𝜆𝑘𝑒2𝜋𝑖𝑘𝑑∕𝑁.
+At accuracy𝜀, the target sequence therefore fixes the low-frequency Fourier
+modesoftheconnectivityprofileandleavestheremainingmodesunconstrained.
+4.Degeneracy of the full recurrent connectivity
+The𝐷-mode sequence fixes the action of𝑊on (𝑁)
+𝗌𝖾𝗊 (𝜀). We denote its canon-
+ical extension, which vanishes on the orthogonal complement, by
+𝑊𝐷 ≔ 1
+𝑁
+∑
+|𝑘|≤𝐷
+𝜆𝑘𝑣𝑘𝑣∗
+𝑘 =𝑊 (≤𝐷)
+𝖼𝗉 ,
+which satisfies
+(4)𝑊 𝐷𝑣𝑘 =𝜆𝑘𝑣𝑘 (|𝑘|≤𝐷).
+Assuming that𝜆𝑘 ≠0for all|𝑘|≤𝐷it follows that𝑊 𝐷 is a sum of2𝐷+ 1
+rank-one matrices𝑣𝑘𝑣∗
+𝑘. Since the vectors𝑣𝑘 are mutually orthogonal and all
+𝜆𝑘 are nonzero, the2𝐷+ 1rank-one terms act on independent one-dimensional
+subspaces. Therefore,
+𝗋𝖺𝗇𝗄(𝑊𝐷) = 2𝐷+ 1.
+In other words, the frequency cutoff𝐷controls the rank of the circulant matrix
+𝑊𝐷.
+Proposition 4.1(Degeneracy of supporting matrices).Let𝑃𝐷 ≔ 1
+𝑁
+∑
+|𝑘|≤𝐷𝑣𝑘𝑣∗
+𝑘
+be the orthogonal projector onto(𝑁)
+𝗌𝖾𝗊 (𝜀). Then, the matrices that support the
+𝐷-mode sequence are
+𝐷 = {𝑊∣𝑊𝑃 𝐷 =𝑊𝐷
+} =
+{
+𝑊𝐷 + ̃𝑊∣ ̃𝑊𝑃𝐷 = 0
+}
+.
+Equivalently,𝑊supports the𝐷-mode sequence if and only if it agrees with𝑊𝐷
+on (𝑁)
+𝗌𝖾𝗊 (𝜀).
+Proof.First, suppose
+𝑊=𝑊 𝐷 + ̃𝑊
+with ̃𝑊𝑃𝐷 = 0. Since𝑓(𝐷)(𝑡)lies in (𝑁)
+𝗌𝖾𝗊 (𝜀)for every𝑡, we have
+𝑃𝐷𝑓(𝐷)(𝑡) =𝑓(𝐷)(𝑡).
+Therefore,
+̃𝑊𝑓 (𝐷)(𝑡) =̃𝑊𝑃𝐷𝑓(𝐷)(𝑡) = 0.
+Hence,
+𝑊𝑓 (𝐷)(𝑡) = (𝑊𝐷 + ̃𝑊)𝑓 (𝐷)(𝑡) =𝑊𝐷𝑓(𝐷)(𝑡).
+=== PDF PAGE 7 ===
+SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS 7
+Using (4), we get
+𝑊𝐷𝑓(𝐷)(𝑡) =𝑊𝐷
+∑
+|𝑘|≤𝐷
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘
+=
+∑
+|𝑘|≤𝐷
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑊𝐷𝑣𝑘
+=
+∑
+|𝑘|≤𝐷
+𝜆𝑘 ̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘
+=
+∑
+|𝑘|≤𝐷
+̂ 𝑦𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘
+=𝑦⋆,(𝐷)(𝑡).
+Thus, every matrix of the form𝑊𝐷 + ̃𝑊with ̃𝑊𝑃𝐷 = 0supports the𝐷-mode
+sequence.
+Conversely, suppose𝑊supports the𝐷-mode sequence, i.e.,
+𝑊𝑓 (𝐷)(𝑡) =
+∑
+|𝑘|≤𝐷
+̂𝑓𝑘𝑒𝑖𝑘𝜔𝑡𝑊𝑣𝑘 =
+∑
+|𝑘|≤𝐷
+̂ 𝑦𝑘𝑒𝑖𝑘𝜔𝑡𝑣𝑘 =𝑦⋆,(𝐷)(𝑡).
+Hence, by uniqueness of the Fourier coefficients we have
+̂𝑓𝑘𝑊𝑣𝑘 =̂ 𝑦𝑘𝑣𝑘,|𝑘|≤𝐷,
+which implies
+𝑊𝑣𝑘 =𝜆𝑘𝑣𝑘,|𝑘|≤𝐷.
+By (4) it follows that
+(𝑊−𝑊 𝐷)𝑣𝑘 = 0,|𝑘|≤𝐷.
+Therefore,
+(𝑊−𝑊 𝐷)𝑃𝐷 = 0.
+Setting ̃𝑊=𝑊−𝑊 𝐷 gives
+𝑊=𝑊 𝐷 + ̃𝑊, ̃𝑊𝑃𝐷 = 0.
+The claim follows.□
+All matrices in𝐷 generate the same𝐷-mode sequence. The free part de-
+composes as̃𝑊=𝑊 (>𝐷)
+𝖼𝗉 +𝑊⟂, where𝑊(>𝐷)
+𝖼𝗉 contains the high-frequency circu-
+lant modes and𝑊⟂the non-circulant part. The former satisfies𝑊(>𝐷)
+𝖼𝗉 𝑃𝐷 = 0
+automatically, so the constraint̃𝑊𝑃𝐷 = 0amounts to requiring𝑊⟂to vanish
+ontheactivesubspaceandisotherwiseunconstrained. Thus,ataccuracy𝜀,the
+target sequence fixes the low-pass connectivity profile but not the full matrix.
+5.Relation to learned connectivity
+Tounderstandhowregularizedlearningactsonthesequence-relevantmodes,
+we consider the idealized regression problem obtained by replacing the target
+sequence by its𝐷-mode approximation at accuracy𝜀
+𝗆𝗂𝗇
+𝑊
+1
+𝑁𝑇 ∫
+𝑇
+0
+‖𝑊𝑓 (𝐷)(𝑡) −𝑦⋆,(𝐷)(𝑡)‖2
+2 𝖽𝑡+𝛼‖𝑊‖ 2
+𝐹.
+The first term penalizes deviations from the support condition, i.e.,𝑊𝑓(𝐷)(𝑡) =
+𝑦⋆,(𝐷)(𝑡), while the second penalizes the Frobenius norm of the connectivity.
+The data are shift-equivariant, i.e.,𝑆𝑟𝑓(𝐷)(𝑡) =𝑓(𝐷)(𝑡−𝑟𝑇∕𝑁)and likewise
+for𝑦⋆,(𝐷), and the Frobenius norm‖⋅‖𝐹 is shift-invariant. Hence, the objective
+is invariant under𝑊↦𝑆 −𝑟𝑊𝑆𝑟. Since𝛼 >0makes the objective strictly
+convex with a unique minimizer, that minimizer must be circulant. For𝛼 >0,
+=== PDF PAGE 8 ===
+8 SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS
+the minimizer generally trades exact support of the target sequence against a
+reduction in connectivity norm.
+Since𝐷<𝑁∕2, the retained Fourier modes are distinct in the finite popula-
+tion, and the optimization decouples mode by mode into
+𝗆𝗂𝗇
+𝜆(𝛼)
+𝑘
+|||𝜆(𝛼)
+𝑘
+̂𝑓𝑘 −̂ 𝑦𝑘
+|||
+2
++𝛼 |||𝜆(𝛼)
+𝑘
+|||
+2
+,|𝑘|≤𝐷,
+with ridge solution
+𝜆(𝛼)
+𝑘 =
+̂𝑓𝑘 ̂ 𝑦𝑘
+| ̂𝑓𝑘|2 +𝛼
+= | ̂𝑓𝑘|2
+| ̂𝑓𝑘|2 +𝛼
+𝜆𝑘,
+where
+𝜆𝑘 = ̂ 𝑦𝑘
+̂𝑓𝑘
+,
+isthesequence-requiredeigenvaluederivedinCorollary3.2. Modeswith| ̂𝑓𝑘|2 ≫
+𝛼satisfy𝜆 (𝛼)
+𝑘 ≈𝜆𝑘, whereas modes with|̂𝑓𝑘|2 less than or on the scale of𝛼, i.e.,
+| ̂𝑓𝑘|2 ≲ 𝛼, are strongly shrunk toward zero. Thus, regularization acts as a soft
+spectral cutoff. That is, modes that are strongly represented in the target se-
+quence are fitted accurately, whereas weak high-frequency modes are increas-
+ingly sacrificed in favor of a smaller connectivity norm.
+The unique optimum of this idealized regression problem is therefore a low-
+pass circulant approximation to the connectivity required by the target se-
+quence. The FORCE training procedure seeks to approximate this optimum,
+predictingthatindependentlytrainednetworksshareitsdominantlow-frequency
+connectivity profile. This matches our simulations.
+6.Parameter dependence of the learned connectivity profile
+The sequence-relevant part of the learned profile is𝖼𝗉(𝛼) =
+(
+𝖼𝗉(𝛼)
+𝑑
+)𝑁−1
+𝑑=0
+with
+𝖼𝗉(𝛼)
+𝑑 = 1
+𝑁
+∑
+|𝑘|≤𝐷
+𝜆(𝛼)
+𝑘 𝑒2𝜋𝑖𝑘𝑑∕𝑁.
+Hence, the sequence parameters,𝑎,𝑏and𝜎, enter through
+𝜆(𝛼)
+𝑘 = | ̂𝑓𝑘|2
+| ̂𝑓𝑘|2 +𝛼
+𝜆𝑘,
+in two ways: Through the sequence-required eigenvalue
+𝜆𝑘 = ̂ 𝑦𝑘
+̂𝑓𝑘
+,
+and through the shrinkage factor
+| ̂𝑓𝑘|2
+| ̂𝑓𝑘|2 +𝛼
+.
+For𝑘≠0, we have
+| ̂𝑓𝑘|2 =𝑎2
+(
+𝜎
+√
+2𝜋
+𝑇
+)2
+𝑒−𝜎2(𝑘𝜔)2
+.
+Hence,increasing𝑎increases| ̂𝑓𝑘|2,whichimplieslessshrinkageofthenonzero
+Fourier modes. In particular, more modes survive regularization.
+=== PDF PAGE 9 ===
+SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS 9
+Increasing𝜎instead concentrates the Fourier spectrum toward low frequen-
+cies. To determine how this affects regularization, consider hoŵ𝑓𝑘 changes
+with𝜎:
+𝜕
+𝜕𝜎| ̂𝑓𝑘|=𝑎
+√
+2𝜋
+𝑇 𝑒− 1
+2 𝜎2(𝑘𝜔)2 (1 −𝜎2(𝑘𝜔)2).
+Thus,
+𝜕
+𝜕𝜎| ̂𝑓𝑘|<0for|𝑘|> 1
+𝜎𝜔.
+Hence, increasing the sequence width𝜎decreases sufficiently high-frequency
+Fouriercoefficients,causingtheirshrinkagefactorstodecreaseandthesemodes
+to be more strongly suppressed by regularization. This favors flatter learned
+connectivity profiles.
+The offset𝑏acts differently. For𝑘≠0, it leaves ̂𝑓𝑘 unchanged but shifts the
+required input through𝑥⋆ =𝜙 −1(𝑓)and𝑦 ⋆ =𝑥 ⋆ +𝜏 ̇ 𝑥⋆. Hence, the offset𝑏
+changeŝ 𝑥𝑘 and
+𝜆𝑘 = (1 +𝑖𝑘𝜔𝜏)̂ 𝑥𝑘
+̂𝑓𝑘
+.
+This provides a mechanism by which the offset can alter the asymmetry of the
+connectivity profile.
+Insummary,widersequencesfavorflatterlearnedconnectivityprofiles,while
+sequences with larger amplitudes can expose higher-frequency structure when
+the corresponding eigenvalues are non-negligible.
+7.Constraints on downstream sequences scaffolded by an upstream
+sequence
+Let𝑁 𝑢 and𝑁 𝑑 denote the number of neurons in the upstream and down-
+stream networks, respectively. Let
+𝑡↦𝑢(𝑡) ∈ℝ 𝑁𝑢,and𝑡↦𝑧(𝑡) ∈ℝ 𝑁𝑑,
+denote the full upstream and downstream target sequences. For a prescribed
+accuracy𝜀>0, let𝑢 (𝜀) and𝑧(𝜀) denote their respective truncated Fourier repre-
+sentations, retainingallsequence-relevantmodesatthataccuracy. Weassume
+that𝑁𝑢 and𝑁𝑑 are sufficiently large so that these modes are represented with-
+out aliasing, as in Remark 2.1.
+We say that𝑢scaffolds𝑧at accuracy𝜀if there exists a linear readout𝐽 𝜀 ∈
+ℝ𝑁𝑑×𝑁𝑢 such that
+𝑧(𝜀)(𝑡) =𝐽𝜀𝑢(𝜀)(𝑡)
+forall𝑡. Werefertoexactscaffoldingasthelimitinwhich𝜀→0,thepopulation
+sizes increase accordingly at a fixed ratio𝑁𝑑∕𝑁𝑢, and the operator norms‖𝐽𝜀‖2
+remain uniformly bounded.
+Let𝑇 𝑢 and𝑇 𝑑 be the fundamental periods of𝑢and𝑧, respectively. Their
+truncated counterparts share the same fundamental periods. Suppose that𝑢
+scaffolds𝑧at accuracy𝜀. Since𝑢 (𝜀)(𝑡+𝑇 𝑢) =𝑢(𝜀)(𝑡),
+𝑧(𝜀)(𝑡+𝑇 𝑢) =𝐽𝜀𝑢(𝜀)(𝑡+𝑇 𝑢) =𝐽𝜀𝑢(𝜀)(𝑡) =𝑧(𝜀)(𝑡).
+Hence,𝑇𝑢 is also a period of𝑧(𝜀). It follows that
+𝑇𝑢 =𝑞𝑇𝑑, 𝑞∈ℕ,
+or equivalently
+𝑇𝑑 = 𝑇𝑢
+𝑞 ≤𝑇𝑢.
+Thus, a scaffolded sequence can have a shorter fundamental period than the
+upstream sequence, but cannot have a longer one.
+=== PDF PAGE 10 ===
+10 SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS
+Width.Indextheupstreamneuronsby𝑖∈ {0,…,𝑁 𝑢 − 1}andthedownstream
+neurons by𝑗∈ {0,…,𝑁 𝑑 − 1}. Consider Gaussian upstream and downstream
+sequences
+𝑢𝑖(𝑡) =𝑎𝑢𝑔𝜎𝑢,𝑇𝑢(𝑡−𝜇 𝑖) +𝑏𝑢, 𝑧 𝑗(𝑡) =𝑎𝑑𝑔𝜎𝑑,𝑇𝑑(𝑡−𝜈 𝑗) +𝑏𝑑,
+with
+𝜇𝑖 = 𝑖𝑇𝑢
+𝑁𝑢
+,and𝜈 𝑗 = 𝑗𝑇𝑑
+𝑁𝑑
+.
+Since𝑇𝑢 =𝑞𝑇𝑑, their fundamental frequencies satisfy
+𝜔𝑑 = 2𝜋
+𝑇𝑑
+= 2𝜋
+1
+𝑞𝑇𝑢
+=𝑞 2𝜋
+𝑇𝑢
+=𝑞𝜔𝑢.
+Similar to (3), for𝑘≠0and𝑚≠0, the scalar Fourier coefficients are
+(5)̂ 𝑢 𝑘 =𝑎𝑢
+𝜎𝑢
+√
+2𝜋
+𝑇𝑢
+𝑒− 1
+2 𝜎2
+𝑢(𝑘𝜔𝑢)2
+,and̂ 𝑧 𝑚 =𝑎𝑑
+𝜎𝑑
+√
+2𝜋
+𝑇𝑑
+𝑒− 1
+2 𝜎2
+𝑑(𝑚𝜔𝑑)2
+.
+The corresponding population Fourier components are
+̂ 𝑢𝑘𝑣(𝑢)
+𝑘 and̂ 𝑧 𝑚𝑣(𝑑)
+𝑚 ,
+where𝑣 (𝑢)
+𝑘 and𝑣 (𝑑)
+𝑚 are the Fourier modes of the upstream and downstream
+populations, respectively.
+Suppose that𝑢scaffolds𝑧at accuracy𝜀. For every retained downstream
+mode𝑚, scaffolding requires the corresponding upstream mode𝑞𝑚to be re-
+tained. Since
+𝑚𝜔𝑑 =𝑞𝑚𝜔𝑢,
+uniqueness of the Fourier coefficients in𝑧(𝜀)(𝑡) =𝐽𝜀𝑢(𝜀)(𝑡)gives
+̂ 𝑧𝑚𝑣(𝑑)
+𝑚 =𝐽𝜀
+(
+̂ 𝑢𝑞𝑚𝑣(𝑢)
+𝑞𝑚
+)
+.
+Taking Euclidean norms gives
+|̂ 𝑧𝑚|‖𝑣(𝑑)
+𝑚 ‖2 ≤‖𝐽𝜀‖2|̂ 𝑢𝑞𝑚|‖𝑣(𝑢)
+𝑞𝑚‖2.
+Since
+‖𝑣(𝑑)
+𝑚 ‖2 =
+√
+𝑁𝑑,and‖𝑣 (𝑢)
+𝑞𝑚‖2 =
+√
+𝑁𝑢,
+it follows that
+‖𝐽𝜀‖2 ≥
+√
+𝑁𝑑
+𝑁𝑢
+|̂ 𝑧𝑚|
+|̂ 𝑢𝑞𝑚|.
+Substituting the Gaussian Fourier coefficients from (5) and using𝑇𝑢 =𝑞𝑇𝑑 and
+𝜔𝑑 =𝑞𝜔𝑢 gives
+‖𝐽𝜀‖2 ≥𝑞
+√
+𝑁𝑑
+𝑁𝑢
+𝑎𝑑𝜎𝑑
+𝑎𝑢𝜎𝑢
+𝖾𝗑𝗉
+[1
+2(𝑞𝑚𝜔𝑢)2(𝜎2
+𝑢 −𝜎2
+𝑑)
+]
+.(6)
+Note that (6) must hold forallmodes𝑚with1≤|𝑚|≤𝐷 𝑑(𝜀), where𝐷𝑑(𝜀)
+is the downstream Fourier cutoff at accuracy𝜀. Therefore, if the downstream
+sequenceisnarrowerthantheupstreamsequence,i.e.,𝜎 𝑑 <𝜎𝑢,then𝜎 2
+𝑢−𝜎2
+𝑑 >0,
+and the right-hand side of (6) increases with|𝑚|. The strongest lower bound is
+therefore obtained at|𝑚|=𝐷 𝑑(𝜀). That is,
+‖𝐽𝜀‖2 ≥𝑞
+√
+𝑁𝑑
+𝑁𝑢
+𝑎𝑑𝜎𝑑
+𝑎𝑢𝜎𝑢
+𝖾𝗑𝗉
+[1
+2(𝑞𝐷𝑑(𝜀)𝜔𝑢)2(𝜎2
+𝑢 −𝜎2
+𝑑)
+]
+.(7)
+=== PDF PAGE 11 ===
+SUPPLEMENTARY MATERIAL: ANALYTICAL DERIVATIONS 11
+At finite accuracy𝜀, (7) gives a finite lower bound on‖𝐽𝜀‖2. As𝜀decreases,
+the downstream cutoff𝐷𝑑(𝜀)increases, since more Fourier modes must be re-
+tained to achive the prescribed accuracy. Thus, a narrower downstream se-
+quence is not excluded at finite accuracy, but requires an increasingly large
+operator norm as higher-frequency modes must be retained.
+For exact scaffolding,𝜀→0. Since the Fourier coefficients of the Gaussian
+sequences are nonzero at arbitrarily large|𝑚|, we have
+𝐷𝑑(𝜀)
+𝜀→0
+← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →∞.
+Thus, if𝜎𝑑 < 𝜎𝑢, the lower bound in (7) diverges. Hence, the operator norms
+‖𝐽𝜀‖2 cannot remain uniformly bounded as𝜀tends to0. Thus, exact linear
+scaffolding requires
+𝜎𝑑 ≥𝜎𝑢.
+In other words, exact linear scaffolding rules out downstream Gaussian se-
+quencesthatarenarrowerthantheupstreamsequence. Thisisconsistentwith
+our simulations.
+Amplitude, offset, and perturbations.Once the required temporal modes
+are present,𝐽can rescale them, so amplitude and offset are less constrained
+than period and width. Perturbations propagate directly through the readout.
+Indeed, if𝑧(𝑡) =𝐽𝑢(𝑡)and𝑢↦𝑢+𝛿𝑢, then𝛿𝑧(𝑡) =𝐽𝛿𝑢(𝑡), so disruptions of the
+upstream sequence produce downstream errors through the scaffold itself.
+Finally, by section 3, the active modes of the upstream sequence also deter-
+mine the corresponding Fourier modes of its connectivity profile. These modes
+determinewhichtemporalmodesareavailabletoadownstreamlinearreadout,
+linking the connectivity profile associated with the upstream sequence to the
+family of sequences that can be scaffolded.

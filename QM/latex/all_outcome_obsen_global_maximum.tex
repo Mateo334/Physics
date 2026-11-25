@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\title{Binary optimality of the instantaneous observational-entropy rate over all finite POVMs}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\paragraph{Scope and status.} This is a direct analytic certificate, not an inference from projected-gradient ascent or from KKT conditions alone. It applies to a pure state in finite dimension, a differentiable unitary-evolution instant, fixed measurement effects, full-space trace volumes, and natural logarithms. It does not establish a chaos criterion or a finite-time optimal entropy trajectory. This standalone file has not been compile-tested: no LaTeX compiler was available.
+\section*{Statement}
+Let the Hilbert-space dimension be an integer $d\ge2$. For any finite POVM $\mathcal E=\{E_i\}_{i=1}^m$, define $p_i=\Tr(\rho E_i)$ and $V_i=\Tr E_i$, omitting zero effects. The observational entropy is
+\[S_{\mathrm{obs}}(\rho;\mathcal E)=-\sum_i p_i\log(p_i/V_i).\]
+Suppose $\rho=|\psi\rangle\langle\psi|$ evolves with instantaneous Hamiltonian $H$, and let $v=\Delta_\psi H/\hbar$. The effects are held fixed when taking the derivative. For every finite $m\ge2$,
+\[\max_{\mathcal E:\,|\mathcal E|=m}\dot S_{\mathrm{obs}}=vC_d,\qquad C_d=2\sqrt{p(1-p)}\log\frac{(d-1)p}{1-p}.\]
+Here $p$ is the unique solution in $(1/2,1)$ of
+\[(2p-1)\log\frac{(d-1)p}{1-p}=2.\]
+Thus adding outcomes cannot improve the binary maximum. Exactly $m$ nonzero effects can attain it by proportional splitting of the binary complement. If $v=0$, every fixed-POVM derivative is zero.
+\section*{Normalized tangent and a global certificate}
+Assume $v>0$. Choose orthonormal vectors $|0\rangle=|\psi\rangle$ and $|1\rangle=i(H-\langle H\rangle)|\psi\rangle/\Delta_\psi H$. With $X=|0\rangle\langle1|+|1\rangle\langle0|$, the normalized tangent is $\dot\rho/v=-X$. For an effect $E\ge0$, put $a=\langle0|E|0\rangle$, $b=\operatorname{Re}\langle0|E|1\rangle$, $c=\langle1|E|1\rangle$, and $V=\Tr E$. Completeness cancels the constant terms in the entropy derivative:
+\[\dot S_{\mathrm{obs}}/v=\sum_i f(E_i),\qquad f(E)=2b\log(a/V).\]
+For a zero-probability effect, define $f(E)=0$; this is the actual derivative contribution along the pure-state curve, as checked below.
+Write $D=d-1$, $q=1-p$, $t=\sqrt{q/p}$, and $u=t^2$. In particular, $0<t<1$ and binary stationarity reads
+\[L=\log(D/t^2)=\frac{2(1+t^2)}{1-t^2}.\]
+Define four real coefficients:
+\[k=\frac{2t}{D(1+t^2)},\qquad \nu=\frac{2t}{1-t^2}-\frac{2t^3d}{D(1+t^2)^2},\]
+\[\mu=-2\log\frac{D(1+t^2)}{t^2}+\frac{2\nu}{t},\qquad \lambda=\frac{\nu}{t^2}-\frac2t.\]
+The proposed Hermitian certificate is
+\[\Lambda=\lambda|0\rangle\langle0|+\frac{\mu}{2}X+\nu|1\rangle\langle1|+kI.\]
+It depends on the dimension and tangent frame, not on the effects or their number. Its trace is
+\[\Tr\Lambda=\lambda+\nu+kd=\frac{4t}{1-t^2}=C_d.\]
+We prove the global, individual-effect inequality
+\[f(E)\le\Tr(\Lambda E)\qquad\text{for every }E\ge0.\]
+Unlike a local KKT condition, this inequality immediately bounds any finite sum of POVM contributions.
+\section*{Reduction to a scalar inequality}
+If $a>0$, set $x=b/a$ and $y=V/a$. Positivity implies $c/a\ge x^2$ and $y\ge1+x^2$, including for complex effects and arbitrary couplings to the remaining dimensions. Since $\nu>0$, it suffices to prove
+\[G(x,y)=\lambda+\mu x+\nu x^2+ky+2x\log y\ge0\qquad(y\ge1+x^2).\]
+Indeed,
+\[\frac{\Tr(\Lambda E)-f(E)}a=G(x,y)+\nu(c/a-x^2).\]
+The following coefficient identities will be used:
+\[\lambda+k=\frac{2t^3[(3d-2)+(d-2)u]}{D(1-u)(1+u)^2}>0,\]
+\[\frac{\mu}{2}+\log(1+u)=-\frac{2u}{1-u}-\frac{2ud}{D(1+u)^2}<0.\]
+Also $0<k<1$. Because $d/D\le2$,
+\[\frac{\nu}{t}-1\ge\frac{1-u+7u^2+u^3}{(1-u)(1+u)^2}>0.\]
+In particular, $\nu>t>0$. All these identities follow by substitution and the displayed stationarity equation.
+\paragraph{Case $x\ge0$.} The gap increases with $y$, so its minimum occurs at $y=1+x^2$. Let $F(x)=G(x,1+x^2)$. Direct substitution gives $F(t)=F'(t)=0$, while
+\[F''(x)=2(\nu+k)+\frac{4x(x^2+3)}{(1+x^2)^2}>0\qquad(x\ge0).\]
+Consequently $F(x)\ge0$ and hence $G(x,y)\ge0$ in this case.
+\paragraph{Case $x<0$.} Write $x=-r$ with $r>0$. The minimizing value of $y$ subject to $y\ge1+r^2$ is
+\[y_*(r)=\max\{1+r^2,2r/k\}.\]
+Let $r_-<1<r_+$ be the roots of $k(1+r^2)=2r$. Since
+\[k(1+t^2)=2t/D\le2t,\]
+we have $r_-\le t<1$. For $0\le r\le r_-$, the constrained minimum is the boundary function
+\[g(r)=\lambda+k-r[\mu+2\log(1+r^2)]+(\nu+k)r^2.\]
+The coefficient identities above and $r\le r_-\le t$ imply $g(r)>0$: the constant term is positive and both other terms are nonnegative.
+For all $r>0$, dropping the constraint on $y$ gives the lower bound
+\[G(-r,y)\ge h(r)=\lambda-\mu r+\nu r^2+2r-2r\log(2r/k).\]
+At the junction $h(r_-)=g(r_-)>0$. Put $r_*=1/t>r_-$. Substitution gives
+\[h(r_*)=h'(r_*)=0,\qquad h''(r)=2\nu-\frac2r.\]
+The derivative $h'$ strictly decreases up to $1/\nu$ and strictly increases afterwards. Since $\nu>t$, the point $r_*$ is on the increasing branch and is the unique local minimum of $h$; any other stationary point is a local maximum. Moreover, $h(r)\to+\infty$ as $r\to+\infty$. Thus the global minimum of $h$ on $[r_-,\infty)$ occurs either at $r_-$ or at $r_*$. Both values are nonnegative. This proves $G(-r,y)\ge0$ for $r\ge r_-$; together with the boundary argument, it proves the scalar inequality everywhere. No sign assumption on $\lambda$ was made, so the argument includes $d=2$.
+\section*{Zero probabilities, summation, and attainment}
+If $a=0$, positivity gives $E|0\rangle=0$ and $b=0$, whereas
+\[\Tr(\Lambda E)=\nu c+kV\ge0=f(E).\]
+For a differentiable pure-state lift near the instant, $p_E(\tau)=\langle\psi(\tau)|E|\psi(\tau)\rangle=O(\tau^2)$ when $a=0$. Therefore its entropy contribution is $O(\tau^2|\log|\tau||)$ and its first derivative is zero. The formula for $f$ and the certificate consequently cover all effects, including rank-deficient and zero-probability cases.
+Now sum the individual-effect inequality and use $\sum_i E_i=I$:
+\[\dot S_{\mathrm{obs}}/v=\sum_i f(E_i)\le\sum_i\Tr(\Lambda E_i)=\Tr\Lambda=C_d.\]
+For attainment take $P=|\phi\rangle\langle\phi|$ with $|\phi\rangle=\sqrt p|0\rangle+\sqrt q|1\rangle$. The effects $\{P,I-P\}$ have probabilities $(p,q)$, volumes $(1,D)$, and normalized probability derivatives $(-2\sqrt{pq},2\sqrt{pq})$. Hence
+\[\dot S_{\mathrm{obs}}/v=2\sqrt{pq}\log(Dp/q)=C_d.\]
+For any $m>2$, replace $I-P$ by $m-1$ effects $w_j(I-P)$, with $w_j>0$ and $\sum_jw_j=1$. Each probability, volume and probability derivative scales by the same weight, so both observational entropy and its derivative are unchanged.
+\paragraph{Relation to induction and KKT.} This proves the desired outcome-count statement without assuming that some pair of arbitrary effects can always be merged without lowering the derivative. Completeness gives a common additive upper budget for every effect, independent of $m$. The same operator $\Lambda$ is the binary KKT multiplier, but the global scalar inequality, not KKT stationarity, supplies the missing upper bound. This is a derived result in this workspace; no claim of literature novelty is made.
+\paragraph{Limitations.} The argument concerns unrestricted finite POVMs, a single pure-state unitary tangent, and fixed effects in the derivative. It does not assert the same coefficient for mixed states, common-POVM ensemble optimizations, restricted measurement classes, discontinuous kick instants, or sustained finite-time growth. The prior numerical matches are consistency checks, not premises of the proof.
+\end{document}

@@ -1,0 +1,60 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\begin{document}
+\title{Observational entropy, QFI, and a possible Pesin connection}
+\author{}
+\date{}
+\maketitle
+\section*{1. The exact connection}
+Assume a finite-dimensional system and a fixed POVM $E_a$, with $p_a=\Tr(\rho E_a)>0$, $v_a=\Tr E_a$, and natural logarithms. Introduce the score $u_a=\dot p_a/p_a$ and $\ell_a=\log(p_a/v_a)$. Normalization implies $\sum_ap_au_a=0$, so
+\[S_E=-\sum_ap_a\ell_a,\qquad\dot S_E=-\Cov_p(u,\ell).\]
+Classical Fisher information is $I_E^{(t)}=\sum_ap_au_a^2$. Cauchy--Schwarz and measurement monotonicity of SLD quantum Fisher information give
+\[\boxed{|\dot S_E|\le\sqrt{I_E^{(t)}\Var_p(\ell)}\le\sqrt{F_Q^{(t)}\Var_p(\ell)}.}\]
+Here the SLD satisfies $\dot\rho=(\rho L+L\rho)/2$ and $F_Q^{(t)}=\Tr(\rho L^2)$. The measurement bound follows by applying Hilbert--Schmidt Cauchy--Schwarz to $\sqrt{E_a}\sqrt\rho$ and $\sqrt{E_a}L\sqrt\rho$, then summing over $a$.
+
+\textbf{Why the connection exists:} entropy rate is the pairing of a probability velocity with an entropy gradient; Fisher information is the squared statistical speed. Speed alone does not determine the sign or magnitude of the entropy derivative. Equality additionally requires alignment of the score with centered $\ell_a$ and a measurement attaining QFI.
+
+The argument needs no density-matrix coordinates. For arbitrary state coordinates $x^\mu$ and an observation model $p_a(x)$,
+\[g^E_{\mu\nu}=\sum_a\frac{\partial_\mu p_a\,\partial_\nu p_a}{p_a},\qquad I_E^{(t)}=g^E_{\mu\nu}\dot x^\mu\dot x^\nu.\]
+This observation metric can be degenerate. Zero probabilities require limiting arguments; smooth unitary pure-state trajectories have quadratic opening of zero outcomes, sufficient for the entropy-rate formula. Mere differentiability of an arbitrary density curve is not sufficient.
+
+\section*{2. Why pure-state optimization gives energy uncertainty}
+For a normalized pure state, remove the unphysical phase velocity:
+\[|w\rangle=(I-|\psi\rangle\langle\psi|)|\dot\psi\rangle,\qquad s=\|w\|.\]
+Taking $|0\rangle=|\psi\rangle$ and $|1\rangle=|w\rangle/s$ for $s>0$ gives
+\[\dot\rho=s(|1\rangle\langle0|+|0\rangle\langle1|),\qquad F_Q^{(t)}=4s^2.\]
+All pure state--tangent pairs with equal $s$ are unitarily equivalent. Conjugating a POVM preserves its probabilities, tangent probabilities, and trace volumes in the corresponding transformed pair. Since the rate is linear in $s$, optimization over all $m$-outcome POVMs yields
+\[\boxed{\sup_E\dot S_E=C_{d,m}s=\frac{C_{d,m}}2\sqrt{F_Q^{(t)}}=C_{d,m}\frac{\Delta H}{\hbar}.}\]
+The last equality uses Schr\"odinger evolution; the geometric argument applies to any differentiable pure-state curve. The coefficient is a canonical optimization constant, not a chaos parameter. Its exact numerical value is not established by previous numerical optimizations.
+
+The POVM is held fixed during differentiation, but may be chosen anew for each state and instant. Consequently this is not a sustained entropy-growth law. For independently optimized ensemble members the mean rate is $(C_{d,m}/2)\overline{\sqrt{F_Q}}$, not $(C_{d,m}/2)\sqrt{\overline{F_Q}}$. A single common POVM has only the corresponding upper bound. Mixed states do not generally obey equality with energy uncertainty: a state commuting with $H$ has zero time QFI but may have nonzero energy variance.
+
+\section*{3. The two dynamical equations concern different directions}
+For an autonomous classical Hamiltonian in canonical coordinates,
+\[\dot z=J\nabla H(z),\qquad\dot\xi=JD^2H(z(t))\xi.\]
+The second equation is exact for an infinitesimal initial-condition variation $\xi=D\Phi_t\,\xi_0$. Lyapunov exponents measure growth of such variations. Time QFI instead measures the speed along the orbit. Even classically these are different: $X_H(z(t))=D\Phi_tX_H(z_0)$ is one special tangent direction. On a compact invariant region without equilibria its exponent is zero, although transverse exponents can be positive.
+
+Quantum variables can be wavefunction amplitudes rather than density matrices. Write $H=A+iB$, with $A^{\mathsf T}=A$, $B^{\mathsf T}=-B$, and $\psi=(q+ip)/\sqrt2$. Then
+\[\dot x=Kx,\qquad\dot{\delta x}=K\delta x,\qquad K=\frac1\hbar\begin{pmatrix}B&A\\-A&B\end{pmatrix},\quad x=\begin{pmatrix}q\\p\end{pmatrix}.\]
+This is a Hamiltonian system, but $K$ is also antisymmetric: its propagator is orthogonal. On normalized rays, unitary evolution preserves the Fubini--Study metric. Thus an initial preparation parameter evolved by a common parameter-independent unitary has exactly conserved QFI:
+\[|\psi_t(\theta)\rangle=U_t|\psi_0(\theta)\rangle\quad\Longrightarrow\quad F_Q^{(\theta)}(t)=F_Q^{(\theta)}(0).\]
+For autonomous $H$, physical-time QFI is likewise constant, $F_Q^{(t)}=4(\Delta H)^2/\hbar^2$. A periodic qubit with nonzero $\Delta H$ already has positive optimized instantaneous OE rate without chaos. Neither quantity is automatically a Lyapunov exponent.
+
+\section*{4. Where a Pesin-type connection could enter}
+\textbf{Exact illustrative model, not a quantum theorem.} Take the classical Hamiltonian $H=\sum_i\lambda_iq_ip_i$, with $\lambda_i>0$, an initial Gaussian covariance $\sigma^2I$, and fixed observation blur $\epsilon^2I$. If $M_t$ is the tangent map, the observed covariance is $C_t=\sigma^2M_tM_t^{\mathsf T}+\epsilon^2I$. Its differential entropy satisfies
+\[\dot h_\epsilon=\sum_j a_j(t),\qquad a_j(t)=\frac{\gamma_j\sigma^2e^{2\gamma_jt}}{\sigma^2e^{2\gamma_jt}+\epsilon^2},\]
+where $\gamma_j$ runs over all $\lambda_i$ and $-\lambda_i$. Expanding directions remain visible while contraction falls below resolution. Hence, for fixed $\epsilon>0$,
+\[\dot h_\epsilon\longrightarrow\sum_i\lambda_i,\qquad I_\epsilon^{(t)}=2\sum_ja_j^2\longrightarrow2\sum_i\lambda_i^2.\]
+Without blur the entropy rate is zero. The positive-exponent sum therefore arises from unresolved contraction, not fine-grained volume growth. Moreover scalar Fisher information gives a quadratic sum, not the linear sum needed by Pesin. This unbounded Gaussian example has no normalized invariant Liouville probability on the whole space and is not itself Pesin's theorem.
+
+\textbf{A concrete literature lead.} Goldfriend and Kurchan study entropy of a weak-noise-averaged state, obtaining a response-Gram determinant, not fixed-POVM OE: Phys.\ Rev.\ Research \textbf{3}, 023234 (2021), doi:10.1103/PhysRevResearch.3.023234, printed pp.~4--8, Eqs.~(18)--(29), (42)--(49). For the local perturbation family $\exp[-i\eta^\alpha X_\alpha(t)/\hbar]|\psi_0\rangle$, independently applying the pure-state QFI formula gives
+\[F_{\alpha\beta}=\frac2{\hbar^2}\langle\{X_{\alpha,c}(t),X_{\beta,c}(t)\}\rangle.\]
+Their endpoint covariance therefore has a multiparameter perturbation-QFI interpretation. A half-log determinant of growing eigenvalues can produce a positive-exponent sum. This is not scalar physical-time QFI; the paper's lower-bound saturation and semiclassical/noise limits require additional assumptions.
+
+\textbf{Remaining gap.} A quantum OE/Pesin claim needs a fixed semiclassical measurement, controlled propagation and entropy errors, specified resolution, an appropriate invariant-measure ensemble, and an intermediate window before saturation. Classical Pesin's formula concerns partition-history KS entropy under smoothness and invariant-measure hypotheses, not an arbitrary final-time measurement entropy. At fixed finite $d$, $S_E\le\log d$, so its asymptotic net rate is zero.
+
+\textbf{Conclusion.} The OE--QFI relation is an exact speed/gradient statement. A possible Pesin relation instead concerns resolved unstable-volume growth. A multiparameter response metric plus a justified coarse-graining limit is the promising bridge; identifying it with our fixed-POVM OE rate remains unproved.
+\end{document}

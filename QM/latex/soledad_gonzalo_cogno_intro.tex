@@ -1,0 +1,137 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\DeclareMathOperator{\Tr}{Tr}
+\title{A physicist's introduction to the work of\\Soledad Gonzalo Cogno}
+\author{Source-grounded reading guide}
+\date{25 November 2026}
+\begin{document}
+\maketitle
+\noindent\textbf{Central idea.} A neuron is a nonlinear, driven, dissipative dynamical system; a neural circuit is a heterogeneous interacting population. Gonzalo Cogno's work asks how cellular dynamics, recurrent interactions and plasticity generate reproducible activity, and how that activity represents sensory inputs, space and time. The useful physics is nonlinear dynamics, stochastic processes, collective phenomena and statistical inference---not quantum mechanics.
+
+\smallskip\noindent\textbf{Scope.} This guide covers the accessible texts of eight works on the author's publication list, including one conference abstract and one 2026 preprint. The 2013 proceedings contribution~\cite{noise} was located bibliographically but could not be read; no scientific results are attributed to it here. Equations use consistent introductory notation rather than reproducing every paper's conventions. Detailed source locations and access records accompany the PDFs in \texttt{papers/soledad\_gonzalo\_cogno/}.
+
+\section{The minimum biological dictionary}
+A \emph{spike} is a brief action potential, treated computationally as an event. A \emph{spike train} records its times; a \emph{firing rate} averages events over repeated trials or a time window. A \emph{burst} is a short group of closely spaced spikes, not merely an increased long-time mean rate. A synapse couples neurons; excitatory and inhibitory inputs tend to increase and decrease the recipient's propensity to spike. \emph{Plasticity} means that the coupling changes with activity. A \emph{recurrent} network contains feedback; a \emph{downstream readout} receives its output.
+
+The primary visual cortex (V1) processes visual features such as line orientation. The hippocampal region CA1 and medial entorhinal cortex (MEC) participate in spatial navigation and memory. A \emph{place cell} fires preferentially at particular locations; a \emph{grid cell} has a roughly periodic spatial firing pattern; an \emph{object-vector cell} prefers a displacement from an object. These are descriptions of responses, not exhaustive anatomical neuron types. A temporal sequence in MEC is not automatically a spatial grid pattern.
+
+Extracellular electrodes measure voltages from which spikes are assigned to cells; calcium imaging measures a slower optical proxy for activity. The local field potential (LFP) is a population-related extracellular voltage, not an individual neuron's membrane potential. Thus the measured signal, latent neural state and inferred firing rate must be kept distinct.
+
+\section{A compact mathematical toolbox}
+\paragraph{From membrane dynamics to collective dynamics.}
+A generic conductance description is an electrical current balance; its gating variables obey additional differential equations:
+\[C_m\dot V=I_{\mathrm{ext}}+I_{\mathrm{syn}}-\sum_a g_a(V,\mathbf q)(V-E_a).\]
+Here $C_m$ is capacitance, $V$ voltage, $E_a$ a reversal potential and $g_a$ an effective conductance. A simpler leaky integrate-and-fire model replaces channel dynamics by leak, threshold crossing and reset. Neither model is a Hamiltonian system. For intuition about population dynamics, a common schematic rate model is
+\[\tau\dot r_i=-r_i+\phi\!\left(\sum_jJ_{ij}r_j+I_i(t)\right).\]
+Here $r_i$ is activity, $J_{ij}$ a directed coupling, $I_i$ external drive and $\phi$ a nonlinear response. This equation is background notation, not a claim that every paper uses the same model. Feedback can support fixed points, oscillations or other dynamics; irregular-looking activity alone does not establish chaos.
+
+\paragraph{Representation versus mechanism.}
+An \emph{encoding model} predicts activity from an input or behavioural variable; a \emph{decoder} infers that variable from activity. Successful decoding demonstrates accessible statistical information under the tested protocol, not that the animal uses that decoder. A \emph{mechanistic model} instead proposes dynamical interactions that generate the activity. Several mechanisms can reproduce the same low-dimensional plot.
+
+\paragraph{Population coordinates.}
+For a centred activity matrix $X_{it}$, principal component analysis (PCA) diagonalizes the empirical covariance:
+\[C=\frac{XX^\mathsf T}{T},\qquad Cu_k=\lambda_ku_k,\qquad z_k(t)=u_k^\mathsf TX(t).\]
+The number $T$ denotes sampled time points. PCA finds directions of variance, not automatically independent degrees of freedom or causal collective modes. Normalizing cells and smoothing their traces changes the covariance. A loop in a projection suggests a useful phase coordinate, but by itself proves neither a limit-cycle attractor nor the intrinsic dimension of the full system.
+
+\section{Single neurons: bistability, reliability and burst codes}
+\paragraph{Bistability means two competing dynamical regimes.}
+The 2014 study~\cite{bistable} uses a two-dimensional Morris--Lecar neuron, with voltage and a potassium activation variable. In the parameter interval studied, a stable resting focus and a stable spiking limit cycle coexist, separated by an unstable cycle. Small excursions near rest and sustained spiking have different characteristic frequencies. Periodic forcing can lock spikes to the drive; noise can cause timing jitter and transitions between rest and spiking.
+
+This makes ``which stimulus frequency gives reliable firing?'' a nonlinear question. Driving near the spiking frequency can stabilize precise firing, but may fail to recruit a neuron initially at rest. Driving near the subthreshold resonance can instead help it escape rest. Initial state, forcing strength, noise and observation time all matter. Noise can both induce switches and suppress switches otherwise induced by periodic forcing; it is not simply an additive loss of precision.
+
+The operational reliability statistic compares the temporal variance of the trial-averaged response with the average single-trial variance:
+\[\chi^2=\frac{\operatorname{Var}_t[\langle r_a(t)\rangle_a]}{\langle\operatorname{Var}_t[r_a(t)]\rangle_a}.\]
+Here $a$ labels trials with common deterministic stimulation and independent noise, and $r_a$ is a binned spike train. Identical nonconstant responses give one; unrelated trials have a finite-sample floor. The all-silent case requires a separate convention. This is a reproducibility statistic, not mutual information. A recording can contain many spikes yet be too short to sample rare transitions between attractors: stationary statistics require durations long compared with both residence times. Read the institutional manuscript pp.~4--7 and 21--28; its pagination differs from the journal version.
+
+\paragraph{Burst size as an output alphabet.}
+The 2016 paper~\cite{burst} combines recordings with a different model: a two-compartment pyramidal neuron with dendritic input and somatic spike output. Input surrogates preserve the LFP power spectrum while randomizing Fourier phases. Recorded bursts are compared with features of dominant delta/theta rhythms: voltage, slope, phase and amplitude. An LFP-shaped injected current is a modelling choice, not an identification of extracellular voltage with synaptic current.
+
+Distinguish \emph{when a burst occurs} from \emph{how many spikes it contains}. Let $X$ be a discretized LFP feature, $B$ indicate a burst onset, and $M$ its size when $B=1$. If $R$ records silence or burst size, the information chain rule gives
+\[I(X;R)=I(X;B)+p(B=1)I(X;M\mid B=1).\]
+The study finds that onset timing carries most of the information, with burst size adding a smaller, feature- and cell-dependent contribution. The conditional term uses the feature distribution at burst times, not its unconditional distribution. This is information about a measured signal feature, not proof that downstream neurons exploit it. Read Methods~2.8 and Results~3.1--3.6. The main text was read, but supplementary conductance equations were inaccessible; the awake recordings also come from only one animal.
+
+\section{Balanced visual networks: why stronger structure need not sharpen tuning}
+Gonzalo Cogno and Mato~\cite{balance} model orientation selectivity in an excitatory--inhibitory network of leaky integrate-and-fire neurons. An \emph{orientation map} means nearby cells tend to prefer similar line orientations; a \emph{salt-and-pepper} layout intermixes preferences. Both can have strongly selective cells. Orientation is unchanged by a rotation through $\pi$, so the natural Fourier factor is $e^{2i\vartheta}$. The orientation selectivity index is
+\[\mathrm{OSI}_i=\frac{\left|\sum_\vartheta r_i(\vartheta)e^{2i\vartheta}\right|}{\sum_\vartheta r_i(\vartheta)}.\]
+For positive total response this lies between zero and one. It measures tuning, not dynamical stability.
+
+The key large-connectivity limit is $1\ll K\ll N$, with individual couplings proportional to $K^{-1/2}$. Mean excitatory and inhibitory currents are then order $\sqrt K$, but dynamically cancel to leave an order-one net drive. In the reduced orientation-space model, with inhibitory kernels defined as positive magnitudes, the leading balance condition reads
+\[J_{AE}*r_E-J_{AI}*r_I+I_A=O(K^{-1/2}),\qquad A\in\{E,I\}.\]
+The star denotes circular convolution. Fourier transformation converts this into a two-by-two linear system for each angular harmonic. Thus balance acts like an inverse filtering problem: the response must acquire the profile needed for recurrent currents to cancel the input.
+
+With stable, separable kernels $J_{AB}=G_{AB}J_B$ and a common input profile $I_A[1+2\rho\cos2(\vartheta-\vartheta_0)]$, the authors obtain
+\[\mathrm{OSI}_A=\rho\left|\frac{\widetilde J_A(0)}{\widetilde J_A(1)}\right|.\]
+Here the tilde denotes harmonics in normalized orientation space. Counterintuitively, \emph{less relative modulation of recurrent coupling can mean more selective responses}. Spike-timing-dependent plasticity (STDP) changes weights according to the relative timing of pre- and postsynaptic spikes. Their excitatory STDP can sharpen tuning by strengthening mean coupling more than its angular modulation. This is a model-dependent result, not a universal Hebbian-learning law.
+
+Read Frontiers pp.~5--9, especially Eqs.~(17)--(30) and Figs.~4--6. The inverse formula fails at a zero first harmonic or outside the stable, physically admissible branch; it does not predict infinite selectivity. Reconnection can destabilize that branch and change the conclusion. The one-page BMC item~\cite{poster} is a related conference summary, not an independent replication.
+
+\section{Object-centred population coding in CA1}
+Nagelhus and colleagues ask how an object modifies the hippocampal representation of space~\cite{object}. Rats explore an arena with an object absent, present, moved and subsequently removed. Individual cells show heterogeneous changes. The simpler pattern emerges at population level: activity is reorganized most strongly near the object, with a gradual weakening at greater distances. A small collection of specialized object detectors is therefore not the whole description.
+
+For a physicist, the natural object is the distribution of a population response conditional on location $x$ and condition $c$. The preprint's Bayesian decoder uses counts $n_i$ in a window of duration $\Delta$, and an independent-Poisson likelihood conditional on $x,c$:
+\[p(\mathbf n\mid x,c)=\prod_i\frac{[\Delta r_i(x,c)]^{n_i}e^{-\Delta r_i(x,c)}}{n_i!}.\]
+Here $r_i(x,c)$ is an estimated spatial rate map. Position is then marginalized, not simply supplied as the answer:
+\[p(\mathbf n\mid c)=\sum_xp(\mathbf n\mid x,c)p(x\mid c).\]
+Training and testing use separate data; with equal condition priors the larger likelihood determines the predicted condition. The Poisson independence assumption belongs to this decoder, not necessarily to the biological circuit.
+
+A complementary analysis compares a short-time population ``word'' $W=(n_1,\ldots,n_N)$ with its total count $K=\sum_i n_i$. Keeping \emph{which} cells fired reveals object-related information lost by keeping only how many spikes occurred. The standard information-theoretic quantities are
+\[I(C;W)=\sum_{c,w}p(c,w)\log_2\frac{p(c,w)}{p(c)p(w)},\qquad I(C;K)\leq I(C;W).\]
+The inequality is a general consequence of deterministic coarse-graining, not the experimental result itself. The result is the measured difference between these representations, especially near the object. In the preprint, words use 10-ms windows, the all-silent word is excluded, and finite-sample bias is estimated using shuffled condition labels. Accordingly the reported information concerns that selected ensemble. Distributed coding does not by itself prove irreducible many-cell synergy.
+
+\paragraph{What to inspect.}
+Read the population decoding, population-vector correlation and word analyses together (preprint Figs.~3--5), then the shuffling, occupancy and temporal-drift controls. Technical details here were checked in the 2022 full-text preprint; the final 2023 article's bibliographic record and abstract were checked, but its full PDF could not be obtained.
+
+\section{Slow MEC sequences: a collective phase on behavioural timescales}
+The Nature paper~\cite{sequences} records MEC populations in head-fixed mice running freely on a wheel in darkness, without scheduled rewards. In oscillatory sessions, many cells activate in a reproducible order over tens of seconds to minutes. The phenomenon is seen with both calcium imaging and spike recordings, and sequences can continue during immobility. It is therefore not simply a code for wheel position or distance travelled, although its occurrence is related to behavioural state. Fifteen of 27 imaging sessions were classified as oscillatory: the result is not universal across every recording.
+
+The distinction between \emph{cell order} and \emph{population phase} is essential. Using the PCA notation above, cells are sorted by their loadings on the first two components, while time is assigned a phase from the projected activity:
+\[\theta_i=\operatorname{atan2}(u_{2,i},u_{1,i}),\qquad \varphi(t)=\operatorname{atan2}(z_2(t),z_1(t)).\]
+Sequentially active cells occupy successive positions around this activity-space ring. The ring is not a physical arrangement of neurons. One phase can approximately describe progression around the loop without the entire recorded activity being exactly rank two. Temporal shuffles, consistency of ordering across recording halves, phase locking and ensemble-transition statistics provide evidence beyond an attractive projection.
+
+For intuition, phase locking of cell $i$ can be summarized by the length of its mean event-time phasor:
+\[L_i=\left|\frac{1}{n_i}\sum_{k=1}^{n_i}e^{i\varphi(t_{ik})}\right|.\]
+Here $t_{ik}$ are that cell's event times and $n_i>0$ its event count. A concentrated preferred phase gives large $L_i$, but a cell may skip cycles while remaining phase locked. Statistical significance requires comparison with an appropriate shuffled null model.
+
+The proposed function is a slowly evolving temporal template from which other circuits might construct activity patterns. This is a hypothesis supported by an illustrative readout model, not a demonstrated memory mechanism. The experiment does not identify the recurrent wiring or prove that the observed loop is a stable autonomous limit cycle. Read journal pp.~338--344, especially Figs.~2--5, then PDF Methods pp.~12--16 for phase and oscillation definitions.
+
+\section{Recurrent sequences: an inverse problem with nonunique solutions}
+The 2026 preprint~\cite{recurrent} asks which connectivity can generate such sequences. It trains recurrent rate networks on phase-shifted activity bumps and on recorded sequences. Unlike the schematic rate equation above, its dynamical variable is an activation $h_i$, with sigmoid output:
+\[\tau\dot h_i=-h_i+\sum_jW_{ij}r_j+\zeta_i,\qquad r_i=\frac{1}{1+e^{-h_i}}.\]
+The matrix element $W_{ij}$ connects source $j$ to recipient $i$; $\zeta_i$ is noise. Different trained matrices can produce similar trajectories. When cells are ordered by sequence phase, however, the average weight at each circular separation is similar:
+\[c(d)=\frac{1}{N}\sum_{i=0}^{N-1}W_{i,(i+d)\bmod N}.\]
+This \emph{connectivity profile} is indexed by functional sequence order, not anatomical distance. Its asymmetry helps support directed progression of the activity bump. The fitted matrices are model-inferred couplings, not measured synapses; the model also does not impose a fixed excitatory or inhibitory sign on every neuron's outgoing weights.
+
+\paragraph{Why microscopic connectivity is not uniquely determined.}
+For a prescribed noiseless rate trajectory $f(t)$ strictly between zero and one, define $h^*(t)$ componentwise by the inverse sigmoid. Exact support of that trajectory requires
+\[h_i^*=\log\frac{f_i}{1-f_i},\qquad Wf=h^*+\tau\dot h^*.\]
+This constrains the action of $W$ on the trajectory, not on every direction in state space. For uniformly phase-shifted periodic profiles, the analytical supplement truncates the Fourier representation at a specified accuracy. If $P_D$ projects onto the retained modes, the corresponding support constraint admits
+\[W=W_D+\Delta W,\qquad \Delta W P_D=0.\]
+Here $W_D$ is a canonical circulant solution on that subspace; a circulant matrix has weights depending only on circular index difference and is diagonal in Fourier modes. Thus low-frequency collective dynamics constrain only part of the microscopic connectivity. The low-pass profile is fixed under the stated assumptions; similarity of the \emph{entire} learned profile also reflects the training/regularization procedure. Smooth Gaussian profiles are not exactly finite rank, and support of a trajectory does not establish its stability against perturbations.
+
+\paragraph{What can a downstream circuit reconstruct?}
+A static linear readout $z(t)=Ar(t)$ treats the sequence as a temporal basis. If the upstream activity repeats with period $P$, then
+\[r(t+P)=r(t)\quad\Longrightarrow\quad z(t+P)=z(t).\]
+It cannot generate a new longer fundamental period without extra state, time-dependent weights or additional input. It can suppress harmonics and produce shorter periods. Narrower output bumps require amplification of weak high-frequency input components: this is an ill-conditioned deconvolution problem. The strict Gaussian width bound in the supplement requires a continuum limit and bounded readout norm; finite-accuracy sharpening is not categorically impossible. Read main Results/Figs.~1--5 and the analytical supplement, especially pp.~1--7 and 9--11. These are model results in a preprint, not an experimentally established wiring mechanism.
+
+\section{Uncertainty: a useful methodological side paper}
+Simmonds and colleagues~\cite{uncertainty} audit how different disciplines quantify model-related uncertainty. Their framework separates uncertainty in response data, explanatory data, parameters and model structure. The practical lesson is to distinguish measurement error from uncertain parameters and from the possibility that the model class itself is wrong. A narrow parameter confidence interval does not resolve structural non-identifiability. The audit examines reporting practices, not the correctness of every reported interval; see their framework, Box~2 and limitations. It is methodological context rather than a new neural mechanism.
+
+\section{How to read the papers critically}
+For the quickest route, read the Nature sequence paper first, then the 2026 modelling preprint and the CA1 population-code paper. Use the 2014 bistability paper for the single-cell dynamical foundation, the 2016 burst paper for coding statistics, and the 2015 visual-cortex paper for balance and plasticity. The BMC abstract is a short companion to the latter; the uncertainty review is optional methodological context.
+
+For each result ask: what was measured, what was inferred, which controls rule out trivial alternatives, and which claims require a model? In particular, do not identify stimulus-response mutual information with a dynamical entropy rate. Neither a noisy spike raster nor a ring-shaped population trajectory establishes a positive Lyapunov exponent. The main conceptual bridge from physics is that reproducible computation can emerge in coarse population variables despite heterogeneous microscopic activity.
+
+\begin{thebibliography}{9}
+\bibitem{noise} S.~Gonzalo-Cogno and I.~Samengo, \emph{Effect of input noise on neuronal firing rate}, AIP Conference Proceedings \textbf{1510}, 247--250 (2013), \href{https://doi.org/10.1063/1.4776516}{doi:10.1063/1.4776516}. Bibliographic record only; full text not accessed.
+\bibitem{bistable} S.~Gonzalo Cogno, S.~Schreiber and I.~Samengo, \emph{Dynamics and reliability of bistable neurons driven with time-dependent stimuli}, Neural Computation \textbf{26}, 2798--2826 (2014), \href{https://doi.org/10.1162/NECO_a_00671}{doi:10.1162/NECO\_a\_00671}. Read in the \href{https://ri.conicet.gov.ar/handle/11336/21388}{institutional manuscript}.
+\bibitem{burst} M.~Constantinou, S.~Gonzalo Cogno, D.~H.~Elijah, E.~Kropff, J.~Gigg, I.~Samengo and M.~A.~Montemurro, \emph{Bursting neurons in the hippocampal formation encode features of LFP rhythms}, Frontiers in Computational Neuroscience \textbf{10}, 133 (2016), \href{https://doi.org/10.3389/fncom.2016.00133}{doi:10.3389/fncom.2016.00133}.
+\bibitem{sequences} S.~Gonzalo Cogno et al., \emph{Minute-scale oscillatory sequences in medial entorhinal cortex}, Nature \textbf{625}, 338--344 (2024), \href{https://doi.org/10.1038/s41586-023-06864-1}{doi:10.1038/s41586-023-06864-1}.
+\bibitem{recurrent} L.~M.~Braun, M.~Karsrud Nordal, S.-N.~Hanssen Ramb{\o}, C.~Clopath and S.~Gonzalo Cogno, \emph{A common structure in recurrent networks supports neural sequence generation locally and in downstream neurons}, bioRxiv v1 (8 September 2026), \href{https://doi.org/10.64898/2026.09.02.748960}{doi:10.64898/2026.09.02.748960}. Preprint; analytical supplement also read.
+\bibitem{balance} S.~Gonzalo Cogno and G.~Mato, \emph{The effect of synaptic plasticity on orientation selectivity in a balanced model of primary visual cortex}, Frontiers in Neural Circuits \textbf{9}, 42 (2015), \href{https://doi.org/10.3389/fncir.2015.00042}{doi:10.3389/fncir.2015.00042}.
+\bibitem{poster} S.~Gonzalo Cogno and G.~Mato, \emph{Orientation selectivity in a model of primary visual cortex with and without orientation map}, BMC Neuroscience \textbf{16}(Suppl.~1), P160 (2015), \href{https://doi.org/10.1186/1471-2202-16-S1-P160}{doi:10.1186/1471-2202-16-S1-P160}.
+\bibitem{object} A.~Nagelhus, S.~O.~Andersson, S.~Gonzalo Cogno, E.~I.~Moser and M.-B.~Moser, \emph{Object-centered population coding in CA1 of the hippocampus}, Neuron \textbf{111}, 2091--2104.e14 (2023), \href{https://doi.org/10.1016/j.neuron.2023.04.008}{doi:10.1016/j.neuron.2023.04.008}. Full text read: \href{https://doi.org/10.1101/2022.07.07.499197}{2022 preprint}.
+\bibitem{uncertainty} E.~G.~Simmonds et al., \emph{Insights into the quantification and reporting of model-related uncertainty across different disciplines}, iScience \textbf{25}, 105512 (2022), \href{https://doi.org/10.1016/j.isci.2022.105512}{doi:10.1016/j.isci.2022.105512}.
+\end{thebibliography}
+\end{document}

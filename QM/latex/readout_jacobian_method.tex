@@ -1,0 +1,19 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\begin{document}
+\section*{Readout Jacobian}
+Suppose we take a closed finite-dimensional system, with initial state $\rho$ and evolution $U_t=\exp(-itH/\hbar)$. Instead of comparing the density matrices directly, we take fixed Hermitian observables $A_a$ and study their expectation values. These are expected measurement readouts, not individual outcomes; we do not measure during the evolution.
+\[x_a(t)=\Tr(A_aU_t\rho U_t^\dagger).\]
+Now we perturb the initial state in directions specified by Hermitian generators $B_b$,
+\[\rho_{\boldsymbol\epsilon}=V_{\boldsymbol\epsilon}\rho V_{\boldsymbol\epsilon}^\dagger,\qquad V_{\boldsymbol\epsilon}=\exp\!\left(-\frac{i}{\hbar}\sum_b\epsilon_bB_b\right).\]
+We evolve each preparation with the same $U_t$. The Jacobian tells us how much each readout changes when we vary the initial preparation:
+\[R_{ab}(t)=\left.\frac{\partial x_a(t,\boldsymbol\epsilon)}{\partial\epsilon_b}\right|_{\boldsymbol\epsilon=0}=\frac{i}{\hbar}\Tr(\rho[B_b,A_a(t)]),\qquad A_a(t)=U_t^\dagger A_aU_t.\]
+Thus, to first order, we have
+\[\delta\boldsymbol x(t)=R(t)\delta\boldsymbol\epsilon,\qquad\dot{\delta\boldsymbol x}(t)=\dot R(t)\delta\boldsymbol\epsilon.\]
+If $R(t)$ is square and invertible, we can eliminate the initial parameters:
+\[\dot{\delta\boldsymbol x}(t)=\dot R(t)R(t)^{-1}\delta\boldsymbol x(t).\]
+However, this is only the response equation along our chosen preparation family. To obtain a closed evolution of $x$ for all states, we need the commutators to stay in the span of the readouts and the identity:
+\[\frac{i}{\hbar}[H,A_a]=c_aI+\sum_bL_{ab}A_b\quad\Longrightarrow\quad\dot x=c+Lx,\qquad\dot{\delta x}=L\delta x.\]
+The singular values of $R(t)$ measure response for specified input and output norms. They are not automatically Lyapunov growth factors: $R(0)$ need not be the identity, and closure does not itself imply instability.
+\end{document}

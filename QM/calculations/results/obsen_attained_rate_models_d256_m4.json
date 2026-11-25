@@ -1,0 +1,52 @@
+{
+  "d": 256,
+  "outcomes": 4,
+  "coefficient": 5.8783229964001205,
+  "results": [
+    {
+      "model": "SYK, seed 20261113",
+      "t0": "0",
+      "generator_uncertainty": 0.4147121315950339,
+      "rate": 2.437811860041201,
+      "finite_difference_rate": 2.4378118598247096,
+      "initial_entropy": 2.518546192811795,
+      "final_elapsed_time": 4.822622362909312,
+      "entropy_range": [
+        2.518546192811795,
+        5.545177433299582
+      ]
+    },
+    {
+      "model": "Kicked top, K=6",
+      "t0": "1.1",
+      "generator_uncertainty": 80.81305871677911,
+      "rate": 475.0452614642759,
+      "finite_difference_rate": 475.0452614095284,
+      "initial_entropy": 2.5185461928117707,
+      "final_elapsed_time": 0.02474847545381601,
+      "entropy_range": [
+        2.5185461928117707,
+        5.5420275421749645
+      ]
+    },
+    {
+      "model": "Kicked rotor, K=10",
+      "t0": "1+",
+      "generator_uncertainty": 62.00754796261677,
+      "rate": 364.50039513903357,
+      "finite_difference_rate": 364.50039508188075,
+      "initial_entropy": 2.5185461928117916,
+      "final_elapsed_time": 0.032254137854407075,
+      "entropy_range": [
+        2.5185461928117916,
+        5.318162436210791
+      ]
+    }
+  ],
+  "python": "3.11.9",
+  "numpy": "2.2.3",
+  "matplotlib": "3.10.0",
+  "protocol": "One different fixed optimized POVM per model; no measurement backaction",
+  "window": "0 <= elapsed time * Delta(generator) <= 2; all within fixed-generator phases",
+  "caveat": "Best attained initial slopes, not globally certified maxima or sustained maximal rates. Rotor finite-d cutoff."
+}

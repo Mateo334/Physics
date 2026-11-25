@@ -1,0 +1,49 @@
+{
+  "d": 512,
+  "cutoff_check_d": 1024,
+  "state_count": 100,
+  "seed": 20261123,
+  "K_interval": [
+    4,
+    12
+  ],
+  "K_step": 0.02,
+  "hbar": 0.09817477042468103,
+  "initial_sigma_q": 0.22155673136318949,
+  "ensemble": "Uniform independent q0 in [0,2pi), fixed p0=0; same packets for every K",
+  "protocol": "Prepare Gaussian; free one time unit; kick; DeltaH for H_phys=p^2/2 at t=1+",
+  "maximum_relative_cutoff_error": 3.0319281361082603e-15,
+  "maximum_outer20percent_probability": 1.115834782629505e-28,
+  "mean_increases_at_every_sample": true,
+  "selected_values": [
+    {
+      "K": 4.0,
+      "mean": 1.1707236988608742,
+      "sem": 0.035191118804221516
+    },
+    {
+      "K": 6.0,
+      "mean": 2.516344508670109,
+      "sem": 0.07215856707473361
+    },
+    {
+      "K": 8.0,
+      "mean": 4.389014937965313,
+      "sem": 0.12337922396672563
+    },
+    {
+      "K": 10.0,
+      "mean": 6.789539974538027,
+      "sem": 0.18889207338642522
+    },
+    {
+      "K": 12.0,
+      "mean": 9.718165178525238,
+      "sem": 0.2687083971183304
+    }
+  ],
+  "python": "3.11.9",
+  "numpy": "2.2.3",
+  "matplotlib": "3.10.0",
+  "caveat": "Mean of individual pure-state energy uncertainties, not uncertainty of the ensemble mixture; no monotonicity theorem or chaos inference."
+}

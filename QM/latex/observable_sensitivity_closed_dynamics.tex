@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\begin{document}
+\title{Observable sensitivity with exact closed quantum dynamics}
+\author{}
+\date{}
+\maketitle
+\section{The lifted dynamics}
+Let the Hilbert space have finite dimension, let $H$ be a fixed Hermitian Hamiltonian, and let $\rho_\epsilon(0)$ be a differentiable family of full-rank density matrices. Define $V(0)=\partial_\epsilon\rho_\epsilon(0)|_0$. All preparations evolve with the same $U_t=\exp(-itH/\hbar)$. A fixed finite POVM has nonzero effects $E_i$. No intermediate measurement is performed.
+\[\dot\rho=\mathcal L\rho,\qquad\dot V=\mathcal LV,\qquad\mathcal LX=-\frac{i}{\hbar}[H,X].\]
+\[p_i=\Tr(E_i\rho),\qquad s_i=\partial_\epsilon p_i|_0=\Tr(E_iV).\]
+\[\dot p_i=\Tr(E_i\mathcal L\rho),\qquad\dot s_i=\Tr(E_i\mathcal LV).\]
+These equations are exact at every time. They need not close in the probability variables: the underlying state and its tangent are retained. The tangent is an initial-state variation, not a Hamiltonian perturbation. At a full-rank state all traceless Hermitian matrices are admissible initial tangents; restricting preparation to a unitary orbit restricts this tangent space.
+\section{An exact information-accessibility measure}
+Because the reference state is full rank, every $p_i$ is positive. The classical Fisher information of this fixed measurement for the preparation parameter is
+\[I_E(t;V_0)=\sum_i\frac{s_i(t)^2}{p_i(t)}.\]
+Its square root is the infinitesimal statistical separation seen by the measurement. Direct differentiation gives
+\[\dot I_E=\sum_i\left(\frac{2s_i\dot s_i}{p_i}-\frac{s_i^2\dot p_i}{p_i^2}\right).\]
+When $I_E>0$, define the instantaneous logarithmic length rate and its finite-time average:
+\[r_E(t)=\frac{\dot I_E(t)}{2I_E(t)},\qquad\lambda_E(t)=\frac{1}{2t}\log\frac{I_E(t)}{I_E(0)}.\]
+The second definition requires $t>0$ and positive endpoint information. The integral of $r_E$ gives the finite-time average only on intervals without zeros. These are readout sensitivity rates, not established quantum Lyapunov exponents.
+
+Let $S$ be the symmetric logarithmic derivative for the preparation tangent:
+\[V=\frac{\rho S+S\rho}{2},\qquad F_Q(\rho,V)=\Tr(\rho S^2).\]
+Under the common unitary, $S_t=U_tS_0U_t^\dagger$, so $F_Q(\rho_t,V_t)=F_Q(\rho_0,V_0)$. To bound the fixed-measurement information, use Hilbert--Schmidt Cauchy--Schwarz with $A_i=E_i^{1/2}\rho^{1/2}$ and $B_i=E_i^{1/2}S\rho^{1/2}$. Since $s_i=\operatorname{Re}\Tr(A_i^\dagger B_i)$,
+\[s_i^2\leq p_i\Tr(\rho S E_i S),\qquad I_E\leq\Tr(\rho S^2)=F_Q.\]
+For $V_0\ne0$, a well-normalized quantity is therefore
+\[\eta_E(t;V_0)=\sqrt{\frac{I_E(t;V_0)}{F_Q(\rho_0,V_0)}}\in[0,1].\]
+It measures the fraction of the global infinitesimal statistical distinguishability accessible to this particular measurement. Its growth is information becoming accessible, not an increase in global distinguishability. This recasts the previously studied Fisher bound in the present exact lifted dynamics; it is not a new quantum Fisher theorem.
+\section{A hidden-tangent obstruction to maximizing gain}
+Let $\mathcal T$ be the real space of traceless Hermitian matrices and write $CV=(\Tr(E_iV))_i$ and $T_tV=U_tVU_t^\dagger$. Assume $C\ne0$. For any fixed genuine norm on the probability tangent space, define
+\[G_t=\sup_{CV\ne0}\frac{\|CT_tV\|}{\|CV\|}.\]
+Then $G_t$ is finite if and only if $\ker C\subseteq\ker(CT_t)$. Indeed, if $CZ=0$ but $CT_tZ\ne0$, choose $W$ with $CW\ne0$ and set $V_\epsilon=Z+\epsilon W$. Its initial readout tends to zero while the final readout tends to a nonzero vector. Conversely, the kernel inclusion makes $CV\mapsto CT_tV$ a well-defined linear map on the finite-dimensional image of $C$, hence bounded. Rescaling each tangent leaves the ratio unchanged, so fixing a nonzero Hilbert--Schmidt tangent norm does not cure the divergence.
+
+Thus unconstrained maximization of final-to-initial readout gain can be infinite even in a regular system. This is not failure of the lifted equations. It is failure of the readout denominator to control hidden perturbations. For restricted preparation families the same argument must be applied on their actual tangent space, not on all of $\mathcal T$.
+\section{An analytic regular-qubit control}
+Take $0<r<1$ and
+\[H=\frac{\hbar\omega}{2}\sigma_y,\qquad\rho_0=\frac{I+r\sigma_y}{2},\qquad V_0=\frac{a\sigma_x+b\sigma_z}{2}.\]
+The reference state is stationary. The tangent can be generated within its unitary orbit: for sufficiently small $\epsilon$, choose the Bloch vector $(\epsilon a,\sqrt{r^2-\epsilon^2(a^2+b^2)},\epsilon b)$. Measure $E_\pm=(I\pm\sigma_x)/2$. Rotation about the $y$ axis yields
+\[p_\pm=\frac12,\qquad s_\pm(t)=\pm\frac{a\cos(\omega t)+b\sin(\omega t)}{2}.\]
+\[I_E(t)=(a\cos(\omega t)+b\sin(\omega t))^2,\qquad F_Q=a^2+b^2.\]
+For $a\ne0$, the readout length gain is $|a\cos(\omega t)+b\sin(\omega t)|/|a|$. It becomes arbitrarily large as $a$ tends to zero at a time with $b\sin(\omega t)\ne0$. This is ordinary periodic rotation, not chaos. The bounded accessibility $\eta_E$ reports the same effect without a divergent initial-readout normalization.
+\section{Physically weighted probability geometry}
+Fisher geometry measures statistical distinguishability, but does not encode physical distances between different outcomes. Alternatively, assign a fixed metric $d_{ij}$ to the finite outcome set. For a zero-sum vector $s$, define its transport norm by the finite Kantorovich dual:
+\[\|s\|_{\mathrm{tr}}=\max_{|f_i-f_j|\leq d_{ij}}\sum_i f_i s_i.\]
+One may fix one $f_i=0$ without changing the maximum. The sign symmetry of the feasible set makes this a norm on zero-sum vectors. For any differentiable valid probability family,
+\[W_1(p_\epsilon,p_0)=|\epsilon|\|s\|_{\mathrm{tr}}+o(|\epsilon|).\]
+This follows from the finite-metric dual formula for $W_1$ and continuity of the resulting norm. Unlike Fisher geometry, it depends on a physical ground metric; unlike a smooth quadratic metric, it is generally nonsmooth when the optimizing potential changes. Applying it to $s=CV$ gives an exact, finite-time state-tangent seminorm, with the same hidden-tangent obstruction if the POVM is incomplete. No assumption of closed probability dynamics is required.
+\section{Fixed quadratic readout geometry}
+For comparison, give the readouts a fixed quadratic weight $W$ and set $M=C^\ast WC$, where the adjoint uses the real Hilbert--Schmidt pairing. On $\mathcal T$, $\mathcal L^\ast=-\mathcal L$, and the measured squared tangent length obeys
+\[q(t)=\langle V_t,MV_t\rangle,\qquad\dot q=\langle V_t,(M\mathcal L-\mathcal LM)V_t\rangle.\]
+The commutator here is self-adjoint. Thus growth is exactly the mismatch between unitary rotation and the fixed readout geometry. For an informationally complete readout with positive weight, $M>0$ and
+\[\frac{\sqrt{q(t)}}{\sqrt{q(0)}}\leq\sqrt{\frac{\lambda_{\max}(M)}{\lambda_{\min}(M)}}.\]
+This bound is uniform in time. Moreover, this quadratic expression does not depend on the reference $\rho$: any reference dependence must enter through the allowed perturbations, their normalization, or a state-dependent output metric. A fixed linear readout with fixed quadratic geometry cannot by itself distinguish reference states when given the same ambient tangent.
+\section{Conclusion and limitations}
+Keeping the exact state and tangent resolves the closure issue, not the interpretation issue. The resulting programme concerns accessibility or physical transport of an initial perturbation under closed quantum dynamics. It must specify the measurement, physical geometry and preparation tangent class before optimization. A regular-system control is essential. Neither a positive finite-time rate nor large gain alone establishes chaos or a relation to ALF, CNT or KS entropy. No simulations or asymptotic exponential-growth claim are made here.
+\end{document}

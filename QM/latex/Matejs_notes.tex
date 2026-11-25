@@ -1,0 +1,3373 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\definecolor{gold}{RGB}{212,175,55}
+\usepackage{derivative}
+\newcommand{\x}{$(X,T,\mu) $ }
+\newcommand{\afl}{h_{\text{AFL}}}
+\newcommand{\diag}{h_{\text{DIAG}}}
+\newcommand{\rafl}{\rho_{\text{AFL}}}
+\newcommand{\rdiag}{\rho_{\text{DIAG}}}
+\newcommand{\qx}{$(\mathcal{A},\Theta,\omega) $ }
+\newcommand{\sigsub}{$\sigma-$algebra}
+\title{Overview - diploma}
+\date{March 2026}
+
+\begin{document}
+\tableofcontents
+\section{Classical overview}
+Sections 1 and 2 are a very simplified recap of the facts known. Calculations start at section 3. Also section 4 is more less a recap. 
+\subsection{Definitions, notation}
+\x is a triplet, for which
+
+\begin{itemize}
+    \item X is a measurable space with a $\sigma$-algebra of measurable sets 
+    \item T is measurable, which means $A\in\Sigma \implies T^{-1}(A)\in \Sigma$ 
+    \item X is endowed with a T-invariant, positive normalized measure $\mu$, such that $\mu(X) = 1$ and $\mu\circ T^{-1} = \mu$
+\end{itemize}
+\subsubsection{Partitions}
+\begin{itemize}
+    \item A finite measurable partition P of \x is any collection of measurable subsets $P_i\subseteq X, i\in I_P$, $I_P$ an index set of finite cardinality, such that $P_i\cap P_j = \emptyset$ for $i\neq j$ and $\bigcup_{i\in I_P}P_i = X$. $P_j$ are called atoms. 
+    \item A partition P is finer than partition Q if the atoms of Q are unions of atoms of P: $Q_j = \bigcup_{i\in I_j\subseteq I_P}P_i $ for all $j\in I_Q$
+    \item Given P,Q, the partition $P\vee Q = \{P_i \cap Q_j\}$ is the coarsest refinement of P and Q
+\end{itemize}
+
+Next, we have partitions of P, which are defined by
+\begin{equation}
+    P\vee Q = \{A\cap B| A\in P , B\in Q\}
+\end{equation}
+And the partitions at successive times are given by
+\begin{equation}
+    P^{n} = \bigvee_{j=0}^{n-1}T^{-j}(P) = P\vee T^{-1}(P)\vee...\vee T^{1-n}(P)
+\end{equation}
+\subsubsection{Lyapunov exponents}
+Classical Lyapunov exponents are given by
+\begin{equation}
+    \lambda = \lim_{t\to \infty}\frac{1}{t}\log{\left|\left|\frac{D\phi^t(x)\delta x(0)}{\delta x(0)}\right|\right|},
+\end{equation}
+where $\delta x(0)$ is a small perturbation, $\phi^t(x)$ is the flow and the evolution is given by $\delta x(t)=  D\phi^t\delta x(0)$. \\
+\subsubsection{Borel sets}
+We define them through the $\sigma$-algebra, which is a collection of subsets of a topological space $\displaystyle X$ that contains both the empty set and the entire set $\displaystyle X$, and is closed under countable union and complement. \\
+Then we can define Borel algebra to be the smallest one containing all open sets of
+$\displaystyle X$.\\
+\subsubsection{CPTP maps}
+A CPTP map C describes a deterministic quantum evolution, which has the
+following properties:
+\begin{itemize}
+    \item Linear: $C(p_1\rho_1 +p_2\rho_2) = p_1C(\rho_1)+p_2C(\rho_2)$. (Note that $p_1$ and $p_2$ are arbitrary complex scalars, and $\rho_1$, $\rho_2$ any operators, but in this notation we imply that they can be probabilities and density matrices respectively)
+    \item Trace preserving (to preserve total probability = 1): $\Tr C(\rho) = \Tr(\rho)$.
+    \item Positive (to map density matrices to density matrices): If $\rho \geq 0$, then $C(\rho) \geq 0$.
+    \item Completely positive: For every ancillary system B and any positive operator $R_{AB}$ defined on the system $A\otimes B$, applying $C$ on system $A$ and identity map on $B$ preserves positivity $(C\otimes I_B) (R_{AB}) \geq0$
+\end{itemize}
+CPTP map - quantum operation or quantum channel, can be written in finite dimensions as 
+\begin{equation}
+        C(\rho) = \sum_kA_k\rho A_k^+, 
+\end{equation}
+with $\sum_kA_k^+A_k = 1$ and $\rho$ the density matrix. This always constitutes a CPTP map.\\
+\subsubsection{POVM}
+ POVM stands for “positive operator-valued measure.”
+A POVM is a set of positive semi-definite operators $M_a \geq 0$ (called effects), such that $\sum_aM_a = I$. If we do the POVM $M_a$ on the density matrix $\rho$, the probability of outcome a is
+\begin{equation}
+    p_a = \Tr(M_a\rho).    
+\end{equation}
+A simple example of a POVM is a projective measurement where each $M_a$ is an orthogonal projector. POVMs also include things like “with probability 1/2, measure in the Z basis and with probability 1/2, measure in the X basis,” plus more complicated things.
+\subsection{Dynamical entropy}
+From Observational entropy, we start with triplet $(X,T,\mu)$ with $X$ being the phase space, $T$ is a dynamical map and $\mu$ is the measure on the phase space. \\
+Measure-theoretic entropy rate - KS is given by
+\begin{equation}
+    h_\mu(T) = \sup_P{h_\mu(T, P)}.
+\end{equation}
+Here $P = {P_i}$ denotes a (finite) measurable partition.
+\subsection{Generating partition}
+Let \x a measure theoretic dynamical triplet with $\Sigma$ its $\sigma-$algebra. 
+A finite measurable partition $P$ of $X$ is called generating if (T invertible)
+\begin{equation}
+    \sigma \left(\bigvee_{-\infty}^\infty T^{-j}(P)\right)=\Sigma. 
+\end{equation}
+This holds up to sets of measure zero. If $T$ is not invertible, \\
+\begin{equation}
+    \sigma\left(\bigvee_{0}^\infty T^{-j}(P)\right)=\Sigma.
+\end{equation}
+\subsection{Kolmogorov-Sinai theorem} states that if the partition $P$ is generating, then 
+\begin{equation}
+    h_\mu(T) = h_\mu(T, P)
+\end{equation}
+
+Pesin theorem states that for a $C^{1+\alpha}$ diffeomorphism $T$ on a compact manifold $M$, with an invariant absolutely continuous measure, the KS entropy is given by 
+\begin{equation}
+    h_\mu(T) = \int_M\sum_{\lambda>0}\lambda(x) d\mu(x),
+\end{equation}
+with counting multiplicities in the sum. 
+\section{Quantum overview}
+Operator A of a unital $C^*$ algebra $\mathcal{A}$ is positive if it is hermitian and its spectrum $\sigma \geq 0$. Positive operators are of the form $A = B^+B$ for some B.  
+
+The von Neumann entropy $S_{vN}$ is given by 
+\begin{equation}
+    S_{vN} = -\text{Tr}(\rho \log \rho).
+\end{equation}
+If we have a specific coarse graining, then the density matrix changes accordingly
+\begin{equation}
+    \rho' = \sum_iP_i\rho P_i,
+\end{equation}
+after which the $S_{vN}$ changes, and we have $S_{vN}' \geq S_{vN}$.
+
+\subsection{Neumark theorem}
+\subsection{Ehrenfest time}
+Is the time during which the Bohr correspondence principle $\hbar \to 0$ remains valid. \\
+For a narrow initial wavepacket, Ehrenfest theorem says that the avg of quantum operators are close to the corresponding classical avgs.\\
+In systems with integrable classical dynamics, $\tau_E \propto 1/\hbar$. In the chaotic dynamics, $\tau_E \propto \frac{|\ln{\hbar}|}{h}$, where $h$ is the classical ks entropy. 
+\subsection{OTOC}
+Out of time ordered correlators are typically defined by the following relation
+\begin{equation}
+    C_T = \langle[V(t),W(0)]^+[V(t),W(0)]\rangle,
+\end{equation}
+which reduces if both operators are hermitian to
+\begin{multline}
+    C_T = -\langle[V(t),W(0)]^2\rangle = -\langle(VW-WV)^2\rangle = \\-\langle(VWVW-VWWV-WVVW+WVWV)\rangle.
+\end{multline}
+If the operators are hermitian and unitary, then
+\begin{multline}
+   -\langle(VWVW-VWWV-WVVW+WVWV)\rangle = \\ 
+   -\langle VWVW\rangle+2\langle I\rangle-\langle WVWV\rangle.
+\end{multline}
+Now, as in usual literature [ref], we can define $F(t) = \langle VWVW\rangle$ and its complex conjugate $F^*(t) = \langle WVWV\rangle$. So, finishing 
+\begin{equation}
+    C_T = 2 - F(t) - F(t)^* = 2 - 2\mathrm{Re} F(t),
+\end{equation}
+or 
+\begin{equation}
+    C_T = 2 - 2F(t),
+\end{equation}
+if $F(t)$ is real.\\
+Now, if we have the usual time evolution on $V$
+\begin{equation}
+    V(t) = U^+_tV(0)U_t
+\end{equation}
+then the assumption on $V(t)$ hermitian and unitary translates to $V(0)$.\\
+We can also take the infinite temperature case
+\begin{equation}
+    \langle A\rangle = \Tr\left(\frac{A}{d}\right),
+\end{equation} 
+where $\rho$ is the density matrix and $d$ the dimension.\\
+Then we have, using the unnormalised trace
+\begin{multline}
+    2\Tr(I) - 2\Tr(VWVW) = 2d - 2d\langle VWVW\rangle = 2d(1-\langle VWVW\rangle )
+\end{multline}
+\subsection{AFL entropy}
+We will begin with the Alicki-Fannes entropy in this section. \\
+A state w is a positive normalised linear functional $w: \mathcal{A} \to \mathbb{C}$. For a hermitian observable, $w(A) = \langle A\rangle$ . If A is not hermitian, it can be decomposed into hermitian and anti hermitian parts, with $w(A)$ being generally complex. \begin{equation}
+    A = \frac{A+A^*}{2} + i\frac{A-A^*}{2i}
+\end{equation} \\
+We also have an automorphism $\theta$ which describes the time evolution of observables, as in the Heisenberg picture.\\
+We require the state to be invariant under the dynamics, ie. $w\circ \theta = w$. For Hamiltonian dynamics, this includes states whose density operators commute with the Hamiltonian.\\ 
+A positive map $\Phi$ satisfies $a\geq 0 \implies \Phi(a) \geq 0$, where $a\geq0$ means $a = bb^*$ for some $b\in\mathcal{A}$.\\
+It is CP if $\Phi \otimes \mathbf{Id}_{M_n}$ is positive for $\forall n\in\mathbb{N}$. \\Basically it remains positive when extended to $A \otimes M_k(\mathbb{C})$, where  $M_k(\mathbb{C})$ is the algebra of $k\cross k$ complex matrices. For finite dim matrix algebras, CP map admits a Kraus decomposition, which are OPUs if the map is trace preserving (CPTP). \\
+OPUs are a set of operators that fulfill $\sum_i A^*_iA_i = \mathbf{1}$. We define their composition as
+\begin{equation}
+    X\circ Y = \{x_iy_j\}_{i,j},
+\end{equation}and note, that their composition is also an OPU. Using $\theta$, we can define their successive time refinements.\\
+\begin{equation}
+    Z^{(n)} = \theta^{(n-1)}(Z)\circ\dots\circ\theta(Z)\circ Z
+\end{equation}
+$\theta$ is a unital $^*$-automorphism, so $\{\theta(Z_i)\}$ is again an OPU. \\
+We then define a density matrix for each of the OPU as $\rho(Z)_{ij} = w(Z^*_jZ_i)$ for all i,j. It is trace is 1 and it is positive semi definite. Tracing out the last factor gives
+\begin{equation}
+    \text{Tr}_{n+1}(\rho(Z^{(n+1)})) = \rho(Z^{(n)})
+\end{equation}
+Now we can define the afl entropy per OPU as 
+\begin{equation}
+    h_w(\theta, Z) = \limsup_{n\to\infty}{\frac{1}{n}S(\rho(Z^{(n)})})
+\end{equation}
+where we have again the discrete time dynamical system, $A_0\subseteq A$ is a theta-invariant unital subalgebra and $Z\subset A_0$ is an OPU. Now, the AFL entropy relative to $A_0$ is
+\begin{equation}
+    h_w(\theta, A_0) = \sup_{Z\subset A_0}h_w(\theta,Z)
+\end{equation} 
+This definition also reduces to the classical KS if we take $A = L^\infty(M,\mu)$, $\theta(f) = f\circ T^{-1}$ and $w(f) = \int f d\mu$.\\
+
+We can now define the trace distance between two density matrices as 
+\begin{equation}
+    \Phi(\rho,\sigma) = \frac{1}{2}\text{Tr}|\rho-\sigma|,
+\end{equation}
+where $|A| = \sqrt{A^*A}$. We have $0\leq \Phi(.,.) \leq 1$. \\
+We then have the Fannes-Audenaert inequality:\\
+$\rho, \sigma$ are density matrices on a d dimensional Hilbert space with $\epsilon = \frac{1}{2}\text{Tr}|\rho-\sigma|$. Then
+\begin{equation}
+    |S(\rho) - S(\sigma)| \leq \epsilon \log(d-1) + h (\epsilon). 
+\end{equation}
+Here $h(\epsilon) = -\epsilon\log \epsilon - (1-\epsilon)\log(1-\epsilon) $ is the binary entropy.\\
+Then the AF inequality (2004) states: Let $\rho_{AB}$ and $\sigma_{AB}$ be density matrices on $H_A \otimes H_B$ with $d_A$ the dimension of $H_A$ finite and $\epsilon = \text{Tr}|\rho_{AB}-\sigma_{AB}|$. Then
+\begin{equation}
+    |S(A|B)_\rho- S(A|B)_\sigma| \leq 4\epsilon log(d_A) + 2h(\epsilon)
+\end{equation}
+There also exists a Winter Uniform continuity bound which is a little tighter than the previous. \\
+
+The AFL entropy of finite dimensional systems vanishes.\\
+For a translation invariant quantum spin chain the OPU $Z = \{\frac{e_{ij}}{\sqrt{d}}\}_{i,j =1}^d$ is generating (AF). \\
+The finite time entropy is bounded regardless of refinement by $2 \log d $, which alone implies the vanishing in fin dim systems.  \\
+
+Definition of the afl density matrix: 
+Given a partition $X = (x_1, ...,x_k)$, the refined partition under n steps of the dynamics is 
+\begin{equation}
+    X^{(n)} = (\theta^{(n-1)}(x_{i_n})...\theta(x_{i_2})x_{i_1})_{i_1,...,i_n}^k
+\end{equation}
+or in other words, the multi-index $\mathbf{i} = (i_1,...,i_n)$ ranges over $\{1,...,k\}^n$ and the corresponding operator is 
+\begin{equation}
+    x_\mathbf{i} = \theta^{(n-1)}(x_{i_n})...\theta(x_{i_2})x_{i_1}
+\end{equation}
+then the density matrix is indexed by the multiindices $\mathbf{i},\mathbf{j}$,
+\begin{equation}
+    \rho_{\mathbf{i},\mathbf{j}}^{(n)} = w(x_\mathbf{j}^*x_\mathbf{i}).
+\end{equation}
+\subsection{CNT entropy}
+
+\section{Calculations}
+\subsection{Rank one partitions}
+Here we will focus on rank one partitions that do not have to be projections, nor orthogonal to each other. We start with the following Kraus operators
+\begin{equation}
+    x_i = \sqrt{\lambda_i}\ket{\psi_i}\bra{\phi_i},
+\end{equation}
+where $\lambda_i$ denote the normalization explicitly, so we have the norm of the $\phi,\psi$ equal to one. \\
+The OPU is $\{x_i\}$. The $E_i$ are the associated POVM effects
+\begin{equation}
+    E_i = x_i^*x_i.
+\end{equation}
+And these fulfill the partiton of unity
+\begin{equation}
+    \sum_i^kx_i^*x_i = \sum_i^k\lambda_i\ket{\phi_i}\bra{\phi_i} = 1.
+\end{equation}
+Now we can compute the $\afl$ and $\diag$. However in the definition for the $\afl$, from the original paper, there are used only finite number operational partitions of unity, and the entropy is identically zero for finite dimensional systems, so by itself $\afl \neq 0$ only for infinite systems and at least one infinite rank element of the operational partition. So for only rank one operational partitions, this entropy must be either zero, or undefined. We can however focus on the case without suprema and without the limit for which this case would not be zero. With this in mind, we still calculate the entropies for rank one measurements to get a better "feel" of how it behaves. 
+\subsubsection{$\afl$}
+Similarly as in the dynamical entropy document, we have for the case $m = 1$ \begin{multline}
+    \rho_{ij}^{AF}[X] = Tr[x_iwx_j^*] = Tr\left[\sqrt{\lambda_i\lambda_j}\ket{\psi_i}\bra{\phi_i}w\ket{\phi_j}\bra{\psi_j}\right] = \\\sqrt{\lambda_i\lambda_j} \braket{\psi_j}{\psi_i}\bra{\phi_i}w\ket{\phi_j}
+\end{multline}
+Further, we can take the case $m = 2$ to see more clearly what is happening
+\begin{multline}
+    \rho_{ij}^{AF}[\Theta(X)\circ X] = Tr[Ux_{i_2}U^+x_{i_1}wx_{\Tilde{i}_1}^*Ux_{\Tilde{i}_2}^*U^+] = Tr[x_{i_2}U^+x_{i_1}wx_{\Tilde{i}_1}^*Ux_{\Tilde{i}_2}^*] = \\ \sqrt{\lambda_{i_1}\lambda_{i_2}\lambda_{\Tilde{i}_1}\lambda_{\Tilde{i}_2}}\braket{\psi_{\Tilde{i}_2}}{\psi_{i_2}}\bra{\phi_{i_2}}U^+\ket{\psi_{i_1}}\bra{\phi_{i_1}}w\ket{\phi_{\Tilde{i}_1}}\bra{\psi_{\Tilde{i}_1}}U\ket{\phi_{\Tilde{i}_2}}
+\end{multline}
+And now for $m=3$ to complete the picture
+\begin{multline}
+\rho_{\mathbf{i}\mathbf{j}}^{AF}
+[\Theta^2(X)\circ\Theta(X)\circ X]
+=
+\operatorname{Tr}\left[
+U^2x_{i_3}U^{+2}Ux_{i_2}U^+x_{i_1}w
+x_{\tilde{i}_1}^{*}Ux_{\tilde{i}_2}^{*}U^+
+U^2x_{\tilde{i}_3}^{*}U^{+2}
+\right]
+\\
+=
+\operatorname{Tr}\left[
+x_{i_3}U^+x_{i_2}U^+x_{i_1}w
+x_{\tilde{i}_1}^{*}Ux_{\tilde{i}_2}^{*}Ux_{\tilde{i}_3}^{*}
+\right]
+\\
+=
+\sqrt{
+\lambda_{i_1}\lambda_{i_2}\lambda_{i_3}
+\lambda_{\tilde{i}_1}
+\lambda_{\tilde{i}_2}
+\lambda_{\tilde{i}_3}
+}
+\braket{\psi_{\tilde{i}_3}}{\psi_{i_3}}
+\bra{\phi_{i_3}}U^+\ket{\psi_{i_2}}
+\bra{\phi_{i_2}}U^+\ket{\psi_{i_1}}
+\bra{\phi_{i_1}}w\ket{\phi_{\tilde{i}_1}}
+\bra{\psi_{\tilde{i}_1}}U\ket{\phi_{\tilde{i}_2}}
+\bra{\psi_{\tilde{i}_2}}U\ket{\phi_{\tilde{i}_3}}.
+\end{multline}
+From here, we can generalize to any m 
+\begin{multline}
+\rho_{\mathbf{i}\mathbf{\tilde{i}}}^{AF}
+[\Theta^{m-1}(X)\circ\Theta^{m-2}(X)...\circ X]
+= \\
+\sqrt{
+\lambda_{i_m}\lambda_{i_{m-1}}...\lambda_{i_1}
+\lambda_{\tilde{i}_1}...
+\lambda_{\tilde{i}_{m-1}}
+\lambda_{\tilde{i}_m}
+}
+\braket{\psi_{\tilde{i}_m}}{\psi_{i_m}}
+\prod_{l=2}^m{\left(\bra{\phi_{i_l}}U^+\ket{\psi_{i_{l-1}}}\right)}
+\bra{\phi_{i_1}}w\ket{\phi_{\tilde{i}_1}}
+\prod_{l=2}^m{\left(\bra{\psi_{\tilde{i}_{l-1}}}U\ket{\phi_{\tilde{i}_l}}\right)} 
+=\\
+\braket{\psi_{\tilde{i}_m}}{\psi_{i_m}}
+\bra{\phi_{i_1}}w\ket{\phi_{\tilde{i}_1}}
+\sqrt{\lambda_{i_1}\lambda_{\tilde{i}_1}} \times\prod_{l=2}^m{\sqrt{\lambda_{i_l}\lambda_{\tilde{i}_l}}\left(\bra{\phi_{i_l}}U^+\ket{\psi_{i_{l-1}}}\bra{\psi_{\tilde{i}_{l-1}}}U\ket{\phi_{\tilde{i}_l}}\right)} = 
+\\
+\braket{\psi_{\tilde{i}_m}}{\psi_{i_m}}
+\bra{\phi_{i_1}}w\ket{\phi_{\tilde{i}_1}}
+\prod_{l=1}^m{\sqrt{\lambda_{i_l}\lambda_{\tilde{i}_l}}}\times\prod_{l=2}^m{\left(\bra{\phi_{i_l}}U^+\ket{\psi_{i_{l-1}}}\bra{\psi_{\tilde{i}_{l-1}}}U\ket{\phi_{\tilde{i}_l}}\right)}
+\end{multline}
+Now, we can simplify this result. If we choose the thermal state $w=\frac{\mathbb{1}}{d}$ and follow the same notation as the previous authors, ie. $u_{ij\tilde{i}\tilde{j}} = U_{ij}U^+_{\tilde{j}\tilde{i}}$, define the Gram matrix $G_{ab} = \braket{a}{b}$, change the bra and kets accordingly: $\ket{i_k}\equiv \ket{\psi_{i_{k}}}$ and $\ket{i_k'}\equiv \ket{\phi_{i_{k}}}$we get
+\begin{multline}
+\frac{1}{d}\braket{\tilde{i}_m}{i_m}
+\braket{i_1'}{\tilde{i}_1'}
+\prod_{l=1}^m{\sqrt{\lambda_{i_l}\lambda_{\tilde{i}_l}}}\times\prod_{l=2}^m{\left(\bra{i_l'}U^+\ket{i_{l-1}}\bra{\tilde{i}_{l-1}}U\ket{\tilde{i}_l'}\right)} = \\
+\frac{1}{d}G_{\tilde{i}_mi_m}
+G_{i_1'\tilde{i}_1'}
+\prod_{l=1}^m{\sqrt{\lambda_{i_l}\lambda_{\tilde{i}_l}}}\times\prod_{l=2}^m{\left(U^+_{i_l'i_{l-1}}U_{\tilde{i}_{l-1}\tilde{i}_l'}\right)} = \\
+\frac{1}{d}\prod_{l=1}^m{\sqrt{\lambda_{i_l}\lambda_{\tilde{i}_l}}}\times g_{\tilde{i}_mi_mi_1'\tilde{i}_1'}
+\prod_{l=2}^m{\left(u_{\tilde{i}_{l-1}\tilde{i}_l'i_{l-1}i_l'}\right)},
+\end{multline}
+where we also defined the analogous gram-double matrix $g_{aba'b'} = G_{ab}G_{a'b'} = G_{ab}G^+_{b'a'}$. \\
+This can be symbolically written as
+\begin{equation}
+\rho_{\mathbf{i}\mathbf{\tilde{i}}}^{AF}
+[\Theta^{m-1}(X)\circ\Theta^{m-2}(X)...\circ X]
+=\frac{1}{d}\left(\prod_{l=1}^m{\sqrt{\lambda_{i_l}\lambda_{\tilde{i}_l}}}\right)(g\otimes u^{\otimes(m-1)})_{\mathbf{i}\mathbf{\tilde{i}}}.
+\end{equation}
+Now, from the paper, we know that u is pure (should check for higher dimensions, though). Now the gram matrix is rank one, if its vectors are normalised (which, as we have the numerical factor in front, holds) and collinear (Which are strong assumptions). However it need not be pure always, it is sufficient for it to grow sublinearly with $m$ (if we discuss the $\afl$).
+
+\subsubsection{$\diag$}
+Now, we can simplify the calculations by using the diagonal ansatz for the dynamical entropy. This entropy can be nonzero even in finite systems, so we can have finite number of rank one partitions. Starting already from the $m$ being general case, this simplifies trivially by $x_{\tilde{i}} = x_i$, where x is either $\lambda$ or $\psi, \phi$. From here, we have
+\begin{multline}
+\rho_{\mathbf{i}\mathbf{\tilde{i}}}^{DIAG}
+[\Theta^{m-1}(X)\circ...\circ X]
+=\frac{1}{d}G_{i_mi_m}
+G_{i_1'i_1'}
+\prod_{l=1}^m{\sqrt{\lambda_{i_l}\lambda_{i_l}}}\times\prod_{l=2}^m{\left(U^+_{i_l'i_{l-1}}U_{i_{l-1}i_l'}\right)}\delta_{\mathbf{i}\mathbf{\tilde{i}}} = \\
+\frac{1}{d}
+\prod_{l=1}^m{\lambda_{i_l}}\times\prod_{l=2}^m{\left(U^*_{i_{l-1}i_l'}U_{i_{l-1}i_l'}\right)}\delta_{\mathbf{i}\mathbf{\tilde{i}}} = \\
+\frac{1}{d}
+\prod_{l=1}^m{\lambda_{i_l}}\times\prod_{l=2}^m{\left(|U_{i_{l-1}i_l'}|^2\right)}\delta_{\mathbf{i}\mathbf{\tilde{i}}}.
+\end{multline}
+Thus we have an easier way of calculating this density matrix.
+\subsection{Inequality between $h_{AFL}$ and $h_{diag}$}
+I'm not sure if this has been done somewhere or is somehow seen trivially, but I will calculate it nevertheless. We take one specific partition $X$ and start from the relative entropy
+\begin{multline}
+    D_{KL}(\rafl||\rdiag) = Tr[\rafl(\log\rafl-\log\rdiag)] =\\ -S_{VNAFL} - Tr[\rafl \log\rdiag], 
+\end{multline}
+where $S_{VNAFL}$ is the Von Neumann entropy of the afl density matrix. Now, since $log\rdiag$ is purely diagonal, we have 
+\begin{multline}
+    -S_{VNAFL} - Tr[\rafl \log\rdiag] =  
+    -S_{VNAFL} - Tr[\rdiag \log\rdiag] = \\
+    -S_{VNAFL} + S_{VNDIAG} \geq 0 
+\end{multline}
+So that 
+\begin{equation}
+    S_{VNDIAG} \geq S_{VNAFL}. 
+\end{equation}
+Note that this holds for any partition, so if we take the supremum, this holds for the dynamical entropies as well
+\begin{equation}
+    \diag \geq \afl.
+\end{equation}
+Thus we have an upper bound on the AFL entropy that is easier to calculate. 
+\subsection{$\diag - \afl$}
+In this section we could try to focus on the difference between these two entropies and how it behaves = essentially study only the coherence histories (off diag elements). 
+\subsection{Interpretation of $\diag$}
+What is its interpretation? From [ref ALF book], we have that:  "one can interpret the AFL entropy as the asymptotic rate of
+information provided by repeated,coarse-grained observations of the time-evolution". We could say that the diagonal version corresponds to the same interpretation, just with "throwing away" the off diagonal coherence of history labels of the measurements. 
+\subsection{Time scaling}
+We know that the $\afl$ cannot generally fulfil the time-scaling issue [ref]. However the proof presented there for the upper bound holds for the diagonal version as well, since nothing in the proof is essentially changed
+\begin{equation}
+    \diag(\Theta^q) \geq q\diag(\Theta).
+\end{equation}
+Now, the authors mention that strong continuity is used in the CNT statement of the equality, so we could try to focus on that?
+
+
+\section{Quantum Kolmogorov complexity}
+\subsection{Introduction to the notation}
+We have the OPU $X = \{x_1,...,x_k\}$. Each time step (discrete) contributes a $k$ dimensional history register. We can relabel the OPUs as is done in the afl definition to give $\mathbf{i} = (i_1,...,i_n)$, $i_m \in \{1,...,k\}$ . \\
+For the definition of the QKC we need the notion of words. These in our notation will be normalised vectors $\ket{\psi_n} = \sum_{\mathbf{i}}c_\mathbf{i}\ket{\mathbf{i}}$.\\
+Now we note that if we were to use the $\diag$, we could just use the classical KC, since there are no coherences between histories. \\
+Now the afl density matrix, as usual is written as 
+\begin{equation}
+    \rafl^{(n)} = \sum_{\mathbf{i}\mathbf{j}}\rho_{\mathbf{i}\mathbf{j}}^{(n)}\ket{\mathbf{i}}\bra{\mathbf{j}},
+\end{equation}
+where the vectors are defined as 
+\begin{equation}
+    \ket{\mathbf{i}} = \ket{i_1...i_n}
+\end{equation}
+This matrix can be diagonalised,
+\begin{equation}
+    \rafl^{(n)} = \sum_{\alpha}\lambda_{\alpha, n} \ket{\alpha n}\bra{\alpha n}.
+\end{equation}
+Next we use the typicality theory and \textbf{assume} that AEP (Asymptotic equipartition property) for the distribution of the eigenvalues holds.\\
+Now we fix one OPU $X$. For the $\afl$ we have
+\begin{equation}
+    \afl (\theta, X) = \limsup_{n\to\infty}{\frac{1}{n}S(\rho(X^{(n)})})
+\end{equation}
+Then we can say that $\forall \delta > 0$ small, almost all the weight of $\rafl$ is composed of the eigenvectors that are in the range
+\begin{equation}
+    I_{n, \delta} = \{\alpha: 2^{-n(\afl(\theta, X)+\delta)} \leq \lambda_{\alpha, n} \leq2^{-n(\afl(\theta, X)-\delta)}\}.
+\end{equation}
+
+We then define the projector onto the subspacce spanned by these eigenvectors 
+\begin{equation}
+    P_{n,\delta} = \sum_{\alpha \in I_{n, \delta}} \ket{\alpha n} \bra{{\alpha n}}
+\end{equation}
+We then define the dimension of the typical subspace
+\begin{equation}
+    D_{n,\delta} = \text{rank}P_{n,\delta} = \#I_{n,\delta}
+\end{equation}
+Now, from the AEP assumption, we have (Need to prove this for some systems) 
+\begin{equation}
+    \lim_{n\to\infty}\text{Tr}(\rafl^{(n)}P_{n,\delta}) = 1.
+\end{equation}
+\subsection{Comparing $\rafl$ with the ones used in Quantum Brudno theorem}
+From this paper [https://arxiv.org/pdf/quant-ph/0506080], we know that the Von Neumann entropy rate characterised by density matrices of an ergodic stationary quantum source (ESQS). \\
+The paper starts with an already stationary ergodic infinite-chain state, whereas our matrices are initially constructed from a dynamical system and an OPU.\\
+By definition, for a fixed OPU $X$, the $\afl$ equals the VN entropy rate.\\
+
+An element of $\mathcal{X}^{(n+1)}$ is indexed by
+$(\mathbf{i},i_{n+1})\in\{1,\ldots,k\}^{n+1}$ and equals
+$X_{(\mathbf{i},i_{n+1})} = \Theta^n(X_{i_{n+1}})\,X_{\mathbf{i}}$.
+The density matrices that are produced by the partitions are compatible, since
+\begin{align*}
+\left(\Tr_{n+1}\rho[\mathcal{X}^{(n+1)}]\right)_{\mathbf{i},\mathbf{j}}
+  &= \sum_{i_{n+1}=1}^k \rho[\mathcal{X}^{(n+1)}]_{(\mathbf{i},i_{n+1}),(\mathbf{j},i_{n+1})} \\
+  &= \sum_{i_{n+1}=1}^k \omega\!\left(X_{\mathbf{j}}^*\Theta^n(X_{i_{n+1}}^*)\,\Theta^n(X_{i_{n+1}})
+     X_{\mathbf{i}}\right) \\
+  &= \omega\!\left(X_{\mathbf{j}}^*
+     \Theta^n\!\left(\sum_{i_{n+1}}X_{i_{n+1}}^* X_{i_{n+1}}\right)
+     X_{\mathbf{i}}\right) \\
+  &= \omega\!\left(X_{\mathbf{j}}^*\Theta^n(\mathbf{1})X_{\mathbf{i}}\right)
+   = \omega\!\left(X_{\mathbf{j}}^* X_{\mathbf{i}}\right)
+   = \rho[\mathcal{X}^{(n)}]_{\mathbf{i},\mathbf{j}}.
+\end{align*}
+And for stationarity it suffices to show that the tracing out of the first element is equal to the same $\rho$. Now we have an analogous convention for the indexes, just the other way around (We change the notation specifically for $\mathbf{i}$) $(i_{1},\mathbf{i})\in\{1,\ldots,k\}^{n+1}$. 
+\begin{equation}
+    X_\mathbf{i} = \Theta^{n-1}(X_{i_{n+1}})\circ....\circ X_{i_{2}}
+\end{equation}
+\begin{align*}
+\left(\Tr_{1}\rho[\mathcal{X}^{(n+1)}]\right)_{\mathbf{i},\mathbf{j}}
+  &= \sum_{i_1=1}^k \rho[\mathcal{X}^{(n+1)}]_{(i_{1},\mathbf{i}),(i_{1}, \mathbf{j})} \\
+  &= \sum_{i_1=1}^k \omega\!\left((X_{i_1}^*)\Theta(X_{\mathbf{j}}^*)\,
+     \Theta(X_{\mathbf{i}})(X_{i_1})\right)\\
+  &= 
+   \sum_{i_1=1}^k \omega\!\left((X_{i_1}^*)\Theta(X_{\mathbf{j}}^*\,
+     X_{\mathbf{i}})(X_{i_1})\right)\\
+  &=  \omega\!\left(\sum_{i_1=1}^k(X_{i_1}^*)\Theta(X_{\mathbf{j}}^*\,
+     X_{\mathbf{i}})(X_{i_1})\right),
+\end{align*}
+where in the last equality we used the fact that $w$ is a linear functional and the sum is finite.\\
+And this $\textbf{need not}$ always be equal to $\rho[\mathcal{X}^{(n)}]_{\mathbf{i},\mathbf{j}}$.\\
+However if we denote $\omega\!\left(\sum_{i_1=1}^k (X_{i_1}^*)A(X_{i_1})\right) \equiv \omega\!\left(\Psi(A)\right)$, then the sufficient condition for stationarity is 
+\begin{equation}
+    w\circ\Psi\circ\Theta = w\circ\Theta,
+\end{equation}
+so we have 
+\begin{equation}
+    w\circ\Psi = w.
+\end{equation}
+We can now ask whether there is an easier assumption on the $\rdiag$, but it is not generally stationary as well. 
+Now if we assume that for a fixed partition $X$, the induced history state is stationary and ergodic $X \in \mathcal{E}$, we can use the results (corollary) of the Quantum Brudno theorem (QBT). There exists a sequence $\{q_n^X\}_n^\infty$ such that for the fixed partition
+\begin{equation}
+    	\label{QKCAFL}
+    \lim_{n\to\infty}
+    \frac{1}{n}QC^{\searrow 0}(q_n^X)=
+    h_{\mathrm{AFL}}(\Theta;X),
+\end{equation}
+where $q_n$ are rank one projections selected from the subspaces given by the QBT and dependent on the partition $X$.   $QC^{\searrow 0}(q_n)$ is the Quantum Kolmogorov complexity and is defined as 
+\begin{equation}
+    QC_M^{\searrow 0}(\rho)
+    =
+    \min\left\{
+        \ell(\sigma):
+        \left\|\rho-M(k,\sigma)\right\|_{\mathrm{Tr}}
+        \leq \frac{1}{k}, \forall k\in\mathbb{N}
+    \right\},
+\end{equation}
+where $\sigma$ is a quantum program, $l(\sigma)$ is its length in qubits, $M(k,\sigma)$ is the machine's output for the given program with a given accuracy number $k$ as an additional input. $\rho$ is the target quantum state that the system must reproduce. \\
+Taking the supremum over \eqref{QKCAFL} over all OPUs whose induced history states are stationary and ergodic, gives
+\begin{equation}
+    	\label{QKCAFLSUP}
+    \sup_{X\in\mathcal{E}}\lim_{n\to\infty}
+    \frac{1}{n}QC^{\searrow 0}(q_n^X)=\sup_{X\in\mathcal{E}}
+    h_{\mathrm{AFL}}(\Theta;X)\leq h_{\mathrm{AFL}}(\Theta),
+\end{equation}
+So to actually get something meaningful out of this, it would be nice to have
+\begin{equation}
+    \sup_{X\in\mathcal{E}}
+    h_{\mathrm{AFL}}(\Theta;X)= h_{\mathrm{AFL}}(\Theta),
+\end{equation}
+for systems in which $\mathcal{E}$ exists and is nonempty.\\
+To summarize, we note that to impose the Quantum Brudno on the afl entropy, we would need to discuss only the stationary and ergodic system. So, we could for example look at partitions that fulfil these conditions to relate the afl to algorithmic complexity. 
+\section{Generating partitions}
+We start at the equation 83 in the dynam. entropy pdf. We make a new notation $w_{i^{m'}} = \text{Tr}(w\prod_{i^{m'}}^\alpha)$.  So we get
+\begin{align*}
+    -\sum_{i^m}\text{Tr}\left[w\prod_{i^m}^\beta\right]\ln\text{Tr}\left[w\prod_{i^m}^\beta\right]\\
+    &=-\sum_{i^m}\text{Tr}\left[w\sum_{i^{m'}}p(i^m|i^{m'})\prod_{i^{m'}}^\alpha\right]\ln\text{Tr}\left[w\sum_{i^{m'}}p(i^m|i^{m'})\prod_{i^{m'}}^\alpha\right]\\
+    &=-\sum_{i^m}\left[\sum_{i^{m'}}w_{i^{m'}}p(i^m|i^{m'})\right]\ln\left[\sum_{i^{m'}}w_{i^{m'}}p(i^m|i^{m'})\right]
+\end{align*}
+And now we want to use Jensen's theorem on the function $f = -\text{xlnx}$, which is concave. However the sum $\sum_{i^{m'}}p(i^m|i^{m'}) \neq 1$. So we have
+\begin{equation}
+f\left(\frac{\sum_{i^{m'}}w_{i^{m'}}p(i^m|i^{m'})}{\sum_{i^{m'}}p(i^m|i^{m'})}\right) \geq \frac{\sum_{i^{m'}}p(i^m|i^{m'})f\left(w_{i^{m'}}\right) }{\sum_{i^{m'}}p(i^m|i^{m'})} = -\frac{\sum_{i^{m'}}p(i^m|i^{m'})w_{i^{m'}}\ln\left(w_{i^{m'}}\right) }{\sum_{i^{m'}}p(i^m|i^{m'})}
+\end{equation}
+So we will multiply the original equation by a factor of one, once in the linear argument and once in the log. 
+
+\begin{align*}
+-&\sum_{i^m}
+\left[
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'})
+\right]
+\ln\left[
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'})
+\right]
+\\
+&=
+-\sum_{i^m}\sum_{i^{m'}}p(i^m\mid i^{m'})
+\left[
+\frac{
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'})
+}{
+\sum_{i^{m'}}p(i^m\mid i^{m'})
+}
+\right]
+\nonumber\\
+&\qquad\times
+\left\{
+\ln\left[
+\frac{
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'})
+}{
+\sum_{i^{m'}}p(i^m\mid i^{m'})
+}
+\right]+\ln\left[\sum_{i^{m'}}p(i^m\mid i^{m'})\right]\right\}\\
+&\geq
+-\sum_{i^m}\sum_{i^{m'}}p(i^m\mid i^{m'})
+\left[
+\frac{
+\sum_{i^{m'}}w_{i^{m'}}\text{ln}(w_{i^{m'}}) p(i^m\mid i^{m'})
+}{
+\sum_{i^{m'}}p(i^m\mid i^{m'})
+}
+\right]
+\nonumber\\
+&\qquad
+ -\sum_{i^m}\sum_{i^{m'}}p(i^m\mid i^{m'})
+\left[
+\frac{
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'})
+}{
+\sum_{i^{m'}}p(i^m\mid i^{m'})
+}
+\right]
+\nonumber
+\left\{\ln\left[\sum_{i^{m'}}p(i^m\mid i^{m'})\right]\right\} \\
+&=
+-\sum_{i^m}
+\left[
+\sum_{i^{m'}}w_{i^{m'}}\text{ln}(w_{i^{m'}}) p(i^m\mid i^{m'})
+\right]
+\nonumber\\
+&\qquad
+ -\sum_{i^m}
+\left[
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'})
+\right]
+\nonumber
+\left\{\ln\left[\sum_{i^{m'}}p(i^m\mid i^{m'})\right]\right\}
+\end{align*}
+Furthermore, to illustrate the effects of the post-processing, we ascribe $H^\alpha = -\lim_{m\to\infty}\frac{1}{m}h^\alpha$ and similarly for $\beta$.\\
+We also introduce the notation
+\begin{equation}
+r_{i^m}
+:=
+\sum_{i^{m'}}w_{i^{m'}}p(i^m\mid i^{m'}),
+\qquad
+l_{i^m}
+:=
+\sum_{i^{m'}}p(i^m\mid i^{m'}).
+\end{equation}
+Using the normalization, we obtain
+\begin{equation}
+-h^\beta_m
+\geq
+-h^\alpha_{m'}
+-
+\sum_{i^m}r_{i^m}\ln l_{i^m} \equiv-h^\alpha_{m'}
+-f_{mm'}.
+\end{equation}
+Where we defined $f_{mm'} = \sum_{i^m}r_{i^m}\ln l_{i^m}$. Now we can divide by $m$ to get
+\begin{equation}
+-\frac{h^\beta_m}{m}
+\geq 
+\frac{-h^\alpha_{m'}}{m}
+-\frac{f_{mm'}}{m}.
+\end{equation}
+Now, we need to have a relation between the $m$ and $m'$ to send them to infinity. We can take $m'$ to be a function of $m$. We impose (the most trivial condition) that $\frac{m'}{m} \to 1$, so after the limiting step, we have  
+\begin{equation}
+H^\beta
+\geq
+H^\alpha
+-
+\lim_{m\to\infty}
+\frac{1}{m}
+\sum_{i^m}r_{i^m}\ln l_{i^m}.
+\end{equation}
+Thus to prove that the QKS are the same for any generating partition, we would like to prove
+\begin{equation}
+    \lim_{m\to\infty}
+\frac{1}{m}
+\sum_{i^m}r_{i^m}\ln l_{i^m} = 0.
+\end{equation}
+We note that this is not a necessary condition for the QKS to be equal, however it is sufficient and intuitively the easiest case.\\
+And also we need to justify the assumption that asymptotically $m$ is the same as $m'$. This is the equivalent of choosing the selected subsequence discussed in the pdf.\\
+Then we would have proven that if $\alpha$ and $\beta$ are generating, then the $H^\alpha$ and $H^\beta$ are the same, since we can reverse their roles. 
+\section{Continuous time evolution}
+As in the pdf, we have the two definitions of the QKS, one with the fixed total time of interaction and the other with the fixed interaction time and total time going to infinity. \\
+As per the section with the ehrenfest time, the latter definition cannot exhibit semiclassical correspondence.\\
+If we then concentrate on the former, with the given total time $T \lesssim\tau_E$ for numerical simulations, we could try to infer some correspondence with the classical KS.\\
+Now, in the pdf, equation 55 should be diverging if we send $m \to \infty$. So I have calculated a different expansion based on first logarithming the $|q|^2$, then changing the sum to a Riemann integral and only then doing the expansion in the exponential. The result still does not exhibit the Zeno effect and the lowest order reads
+\begin{equation}
+    |q|^2 = \exp\left\{-\frac{(\Delta H)^2T^2m}{3}\right\}.
+\end{equation}
+So the limiting case is zero for the norm squared. 
+\section{Generating coarse graining}
+A POVM is IC (informationally complete), if it spans the space of hermitian operators, ie
+\begin{equation}
+    \text{span}\{\Pi_{i}\} = \text{Herm}(\mathcal{H})
+\end{equation}
+Now, we want to find out what specific relation holds for the history POVM elements $\{\Pi_{i^N}\}$.\\
+So we have the logical string
+\begin{equation}
+    \exists \{\Pi_{i}\} \quad \forall \rho \quad \exists N_0 \in \mathbb{N} \forall N \geq N_0 \quad \exists c_{i^N} \subset \mathbb{R}; \rho = \sum_{\mathbf{i^N}} c_{\mathbf{i^N}}^{(N,\rho)}\Pi_{i}{\mathbf{i^N}}^{(N)},   
+\end{equation}
+and for this to hold, the history POVM elements have to essentially be IC.\\
+This requirement cannot hold for PVMs as we prove here.\\
+Let
+\[
+\mathcal{P}=\{P_i\}_{i=1}^r
+\]
+be a PVM.\\
+Define the POVM elements by
+\[
+\Pi_{\mathbf{i}^N}
+=
+P_{i_1}^{(1)}
+P_{i_2}^{(2)}
+\cdots
+P_{i_N}^{(N)}
+P_{i_N}^{(N)}
+\cdots
+P_{i_2}^{(2)}
+P_{i_1}^{(1)}.
+\]
+
+Define
+\[
+Q_i:=P_i^{(1)}.
+\]
+Since unitary evolution preserves the projective structure,
+for every history $\mathbf{i}^N$, the first evolved projector occurs on both
+sides of the corresponding history effect. Therefore
+\[
+\Pi_{\mathbf{i}^N}
+=
+Q_{i_1}
+\Pi_{\mathbf{i}^N}
+Q_{i_1}.
+\]
+Consequently, for any two distinct sectors $r\neq s$,
+\[
+Q_r\Pi_{\mathbf{i}^N}Q_s=0.
+\]
+
+Now consider an arbitrary real linear combination of the history effects,
+\[
+A=
+\sum_{\mathbf{i}^N}
+c_{\mathbf{i}^N}\Pi_{\mathbf{i}^N},
+\qquad
+c_{\mathbf{i}^N}\in\mathbb{R}.
+\]
+For $r\neq s$ we have
+\[
+\begin{aligned}
+Q_rAQ_s
+&=
+\sum_{\mathbf{i}^N}
+c_{\mathbf{i}^N}
+Q_r\Pi_{\mathbf{i}^N}Q_s
+\\
+&=0.
+\end{aligned}
+\]
+Hence every operator in the real span of the history POVM is block diagonal
+with respect to the decomposition induced by $\{Q_i\}$:
+\[
+A=\sum_iQ_iAQ_i.
+\]
+It follows that
+\[
+\operatorname{span}_{\mathbb{R}}
+\{\Pi_{\mathbf{i}^N}\}
+\subseteq
+\bigoplus_i
+Q_i\operatorname{Herm}(\mathcal{H})Q_i.
+\]
+
+Let
+\[
+r_i=\operatorname{rank}(Q_i),
+\qquad
+\sum_i r_i=d:=\dim\mathcal{H}.
+\]
+The real dimension of the block-diagonal Hermitian subspace is
+\[
+\sum_i r_i^2.
+\]
+On the other hand,
+\[
+\dim_{\mathbb{R}}\operatorname{Herm}(\mathcal{H})=d^2.
+\]
+Since the projective measurement is nontrivial, at least two of the
+$r_i$ are nonzero. Therefore
+\[
+d^2
+=
+\left(\sum_i r_i\right)^2
+=
+\sum_i r_i^2
++
+2\sum_{i<j}r_ir_j
+>
+\sum_i r_i^2.
+\]
+Thus
+\[
+\dim_{\mathbb{R}}
+\operatorname{span}_{\mathbb{R}}
+\{\Pi_{\mathbf{i}^N}\}
+\leq
+\sum_i r_i^2
+<
+d^2.
+\]
+Therefore
+\[
+\operatorname{span}_{\mathbb{R}}
+\{\Pi_{\mathbf{i}^N}\}
+\neq
+\operatorname{Herm}(\mathcal{H}),
+\]
+for every $N$, and hence the history POVM cannot be informationally complete.\\
+We also note that the POVMs even if non-projective have to be somehow "naturally chosen", as stated in the original paper of AFL. They need to be connected to the dynamics in a ?specific? way. \\
+But for now, sufficient would be to prove that they exist and if they do, then two generating partitions lead to the same QKS.
+\subsection{Numerical}
+Now we focus on iterating N for the history POVM elements and trying the linear combinaiton of the distribution with the elements to be equal to the density matrix. We have a two qubit system with a hamiltonian
+\begin{equation}
+H_0
+=
+\sqrt{2}\,\sigma_x\otimes\sigma_x
++
+\sqrt{3}\,\sigma_z\otimes\sigma_z
++
+\sqrt{5}\,\sigma_x\otimes I
++
+\sqrt{7}\,I\otimes\sigma_z
++
+0.37\,\sigma_y\otimes\sigma_z
++
+0.23\,\sigma_z\otimes\sigma_x,
+\end{equation}
+which we make traceless.\\
+Now, since we focus on the span of the histories of the povm measurements, we can omit the requirement that the sum of the coefficients is equal to one and also that they are semipositive. 
+\section{Gathered from generating afl}
+
+\subsection{Numerical simulation}
+\subsection{Two-qubits}
+$\sigma_0=I$, $\sigma_1=X$, $\sigma_2=Y$, and $\sigma_3=Z$.\\
+For each run we generate a generic two-qubit Pauli Hamiltonian
+\begin{equation}
+H_0=\sum_{\substack{a,b=0\\(a,b)\neq(0,0)}}^3
+J_{ab}\,\sigma_a\otimes\sigma_b,
+\qquad
+J_{ab}\sim\mathcal N(0,1).
+\end{equation}
+The overall energy scale is fixed by normalizing the Hamiltonian
+\begin{equation}
+H=\frac{H_0}{\sqrt{\frac14\Tr(H_0^2)}}.
+\end{equation}
+\subsubsection{Operational partitions}
+Take a POVM $\{E_i\}_{i=1}^n$, we define the corresponding operational partition accordingly
+\[
+X_i=\sqrt{E_i},
+\qquad
+X_i^\dagger X_i=E_i.
+\]
+
+
+For a history $\mathbf i=(i_1,\ldots,i_N)$, define the history operator
+
+$$
+K_{\mathbf i}=\Theta^{N-1}(X_{i_N})\,
+\Theta^{N-2}(X_{i_{N-1}})
+\cdots
+\Theta(X_{i_2})\,
+X_{i_1}.
+$$
+The corresponding history POVM element is $\Pi_{\mathbf i}=K_{\mathbf i}^\dagger K_{\mathbf i}.$\\
+These positive operators are then used to compute the optimisation problem
+\begin{equation}
+\epsilon_N=\min_{c_{\mathbf i}\geq0}
+\left\|\rho-\sum_{\mathbf i}c_{\mathbf i}\Pi_{\mathbf i}
+\right\|.    
+\end{equation}
+
+
+\subsubsection{Unsharp Pauli POVMs.}
+For $A,B\in\{X,Z\}$,
+\begin{equation}
+E_{s,t}^{(A,B)}
+=
+\frac14
+(I+s\eta A)\otimes(I+t\eta B),
+\qquad s,t\in\{-1,+1\},
+\end{equation}
+with $\eta=0.7$. We consider
+\[
+(A,B)=(Z,Z),(X,X),(Z,X),(X,Z),
+\]
+labelled respectively as
+\[
+\text{Unsharp ZZ},\quad
+\text{Unsharp XX},\quad
+\text{Unsharp ZX},\quad
+\text{Unsharp XZ}.
+\]
+
+\subsubsection{Noisy Bell POVM.}
+For the Bell projectors
+\[
+P_j=\ket{B_j}\bra{B_j},
+\qquad
+\ket{B_j}\in
+\{\ket{\Phi^+},\ket{\Phi^-},\ket{\Psi^+},\ket{\Psi^-}\},
+\]
+we define
+\begin{equation}
+E_j=\eta P_j+(1-\eta)\frac{I}{4},
+\qquad j=1,\ldots,4.
+\end{equation}
+
+\subsubsection{Random POVMs.}
+Generate independent complex Gaussian matrices $A_i\in\mathbb C^{4\times4}$ and set
+\begin{equation}
+Q_i=A_iA_i^\dagger,\qquad
+S=\sum_{i=1}^4Q_i,\qquad
+E_i=S^{-1/2}Q_iS^{-1/2}.
+\end{equation}
+Then $\sum_iE_i=I_4$ and $X_i=\sqrt{E_i}$.
+\subsubsection{Random AFL partition.}
+For independent complex Gaussian matrices $A_i$, define
+\begin{equation}
+S=\sum_{i=1}^4A_i^\dagger A_i,
+\qquad
+X_i=A_iS^{-1/2}.
+\end{equation}
+Hence
+\begin{equation}
+\sum_iX_i^\dagger X_i=I_4.
+\end{equation}
+Unlike the previous cases, the $X_i$ need not be Hermitian or positive.
+
+\subsection{SYK model}
+We consider a four-qubit system, corresponding to \(8\) Majorana operators
+
+$$
+\gamma_{2j}
+=
+Z^{\otimes j}\otimes X\otimes I^{\otimes(3-j)},
+\qquad
+\gamma_{2j+1}
+=
+Z^{\otimes j}\otimes Y\otimes I^{\otimes(3-j)},
+\qquad
+j=0,\ldots,3.
+$$
+
+The quartic SYK Hamiltonian is
+
+$$
+H=\sum_{0\leq a<b<c<d\leq 7}
+J_{abcd}\,
+\gamma_a\gamma_b\gamma_c\gamma_d,
+$$
+
+where the coefficients \(J_{abcd}\) are independent real Gaussian random variables. We remove the irrelevant identity component and normalize the Hamiltonian.\\
+For the POVMs, define the local fermionic mode-parity operators
+
+$$
+P_j
+=
+-i\gamma_{2j}\gamma_{2j+1},
+\qquad
+P_j^2=I.
+$$
+
+For two anticommuting Majorana operators \(A\) and \(B\), we use the four-outcome joint unsharp POVM
+
+$$
+E_{st}
+=
+\frac14
+\left[
+I+\eta(sA+tB)
+\right],
+\qquad
+s,t\in\{-1,+1\},
+$$
+
+with
+
+$$
+0\leq\eta\leq\frac1{\sqrt2}.
+$$
+We usually set $\eta = 0.7$.\\
+For two commuting Hermitian observables \(A,B\), with \(A^2=B^2=I\), we use
+
+$$
+E_{st}
+=
+\frac14
+(I+s\eta A)(I+t\eta B),
+\qquad
+s,t\in\{-1,+1\}.
+$$
+
+The specific choices are
+
+$$
+(A,B)=(\gamma_0,P_1),
+\qquad
+(A,B)=(\gamma_2,P_2),
+\qquad
+(A,B)=(P_0,P_1).
+$$
+
+Thus we consider the five natural POVMs
+
+$$
+(\gamma_0,\gamma_1),\quad
+(\gamma_2,\gamma_3),\quad
+(\gamma_0,P_1),\quad
+(\gamma_2,P_2),\quad
+(P_0,P_1),
+$$
+together with three random four-outcome POVMs.
+\subsection{QM kicked top}
+We consider the quantum kicked top with
+
+$$
+J=\frac12,\frac32,\frac72 ,\qquad d=2J+1,
+$$
+
+and Floquet operator
+
+$$
+U_F=
+\exp\!\left(-i\frac{k}{2J}J_z^2\right)
+\exp(-ipJ_y),
+\qquad p=\frac{\pi}{2}.
+$$
+
+We use four natural four-outcome POVMs associated with
+
+$$
+A\in
+\left\{J_z,\,J_x,\,J_y,\,\frac{J_x+J_y+J_z}{\sqrt3}
+\right\}.
+$$
+
+If
+
+$$
+A|a_i\rangle=a_i|a_i\rangle,
+$$
+
+then
+
+$$
+E_i^{(A)}
+=
+\eta |a_i\rangle\langle a_i|
++
+(1-\eta)\frac{I }{4},
+\qquad
+\eta=0.7,
+$$
+\subsection{Commuting POVMs}
+Assume that every POVM element commutes with the Hamiltonian,
+$$
+[E_i,H]=0
+\qquad\forall i.
+$$
+For the Lüders choice,
+$$
+X_i=\sqrt{E_i},
+$$
+we also have
+$$
+[X_i,H]=0.
+$$
+Hence the operational elements are time-invariant, therefore every history operator has the form
+$$
+K_{\mathbf i}
+=
+X_{i_N}X_{i_{N-1}}\cdots X_{i_1},
+$$
+and thus every history POVM element
+
+$$
+\Pi_{\mathbf i}
+=
+K_{\mathbf i}^\dagger K_{\mathbf i}
+$$
+
+also commutes with \(H\),
+
+$$
+[\Pi_{\mathbf i},H]=0.
+$$
+
+Thus every positive linear combination of history effects satisfies
+$$
+\left[
+\sum_{\mathbf i}c_{\mathbf i}\Pi_{\mathbf i},
+H
+\right]=0.
+$$
+
+\section{Obsen rate revisited}
+
+\subsection{Observational entropy and history entropy}
+
+For a fixed coarse-graining $\{P_i0\}$, the observational entropy at time $t$ is determined only by the probabilities of the outcomes of a measurement performed at that particular time,
+
+
+\[
+p_i(t)=\Tr\!\left(P_i\rho(t)\right).
+\]
+
+For a projective coarse-graining, the observational entropy is
+
+\[
+S_{\mathrm{obs}}(t)=-\sum_i p_i(t)
+\log\frac{p_i(t)}{V_i},\qquad V_i=\Tr P_i.
+\]
+
+Thus, $S_{\mathrm{obs}}(t)$ is a \emph{single-time} quantity. It does not retain information about measurement outcomes at previous times.
+
+The history entropy instead describes the uncertainty of the entire sequence of coarse-grained outcomes. For a quantum partition
+
+$$
+\mathcal X=\{X_i\},
+$$
+
+The probability of this history is
+
+$$
+p_{\mathbf{i}}
+=
+\Tr\!\left(
+\rho K_{\mathbf{i}}^\dagger K_{\mathbf{i}}
+\right).
+$$
+
+The entropy of all histories of length $N$ is then
+
+$$
+H_N
+=
+-\sum_{\mathbf{i}}
+p_{\mathbf{i}}\log p_{\mathbf{i}}.
+$$
+
+Unlike observational entropy, $H_N$ contains correlations between successive coarse-grained observations. It can therefore continue to grow as the history becomes longer.\\
+For a discrete-time system such as the kicked top, the rate of this entropy (in its linear regime) is given by 
+$$
+h
+=
+\lim_{N\to\infty}h_N
+=
+\lim_{N\to\infty}\frac{H_N}{N}.
+$$
+
+The essential distinction is therefore
+$$
+S_{\mathrm{obs}}(t)
+\ \text{measures uncertainty of a coarse-graining at one time}
+$$
+whereas
+$$
+H_N
+\ \text{measures uncertainty of an entire coarse-grained history}.
+$$
+
+
+
+\subsection{Classical history entropy and the Kolmogorov--Sinai entropy}
+
+Let
+
+$$
+\mathcal P=\{P_i\}
+$$
+
+be a finite measurable partition of phase space and let $T$ denote the classical dynamics. The $N$-step refined partition is
+
+$$
+\mathcal P^{(N)}
+=
+\mathcal P
+\vee T^{-1}\mathcal P
+\vee\cdots\vee
+T^{-(N-1)}\mathcal P.
+$$
+
+An atom of this refined partition corresponds to a symbolic history with probability
+
+$$
+p_{\mathbf i}
+=
+\mu\!\left(
+P_{i_1}
+\cap
+T^{-1}P_{i_2}
+\cap\cdots\cap
+T^{-(N-1)}P_{i_N}
+\right).
+$$
+
+The Shannon entropy of all histories of length $N$ is
+
+$$
+H_N(\mathcal P)
+=
+-\sum_{\mathbf i}
+p_{\mathbf i}\log p_{\mathbf i}
+=
+H\!\left(\mathcal P^{(N)}\right).
+$$
+
+The entropy rate associated with the partition $\mathcal P$ is
+
+$$
+h_\mu(T,\mathcal P)
+=
+\lim_{N\rightarrow\infty}
+\frac{1}{N}
+H_N(\mathcal P),
+$$
+
+provided the limit exists. \\
+
+\section{Perturbation matrix}
+Let the perturbation matrix be
+\[
+Z(t)=
+\begin{pmatrix}
+\delta\rho_{11}(t) & \delta\rho_{12}(t) & \cdots & \delta\rho_{1n}(t)\\
+\delta\rho_{21}(t) & \delta\rho_{22}(t) & \cdots & \delta\rho_{2n}(t)\\
+\vdots & \vdots & \ddots & \vdots\\
+\delta\rho_{n1}(t) & \delta\rho_{n2}(t) & \cdots & \delta\rho_{nn}(t)
+\end{pmatrix}.
+\]
+
+Each perturbation obeys the von Neumann equation
+
+$$
+\dot{\delta\rho}
+=
+-\frac{i}{\hbar}[H,\delta\rho].
+$$
+
+Element-wise,
+
+$$
+\dot{\delta\rho}_{ij}
+=
+-\frac{i}{\hbar}
+\sum_k
+\left(
+H_{ik}\delta\rho_{kj}
+-
+\delta\rho_{ik}H_{kj}
+\right).
+$$
+
+Equivalently, since
+
+$$
+\delta\rho(t)=U_t\delta\rho(0)U_t^\dagger,
+$$
+
+we have
+
+$$
+\delta\rho_{ij}(t)
+=
+\sum_{kl}
+(U_t)_{ik}\,
+\delta\rho_{kl}(0)\,
+(U_t)^*_{jl},
+$$
+
+and therefore
+
+$$
+Z_{(ij),(kl)}(t)
+=
+(U_t)_{ik}(U_t)^*_{jl},
+$$
+if we set the initial state of this matrix to be the identity.\\
+Hence, up to the vectorization convention,
+
+$$
+Z(t)=U_t\otimes U_t^*.
+$$
+
+Since \(U_t\) is unitary,
+
+$$
+Z^\dagger(t)Z(t)
+=
+(U_t^\dagger U_t)\otimes
+(U_t^T U_t^*)
+=
+I.
+$$
+
+Therefore \(Z(t)\) is unitary. In a QR decomposition,
+
+$$
+Z(t)=Q(t)R(t),
+$$
+
+$$
+|R_{ii}|=1,
+$$
+
+so that
+
+$$
+\lambda_i
+=
+\lim_{T\to\infty}
+\frac1T
+\sum_k \log |R_{ii}^{(k)}|
+=
+0.
+$$
+
+Thus the direct density-matrix tangent evolution gives
+
+$$
+\boxed{\lambda_i=0\qquad\forall i.}
+$$
+\subsection{Normalization}
+Let \(\{\Pi_\alpha\}_{\alpha\in A}\) be a collection of nonzero positive operators. \\
+If we abandon the asymptotic approach for a moment, we can try to find the coefficients $c_\alpha$ to generate the density matrix by
+\begin{equation}
+    \rho=\sum_\alpha c_\alpha \Pi_\alpha,
+\end{equation}
+where $c_\alpha \geq 0$. \\
+We can then define the normalized versions of the operators by
+\begin{equation}
+\sigma_\alpha:=\frac{\Pi_\alpha}{\Tr(\Pi_\alpha)}.
+\end{equation}
+Thus rewriting the equation into
+\begin{equation}
+\rho=\sum_\alpha c_\alpha\Tr(\Pi_\alpha)\sigma_\alpha.
+\end{equation}
+Defining
+\begin{equation}
+p_\alpha:=c_\alpha\Tr(\Pi_\alpha),
+\end{equation}
+we have \(p_\alpha\geq0\). Furthermore, taking the trace gives
+\begin{equation}
+1
+=
+\Tr(\rho)
+=
+\sum_\alpha
+c_\alpha\Tr(\Pi_\alpha)
+=
+\sum_\alpha p_\alpha.
+\end{equation}
+Hence
+\begin{equation}
+\rho
+=
+\sum_\alpha p_\alpha\sigma_\alpha,
+\qquad
+p_\alpha\geq0,
+\qquad
+\sum_\alpha p_\alpha=1.
+\end{equation}
+
+Thus imposing positivity of the coefficients for the unnormalized operators \(\Pi_\alpha\) is mathematically equivalent to imposing positivity and normalization of the coefficients for the normalized operators \(\sigma_\alpha\).\\
+Since each history effect satisfies
+$$
+\Pi_\alpha\geq 0,
+$$
+
+any combination with positive coefficients,
+
+$$
+\sum_\alpha c_\alpha \Pi_\alpha,
+\qquad c_\alpha\geq 0,
+$$
+
+is again a positive operator. Therefore the positive cone generated by the history effects,
+
+$$
+\operatorname{cone}\{\Pi_\alpha\}
+=
+\left\{
+\sum_\alpha c_\alpha\Pi_\alpha:\ c_\alpha\geq0
+\right\},
+$$
+
+is contained entirely in the cone of positive semidefinite operators.\\
+\section{$\lambda$-Variation}
+Here I am continuing with the notes from the following section.\\
+The time derivative is 
+\begin{equation}
+\dot{\delta \rho}=\lim_{t\rightarrow 0} \frac{\delta \rho}{t} =-i[H, \rho] +  \lambda ([\hat H, [\hat A,\rho]]+[[\hat A,\hat{H}], \rho]).
+\end{equation}
+If we were to take the limit $\lambda\to0$ now, then it would be Hamiltonian evolution, ie
+\begin{equation}
+    \lim_{\lambda\rightarrow 0}\dot{\delta \rho}=-i[H, \rho].
+\end{equation}
+We can also try a different approach and compute the variation with respect to the $\lambda$ parameter ($\delta x\to\pdv{x}{\lambda}\delta\lambda$)
+\begin{multline}
+    \delta(U(\lambda)U(t)\rho U(t)^\dag U(\lambda)^\dag)\equiv \delta\rho_{t\lambda} \approx \delta((1+iA\lambda)U(t)\rho U(t)^\dag (1-iA\lambda)) = \\
+    \left(iAU(t)\rho U(t)^\dag (1-iA\lambda) -i (1+iA\lambda)U(t)\rho U(t)^\dag A \right)\delta\lambda = \\
+    \left([iA, U(t)\rho U(t)^\dag] + 2\lambda AU(t)\rho U(t)^\dag A\right )\delta\lambda.
+\end{multline}
+If we take the time derivative of this, we then have
+\begin{equation}
+    \delta\Dot{\rho_{t\lambda}} = \left([A,[H,\rho]] - 2i\lambda A[H,\rho]A\right)\delta\lambda, 
+\end{equation}
+and again taking the limit of $\lambda\to0$, we have
+\begin{equation}
+    \lim_{\lambda\to0}\delta\Dot{\rho_{t\lambda}} = [A,[H,\rho]]\delta\lambda.
+\end{equation}
+
+\section{Variation in parameter space}
+\subsubsection{First vary then evolve}
+So, taking this variation to be linear in its parameter $\lambda$, I would take the two states 
+\[
+    \rho, U(\lambda)\rho U(\lambda)^\dag,
+\]
+compute their tangents $\delta\rho$, and calculate the area of the parallelogram using the gram determinant. Then time-evolve and compute it again. \\
+So at time $t=0$, we have the tangents ($U(\lambda) = \exp(i\lambda A) = 1+i\lambda A + O(\lambda^2)$), $\lambda \in \mathbb{R}$, $A$ hermitian
+\[
+    \delta \rho, \quad \delta\rho' = \delta (U(\lambda)\rho U(\lambda)^\dag) = \delta \rho + i\lambda [A, \delta\rho].
+\]
+Hence the Gram matrix is
+\[
+    G=
+    \begin{pmatrix}
+    \Tr\!\left((\delta\rho)^2\right) & \Tr\!\left(\delta\rho\,\delta\rho'\right)\\
+    \Tr\!\left(\delta\rho\,\delta\rho'\right) & \Tr\!\left((\delta\rho')^2\right)
+    \end{pmatrix}.
+\]
+Now, denoting $\delta\rho = x$ and $i[A,\delta\rho] = y$, we have
+\[
+    \Tr(xy) = \Tr(ix(Ax-xA)) = i\Tr(xAx-x^2A) = 0,
+\]
+by the cyclicity of the trace. Now the determinant comes out to be
+\[
+    \text{det}(G) = \Tr(x^2)\Tr((x+\lambda y)^2) - \Tr(x(x+\lambda y))\Tr((x+\lambda y)x).
+\]
+The $\Tr(x^2)^2$ factors cancel out and leave us with
+\[
+    \text{det}(G) = \Tr(x^2)\Tr(\lambda^2 y^2) = -\lambda^2\Tr((\delta\rho)^2)\Tr([A,\delta\rho]^2).
+\]
+And the corresponding area of the parallelogram is $\mathcal{A} = \sqrt{\text{det}(G)}$. Now we evolve both of them. Our states are now 
+\[
+    U(t)\rho U(t)^\dag, U(t)U(\lambda)\rho U(\lambda)^\dag U(t)^\dag,
+\]
+and while keeping the time operators fixed ($\delta U(t) = 0$) their tangents are
+\[
+    \delta\rho(t) = U(t)\delta\rho U(t)^\dag, \quad \delta\rho'(t) = U(t) \left(\delta \rho + i\lambda [A, \delta\rho]\right) U(t)^\dag,
+\]
+but the Gram determinant is invariant wrt any unitary evolution, so the area stays the same. \\
+\subsubsection{First evolve then vary}
+If we were to compute the area of the latter variation, ie first evolve then vary, then we would have the following tangent at time $t$ (at time $t=0$ this is the same as before)
+\[
+    \quad \delta\rho'(t) = U(t)\delta \rho U(t)^\dag + i\lambda [A, U(t)\delta\rho U(t)^\dag] = \delta \rho(t) + i\lambda [A, \delta\rho(t)].
+\]
+And now the gram determinant is changed, since in the second term, the variation generator $A$ is not evolved. Now still $\Tr(\delta\rho(t)=0)$ and we again decompose them into variables $x = \delta\rho(t)$, $y = i[A, \delta\rho(t)]$. Now still $\Tr(xy) =0$ and the determinant only changes in the $y$ parameter. We have 
+\[
+    \text{det}(G) = \Tr(x^2)\Tr(\lambda^2 y^2) = -\lambda^2\Tr((\delta\rho)^2)\Tr([A,\delta\rho(t)]^2).
+\]
+So now we can turn our focus onto the last multiplicative term
+\[
+    \Tr([A,\delta\rho(t)]^2) = \Tr((A\delta\rho(t) - \delta\rho(t)A)^2) = 2\Tr(A\delta\rho(t)A\delta\rho(t)) - 2\Tr(A\delta\rho(t)\delta\rho(t)A).
+\]
+Now obviously this area of the parallelogram equals the original if the $A$ operators commute with the Hamiltonian. But this seems to be a necessary assumption if we consider all tangent vectors (ie every time $t$).\\
+However the area $\mathcal{A}$ is still a square root of the determinant, so we should maybe not focus only on the linear part in the original approximation and allow second order.
+
+ \section{Parallelogram and further}
+ Ok, focus on pure states and the indistinguishability of states? There was also a notion with the Fisher Information. Either quantum or classical. \\
+ Ok, so the two form is basically the Imaginary part of the scalar product. These are of the tangent vectors. Symplecticity means negative imply positive lyaps. 
+
+ Yes, pure states could be the exact analogy of the classical system. But are the rhos the same as the zs?
+
+ Okay, what about the parallelogram with the rho0 being the pure state? then it also translates, right. 
+
+ Could the basis evolve along with the parameters? 
+ \[
+    \dot \rho  = -i[\rho, \lambda_jX_j]\\
+    \dot\delta\rho = i[X_j, \rho]\delta\lambda_j
+ \]
+
+ Every unitary operator in QM can be interpreted as a change of basis. In classical physics, lyaps are coordinate (eg basis) independent. However not dynamic independent. However in QM, the unitaries describe either the basis change or the dynamics. Hence there can be no chaos in qm
+
+ \textbf{We are stretching the wrong object.}
+ What about some purely diagonal density matrices? Really go for the classical. 
+
+ 
+ Now we can study this equation if this imposes some non-trivial dependency for the state to stay pure under evolution. Seems it should still evolve unitarily. \\
+
+ If we take things from a classical POV, \\
+ Isn't rho the whole system, whereas we should have taken some subpart of it to correspond to the phase space object . \\
+
+ Ok, if we have the lyapunov usual object we work with, the part of phase space, we take exactly all possibilites in that space, whereas if we take some space of density matrices, that corresponds to the probabilities. So we either have to take the space belonging to pure states, or somehow fix it that we are certain which we take - dont take the prob dist. \\
+ Ok, lets denote the space of all density matrices $\Omega$. The pure states are always on the boundary of this space. In two dimensions they form the whole surface, whereas in higher dimensions they generally only form a subspace of this boundary. The rest are the rank deficient density matrices. \\
+
+ Ok, continuing from the dyn entropy. WE have\\
+ A point in phase space (ok, this should be equiv to a pure state), for which we can define the equations based on the hamiltonian flow. Right, we have that as well. Ok, the point in phase space must correspond to sth different. What is it? Its a precise measurement, we have both the position and momentum of a system at one specific time. Once we have this point specified, the dynamics is deterministic. What is the equivalent of knowing precisely everything about the system in QM? Employ sth like a Maxwell demon? Well of course if you take this to be the density matrix of a pure state (or any state), then the evolution is purely deterministic until the point of measurement. Measurement! Could the phase space point be the measurement of multiple states at the same time somehow? 
+
+
+ Suppose we have two non-orthogonal pure states characterized by density matrices $\rho, \sigma$. We know that VN entropy is zero for both of these. That means, for our proposition to hold, we need to have such POVM elements, that
+\[
+    S_{\text{Obsen}}^{(\infty)} (\rho) = S_{\text{Obsen}}^{(\infty)} (\sigma) = 0,
+\]
+For the KL divergence, we have the probabilities as
+\[
+    p_i = \Tr(\rho \Pi_i), \quad q_i = \frac{\Tr(\Pi_i)}{d}, \quad p_i' = \Tr(\sigma \Pi_i), 
+\]
+thus we need the KL divergence to be equal to $\ln d$ for both the distributions. However due to the data processing inequality, we know that both of these relative entropies are $\leq D(\rho||1/d)$, $\leq D(\sigma||1/d)$ respectively. If we plug in for $q_i$ into the relative entropy we end up with an equation for $p$, which is 
+\[
+    \sum_ip_i\ln\frac{p_i}{\Tr(\Pi_i)} = 0,
+\]
+analogously for $p'$. However, since $\norm{\rho} \leq 1$, this implies that the log is not negative only for $p_i = \Tr(\Pi_i)$.
+\[
+    p_i = \Tr(\Pi_i) = \Tr(\bra{\psi}\Pi_i\ket{\psi}),
+\]
+where $\psi$ corresponds to the pure state $\rho$. Thus we can write the POVM as 
+\[
+    \Pi_i = p_i \ket{\psi}\bra{\psi}.
+\]
+The obsen cannot go to VN entropy asymptotically for all density matrices given one fixed povm. If it could, that would mean, we can distinguish asymptotically two non-orthogonal states perfectly. \\
+However, if we were to take n indpendent copies of the same system, then the collective Schur-Weyl measurement on all the states simultaneously reduces this per copy to the VN. \\
+
+Lets try sth. Obsen sum all the trajectories and incorporates the Volumes. Afl sums them also, but uses qm coherences. 
+\[
+    S_{\mathrm{k}}^{(N)}(\rho)=-\sum_{\mathbf{i}\mathbf{j}}\Tr(\rho_{\mathbf{i}\mathbf{j}}\Pi_{\mathbf{i}^N})\ln\left(\frac{\Tr(\rho_{\mathbf{i}\mathbf{j}}\Pi_{\mathbf{i}^N})}{\Tr(\Pi_{\mathbf{i}^N})}\right),
+\]
+where $\rho_{\mathbf{i}\mathbf{j}} = \Tr(\rho K_\mathbf{j}^\dag K_\mathbf{i})$...nope. 
+
+
+\subsection{FMI}
+\[
+    I_{\mathrm{free}}(A(t):B)_{\delta,N}=-\frac{4}{d^2}\ln f_{A(t)|B,\delta,N},\qquad f_{A(t)|B,\delta,N}=\frac{\operatorname{Vol}(S_{A(t)|B,\delta,N})}{\operatorname{Vol}(S_A)},\qquad \operatorname{Vol}(S)=\int_{U(d)}\mathbf{1}_S(VAV^\dagger)\,d\mu_{\mathrm{Haar}}(V)
+\]
+
+\[
+    I_{\mathrm{free}}(A(t):B_1,B_2)_{\delta,N}=-\frac{4}{d^2}\ln f_{A(t)|B_1,B_2,\delta,N},\qquad f_{A(t)|B_1,B_2,\delta,N}=\frac{\operatorname{Vol}(S_{A(t)|B_1,B_2,\delta,N})}{\operatorname{Vol}(S_A)},\qquad \operatorname{Vol}(S)=\int_{U(d)}\mathbf{1}_S(VAV^\dagger)\,d\mu_{\mathrm{Haar}}(V)
+\]
+\[
+    I_{\mathrm{free}}(A(t):B_1\cdots B_k)\geq I_{\mathrm{free}}(A(t):B_1)
+\]
+
+\begin{itemize}
+    \item If you couple some subsystem to an ancilla and act with U on that whole system, how fast does the subsystem go to the ancilla. You can then take the sup over all such subsystems for one fixed U
+    \item if from the classical system you can construct the Unitary, then you would have some correspondence. This would not be the usual phase space in classical, but some specific points for which you can construct the equations of motion from the unitary
+    \item Separability could be a very important notion
+    \item Somehow from the measurement to get the actual classical coarse graining, then you would have won
+\end{itemize}
+\[
+    U=e^{-i\frac{k}{2J}J_z^2}e^{-ipJ_y},\qquad p=\frac{\pi}{2},\qquad d=2J+1
+\]
+\section{Obsen}
+Ok, so minimal count of bits needed to characterize a given microstate. Could we in principle use qubits to do the same things? Sort of have a truly quantum entropy...\\
+Well we pick a subspace, this corresponds to a macrostate. For a microstate, those belong to the macrostate. So maybe instead of enumerating the bits of all the microstates, we can first do a very coarse graining, like into two subspaces, then again... Sort of a binary (multi) search for a microstate. Ok, so binary search, but conditioned on the probabilities of the subspaces. Ok, so if its uniform, then the refinement is absolutely arbitrary, ie if we halve it, or cut it into quarters, then the same amount of bits is needed to restrict ourselves to the same subsystem. However if its not uniform, then we can cut it not into a grid, but into subspaces of equal sum of probabilities.\\
+Ok, so lets say our goal is to find a way to characterize such an algorithm. We have a set of mutually disjoint subspaces $\{P_i\}$, such that 
+\[
+    \bigoplus_{i=1}^n P_i = \mathcal H.
+\]
+But we cannot in general pick subspaces, such that they are equiprobable. Otherwise we would have used the generalisation of the binary search. Okay, so after doing this, we have to use $\log_2n$ bits to determine one of the subspaces. That leaves us with the specific subspace, wlog $P_1$. 
+
+But statement "we pick" probably needs to be precise. Since we have not specified the probabilities, they are dependent on the number of such subspaces. Thus the probability is just $1/n$. So one such characterisation costs $\log_2n$ bits. And each of these subsystems has the dimension $\Tr(P_i)$, hence the number of orthogonal quantum states. \\ 
+
+
+We need to iterate this process further. However at each step we need to redefine the subspaces of $\mathcal{H}$. Now valid could be using the same $n$, just rotating the partitions. Or we could refine further. Note that this will have to be a limiting process, since each state(micro?) is of measure zero. So this will be sth like
+\[
+    \inf \lim .
+\]
+Hmm, but is cutting the macrostate into subspaces of equal probability optimal? It seems so, since binary search is optimal. This would be probably an atomic measure. Since we need to reach some point? \\
+qubits to measure some other entropy instead of bits?\\
+Ok, so you probably cannot have that for all states there exists a povm such that obsen goes to VN. You can have it for one state. Then that povm can convexly generate that state. \\
+Maybe throw the FI or QFI at the unitary U and try to get the most change wrt some parameter. Try this with the kicked top if you get something. \\
+Also calculate the VN entropy rate or the Obsen entropy rate. This has a direct connection to brudno and so on.. So we have
+\[
+    h_{\text{QKS}} = \lim \frac{1}{n}S_{\text{VN/OBSEN}}(\rho^{(n)}).
+\]
+Now AFL just decides that $\rho$ is the correlation matrix of histories. So maybe just define the history matrix in a different way or refine this a bit more...\\
+By qm brudno this should be the VN entropy rate, but they used that only for the spin invariant chain... The only system, for which CNT equals VN entropy rate. \\
+Ok, and classically it holds for ergodic, measure preserving systems. \\
+Ok, it seems that for the ergodicity in QM to hold, we need to have infinite systems, if we consider only closed ones. So either infinite dim closed or finite dim open. \\
+So you can use the K-property. The K-systems have this property and in classical it implies nonzero entropy growth. In QM, it does so as well. 
+\[
+    h_{\mathrm{CNT}}(\alpha)\leq h_{\mathrm{AFL}}(\alpha).
+\]
+So positive CNT implies positive AFL. But only in some systems, particularly in noncommutative K-systems. If a quantum dynamical system contains an invariant subsystem isomorphic to a nontrivial quantum Bernoulli shift, then the CNT is positive as well. \\
+Ok, so the rate of the entropy, in finite case its density, is the sum of the Lyapunov exponents. Thus k property implies chaos. \\
+In QM, strong mixing implies weak mixing and that implies ergodicity. \\
+Maybe the k property can imply positive afl entropy. Chatgpt says it has not found any counterexamples so far. \\
+The implication does not work in the other way, but neither in classical. \\
+Even if we had proved this, what else would hold...\\
+A quantum dynamical system $(\mathcal M,\alpha,\omega)$, where $\mathcal M$ is a von Neumann algebra, $\alpha$ is a $*$-automorphism, and $\omega$ is a faithful normal invariant state satisfying $\omega\circ\alpha=\omega$, has the algebraic K-property if there exists a von Neumann subalgebra $\mathcal N\subseteq\mathcal M$ such that
+\[
+\mathcal N\subseteq\alpha(\mathcal N),\qquad \bigvee_{n\in\mathbb Z}\alpha^n(\mathcal N)=\mathcal M,\qquad \bigcap_{n\in\mathbb Z}\alpha^n(\mathcal N)=\mathbb CI.
+\]
+We can bound the VN and thus the AFL by the Renyi, using
+\[
+    S(\rho)\geq S_2(\rho)=-\log_2\operatorname{Tr}(\rho^2).
+\]
+Where equality holds when all nonzero eigenvalues of $\rho$ are equal. \\
+\section{Obsen via Umegaki}
+
+\section{VN revisited}
+We know that any qm entropy should be lower bounded by the VN entropy and upper bounded by the log of the dimension. This does not apply of course to relative entropies, nor the entropy rates.  \\
+We can take the linear algebra approach to the definition of VN. However the trace becomes interesting once we have the powers of the operator under it. We could do a Taylor for the log to get some powers. Then this would be a sum over sums of weighted walks (cycles). 
+\section{QM Ergodicity analogy}
+Ok, so we have the VN entropy
+\[
+    S(\rho) = -\Tr(\rho\ln \rho),
+\]
+which is exactly a qm analog of the Shannon entropy. Now from Shannon, we have $h_{KS}$, which also has Pesin, K-property and Brudno, and many others. If we take the notion of chaos to be defined via stating that there exists a positive lyapunov exponent, then we have the following statements.\\
+\begin{itemize}
+    \item K-property implies nonzero $h_{KS}$. 
+    \item Brudno says that $h_{KS}$ is equal to the Kolmogorov complexity.  
+    \item Pesin states that $h_{KS}$ is the sum of the positive lyaps, meaning positive $h_{KS}$ means chaos. 
+    \item There exists a generating partition for $h_{KS}$
+    \item SMB theorem 
+    \item Variational principle connecting topological entropy with $h_{KS}$. 
+    
+\end{itemize}
+
+\begin{itemize}
+    \item \textbf{Algebraic K-property:} $\exists\,\mathcal N\subseteq\mathcal M:\ \alpha(\mathcal N)\subseteq\mathcal N,\quad \bigvee_{n\in\mathbb Z}\alpha^n(\mathcal N)=\mathcal M,\quad \bigcap_{n\geq0}\alpha^n(\mathcal N)=\mathbb CI.$ The distant past contains no nontrivial information.
+    \item \textbf{Quantum Brudno:} $\displaystyle\lim_{n\to\infty}\frac{K_q}{n}=s(\omega).$ The complexity of a typical quantum state grows at the entropy rate.
+    \item \textbf{Quantum Pesin:} $h_Q=\sum_{\lambda_i^Q>0}\lambda_i^Q.$ Entropy production equals the total exponential instability (not a general theorem).
+    \item \textbf{Quantum Ruelle:} $h_Q\leq\sum_{\lambda_i^Q>0}\lambda_i^Q.$ Entropy production is bounded by exponential instability (restricted formulations).
+    \item \textbf{Quantum SMB:} $\dim\mathcal H_{\mathrm{typ}}\sim e^{ns(\omega)}.$ Almost all probability concentrates in an exponentially growing typical subspace.
+    \item \textbf{Noncommutative KS theorem:} $h_{\mathrm{CNT}}=\lim_{n\to\infty}h_{\mathrm{CNT}}(\mathcal A_n).$ Increasingly complete observable algebras recover the full dynamical entropy.
+    \item \textbf{Quantum variational principle:} $\sup_\omega h_{\mathrm{CNT}}(\omega)\leq h_{\mathrm{VB}}.$ The maximum state-dependent entropy cannot exceed the complexity of the observable dynamics.
+    \item \textbf{Quantum Ornstein--Weiss:} $\displaystyle\lim_{n\to\infty}\frac{\log R_n}{n}=h_{\mathrm{Shannon}}.$ Typical measurement-outcome patterns recur after exponentially long times (classical output process).
+\end{itemize}
+
+Even if we wanted Pesin, we should start with the Ruelle ineq. 
+\section{GPT generated conjectures}
+For every infinite-dimensional von Neumann algebra $\mathcal M$ with a faithful normal state $\omega$ and every $\omega$-preserving automorphism $\Theta$, the CNT dynamical entropy satisfies
+\[
+ \begin{gathered}
+ h_{\mathrm{CNT}}(\omega,\Theta)
+ \leq h_{\mathrm{AFL}}^{\mathrm{all}}(\omega,\Theta),\\
+ h_{\mathrm{AFL}}^{\mathrm{all}}(\omega,\Theta)
+ :=\sup_{\substack{m\geq1,\ X_1,\ldots,X_m\in\mathcal M\\
+                   \sum_{i=1}^{m}X_i^*X_i=I}}
+ \limsup_{n\to\infty}\frac1n
+ S_{\mathrm{vN}}\!\left(
+   [\omega(K_{\mathbf j}^*K_{\mathbf i})]_{\mathbf i,\mathbf j}
+ \right),
+ \end{gathered}
+\]
+where $K_{\mathbf i}=X_{i_n}\Theta(X_{i_{n-1}})\cdots\Theta^{n-1}(X_{i_1})$ and $S_{\mathrm{vN}}(R)=-\operatorname{Tr}(R\ln R)$.\\
+
+Let $\mathcal M$ be any infinite-dimensional von Neumann algebra with a faithful normal state $\omega$, and let $\Theta$ be any $\omega$-preserving automorphism.
+If a von Neumann subalgebra $\mathcal N\subset\mathcal M$ satisfies
+\[
+ \mathcal N\subset\Theta(\mathcal N),\qquad
+ \left(\bigcup_{k\geq0}\Theta^k(\mathcal N)\right)''=\mathcal M,
+ \qquad
+ \bigcap_{k\geq0}\Theta^{-k}(\mathcal N)=\mathbb C I,
+\]
+then
+\[
+ \sup_{\substack{m\geq1,\ X_1,\ldots,X_m\in\mathcal M\\
+                  \sum_{i=1}^{m}X_i^*X_i=I}}
+ \limsup_{n\to\infty}\frac1n
+ S_{\mathrm{vN}}\!\left(
+   [\omega(K_{\mathbf j}^*K_{\mathbf i})]_{\mathbf i,\mathbf j}
+ \right)>0,
+\]
+where $K_{\mathbf i}=X_{i_n}\Theta(X_{i_{n-1}})\cdots\Theta^{n-1}(X_{i_1})$ and $S_{\mathrm{vN}}(R)=-\operatorname{Tr}(R\ln R)$.
+\section{Thoughts and prayers}
+Ok, so take the kicked top. In classical, it has an uncountable number of microstates. In QM, you also have an uncountable number of states, but you cannot have an infinite information production, because of the uncertainty. \\
+This is because in clas, you can distinguish any two microstate infinitely precisely. In Qm, you cannot arbitrarily get closer to distinguish two states. So the QM space is dependent on the parameter j, which specifies the dimension. For it being one half, you get the Bloch sphere. \\
+If we could create arbitrary copies of the system, then we could get arbitrarily far. However that does not seem to be too useful. \\
+Take then the qm kicked top coupled to an infinite system. We can take noise, the infinite spin chains, etc... This should have a practical purpose, so noise is probably best. \\
+Okay, so you cannot reach the vn from obsen for all rhos. 
+\\
+It seems that the relative measured entropy is upper bounded by the initial distance of the two states due to the data processing inequality. \\
+Hmm, okay, so qm chaos could be up to the ehrenfest time. At least in finite dimensions. \\
+Maybe move from the space of phase space to the space of the measurements? I.e. that almost for all measurements the lyaps are positive? Sounds weird..\\
+
+Ok, so the goal is to link the first derivative to the equation of motion and the second derivative as the time derivative of the perturbation...somehow. 
+\section{Lyaps revisited}
+\subsection{Gradient}
+We will write obsen as 
+\[
+    S(\rho) = \ln d - D_{KL}(\rho||\frac{1}{d})
+\]
+And now, taking the frechet derivative of this, we obtain
+\[
+    DS(\rho)[A] = -\Tr(A\sum_i\Pi_i\ln\frac{p_i}{q_i}).
+\]
+Ok, I'm pretty finished now, so what we want to do:
+\begin{enumerate}
+    \item Calculate the gradient of the observational entropy - that should mean independence of the initial state (which seems pointless for lyaps)
+    \item Calculate the function F i have designed and try to maximize its derivative wrt POVMs - the time derivative of this should go to lyaps
+    \item Compute the time derivative of the rho cg and link it to the Petz map somehow. But be vary of the data processing ineq.
+    \item Try to find some connection between the time derivative of the perturbation for which we have the classical equations and the DS we computed. For this also try to look for the physical interpretation, it seems promising.  
+    \item Look at the classical equations one more time and for some specific things that can be related to our stuff. Also is the measurement really necessary?
+\end{enumerate}
+
+
+
+\subsection{Gradient of obsen wrt POVM}
+We cannot use the Lagrange multiplicators here, since the semidefinite-positivness is an inequality. So we use the Karush-Kuhn-Tucker conditions (KKT) for the following Lagrangian
+\[
+    F = S_{obsen} + \Tr(\alpha\sum_i\Pi_i-1) - \sum_i\Tr(\beta_i \Pi_i) = -\sum_ip_i\ln\frac{p_i}{V_i}+ \Tr(\alpha\sum_i\Pi_i-1) - \sum_i\Tr(\beta_i \Pi_i),
+\]
+where $\alpha$ is a hermitian matrix and $\beta_i \geq 0$. \\
+Now we compute the gradient of this quantity using the Frechet derivative and making use of the Riesz representation theorem. So first we compute the Frechet derivative of this wrt the POVM elements in the directions of $A_i$ per each such element. The probabilities and volumes then become
+\[
+    dp_i = \Tr(\rho A_i), dV_i = \Tr(A_i),
+\]
+And the full Lagrangian differentiated becomes
+\[
+    DF[A_i] = -\sum_i\big[(\ln\frac{p_i}{V_i} + 1)\Tr(\rho A_i) + \frac{p_i\Tr(A_i)}{V_i}\big] + \Tr(\alpha\sum_iA_i) - \sum_i\Tr(\beta_iA_i)
+\]
+And grouping the terms together, we obtain
+\[
+    DF[A_i] = -\sum_i\Tr\Bigg[\big((\ln\frac{p_i}{V_i} + 1)\rho + \frac{p_i}{V_i} + \alpha - \beta_i\big)A_i\Bigg]
+\]
+And employing the Riesz rep. theorem, we have
+\[
+    \nabla_{\Pi_i} F = -\Bigg[(\ln\frac{p_i}{V_i} + 1)\rho + \frac{p_i}{V_i} + \alpha - \beta_i\Bigg]
+\]
+So setting this to zero, we get the stationary point as a condition on the obsen
+\[
+    \nabla_{\Pi_i}S_{obsen} = -\alpha + \beta_i
+\]
+But now it seems that we want to maximize the obsen rate rather than the full obsen wrt the POVMs. So the Lagrangian should be 
+\[
+    G = -\sum_i \Tr\left(\dot\rho(t)\Pi_i\right)\ln\frac{\Tr(\rho(t)\Pi_i)}{\Tr(\Pi_i)} + \Tr(\alpha\sum_i\Pi_i-1) + \sum_i\Tr(\beta_i \Pi_i),
+\]
+For the gradient we again obtain the solution
+\[
+    \ln\frac{p_i}{V_i}\dot\rho+\frac{\dot p_i}{p_i}\rho-\frac{\dot p_i}{V_i}I=\alpha+\beta_i.
+\]
+So without considering constraints we can use the Projected Gradient Ascent (PGA) algorithm. \\
+The maximal established obsen rate (for up to 10 outcome POVMs) is exactly proportional to the energy uncertainty before the first kick. \\
+In essence, for the kicked top, we obtained
+\[
+    R_a^{\max}=C_{101,10}\Delta H_a, 
+\]
+where $a$ is the qm system configuration with all the needed parameters and $C_{101,10}$ is a constant, specified by the dimension and the number of POVM outcomes respectively. So the maximal growth is proportional to the energy uncertainty multiplied by a constant factor dependent on the dimension and number of POVM outcomes. This proportionality should hold during the time evolution, provided the state stays pure.\\
+For pure states, the square of the energy uncertainty is propto the fisher information. That means that the maximal rate of obsen is proportional to the square root of the fisher information. Lets derive this proportionality equation. The rate of obsen for pure states is 
+\[
+    \odv{S_{obsen}}{t} = i\sum_i \Tr([H, \rho]\Pi_i)\ln\frac{p_i}{V_i}
+\]
+\subsection{Maximal obsen rate}
+We might be able to prove that 
+\[
+    max(\dot{S_{obsen}}) = \ln (d) \frac{\Delta H}{\hbar}
+\]
+
+\subsection{Gradient of obsen wrt rho}
+The Frechet derivative of obsen wrt rho is 
+\[
+    DS_{\mathrm{obs}}(\rho)[A]=-\sum_i\left(\ln\frac{p_i}{V_i}+1\right)\operatorname{Tr}(\Pi_iA),
+\]
+and the gradient is 
+\[
+    \nabla_\rho S_{\mathrm{obs}}=-\sum_i\left(\ln\frac{p_i}{V_i}+1\right)\Pi_i.
+\]
+Using this we can find initial states that optimize the observational entropy, however I cannot see how that would be useful.
+\subsection{rho c.g.}
+We take the Petz recovered (coarse grained) state associated with a POVM measurement
+\[
+    \rho_{cg} = \sum_i\frac{p_i}{q_i}\sqrt{\sigma}\pi_i\sqrt{\sigma},
+\]
+where $\sigma$ is the reference state. If this reference state is the mms, then the expression simplifies to 
+\[
+    \rho_{cg} = \sum_i\frac{p_i}{V_i}\pi_i,
+\]
+now if this is equal to the original state, then the obsen of the original state equals the VN entropy. Its time derivative is
+\[
+    \Dot{\rho_{cg}} = \sum_i\frac{\Dot{p_i}}{q_i}\sqrt{\sigma}\pi_i\sqrt{\sigma} = -i\sum_i\frac{\Tr([H,\rho]\Pi_i)}{q_i}\sqrt{\sigma}\pi_i\sqrt{\sigma},
+\]
+Ok, so we have the following hermitian map $\Phi(\rho)$, which denotes a quantum channel. We also take the perturbation to the initial state $\rho_0 + \delta\rho$ and apply the CPTP on the two states n times. Then we try to recover the initial state from those two sequences using the petz map. However since both the Petz map and the CPTP channels are linear, the "distance" is only the following quantity
+\[
+    d_n = \norm{R_{\sigma, \Phi^n}(\delta\rho_n)} = \norm{R_{\sigma, \Phi^n}\Phi^n(\delta\rho)}
+\]
+If we choose the reference channel for the Petz map to be the mms state, we get
+\[
+    d_n = \norm{\Phi^{2n}(\delta\rho)}
+\]
+However, also 
+\[
+    d_{n+1} =  \norm{\Phi^{2n+2}(\delta\rho)} \leq  \norm{\Phi^{2n}(\delta\rho)} = d_n,
+\]
+so this cannot yield growth. 
+\section{Golden braid}
+\begin{tcolorbox}[enhanced,colframe=gold,colback=gold!12,boxrule=2.5pt,arc=5mm,left=10mm,right=10mm,top=2mm,bottom=4mm,drop fuzzy shadow={gold!70!yellow},borderline={1pt}{3pt}{yellow!85!white},borderline={0.8pt}{4.5pt}{gold!80!orange}]\begin{align}\dot{z}&=X_H(z)=\mathbf{J}\nabla_z H(z),\\\dot{\delta z}_i(t)&=\mathbf{J}D^2H(z(t))_{ij}\cdot\delta z_j(t).\end{align}
+\end{tcolorbox}
+\section{Golden braid resolution}
+If we take the Schrodinger equation and any other that satisfies the golden braid analogy, we have
+\[
+    \dot{\rho} = -i[H,\rho], \quad \delta\dot{\rho}  =f(\rho)\delta\rho
+\]
+But I believe that density matrices are not the correct object for these equations, since even then the second equation would have to be Schrodinger. Also it seems that the Lyapunov exponents should depend on the dimension of the system. So if we have Schrodinger even in the second equation, 
+\[
+    \dot{\rho} = -i[H,\rho], \quad \delta\dot{\rho}  =-i[H,\delta\rho],
+\]
+we still have zero Lyapunov exponents. 
+
+
+\section{Sources}
+
+\begin{itemize}
+    \item \url{http://scholarpedia.org/article/Ehrenfest_time_and_chaos}
+    \item \url{http://www.scholarpedia.org/article/Kolmogorov-Sinai_entropy}
+    \item \url{http://www.scholarpedia.org/article/Pesin_entropy_formula}
+    \item \url{http://www.scholarpedia.org/article/Nonuniform_hyperbolicity#Lyapunov_Exponents}
+    \item \url{https://www.cs.umd.edu/class/fall2024/cmsc657/Lecture-4.pdf}
+\end{itemize}
+\end{document}
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{derivative}
+\usepackage{braket}
+\usepackage{xcolor}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newcommand{\Tr}{\text{Tr}}
+\title{Generating coarse grainings for AFL}
+\date{September 2026}
+
+\begin{document}
+\tableofcontents
+
+\section{Blackwell method}
+
+Let $\pi_t$ denote the conditional state of the hidden system after observing
+$i_1,\dots,i_t$,
+\[
+\pi_t(x)=P(X_t=x\mid i_1,\dots,i_t).
+\]
+For a specific outcome $i$, the filtering map $F_i$ updates the conditional state,
+\[
+\pi_{t+1}=F_i(\pi_t)=\frac{M_i\pi_t}{\sum_j (M_i\pi_t)_j},
+\qquad
+p_i(\pi_t)=\sum_j (M_i\pi_t)_j.
+\]
+
+where $M_i$ is the outcome-resolved transition matrix
+\[
+(M_i)_{jk}=P(X_{t+1}=j,Y_{t+1}=i\mid X_t=k).
+\]
+At long times the filtering states are distributed according to the stationary Blackwell measure $\mu_B$.
+
+\subsection{Lyapunov exponents.}
+
+Linearizing the filtering dynamics gives the Jacobian
+\[
+J_t=D F_{i_t}(\pi_t).
+\]
+Thus in matrix form, 
+\[
+(J_i(\pi))_{jk}=\frac{\partial (F_i(\pi))_j}{\partial \pi_k}.
+\]
+And from this we have 
+\[
+(J_i(\pi))_{jk}=\frac{(M_i)_{jk}}{p_i(\pi)}-\frac{(M_i\pi)_j\sum_\ell (M_i)_{\ell k}}{p_i(\pi)^2}.
+\]
+Finally, we have the accumulated Jacobian over many time steps
+\[
+ \tilde{J_T}=J_TJ_{T-1}\cdots J_1.
+\]
+The Lyapunov exponents are obtained from the asymptotic singular values gathered from the accumulated Jacobian,
+\[
+\lambda_k=\lim_{T\to\infty}\frac1T\log\sigma_k(M_T).
+\]
+For this calculation, we iterate through a QR decomposition,
+\[
+J_tQ_{t-1}=Q_tR_t,
+\qquad\lambda_k=\frac1T\sum_{t=1}^T\log |(R_t)_{kk}|.
+\]
+
+\section{Hamiltonian equations lyapunov exponents}
+For an isolated quantum system, the state evolves according to the von Neumann equation
+\[
+\dot{\rho}(t)=-\frac{i}{\hbar}[H,\rho(t)].
+\]
+In analogy with the classical equation
+
+$$
+\dot z = X_H(z),
+$$
+
+we can define the quantum vector field
+
+$$
+\mathcal{L}(\rho)
+:=
+-\frac{i}{\hbar}[H,\rho],
+$$
+The equation of motion can therefore be written as
+
+$$
+\dot\rho(t)=\mathcal{L}(\rho(t)).
+$$
+
+We now consider two nearby states,
+
+$$
+\rho(t)
+\qquad\text{and}\qquad
+\rho(t)+\delta\rho(t).
+$$
+
+
+Expanding the right-hand side using the Frechet derivative gives
+
+$$
+\mathcal{L}\bigl(\rho+\delta\rho\bigr)
+=
+\mathcal{L}(\rho)
++
+D\mathcal{L}_{\rho}[\delta\rho]
++
+O(\|\delta\rho\|^2).
+$$
+
+For the isolated system the Liouvillian is linear in $\rho$, and therefore its Frechet derivative is simply the Liouvillian itself,
+
+$$
+D\mathcal{L}_{\rho}[\delta\rho]
+=
+-\frac{i}{\hbar}[H,\delta\rho].
+$$
+
+Hence,
+\[
+\dot{\delta\rho}(t)=-\frac{i}{\hbar}[H,\delta\rho(t)].
+\]
+
+Thus, unlike the classical case, the linearized generator does not depend on the reference trajectory $\rho(t)$. This follows from the linearity of the Schrodinger evolution.
+The evolution of the initial variation is
+
+$$
+\delta\rho(t)
+=
+U_t\,\delta\rho(0)\,U_t^\dagger.
+$$
+
+We can therefore define the tangent map
+
+$$
+D\Phi_t(\rho_0)[\delta\rho(0)]
+=
+U_t\,\delta\rho(0)\,U_t^\dagger.
+$$
+
+To define Lyapunov exponents in analogy with the classical case, we consider the asymptotic growth of a perturbation,
+\[
+\lambda(\delta\rho):=\limsup_{t\rightarrow\infty}
+\frac{1}{t}\log\frac{|\delta\rho(t)|}
+{|\delta\rho(0)|}.
+\]
+
+Taking the Hilbert--Schmidt norm (Or any other for that case),
+
+\begin{align*}
+|\delta\rho(t)|_{\mathrm{HS}}^2&=
+\Tr\left[\left(U_t\delta\rho(0)U_t^\dagger\right)^\dagger
+\left(U_t\delta\rho(0)U_t^\agger\right)\right]&=
+\Tr\left[U_t\delta\rho(0)^\dagger U_t^\dagger
+U_t\delta\rho(0)U_t^\dagger\right]\\&=
+\Tr\left[\delta\rho(0)^\dagger\delta\rho(0)\right].
+\end{align*}
+
+
+Hence
+\[
+\|\delta\rho(t)\|_{\mathrm{HS}}=\|\delta\rho(0)\|_{\mathrm{HS}}
+\]
+
+for all $t$, and therefore the lyaps are all zero.\\
+\section{Projective measurements cannot be generating}
+We have defined the notion of a generating POVM in the following way
+\begin{equation}    
+    \label{Generating_POVM}
+    \exists \{\Pi_{i}\} \quad \forall \rho \quad \exists N_0 \in \mathbb{N} \forall N \geq N_0 \quad \exists (c_{i^N}) \geq 0; \rho = \sum_{\mathbf{i^N}} c_{\mathbf{i^N}}^{(\rho)}\Pi_{\mathbf{i^N}}.  
+\end{equation}
+If the POVM $\{\Pi_{i}\}$ satisfies this, it is generating. 
+Let us start with rank one projectors, for higher ranks, this will generalize easily. So, taking 
+\[
+    P_i = \ket{\psi_i}\bra{\psi_i}, \quad \sum_iP_i = 1.
+\]
+And using these to define the history operator, we have
+\[
+    K_\mathbf{i} = U^{N-1}P_{i_N}U^\dag P_{i_{N-1}}...U^\dag P_{i_2}U^\dag P_{i_1},
+\]
+and the history POVM element
+\[
+    \Pi_\mathbf{i} = K_\mathbf{i}^\dag K_\mathbf{i} = P_{i_1}UP_{i_2}U...P_{i_{N-1}}UP_{i_N}U^\dag P_{i_{N-1}}...U^\dag P_{i_2}U^\dag P_{i_1}.
+\]
+And this element lives in the subspace $\text{Rng}(\Pi_\mathbf{i}) \subseteq \text{Rng}(P_{i_1}U...U^\dag P_{i_1})$, so we have 
+\[
+    \Pi_\mathbf{i} = P_{i_1}\Pi_\mathbf{i}P_{i_1}.
+\]
+This implies that this matrix is always diagonal (block diagonal for higher ranks) wrt the projectors (with zeros elsewhere), since
+\[
+P_{j}\Pi_\mathbf{i}P_{l} = 0, \quad j\neq l.
+\] 
+Hence they cannot construct a density matrix with general off-diagonal elements. \\
+Also note that this is not the object that is appearing in the AFL entropy, since in there we are dealing with $K_\mathbf{j}^\dag K_\mathbf{i}$.
+
+\section{Things to try}
+
+\subsection{Generating POVMs and Lyapunov exponents}
+\[
+    A \equiv \rho + \sum \alpha_i\Pi_i
+\]
+variate wrt alpha. \\
+Taking this, we end up with the time derivative (taking the coefficients $\alpha$ constant in time)
+\[
+    \Dot{A} = \mathcal{L}(A) = -\frac{i}{\hbar}\left([H,\rho] +  \sum_i\alpha_i[H,\Pi_i]\right).
+\]
+And the derivative of the perturbation as 
+\[
+    \delta \Dot{A} = -\frac{i}{\hbar}\sum_i\left([H,\Pi_i]  + \pdv{[H,\rho]}{\alpha_i}\right)\delta \alpha_i.
+\]
+We can then define our analogy of the classical Hessian as
+\[
+    \mathcal{F}(H)_i = -\frac{i}{\hbar}\left([H,\Pi_i]  + \pdv{[H,\rho]}{\alpha_i}\right).
+\]
+And then we have
+\[
+    \delta \Dot{A} = \mathcal{F}(H) \cdot \delta\alpha.
+\]
+But now we cannot continue with the analogy, since the classical perturbations are dependent on time. We could then either generalize this problem to also include the coefficients to be time dependent, or exchange the time dependency of the POVM elements with these coefficients. Intuitively the latter approach seems to be the same we have been doing so far, so I would rather consider the first case.\\
+\subsection{POVM discrete time measurements}
+We measure the overlap of two states.\\
+At each time step we measure both states with the same POVM
+\begin{equation}
+\label{rhonplusone}
+    \rho_{n+1}=\frac{M_{i_n}\rho_n M_{i_n}^\dagger}{\Tr(M_{i_n}\rho_n M_{i_n}^\dagger)}.
+\end{equation}
+This is called a quantum trajectory. Now here (https://arxiv.org/pdf/2601.14023), they proved that in the absence of "dark subspaces", this converges exponentially fast to the set of pure states, if we take $M_{i_n}$ to be general Kraus operators.\\
+Also, they proved that if a history POVM becomes IC, then it must become IC in at most $d^2$ steps. \\
+For pure states,
+\[
+    \ket{\psi_{n+1}} = \frac{M_{i_n}\ket{\psi_n}}{\sqrt{\bra{\psi_n}M_{i_n}^\dagger M_{i_n}\ket{\psi_n}}}.
+\]
+Then we evolve both unitarily.\\
+And now if we compute the overlap of this state and the perturbed one, we get (in simplified notation) for the first time step
+\[
+    \braket{\psi|\psi+\delta\psi}_1 = \frac{\bra{\psi}M_{i_1}^\dagger M_{i_1}\ket{\psi + \delta\psi}}{\sqrt{\bra{\psi + \delta\psi}M_{i_1}^\dagger M_{i_1}\ket{\psi + \delta\psi}\bra{\psi}M_{i_1}^\dagger M_{i_1}\ket{\psi}}},
+\]
+so the unitary evolution doesn't change the first overlap. But in the second, they already play a role
+\[
+\braket{\psi|\psi+\delta\psi}_2=
+\frac{\bra{\psi}M_{i_1}^\dagger U^\dagger M_{i_2}^\dagger M_{i_2}UM_{i_1}\ket{\psi+\delta\psi}}
+{\sqrt{\bra{\psi}M_{i_1}^\dagger U^\dagger M_{i_2}^\dagger M_{i_2}UM_{i_1}\ket{\psi}
+\bra{\psi+\delta\psi}M_{i_1}^\dagger U^\dagger M_{i_2}^\dagger M_{i_2}UM_{i_1}\ket{\psi+\delta\psi}}}.
+\]
+We can simplify this expression using the same history operators as in the definition of the AFL entropy
+\[ 
+    K_{\mathbf i} = M_{i_n}U M_{i_{n-1}}U\cdots M_{i_2}U M_{i_1}, 
+\]
+and 
+\[ 
+    \Pi_{\mathbf i} = K_{\mathbf i}^{^\dagger} K_{\mathbf i}. 
+\]
+Then we can rewrite the density matrix evolution as 
+\begin{equation}
+    \rho_{n+1}=\frac{K_{\mathbf i_n}\rho_0 K_{\mathbf i_n}^\dagger}{\Tr(K_{\mathbf i_n}\rho_0 K_{\mathbf i_n}^\dagger)}.
+\end{equation}
+So even if we take $\rho_0$ pure, it stays pure. \\
+So the general form can be written as 
+\[
+\bra{\psi}\ket{\psi+\delta\psi}_n=
+\frac{\bra{\psi}\Pi_{\mathbf i}\ket{\psi+\delta\psi}}
+{\sqrt{\bra{\psi}\Pi_{\mathbf i}\ket{\psi}
+\bra{\psi+\delta\psi}\Pi_{\mathbf i}\ket{\psi+\delta\psi}}}.
+\]
+Also note that this is one measurement history. To get the full picture, we would need to sum over all possible histories as is done in the AFL. \\
+A subspace with a projector $P$ of rank $\geq2$ is dark, when 
+\[
+    P\Pi_\mathbf{i}P = c_\mathbf{i}P.
+\]
+Yes, this construction is essentially same as in the dyn entropy pdf, where there are instead computed the probabilities rather than the overlaps (up to a normalization). If we prescribe the probabilities 
+\[
+    p_{\mathbf{i}^n} = \bra{\psi_0}\Pi_{\mathbf{i}^n}\ket{\psi_0},
+\]
+then this is the probability we would get if we started with the pure state in the dyn entropy pdf. \\
+If we sum over all possible histories, then it has a very similar structure to the AFL entropy. \\
+From this, we could have something very similar to the classical Bennetini picture.\\
+We can take it in first order of the parameter $\lambda$ towards any direction specified by it in terms of the basis of hermitian traceless operators $X_j$ that leave the density matrix positive, ie
+\[
+    \rho + \delta\rho = \rho + \sum_j\lambda_jX_j,
+\]
+but here comes up the question if we want this perturbed state to be pure. If we do, we have the previously mentioned condition on lambdas, once we fix the basis $X_j$. So this is the first step. Then we time evolve both states, and measure in some previously specified basis. This changes the density matrix according to (\ref{rhonplusone}). 
+\begin{enumerate}
+    \item Specify the pure state $\rho$, the measurement operators $M_n$ and the basis $X_j$ together with the vector of perturbation $\lambda$. There is an issue, that this very often leads to the perturbed state being negative. 
+    \item Evolve both the perturbed and the reference state by a time $\Delta t$.
+    \item Measure both states with the same measurement $M_k$.
+    \item Renormalize the distance between the two states. Now this is a crucial step, however it may not be needed after all. 
+\end{enumerate}
+Hmm, maybe this is not a correct approach. If we start with a mixed state, it reaches some pure state exponentially fast. Now, after the state is chosen, we can choose some Kraus operators such that the set of all pure states is reachable via different trajectories $\mathbf{i_n}$. \\
+If we however choose the Kraus operators, ie the dynamics before the state, it may not be able to reach all the pure states. \\
+It might be interesting to take the trace of the superoperator $\mathcal{L}(\rho_n) = \rho_{n+1}$, since that isn't constant and should retain the information about the trajectory. The same with the determinant. 
+
+\subsection{Lyapunov differential equation neccesities}
+From what seems to be needed for the classical analogy is (both $f,g$ are superoperators):
+\begin{align*}
+    \dot{\rho} = f(H, \rho)\\
+    \delta\dot{\rho} = g(H, \rho)\delta\rho\\
+    \Tr(g(H, \rho)\delta\rho) = 0 \\
+    f \text{ is non-linear in } \rho+\delta\rho
+\end{align*}
+
+
+\subsection{Benettini algorithm}
+Lyapunov exponents can be computed using this algorithm in the classical systems. It seems as though it could be used also in QM, since we only need two governing differential sets of equations for it to function.\\
+Using the idea with the PT(parallel transport), this will not affect the R matrix in the QR decomposition part of this algorithm. The only part which will depend on this change is in the renormalization step, since there we change the directions. \\
+\subsection{Geometrical Lyapunov exponents}
+If we take the variation of the initial state to be a unitary transformation $U = \exp{(\sum i\lambda_i A_i)}, \quad\lambda\in\mathbb{R}$, where the generators $A_i$ are hermitian. The tangent vector to $U$ is $\nabla_j U|_{\vec{\lambda} =0} = iA_j$. These $A_i$ need to be projectors, nor orthogonal. They simply need to span the hermitian space.\\
+We could use a different metric, since the HS (Hilbert-Schmidt) gives a flat space and probably does not have the physical overlay we would want - purely Euclidean norm. We could use any of these
+\begin{itemize}
+    \item Bures
+    \item Trace distance
+    \item Quantum Fisher information
+\end{itemize}
+but they are still unitarily invariant. \\
+We would want to keep the volumes $\Tr(\Pi_i)$ invariant to satisfy Liouville. Then taking this analogy further, classically this implies that the sum of the lyaps is zero. They are tied to the stretching rate of the phase space volume, so our should be as well tied to this quantity of QM phase space volume $\Tr(\Pi_i)$. Now we need to decompose the POVM elements into some ways so we can calculate the according lyaps. Similarly to how the lyaps classically measure the directions of the stretching. Most promising seems to me the spectral decomposition and then the study of the corresponding subspaces of the POVM. Essentially
+\[
+    \Pi_{\mathbf{i}^N} = \sum_\lambda \lambda\ketbra{\lambda}{\lambda},
+\]
+then the individual subspaces $\ketbra{\lambda}{\lambda}$ correspond to one Lyapunov phase space volume stretching via one trajectory $\mathbf i^N, \quad N\to\infty$. Now the lyaps should be somehow the same for almost every such trajectory  
+\[
+    U\left(\sum_\lambda \lambda\underbrace{\ketbra{\lambda}{\lambda}}_{P_\lambda(0)}\right)U^\dag = \sum_\lambda \lambda UP_\lambda(0)U^\dag = \sum_\lambda \lambda P_\lambda(t).
+\]
+And since the perturbation would be unitary on the original spectral subspaces, we would only compare the non-perturbed projectors with these, so still the same problem.  
+
+\subsection{Vectorized Schrödinger}
+Starting from the Schrödinger equation, 
+\[
+    \dot{\rho} = X_H(\rho)=  -i[H, \rho] = -i(H\rho -  \rho H).
+\]
+Now, using the Jacobian, we have
+\[
+    X_H(\rho) = -i \begin{pmatrix} H & \rho\end{pmatrix} \mathbf{J} \begin{pmatrix}
+H\\
+\rho
+\end{pmatrix}
+\]
+Now the classical equation for the phase space point is a vector equation, so we can employ the formalism of vectorization, ie
+\[
+    \operatorname{vec}(\dot{\rho}) = -i(\operatorname{vec}(H\rho) - \operatorname{vec}(\rho H)).
+\]
+Now, using the formula 
+\[
+    \operatorname{vec}(ABC) = (C^T \otimes A)\operatorname{vec}(B),
+\]
+we get 
+\[
+    \operatorname{vec}(\dot{\rho}) = -i(I\otimes H - H^T \otimes I)\operatorname{vec}(\rho).
+\]
+Still linear of course, but maybe if we were to use only the diagonal elements of $\rho$, then there should not be Schrödinger by itself (thus not unitary, but discarding information). 
+\subsection{Curved space}
+We have a manifold 
+\[
+    \mathcal{M} = \{\rho|\quad\rho = \rho^\dag, \rho \geq0,\Tr\rho = 1\}
+\]
+composed of density matrices. Now only the non-full rank density matrices form the boundary
+\[
+    \partial\mathcal{M} = \{\rho|\quad\rho = \rho^\dag, \rho \geq0,\Tr\rho = 1, \text{rank}(\rho) < d\},
+\]
+because they all have at least one eigenvalue $\lambda_i = 0$ for some $i$ and we can move infinitesimally "outside" of the manifold by perturbing by $-\epsilon \ketbra{i}{i} + \epsilon \ketbra{j}{j}$ in the subspace generated by the eigenvector $\ket{i}$ corresponding to the null eigenvalue. For the tracelessness we need to also add the latter term, which needs to correspond to some non-zero eigenvalue $j \neq i$. Now, since unitary evolution preserves the rank, we stay in the same sphere for the whole system evolution.\\
+Now for each density matrix, there is a corresponding tangent space 
+\[
+    \mathcal{T_\rho M} = \{\delta\rho|\quad  \delta\rho = \delta\rho^\dag, \Tr\delta\rho =0\}.
+\]
+We also need to describe the dynamics of this geometry, so one usually defines the one parameter flow $\Phi: \mathcal{M}\to\mathcal{M}$ accordingly
+\[
+    \Phi_0 = \text{Id}, \quad \Phi_{t+s} = \Phi_t\circ\Phi_s,
+\]
+which is usually described (but needn't be) by the unitary evolution $\Phi_t(\rho) := U_t\rho U_t^\dag$. And this flow (and its differential) is exactly what we need to compute the Lyapunov exponents. \\
+
+
+
+
+However if we use the Hilbert-Schmidt metric, then we can parametrize the density matrices accordingly
+\[
+    \rho = \frac{I}{d} + \sum_i c_i A_i.
+\]
+Where $A_i$ are traceless and hermitian. Now the HS metric is defined by the line element square (ref)
+\[
+    ds_{HS}^2 = \frac{1}{2}\Tr((d\rho)^2),
+\]
+and this induces a flat geometry (J. Phys. A: Math. Gen. 36 (2003) 10115–10130). \\
+Now if we consider the Bures metric, then the manifold is not flat nor of constant curvature (Journal of Geometry and Physics 13 (1994) 203—206).
+
+\subsection{Parameter space}
+From the construction, we have two points. We can compute the tangents to each point and move them to the same origin (using parallel transport possibly) to construct the parallelogram. \\
+The $\lambda'$ it takes to reach the time evolved variated starting point is the same as we computed before, namely for this equation to hold
+\[
+U_{\lambda'}U_t \rho U_t^\dag U_{\lambda'}^\dag=U_t U_\lambda \rho U_\lambda^\dag U_t^\dag,
+\]
+we need
+\[
+    [U_\lambda^\dag U_t^\dag U_{\lambda'}U_t, \rho] = 0.
+\]
+Ok, if we take two initial points in classical phase space $z,z'$, then $z\neq z'$ or $z=z'$ and this must stay during the evolution, whereas $\norm{z-z'} = \sqrt{(q-q')^2 + (p-p')^2}$ diverges.\\
+To compute the area of the parallelogram spanned by two vectors, we will use the Gram determinant $\text{det}(G)$, which is a square of the area $\mathcal{A}$. Now this is unitarily invariant, since it is fully determined by the scalar product of the two vectors and their norms. \\
+In this section I use $U$, $U_t$ and $U(t)$ interchangeably.
+\section{Parallelogram integration}
+Okay, suppose we have a density matrix at the origin. Now, we can parametrize the density matrix as 
+\begin{equation}
+    \label{rho_in_lambda}
+    \rho  =\frac{1}{d} + \sum_i\lambda_iX_i \geq 0,
+\end{equation}
+    where $X_i$ are hermitian and traceless. Then our notion of the parallelepiped (hypercuboid) after one evolution is the following set 
+\[
+    \Omega = \{\rho = \frac{1}{d} + \sum_i\lambda_iX_i; \vec{\lambda} \in [0,r_1]\cross [0,r_2]\cross...\cross[0,r_n]\}
+\]
+which has the volume
+\[
+    V = \int_{\Omega_V}d\mu(\rho),
+\]
+where $\Omega_V$ is the region spanned by the parallelogram.\\
+And if we employ the HS measure, this becomes
+\begin{align*}
+    V = \sqrt{\det \Tr (X_j X_k)}\int_0^{r_1}...\int_0^{r_n} d\lambda_1...d\lambda_n = \sqrt{\det \Tr (X_j X_k)} V_{\vec{\lambda}} = \\\sqrt{\det \Tr (X_j X_k)} \prod_{i=1}^n r_i = V(\vec{r})\sqrt{\det G} 
+\end{align*}
+
+So we just have the Euclidean volume spanned by the vector multiplied with the square root term. \\
+Now since HS is invariant under unitary transformation, this must be conserved (The term in the trace is again the Gram matrix, which is invariant wrt unitary evolution). \\
+\subsubsection{Time evolution}
+If we evolve the parallelepiped, we can only evolve the generators. What we are interested in is how the parameters change, thus we obtain
+\[
+    \sum_i \lambda'_i X_i = \sum_i \lambda_i UX_iU^\dag,
+\]
+or after linearization in this time evolution, 
+\[
+    \sum_i \lambda'_i X_i = \sum_i \lambda_iX_i - i\Delta t\lambda_i[H,X_i].
+\]
+We thus have $d^2-1$ equations for the $\lambda'_i$. Now, since the $X_i$ form a basis of hermitian traceless operators, we can write ($(- i[H,X_i])^\dag = - i[H,X_i]$ is traceless, hermitian) 
+\begin{equation}
+    \label{A_equation}
+    - i[H,X_i] = \sum_{j} A_{ij}X_j, 
+\end{equation}
+And rewrite the "equations of motion for the parameters" now as 
+\[
+   \lambda'_i = \lambda_i + \Delta t \sum_j A_{ij}\lambda_j,
+\]
+or without indices
+\[ 
+     \lambda' = (1+\Delta tA^T)\lambda,
+\]
+or, taking the limit $\Delta t \to 0$
+\[
+    \frac{\lambda'- \lambda}{dt} = \dot\lambda = A^T\lambda, 
+\]
+leading to the solution 
+\[
+    \boldsymbol \lambda(t) = e^{A^Tt}\boldsymbol \lambda(0).
+\]
+Now we can compute the form of the $A$ matrix. \\
+If we multiply the equation (\ref{A_equation}) by $X_k$ from the right and take the trace, we end up with
+\[
+     \Tr(-i[H,X_i]X_k) = \Tr(\sum_{j} A_{ij}X_jX_k) = \sum_jA_{ij}\Tr(X_jX_k) = \sum_jA_{ij}G_{jk},
+\]
+which implies (G is invertible if the operators are linearly independent)
+\[
+    A_{il} = \sum_k\Tr(-i[H,X_i]X_k)G_{kl}^{-1}.
+\]
+Now let us study it further. We have that
+\[
+    \dot X_i = \sum_{j} A_{ij}X_j,
+\]
+and using this with the fact that $G$ is invariant, we get
+\begin{align*}
+    0=\dot G_{ij} = \Tr(\dot X_iX_j)+ \Tr(X_i\dot X_j) = \Tr(\sum_{k} A_{ik}X_kX_j)+ \Tr(X_i\sum_{k} A_{jk}X_k) = \\\sum_{k}A_{ik}G_{kj} + \sum_{k} A_{jk}G_{ik},   
+\end{align*}
+or without indices
+\begin{equation}
+    \label{AGGAT}
+    \mathbf A\mathbf G  + \mathbf G\mathbf A^T = 0.
+\end{equation}
+Now, let $v$ be the eigenvector of $A^T$ with eigenvalue $a$, since $A$ is real, we have
+\[
+    A^Tv = av,\quad v^\dag A = a^*v^\dag,
+\]
+and multiplying the previous equation with both these eigenvectors, we get
+\begin{align*}
+    v^\dag(AG  + GA^T)v = a^*v^\dag Gv + av^\dag Gv = 0\implies (a^* + a)v^\dag Gv =0.
+\end{align*}
+And $G$ being positive definite means that $\Re(a) = 0$.\\
+Now, based on the condition (\ref{AGGAT}), the matrix $A$ is guaranteed to be antisymmetric if the basis $X_i$ is orthonormal, since then $G=1$. 
+\subsection{Arbitrary unitary evolution}
+Ok, now suppose that we have the unitary evolution given by 
+\[
+    V = \exp(i\sum_j s_jA_j),
+\]
+where $A_j$ are the generators of translation. Now if we act with this operator on the initial density matrix, whilst keeping only first order, we obtain
+\begin{align*}
+    V\rho V^\dag = \frac{1}{d} + V\sum_i\lambda_iX_iV^\dag = \\
+    \frac{1}{d} + (1+i\sum_j s_jA_j)\sum_i\lambda_iX_i(1-i\sum_j s_jA_j) = \\
+    \frac{1}{d} + \sum_i\lambda_iX_i + i\sum_j\sum_i s_j\lambda_i[A_j,X_i].
+\end{align*}
+Now again, since $i[A_j,X_i]$ is traceless and hermitian, we can construct it in the basis of $X_k$ with the coefficients $c_{ki}^{j}$ (which depend on $j$) as
+\[
+    i[A_j,X_i] = \sum_kc_{ki}^{(j)}X_k,
+\]
+leading to
+\[
+    V\rho V^\dag = \frac{1}{d} + \sum_i\lambda_iX_i + \sum_j\sum_i \sum_kc_{ki}^{(j)}s_j\lambda_iX_k = \frac{1}{d} + \sum_i\Big\{\big(\lambda_i + \sum_j\sum_k c_{ik}^{(j)}s_j\lambda_k\big)X_i\Big\}.
+\]
+Hence the coordinates parameters have transformed according to
+\[
+    \tilde{\lambda}_{i} = (\lambda_i + \sum_j\sum_k c_{ik}^{(j)}s_j\lambda_k\big),
+\]
+and we can construct the derivative, ie
+\[
+    \odv{(\tilde\lambda_i - \lambda_i)}{\lambda_m} = \sum_j c_{im}^{(j)}s_j,
+\]
+now we define the following matrix
+\[
+    B_{im} = \sum_j c_{im}^{(j)}s_j,
+\]
+so we get
+\[
+    \lambda_i = (\delta_{im}+B_{im})\lambda_m(0).
+\]
+\subsubsection{Exact solution}
+Denoting the unitary evolution as 
+\[
+    U = \exp(i\sum_js_jA_j),
+\]
+and if we try to solve the evolution exactly, we can parametrize the lambdas, so we have 
+\[
+ \rho(\mathbf s)  =\frac{1}{d} + \sum_i\lambda_i(\mathbf s)X_i, \quad \mathbf s\in[0,r_i]^n,
+\]
+and differentiating this wrt the flow parameter, 
+\[
+    \odv{\rho}{s_j} = \sum_i\odv{\lambda_i(\mathbf s)}{s_j}X_i.
+\]
+We can also differentiate this when the density matrix has been acted upon by the unitary evolution, leading to 
+\[
+    \pdv{U\rho_0U^\dag}{s_j} = \pdv{U}{s_j} \rho_0U^\dag + U\rho_0\pdv{U^\dag}{s_j},
+\]
+while also from unitarity we have
+\[
+    \pdv{U}{s_j} =  - U\pdv{U^\dag}{s_j}U, 
+\]
+which gives then
+\[
+    \pdv{\rho}{s_j} = -U\pdv{U^\dag}{s_j}\rho + \rho U\pdv{U^\dag}{s_j} = -[U\pdv{U^\dag}{s_j},\rho].
+\]
+
+We then have 
+\[
+    -[U\pdv{U^\dag}{s_j},\rho] = \sum_i\odv{\lambda_i(\mathbf s)}{s_j}X_i
+\]
+The derivative can be calculated using the Duhamel formula for example, but that leads to a very complicated form. \\
+
+
+
+\subsubsection{Exact solution for one parameter flow}
+If we instead focus on the one parameter flow, we can define the unitary operator of the evolution as 
+\[
+    U(t) = \exp(it\sum_js_jA_j)
+\]
+ After this, it yields
+\[
+    \odv{\rho}{t} = -i[\rho,\sum_js_jA_j] = -i\sum_{i,j}\lambda_is_j[X_i, A_j].
+\]
+Connecting those two, we have 
+\[
+    \sum_i\odv{\lambda_i(t)}{t}X_i = -i\sum_{i,j}\lambda_is_j[X_i, A_j] = \sum_{i,j}\lambda_is_j\sum_kc_{ki}^{(j)}X_k
+\]
+\[
+    \odv{\lambda_i(t)}{t} = \sum_{m,j}\lambda_ms_jc_{im}^{(j)} = \sum_{k}\lambda_k B_{ik},
+\]
+Solving this, we get in matrix notation
+\begin{equation}
+    \label{lambda_evol}
+    \boxed{ 
+    \boldsymbol\lambda(t) =  \exp(t\mathbf B)\boldsymbol\lambda(0)}
+\end{equation}
+Now if we compose two evolutions, the question is if we should end up at the same state if we exchange the order of those operations. If we do, we get 
+\[
+    \exp(s\mathbf B)\exp(u\mathbf C) = \exp(u\mathbf C)\exp(s\mathbf B)\implies [\mathbf B, \mathbf C] = 0,
+\]
+should this hold for all $s, u$. Otherwise use the BCH formula. \\
+
+\subsubsection{Parameter through generators}
+We can also write translations of lambda through their generators as
+\[
+    A_i = \pdv{}{\lambda_i},
+\]
+where $A_i$ are now the generators of the translation 
+\[
+    T(\boldsymbol h) = \exp (\sum_i h_i A_i), 
+\]
+which can act on the density matrix in the following manner
+\[
+    \rho (\boldsymbol \lambda) = T(\boldsymbol \lambda)\rho(0),
+\]
+and the generators themselves transform in the opposite (follows from the chain rule) way from the lambdas
+\[
+    A_i(s) = \sum_j \exp(-s\mathbf B)_{ji}A_j(0) 
+\]
+\subsection{Overlap of parallelograms}
+Now to compute the overlap. Given an initial state (\ref{rho_in_lambda}), and a fixed basis of $X_i$, the volume of every parallelogram evolved from this origin is fully characterised by the vector $\vec{\lambda}$. We can compute the overlap accordingly
+\[
+    V_O = \mu(V_1\cap V_2) = \int_\Omega 1_{V_1}1_{V_2} d\mu(\rho),
+\]
+where $\Omega$ is the whole space and $1_{V_1} (1_{V_2})$ denote the characteristic functions for the volume $V_1, V_2$.\\
+Employing our formula for the volume, we get
+\[
+    V_O = \sqrt{\det G}\int_{\mathbb{R}^n}1_{V_1}1_{V_2}d^n\lambda.
+\]
+Gram is again unitarily invariant, so we will focus on the integral. Now we know that the lambdas transform according to (\ref{lambda_evol}). The problem is that the overlap of two parallelograms need not be another parallelogram.\\
+We know that one corner of the parallelogram is the maximally mixed state, which is left invariant wrt the evolution, so that must go through the rotation axis (or other object in higher dim).\\
+Take the evolution of any (other than $\rho = \frac{1}d{}$) corner, we have
+\[
+    \frac1 d + \lambda_iX_i \to \frac1 d + (\sum_j\exp(t\mathbf{B})_{ij}\lambda_j)X_i.
+\]
+  
+If we take the equation (\ref{lambda_evol}), and linearize the exponential, we have 
+\[
+    \boldsymbol \lambda(dt) = (1+dt\mathbf B)\boldsymbol \lambda(0) 
+\]
+
+
+\subsubsection{Two dimensional case}
+Ok, if we start off easy at two dimension with the usual rotation matrix $R(\theta)$ (Noting that this is a special case), we have (here $\lambda_1, \lambda_2$ are scalars.)
+\[
+    \begin{pmatrix}
+    \lambda_1^{(n+1)} \\
+    \lambda_2^{(n+1)} \\
+\end{pmatrix} = e^{s\mathbf B}\begin{pmatrix}
+    \lambda_1^{(n)} \\
+    \lambda_2^{(n)} \\
+\end{pmatrix} = R(\theta) =
+\begin{pmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{pmatrix}\begin{pmatrix}
+    \lambda_1^{(n)} \\
+    \lambda_2^{(n)} \\
+\end{pmatrix}.
+\]
+and our goal is to compute $V_{O}^{(n)}$. Now if this is a square, then the area will always be a quadrilateral, with area
+\[
+    A_n = \frac{1}{2} a^2 \sin(\frac{\pi}{2}-n\theta).
+\]
+\subsubsection{Monte Carlo simulation}
+\subsection{Parallelogram for pure states}
+Any density matrix can be written as 
+ \[
+    \rho = \rho_0 + \sum_j^{d^2-1}\lambda_jX_j \equiv \rho_0 + A,
+ \]
+ where the $X_j$ are hermitian and traceless, and $\rho_0$ is a pure state. \\
+ Now the condition for the state to stay pure is 
+ \[
+    \rho_0A +A\rho_0 +A^2 = A.
+ \]
+ Since the Haar measure acts only on pure states, we need this equation to hold for every state in our region $\Omega$. Once fulfilled, it stays so during the unitary evolution. Note that this is an additional constraint on the $\lambda_j$. This then reads
+ \[
+    \sum_j^{d^2-1}\lambda_j(\rho_0X_j + X_j\rho_0 - X_j) = - \sum_{i,j}^{d^2-1}\lambda_j\lambda_iX_jX_i.
+ \]
+ We can also take the trace of this equation to get
+ \[
+    \sum_j^{d^2-1}\lambda_j\Tr((\rho_0X_j + X_j\rho_0)) = - \sum_{i,j}^{d^2-1}\lambda_j\lambda_i\Tr(X_jX_i),
+ \]
+ which reduces to 
+ \[
+    2\sum_j^{d^2-1}\lambda_j\Tr(X_j\rho_0) = - \sum_{i,j}^{d^2-1}\lambda_j\lambda_iG_{ji}.
+ \]
+ However we can still use the HS measure on this region. If we do, the integral becomes harder to compute, nevertheless the volume stays constant. \\
+ In addition to this change, we can compute the paralellogram using the corners by the full vector of lambdas rather than one lambda for each corner (thus having $\lambda^{(m)}_j$ for $1\leq m\leq d^2-1$). In the end we should end up with the following lambda transformation
+ \[
+    \boldsymbol\lambda(t) = B(t)\boldsymbol\lambda(0).
+ \]
+ Now we can put all the vectors of lambdas into one big matrix, ie
+ \[
+    \boldsymbol{\Lambda} =
+    \begin{pmatrix}
+    \lambda_1^{(1)} & \lambda_1^{(2)} & \cdots & \lambda_1^{(d^2-1)} \\
+    \lambda_2^{(1)} & \lambda_2^{(2)} & \cdots & \lambda_2^{(d^2-1)} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \lambda_{d^2-1}^{(1)} & \lambda_{d^2-1}^{(2)} & \cdots & \lambda_{d^2-1}^{(d^2-1)}
+    \end{pmatrix}
+\]
+ Using this, we can rewrite the evolution of this matrix as a whole
+ \[
+    \Lambda(t) = B(t)\Lambda(0).
+ \]
+Now the volume at the initial state is 
+\[
+    V_{\text{HS}}(0) = \sqrt{\det (\Lambda^TG\Lambda)} = |\det\Lambda(0)|\sqrt{\det G}, 
+\]
+ where we've used the identity $\det(\Lambda^T) = \det(\Lambda)$.\\
+ This comes from the inner product of any two vectors,
+ \[
+    v_i\cdot v_j = \Tr(v_iv_j) = \sum_{kl}\lambda^{(i)}_k\lambda^{(j)}_l\Tr(X_kX_l).
+ \]
+ Now the volume evolves according to 
+ \[
+    V_{\text{HS}}(t) = \sqrt{\det (\Lambda^T(t)G\Lambda(t))} = \sqrt{\det (\Lambda^T(0)B(t)^TGB(t)\Lambda(0))} = |\Lambda(0)|\sqrt{\det B(t)^TGB(t)}.
+ \]
+ Hence for the volume to stay constant, the transition matrices $B$ need to satisfy 
+ \[
+    \frac{\det (B(t)^TGB(t))}{\det G} =1 \implies (\det B)^2 = 1.
+ \]
+ Compare this with the much stronger condition (\ref{AGGAT}), which means that the evolution is an isometry wrt the HS metric (or in this specific basis, the G). \\
+ Any perturbation that evolves unitarily implies \ref{AGGAT} and thus volume, angle and length preservation. Even if multiple perturbations would evolve via a different unitary, then the lengths would be preserved, although not necessarily the volume nor angles. 
+
+\subsection{Subspace of density matrices}
+  If we search a subspace on which if we measure, we are certain that the measurement will give the value $x$, then this has to hold 
+ \[
+    p(x) = \int_{S\subseteq\Omega}\Tr(\rho E_x)d\mu(\rho) = \Tr(E_x\int_{S\subseteq\Omega}\rho d\mu(\rho)) = \Tr(E_x \tilde{\rho}) = 1,
+ \]
+where we've defined $\tilde{\rho} =  \int_{S\subseteq\Omega}\rho d\mu(\rho)$. However this by the normalization of the measure implies that 
+\[
+    \Tr(\rho E_x) =1.
+\]
+(For mu almost everywhere). Now if $E_x$ is one dimensional, then this defines one state. \\
+Then we could define some distance based on the fact that we need to keep this probability to be equal to one to stay during the evolution. \\
+Furthermore I don't think the object we need to focus on is in the subspace of the density matrices. Even if we take any non-unitary perturbation, like linearization, then we evolve the subspace, we cannot get exponential growth. That is if we do this step once at the start.\\
+It seems to me we should focus more on the classical notions stemming from qm, such as probabilities. 
+
+\section{Linearization procedure}
+I will derive the tangent vectors once again, to make sure. First we time evolve, then vary. For this, we have (for $U(\lambda) = \exp(i\lambda A)$) and $U:=U_t$, after linearization 
+\begin{align*}
+    \rho_{t\lambda} = (1+i\lambda A)U\rho U^\dag (1-i\lambda A) =   (1+i\lambda A)\rho_t (1-i\lambda A) = \rho_t + i\lambda[A, \rho_t].
+\end{align*}
+And now for the other order of evolutions, 
+\begin{align*}
+    \rho_{\lambda t} = U(1+i\lambda A)\rho  (1-i\lambda A)U^\dag =   \rho_t + Ui\lambda[A, \rho]U^\dag.
+\end{align*}
+So now to get the tangent vector, we have to substract the common origin ($\lim_{\lambda\to0}$) from both of them, which is 
+\[
+    \rho_{origin} = \rho_t,
+\]
+leading to 
+\begin{align*}
+    \delta\rho_{t\lambda} = i\lambda[A, U\rho U^\dag]\\
+    \delta\rho_{\lambda t} = Ui\lambda[A, \rho]U^\dag.
+\end{align*}
+But now to be completely general, we should take the (vector) $\lambda$ for each tangent vector to be independent. Also for the basis $A$. Thus we should have for the (wlog) $\rho_{\lambda t}$ instead the unitary evolution $U(\lambda) = \exp(i\lambda'B)$, where we do not impose any relation between $\lambda, \lambda'$ and $A, B$ in advance. In fact we would like to get some relation for them. Then we have
+\begin{align*}
+    \delta\rho_{t\lambda} = i\lambda[A, U\rho U^\dag]\\
+    \delta\rho_{\lambda' t} = Ui\lambda'[B, \rho]U^\dag.
+\end{align*}
+Now we know what criterion $B$ and $\lambda'$ need to satisfy for these two tangents (and therefore the resulting states) to be equal if we do not linearize. However when we do, we end up with the following equation
+\[
+    \lambda[A, U\rho U^\dag] = U\lambda'[B, \rho]U^\dag,
+\]
+which is in general a vector equation and can be reduced to
+\begin{equation}
+    \label{lambda_prime_equality}
+    \boxed{[\lambda U^\dag AU - \lambda'B,\rho] = 0}.
+\end{equation}
+Ok, so this finally seems non-trivial for $B$. We can also impose another basis $B' = \frac{\lambda'}{\lambda}B$, such that
+\[
+    [U^\dag AU - B',\rho] = 0.
+\]
+But we cannot use these vectors for the gram det, since we impose equation (\ref{lambda_prime_equality}), for which it must be zero (may be worth checking).\\
+We take the $\lambda'$ at some time $t$, then time evolve and see how much it has changed, ie distorting the parallelogram in various directions, whilst keeping its area. So we need to keep our equation (\ref{lambda_prime_equality}) to be fulfilled at every step. I need to make some things clear
+\begin{itemize}
+    \item Is the subsequent evolution just in time, or is there something of Benettini approach?
+    \item Which tangent vectors are the correct ones for this approach? Or are we supposed to use the change of the tangent vectors instead?
+    \item If we compute just from the origin which was not time evolved, then we have two different vectors - corresponding to lambda and to time evolution. Shouldnt the parallelogram be computed from these?
+    \item It might not be a parallelogram, since the evolution in lambda is a linearization. Would still be computed by gram, but 4x4 dim. Or volume? what is the right object exactly? 
+    \item Isn't this very closely connected to the OTOC?
+\end{itemize}
+\subsubsection{Operator derivation}
+We can define new operators $R$, $T$ as 
+\[
+    R = (1+i\lambda A)U, \quad T = U(1+i\lambda' B),
+\]
+then 
+\[
+    R\rho R^\dag = T\rho T^\dag.
+\]
+Now these need not be unitary, since
+\[
+    R^\dag R = 1 +\lambda^2 U^\dag A^2 U, \quad T^\dag T = 1 + \lambda'^2 B^2.
+\]
+So now we have 
+\[
+    T^\dag R \rho R^\dag T = (1 + \lambda'^2 B^2)\rho (1 + \lambda'^2 B^2).
+\]
+If we omit the $\lambda'^2$ order, then we have 
+\[
+    T^\dag R \rho R^\dag T =\rho \implies [T^\dag R, \rho] = [(1-i\lambda'B)U^\dag (1+i\lambda A)U , \rho]= [1 - i\lambda'B + i\lambda U^\dag A U] =  0, 
+\]
+leading again to equation (\ref{lambda_prime_equality}) in the first order. 
+\subsubsection{$\lambda'$ parameter}
+Okay, so we need a change in $\lambda'$ based on the time evolution. We have the condition on the point conservation at \ref{lambda_prime_equality}. 
+
+
+
+
+
+Just as a sanity check, the gram determinant (using HS for the metric) of the tangents is
+\[
+    \det G=\Tr\left(\delta\rho_{t\lambda}^2\right)
+    \Tr\left(\delta\rho_{\lambda t}^2\right)-\Tr\left(\delta\rho_{t\lambda}\delta\rho_{\lambda t}\right)^2.
+\]
+Which after plugging in the tangent vectors, gives
+\[
+    \det G=\lambda^2\lambda'^2\left[\Tr\left([A,U\rho U^\dagger]^2\right)\Tr\left([B,\rho]^2\right)-\Tr\left([A,U\rho U^\dagger]\,U[B,\rho]U^\dagger\right)^2\right].
+\]
+This is zero for our condition (\ref{lambda_prime_equality}), so that checks out.\\
+If we calculate the Gram determinant for the two infinitesimal tangent vectors corresponding to the unitary evolution of $\lambda', t$, we have
+\[
+    v_1 = i[B,\rho], \quad v_2 = -i[H,\rho],
+\]
+and the Gram determinant becomes
+\begin{equation}
+    \label{Gram_infinitesimal}
+    \det G = \Tr([B,\rho]^2)\Tr([H,\rho]^2) - \Tr([B,\rho][H,\rho])^2.
+\end{equation}
+\subsubsection{Invariant Area}
+So now the object we seem to want is a quadrilateral composed of four vectors, two from the origin and from each one another. In essence, the one displayed in figure 1 (Except we use the linearized lambda). Now If they all lie in one plane (This does not seem to be the case, but their overall area can still be computed , then we can compute the area as a sum of two triangles, one corresponding to each path (Add an image to illustrate).  We have the corners of this quadrilateral as 
+\[
+    0, \lambda', t, \lambda' t = t\lambda,
+\] 
+with the following vectors given by
+\[
+    v_{\lambda'}, v_{t}, v_{\lambda't}, v_{t\lambda}.
+\]
+So now the triangle area we will calculate using 
+\[
+    \mathcal{A}_{1,2} = \frac{1}{2}\sqrt{b^2c^2 - (b\cdot c)^2},
+\]
+where $b = v_{\lambda'}, v_t$ for $\mathcal{A}_{1,2}$ respectively. And $c = v_{\lambda'} + v_{\lambda't} =...$. Here 
+\begin{itemize}
+    \item $b_2 = v_t = U\rho U^\dag - \rho$
+    \item $b_1 = v_{\lambda'} = i\lambda'[B, \rho]$
+    \item $v_{\lambda' t} = \rho_{\lambda' t}  - \rho_{\lambda'} = \rho_t + Ui\lambda'[B, \rho]U^\dag - \rho - i\lambda'[B, \rho]$
+    \item $c = v_{\lambda'} + v_{\lambda't} = \rho_t + Ui\lambda'[B, \rho]U^\dag - \rho$
+\end{itemize}
+And for the important squares and dot products, we have ($B, \rho$ are hermitian) 
+\begin{itemize}
+    \item $b_1^2 =  -\lambda'^2\Tr([B, \rho]^2)$
+    \item $b_2^2 = \Tr(2\rho^2 - 2(U\rho U^\dag\rho))$
+    \item $c^2 = \Tr(2\rho^2 - 2(U\rho U^\dag\rho)) - \lambda'^2\Tr([B,\rho]^2) + 2i\lambda'\Tr((\rho_t - \rho)U[B,\rho]U^\dag)$
+    \item $b_1\cdot c = i\lambda'\Tr([B,\rho]\rho_t) - \lambda'^2\Tr([B,\rho]U[B,\rho]U^\dag)$
+    \item $b_2\cdot c = 2\Tr(\rho^2)-2\Tr(U\rho U^\dagger\rho)-i\lambda'\Tr\left(\rho U[B,\rho]U^\dagger\right)$
+    
+\end{itemize}
+
+So now we have 
+\[
+\begin{aligned}
+    \mathcal{A}_1 = \frac{1}{2}\sqrt{-\lambda'^2\Tr([B, \rho]^2)\left(\Tr(2\rho^2 - 2(U\rho U^\dag\rho)) - \lambda'^2\Tr([B,\rho]^2) + 2i\lambda'\Tr((\rho_t - \rho)U[B,\rho]U^\dag)\right) 
+    \\
+     - (i\lambda'\Tr([B,\rho]\rho_t) - \lambda'^2\Tr([B,\rho]U[B,\rho]U^\dag))^2}
+\end{aligned}
+\]
+And for the second area we have 
+\[
+\begin{aligned}
+    \mathcal{A}_2 = \frac{1}{2}\sqrt{\Tr(2\rho^2 - 2(U\rho U^\dag\rho))\left[\Tr(2\rho^2 - 2(U\rho U^\dag\rho)) - \lambda'^2\Tr([B,\rho]^2) + 2i\lambda'\Tr((\rho_t - \rho)U[B,\rho]U^\dag) \right]\\
+    -\left(2\Tr(\rho^2)-2\Tr(U\rho U^\dagger\rho)-i\lambda'\Tr\left(\rho U[B,\rho]U^\dagger\right)\right)^2
+    }
+\end{aligned}
+\]
+But the sum $\mathcal{A} = \mathcal{A}_1 + \mathcal{A}_2$ is not in general time invariant. Or at least doesn't appear to be. \\
+But now we can use the equation (\ref{lambda_prime_equality}) and focus on pure states only $\rho = \ket{\psi}\bra{\psi}$. If we do this, then the specific areas reduce to
+\[
+\begin{aligned}
+    \mathcal{A}_1 = \frac{1}{2}\sqrt{-\lambda'^2\Tr(2(B\rho B\rho - B^2\rho))
+    \left(2 - 2|\bra{\psi}U\ket{\psi}|^2) - \lambda'^2\Tr(2(B\rho B\rho - B^2\rho)) + 
+    2i\lambda'\Tr(- \rho U[B,\rho]U^\dag)\right) 
+    \\
+     - (i\lambda'\Tr([B,\rho]\rho_t) - \lambda'^2\Tr([B,\rho]U[B,\rho]U^\dag))^2}
+\end{aligned}
+\]
+and 
+\[
+\begin{aligned}
+    \mathcal{A}_2 = \frac{1}{2}\sqrt{(2 - 2|\bra{\psi}U\ket{\psi}|^2)\left[(2 - 2|\bra{\psi}U\ket{\psi}|^2) - \lambda'^2\Tr([B,\rho]^2) + 2i\lambda'\Tr((\rho_t - \rho)U[B,\rho]U^\dag) \right]\\
+    -\left(2-2(|\bra{\psi}U\ket{\psi}|^2)-i\lambda'\Tr\left(\rho U[B,\rho]U^\dagger\right)\right)^2
+    }
+\end{aligned}
+\]
+Hmm, this doesn't seem to reduce to anything useful.  \\
+\subsubsection{Infinitesimal $t,\lambda$ evolution}
+But now if we take also the translation in time to be infinitesimal in the time parameter $t$, we can write (These are the displacement vectors, we will divide by the corresponding parameter in the end)
+\begin{itemize}
+    \item $b_2 = v_t = -it[H, \rho]$
+    \item $b_1 = v_{\lambda'} = i\lambda'[B, \rho]$
+    \item $v_{\lambda' t} = \rho_{\lambda' t}  - \rho_{\lambda'} = t\lambda'[H, [B, \rho]]-it[H, \rho]$
+    \item $c = v_{\lambda'} + v_{\lambda't} = t\lambda'[H, [B, \rho]]-it[H, \rho] + i\lambda'[B, \rho]$
+\end{itemize}
+Again, the important squares and dot products are
+\begin{itemize}
+    \item $b_1^2=-\lambda'^2\Tr([B,\rho]^2)$
+    \item $b_2^2=-t^2\Tr([H,\rho]^2)$
+    \item $c^2=-\lambda'^2\Tr([B,\rho]^2)-t^2\Tr([H,\rho]^2)+t^2\lambda'^2\Tr([H,[B,\rho]]^2)+2t\lambda'\Tr([B,\rho][H,\rho]) - 2it^2\lambda'\Tr([H,\rho][H, [B,\rho]])$
+    \item $b_1\cdot c=-\lambda'^2\Tr([B,\rho]^2)+t\lambda'\Tr([B,\rho][H,\rho])$
+    \item $b_2\cdot c=-t^2\Tr([H,\rho]^2)+t\lambda'\Tr([H,\rho][B,\rho]) -it^2\lambda'\Tr([H,\rho][H,[B,\rho]])$
+\end{itemize}
+
+Here we used the identity
+\[
+    \Tr([B,\rho][H,[B,\rho]])=0.
+\]
+
+For the first triangle area, we get
+\[                          \mathcal{A}_1=\frac12\sqrt{\begin{aligned}t^2\lambda'^2\big[\Tr([B,\rho]^2)\Tr([H,\rho]^2)-\Tr([B,\rho][H,\rho])^2  +\\ \lambda'2i \Tr([B,\rho]^2)\Tr([H, \rho][H, [B,\rho]])\big]-\\t^2\lambda'^4\Tr([B,\rho]^2)\Tr([H,[B,\rho]]^2)\end{aligned}}
+\]
+And for the second,
+\[
+    \mathcal A_2=\frac12\sqrt{\begin{aligned}t^2\lambda'^2\big[\Tr([B,\rho]^2)\Tr([H,\rho]^2)-\Tr([B,\rho][H,\rho])^2 +\\ 2it \Tr([H,\rho][B,\rho])\Tr([H,\rho][H,[B,\rho]])\big]+ \\ 
+    t^4\lambda'^2\Tr([H,\rho][H,[B,\rho]])^2
+    -t^4\lambda'^2\Tr([H,\rho]^2)\Tr([H,[B,\rho]]^2)\end{aligned}}
+\]
+Now to simplify, we define a new quantity (Which is invariant wrt the dynamics given that $B$ is transported via the same unitaries as $\rho$)
+\[
+    D=\Tr([B,\rho]^2)\Tr([H,\rho]^2)-\Tr([B,\rho][H,\rho])^2,
+\]
+and using this, the total area is
+\[
+\begin{aligned}
+    \mathcal A=\frac{|t\lambda'|}{2}\Big(\sqrt{D-\lambda'^2\Tr([B,\rho]^2)\Tr([H,[B,\rho]]^2) + \lambda'2i \Tr([B,\rho]^2)\Tr([H, \rho][H, [B,\rho]])}+\\\sqrt{D-t^2\Tr([H,\rho]^2)\Tr([H,[B,\rho]]^2) + t^2\Tr([H,\rho][H,[B,\rho]])^2 + 2it \Tr([H,\rho][B,\rho])\Tr([H,\rho][H,[B,\rho]])}\Big).
+\end{aligned}
+\]
+Which is invariant wrt another unitary evolution\footnote{This notation with $t$ might be confusing, since in this form, it is purely an infinitesimal parameter. For the time evolution further on, we will use the notation with time denoted as $s$.} if the basis $B$ evolves according to the same evolution. However this still seems to be imposed purely off unitarity. Therefore there probably is not any stretching in any of the directions of $\lambda, \lambda'$. \\
+We thus have the equation 
+\[
+    \odv{\mathcal{A}}{s} = 0.
+\]
+But now we should divide by $\lambda', t$, denoting a new quantity $\sigma := \frac{\mathcal{A}}{\lambda't}$ (or $\lambda$ but I think $\lambda'/\lambda$ is just a constant factor) and then take the limiting procedure, to get the renormalized area $\tilde{\sigma}$. If we do this, we get
+\[
+    \tilde\sigma =\frac{1}{2}\Big(\sqrt{D}+\sqrt{D}\Big) = \sqrt{D},
+\]
+and of course
+\[
+    \odv{\tilde\sigma}{s} = 0.
+\]
+This is exactly the square root of the gram determinant of the infinitesimal evolution in $\lambda', t$ (\ref{Gram_infinitesimal}). \\
+Ok, now we are interested in the $\lambda'$ evolution. To calculate this, we should consider the following equation
+\[
+    \odv{\sigma}{\lambda'} = 0.
+\]
+And now, since the second derivatives commute, this is still time invariant, thus the change of the renormalized area wrt the $\lambda'$ is constant. This statement leads me to believe that there can be only sub-exponential stretching (based on the form of $\sigma$). 
+
+But maybe if the basis changes via unitary evolution, then we have a different basis at each of the four corners. That seems to me could in principle constitute some chaotic behavior. 
+\subsubsection{Generators along a trajectory}
+Given a fixed density matrix $\rho$, we can define a tangent to it at any point along its time evolution as 
+\[
+    X_\rho(t) = i[B(t), \rho_t].
+\]
+Now we can differentiate it wrt time (assuming that $\dot{B(t)} = -i[H,B(t)]$),
+\[
+    \odv{X_\rho(t)}{t} =[[H,B(t)],\rho_t] + [B(t), [H,\rho_t]],
+\]
+which, using the Jacobi identity is
+\[
+    \odv{X_\rho(t)}{t} =[H,[B(t),\rho_t]] =  -i[H, X_\rho(t)].
+\]
+Once again unitary evolution. 
+\subsubsection{Any function of any parameter $\lambda$}
+Now this is just a side note, may be obvious, but if we were to take any function of $\lambda$, which we take as a perturbation parameter, then we have 
+\[
+    \rho_\lambda = f_\lambda\rho f_\lambda^\dag,
+\]
+and the derivative wrt the parameter
+\[  
+    \odv{\rho}{\lambda} =  f_\lambda'\rho f_\lambda^\dag + f_\lambda\rho f_\lambda'^\dag,
+\]
+which, taking the limit to construct tangent vectors, gives
+\[
+    \odv{\rho}{\lambda}|_{\lambda = 0} = f'_0\rho f_0^\dag + f_0\rho f_0'^\dag,
+\]
+where we can use Taylor for our function $f = f(0) + \lambda f'(0) + O(\lambda^2)$, thus, denoting this in a different way $x = f_0, y = f'(0)$, gives
+\[
+    \odv{\rho}{\lambda}|_{\lambda = 0} = y\rho x^\dag + x\rho y^\dag.
+\]
+This is symmetric in $x, y$. Ok, now imposing the condition that $y^\dag = -y, x^\dag = x$, we have 
+\[
+    \odv{\rho}{\lambda}|_{\lambda = 0} = y\rho x - x\rho y = [y, \rho x ] + [\rho, x]y.
+\]
+Just note that for unitary evolution, $x = 1, y = i A$, where $A$ is hermitian. 
+\subsubsection{Change of tangent vectors}
+Now this all was just a $\lambda$ evolution at $\rho(t)$. Now if we substract the initial points, we have the changes of the tangent vectors
+\[
+    \delta \rho_1(t) = i\lambda ([\hat A, U(t)\rho U(t)^\dag] - [\hat A,\rho]), \quad \delta\rho_2(t) = i\lambda(U(t)[A, \rho]U(t)^\dag - [A, \rho]),
+\]
+and their gram determinant is 
+\begin{multline*}
+\text{det}(G)=\lambda^4\left(\Tr\left(\left([A,\rho(t)]-[A,\rho]\right)^2\right)
+\Tr\left(\left(U(t)[A,\rho]U(t)^\dagger-[A,\rho]\right)^2\right)-\\\Tr\left(
+\left([A,\rho(t)]-[A,\rho]\right)\left(U(t)[A,\rho]U(t)^\dagger-[A,\rho]\right)\right)^2\right).
+\end{multline*}
+This is zero at time $t=0$ as well, which is obvious from the vector construction.\\ Then we could in principle "start the area preservation" at time $t=\epsilon$, but that doesn't seem very physical. \\
+Now if we had used a different basis $B$ for the second vector, we would have got
+\begin{multline*}
+\text{det}(G)=\lambda^4\left(\Tr\left(\left([A,\rho(t)]-[A,\rho]\right)^2\right)
+\Tr\left(\left(U(t)[B,\rho]U(t)^\dagger-[B,\rho]\right)^2\right)-\\\Tr\left(
+\left([A,\rho(t)]-[A,\rho]\right)\left(U(t)[B,\rho]U(t)^\dagger-[B,\rho]\right)\right)^2\right).
+\end{multline*}
+Now if these bases are generally independent, then this cannot remain $0$ for all time. What we would need for this to be true is (again by C-S)
+\[
+([A,\rho(t)]-[A,\rho])\propto\left(U(t)[B,\rho]U^\dagger(t)-[B,\rho]\right).
+\]
+I'm not sure if computing the parallelogram is the correct way to define the parameter space volume preservation, but let's see. \\
+If we take the parameter $\lambda$ to be a vector $\lambda_i$ with the corresponding generators $A_i$, then the unitary transformation is 
+\[
+ U(\vec{\lambda}) = \exp\left(i\sum_i\lambda_iA_i\right).
+\]
+Now, constructing the commutator of time evolution and lambda variation, we have
+\[
+    [U(\lambda), U(t)] = (U(\lambda)- U(t)U(\lambda)U(t)^\dag)U(T) = (U(\lambda)-U(\lambda'))U(t).
+\]
+Since if we evolve first time then $\lambda$, and then study the oppposing order of evolution, the $\lambda'$ is just a time evolution of $\lambda$. So we time evolve the state and the basis simultaneously. If we follow the Benettin algorithm for the computation of the lyapunov exponents analogously, we have the initial state $\rho$ and its perturbation $\delta\rho$.  Now we evolve both in time. And then the distance can be denoted by the $\lambda'$, which is how much we need to perturb the initially unperturbed state to reach the one which we perturbed and time evolved. Now this will always be (if we do not linearize (if we did, this would be a condition on its generating basis $A_i$))
+\[
+    U(\lambda') = U(t)U(\lambda)U(t)^\dag.
+\]
+So now this is our distance of the two states. Now we keep the direction, but normalize their distance. However this $U(\lambda')$ is normalized at all times. And if we were to compute the $U(\lambda')$, it would have the same form. I think what we have done is effectively transformed the Schrödinger equation of the states into the generators $A_i$, so it's still linear. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Parallelogram.png}
+    \caption{Time evolution of the perturbed state.}
+    \label{fig:paralellogram}
+\end{figure}
+Ok, this was Benettin, which doesn't seem to work for this definition.\\
+Maybe if we measured using the POVM in each of the steps, that could result in some non-trivial evolution and be physically motivated. So we time evolve, measure and then search for the $\lambda'$. But now, since the POVM measurement is not unitary, we cannot write
+\[
+    U(\lambda') = E_i U(t)U(\lambda)U(t)^\dag E_i^\dag,
+\]
+where $E_i$ are the measurement operators of the current POVM. So now we have abandoned the unitary dynamics and can go further.\\
+After one timestep we have two states 
+\[
+    \rho(t) = U(\lambda) E_i U(t)\rho(0) U(t)^\dag E_i^\dag U(\lambda)^\dag ,\quad \rho(t)_{\text{perturbed}} =  E_i U(t)U(\lambda)\rho(0)U(\lambda)^\dag U(t)^\dag E_i^\dag,
+\]
+up to a normalization from the measurement. Now this looks very similar to the POVM discrete case we already calculated overlap for, but lets see if we can get somewhere using the underlying geometry.\\
+We can in general define a dynamical map on our state accordingly
+\[
+    \Phi_i(\rho) = \frac{M_iU\rho U^\dag M_i^\dag }{p_i},
+\]
+where $p_i = \Tr(M_iU\rho U^\dag M_i^\dag) $. Now we need to differentiate this map to get the evolution equation for our perturbation
+\[
+    D\Phi_i(\rho) = \lim_\epsilon\odv{\Phi_i(\rho + \epsilon\delta\rho)}{\epsilon} =  \frac{M_iU\delta\rho U^\dag M_i^\dag }{p_i} -  \frac{M_iU\rho U^\dag M_i^\dag }{p_i^2}\Tr(M_iU\delta\rho U^\dag M_i^\dag).
+\]
+So now we have two equations (though discrete)
+\[
+    \rho_{n+1} = \Phi_{i_n}(\rho_n), \quad \delta\rho_{n+1} = D\Phi_{i_n}(\rho_{n},\delta\rho_{n} ),
+\]
+which are equations we can use in the Benettini algorithm. However this system is \textbf{open} now, since we have allowed the measurement on the states.\\
+ Now if we want to take some limit to continuous evolution. However if we only set the time step to be $t\to0$, then the dynamical map for such one timestep is 
+\[
+   \lim_{t\to 0}\Phi_i(\rho) = \frac{M_iU\rho U^\dag M_i^\dag }{p_i} = \frac{M\rho M^\dag + itM[\rho, H] M^\dag}{\Tr(M\rho M^\dag + itM[\rho, H] M^\dag)}  = \frac{M\rho M^\dag }{\Tr(M\rho M^\dag)} \neq \rho.
+\]
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Benetini_lyap.png}
+    \caption{Renormalization step for the largest Lyap in Benettini algorithm}
+    \label{fig:renormalization}
+\end{figure}
+\subsection{Generating POVM for finite dimensions}
+Okay, now with chatgpt we have constructed this proof, although I would appreciate if someone would check the details of it. \\
+As per the AFL formulation of the POVM elements, we define the finite operational partition 
+\[
+    \{X_i\}, \sum_i X_i^\dag X_i = 1, 
+\]
+which defines the AFL history operators using the system dynamics
+\[
+    K_{\mathbf{i}^N} = U^{N-1}X_{i_N}U^\dag X_{i_{N-1}}...U^\dag X_{i_2}U^\dag X_{i_1},
+\]
+and these in turn define the history POVM elements
+\[
+    \Pi_{\mathbf{i}^N} = K_{\mathbf{i}^N}^\dag K_{\mathbf{i}^N} = X_{i_1}^\dag UX_{i_2}^\dag U...X_{i_{N-1}}^\dag UX_{i_N}^\dag X_{i_N} U^\dag X_{i_{N-1}}...U^\dag X_{i_2}U^\dag X_{i_1}.
+\]
+We want to prove this logical string for the AFL POVM elements
+
+($\sum_{\mathbf{i}^N} \Pi_{\mathbf{i}^N} = 1$)
+\begin{equation}
+    \forall U\exists \{X_{i}\} \quad \forall \rho \forall \epsilon > 0 \quad \exists N_0 \in \mathbb{N} \forall N \geq N_0 \quad \exists c_{i^N} \geq 0; \norm{\rho - \sum_{\mathbf{i^N}} c_{\mathbf{i^N}}^{(N,\rho)}\Pi_{\mathbf{i^N}}^{(N)}} < \epsilon.
+\end{equation}
+We consider only $d<\infty$. Now wlog we can consider only pure states $\rho = \ket{\psi}\bra{\psi}$, since
+\[
+    \begin{aligned}
+        \norm{\rho - \sum_{\mathbf{i^N}} c_{\mathbf{i^N}}^{(N,\rho)}\Pi_{\mathbf{i^N}}^{(N)}} = \norm{\sum p_j\ket{\psi_j}\bra{\psi_j} - \sum_{\mathbf{i^N}} c_{\mathbf{i^N}}^{(N,\rho)}\Pi_{\mathbf{i^N}}^{(N)}} \leq \\\sum_{j=0}^k p_j\norm{\ket{\psi_j}\bra{\psi_j} - \sum_{\mathbf{i^N}} c_{\mathbf{i^N}}^{(N,\ket{\psi_j}\bra{\psi_j})}\Pi_{\mathbf{i^N}}^{(N)}}< \sum_{j=0}^k p_j\epsilon = \epsilon.
+    \end{aligned}
+\]
+Ok, so we first take an arbitrary rank one projector $P$ and define a contracting operator
+\[
+    D = P + a(1-P),
+\]
+for $0<a<1$ this is contracting, ie
+\[
+    D^2 = P + a^2(1-P) \implies D^n = P + a^n(1-P).
+\]
+We now arbitrarily choose a finite collection of unitary operators $\{V_j\}_1^l$ along with their hermitian conjugates, such that the subgroup generated by them is dense in SU(d) (or U(d), the global phase would cancel in the end). Then, we define 
+\[
+    A_j = \alpha V_j, A_{l+1} = \beta D, A_{l+2} = \sqrt{1 - \beta^2D^2 - l\alpha^2}, 
+\]
+where $\alpha, \beta > 0$, such that $l\alpha^2 + \beta^2 < 1$, so $A_{l+2}$ is a positive operator. With this construction, we can write
+\[
+    \sum_{j=1}^{l+2} A_j^\dag A_j = l\alpha^2V_j^\dag V_j + \beta^2D^2 + 1 - \beta^2D^2 - l\alpha^2V_j^\dag V_j = 1.
+\]
+Now we define the operational partitions of unity as $X_p := UA_p$. Thus for the Kraus history operators, we have
+\[
+    K_{\mathbf{i}^N} = U^{N}A_{i_N}A_{i_{N-1}}...A_{i_1}, 
+\]
+and for the history POVM elements
+\[
+    \Pi_{\mathbf{i}^N} = K_{\mathbf{i}^N}^\dag K_{\mathbf{i}^N} =  A_{i_1}^\dag...A_{i_{N-1}}^\dag A_{i_N}^\dag A_{i_N}A_{i_{N-1}}...A_{i_1}.
+\]
+Now we choose an density matrix $\sigma$ corresponding to a pure state that we want to approximate. Now, since the subgroup generated by the $V_j$ is dense, we can write 
+\[
+    \forall \epsilon > 0, \exists \{j_i\}^r_1, r \in \mathbb{N} \text{ finite}; \norm{\sigma - V_{j_r}^\dag...V_{j_1}^\dag PV_{j_1}...V_{j_r}}<\epsilon .
+\]
+Now, the total AFL history length is $N$. We define a new variable $n := N - r$, since $N \geq r$, this is always semipositive. And for simplicity, we define the consequent operations of $V_j$ by a single operator, thus 
+\[
+    V_{\mathbf{j}_r} = V_{j_1}...V_{j_r}.
+\]
+Now, we define the specific Kraus operators with the following history $\mathbf{i}_N = (n, \mathbf{j}_r)$, to get 
+\[
+    K_{\mathbf{i}^N} = \alpha^rU^NA_{l+1}^n V_{\mathbf{j}_r} = U^N\beta^n \alpha^rD^nV_{\mathbf{j}_r},
+\]
+and for the POVM history elements, we have
+\[
+    \Pi_{\mathbf{i}_N} = K_{\mathbf{i}^N}^\dag K_{\mathbf{i}^N} = \beta^{2n} \alpha^{2r}V_{\mathbf{j}_r}^\dag D^{2n} V_{\mathbf{j}_r} = c_{\mathbf{i}_N}^{-1}V_{\mathbf{j}_r}^\dag D^{2n} V_{\mathbf{j}_r},
+\]
+where in the last equality, we defined the coefficients 
+\[
+    c_{\mathbf{i}_N} = \beta^{-2n} \alpha^{-2r}.
+\]
+Hence, we have 
+\[
+    c_{\mathbf{i}_N}\Pi_{\mathbf{i}_N} = V_{\mathbf{j}_r}^\dag D^{2n} V_{\mathbf{j}_r} = V_{\mathbf{j}_r}^\dag P V_{\mathbf{j}_r} + a^{2n}V_{\mathbf{j}_r}^\dag (1-P) V_{\mathbf{j}_r},
+\]
+and taking the norm of the difference\footnote{$\norm{1-P} = \sqrt{\Tr((1-P)^\dag(1-P))} = \sqrt{\Tr(1-P)} = \sqrt{d-y}$, for $P$ being a rank-y projector.}, 
+\[
+    \norm{\sigma - c_{\mathbf{i}_N}\Pi_{\mathbf{i}_N}} \leq \underbrace{\norm{\sigma - V_{\mathbf{j}_r}^\dag P V_{\mathbf{j}_r}}}_{<\epsilon} + a^{2n}\norm{V_{\mathbf{j}_r}^\dag (1-P) V_{\mathbf{j}_r}} < \epsilon + a^{2n}\sqrt{d-1}.
+\]
+We then need to choose $n = N-r$ sufficiently large so the last term is less than $\epsilon$, 
+\[
+    a^{2n}\sqrt{d-1} < \epsilon \implies n > \frac{\ln \frac{\epsilon}{\sqrt{d-1}}}{2\ln a}, 
+\]
+hence completing the proof.\\
+I think we may be able to prove that this converges exponentially fast.\\
+In order to prove this, we can require the unitary operators $\mathcal{V} \equiv\{V_j, V_j^{-1}\}_1^l$ (in addition to all the previous requirements) in their matrix form to have elements that consist entirely of algebraic numbers. Then, according to the Bourgain-Gamburd theorem (https://ems.press/content/serial-article-files/31848), their associated averaging operator has a spectral gap. (This will be very heavy mathematically), but if we have an arbitrary $g\in$ SU(d), we choose a $g^*$ such that
+\[
+    \sigma = g^{*\dag} P g^*,
+\]
+where we are reusing the notation from the theorem. We can then define the averaging operator $T$
+\[
+    Tf(g) = \frac{1}{|\mathcal{V}|} \sum_{V\in\mathcal{V}}f(Vg),
+\]
+ where $f: SU(d)\to\mathbb{C}$ is an arbitrary function on the special unitary group. \\
+The spectral gap implies that there exists $\delta>0$ such that
+\[
+    \langle f,Tf\rangle \leq (1-\delta)\norm{f}_2^2,
+\]
+for all $f\in L^2(SU(d))$, with zero Haar average. Now we define another operator $K = (1+T)/2$, which preserves Haar measure and satisfies
+\[
+    \norm{Kf}\leq q\norm{f},
+\]
+for zero mean f, with $q<1$.\\
+Thus it doesn't change the mean of $f$, and we can apply it iteratively, leading to 
+\[
+    \norm{K^2f}_2 \leq q\norm{Kf} \leq q^2\norm{f} \implies\norm{K^nf}_2 \leq q^n\norm{f}.
+\]
+Okay, now we need to prove that some product of generators approaches the target $g^*$ exponentially fast. We define two balls $A, B$ of radius $\epsilon$ centered around $I, g^*$ respectively. By Haar invariance (can translate one center to another via a unitary), they have the same measure $y = \mu(A) = \mu(B)$. We define the function
+\[
+    f = \frac{1_A}{y},
+\]
+via the averaged characteristic function on the ball $A$. Then the function $f-1$ has zero mean. We can thus use the previous inequality, 
+\[
+    \norm{K^n(f-1)}_2 \leq q^n\norm{f-1}.
+\]
+The averaging operator acting on the constant function 1 gives
+\[
+    T1(g) = \frac{1}{|\mathcal{V}|} \sum_{V\in\mathcal{V}}1 = 1,
+\]
+
+\[
+    \norm{K^nf-1}_2 \leq q^n\norm{f-1}_2.
+\]
+To compute the RHS, we have
+\[
+    \norm{f-1}_2^2 = \int_{SU}|f-1|^2d\mu = \int_{A}|\frac{1}{y}-1|^2d\mu + \int_{SU\setminus A}1d\mu = y(\frac{1}{y}-1)^2+ 1-y = \frac{1}{y}-1.
+\]
+We have 
+\[
+    \norm{K^nf-1}_2 \leq q^n\sqrt{\frac{1}{y}-1}.
+\]
+Now we integrate over the ball centered at the target $g^*$
+\[
+    \int_B K^n fd\mu = \int_B (K^n f-1)d\mu + y
+\]
+Using the CS inequality, $|\int_B (K^n f-1)d\mu| = |\langle K^n f-1,1_B\rangle|$ we get
+\[
+    |\int_B (K^n f-1)d\mu| \leq \norm{1_B}\norm{(K^n f-1)} = \sqrt{y}\norm{(K^n f-1)}.
+\]
+And, getting rid of the absolute value, 
+\[
+    \int_B (K^n f-1)d\mu \geq -\sqrt{y}\norm{(K^n f-1)} \geq -\sqrt{y}q^n\sqrt{\frac{1}{y}-1} = -q^n\sqrt{1-y},
+\]
+therefore
+\[
+    \int_B (K^n f)d\mu \geq y -q^n\sqrt{1-y},
+\]
+so if $q^n < y/\sqrt{1-y}$, the integral is positive. For us, sufficient condition will be $q^n < y$. But $f(g)>0$ exactly when $g\in A$, and f is non-negative. Now applying $K^n$ is just a weighted average of the function $f$ wrt products of the generators from $\mathcal{V}$. This implies, that there exists some product of generators $W = V_{i_1}...V_{i_k}$ (ie a word), such that $f(Wg)>0$. So for some $g\in B$ and $W$, $Wg\in A$. \\
+Now we take a $g$ in the ball $B$ and $Wg$ in the ball $A$ to compute their distance
+\[
+    \norm{W - g^{*\dag}} = \norm{Wg^*-1} \leq\norm{Wg^*-Wg} + \norm{Wg-1} < 2\epsilon.
+\]
+And the volume $y$ scales with the radius $\epsilon$, so 
+\[
+    y = \mu(A) \geq c\epsilon^{d^2-1},
+\]
+with a constant $c$. We thus need to require only 
+\[
+    q^n < c\epsilon^{d^2-1}.
+\]
+So we choose $\epsilon_n = a\exp(-\alpha n)$, such that
+\[
+    0<\alpha<\frac{|\ln q|}{d^2-1},
+\]
+which means 
+\[
+    q^n < ca^{d^2-1}\exp(-\alpha n(d^2-1)),
+\]
+Therefore, for every target $g^*\in SU(d)$, there exists a word $W=V_{i_1}\cdots V_{i_k}$, with $k\leq n$, such that
+\[
+    \norm{W^\dagger-g^*}_F < 2C\exp(-\alpha n)
+\]
+Thus, products of our unitary generators approximate arbitrary elements of $SU(d)$ exponentially fast in word length $n$.\\
+\subsection{Connection to ObsEn}
+If we numerically plug in the POVMs used in the previous proof, the obsen does not reduce to the VN entropy. It does not even approach it, it stabilizes at some value around 10 steps in.  \\
+If we take the probabilities to be $p_{\mathbf{i}_N} = \Tr{(\rho\Pi_{\mathbf{i}_N})}$ and the volumes $V_{\mathbf{i}_N} = \Tr(\Pi_{\mathbf{i}_N})$, then ObsEn can be written as 
+\[
+    S^{(n)}(\rho) = -\sum_{\mathbf{i}_N}p_{\mathbf{i}_N}\ln\frac{p_{\mathbf{i}_N}}{V_{\mathbf{i}_N}}.
+\]
+Now this sequence $\{S(\rho)^{(n)}\}$ is non-increasing in $n$. There is an important relation with the KL divergence
+\[
+     S^{(n)}(\rho) = \ln d - D(p^{(n)}||q^{(n)}),
+\]
+where $p^{(n)}$ is the probability distribution over all measurement histories of length $n$ and $q^{(n)}$ is taken from the mms, $1/d$. The non-increasing of $S$ means the KL sequence must be non-decreasing. \\
+Next, we take a distribution in the measurements $\{w_i\}$, $\{\Pi_{ij}\}$, where the index $i$ selects the measurement apparatus and $j$ corresponds to the result of that measurement. Then the probability is
+\[
+    p_j = \Tr(\rho\sum_iw_i\Pi_{ij}) = \sum_iw_i\Tr(\rho\Pi_{ij}) \equiv\sum_iw_ip_{ij}.
+\]
+Note that this reduces to the ordinary probability, when $w_1 = 1$. \\
+Now, plugging in our POVMs, 
+\[
+    S_{\mathrm{obs}}^{(N)}(\rho)=-\sum_{\mathbf{i}^N}\Tr\left(\rho\Pi_{\mathbf{i}^N}\right)\ln\left(\frac{\Tr\left(\rho\Pi_{\mathbf{i}^N}\right)}{\Tr\left(\Pi_{\mathbf{i}^N}\right)}\right).
+\]
+This is equal to 
+\[
+    S_{\mathrm{obs}}^{(N)}(\rho)=-\sum_{\mathbf{i}^N}\Tr(\rho\Pi_{\mathbf{i}^N})\ln(\Tr(\rho\Pi_{\mathbf{i}^N})) + \sum_{\mathbf{i}^N}\Tr(\rho\Pi_{\mathbf{i}^N})\ln(\Tr(\Pi_{\mathbf{i}^N})).
+\]
+So it reduces to Shannon entropy, only if 
+\[
+    \sum_{\mathbf{i}^N}\Tr(\rho\Pi_{\mathbf{i}^N})\ln(\Tr(\Pi_{\mathbf{i}^N})) = 0
+\]
+Now, since $-\ln x$ is convex, we can write, using the Jensen inequality, 
+\[
+    S_{\mathrm{obs}}^{(N)}(\rho) \geq -\ln\sum_{\mathbf{i}^N}\left(\frac{\Tr\left(\rho\Pi_{\mathbf{i}^N}\right)^2}{\Tr\left(\Pi_{\mathbf{i}^N}\right)}\right).
+\]
+We could also use the log sum inequality. For this, we use the spectral decomposition of our density matrix
+\[
+    \rho = \sum_j \lambda_j\ket{j}\bra{j}, 
+\]
+and denote 
+\[
+    \bra{j}\Pi_{\mathbf{i}^N}\ket{j} = a_j.
+\]
+Then, we can write
+\[
+    S_{\mathrm{obs}}^{(N)}(\rho) = -\sum_{\mathbf{i}^N}(\sum_ja_j\lambda_j) \ln\frac{\sum_ja_j\lambda_j}{\sum_ja_j}\geq -\sum_{\mathbf{i}^N}\sum_ja_j\lambda_j\ln\frac{a_j\lambda_j}{a_j} = -\sum_{\mathbf{i}^N}\sum_ja_j\lambda_j\ln(\lambda_j) = -\sum_j\lambda_j\ln(\lambda_j) = S_{VN}, 
+\]
+where in the last computational step we've used the completeness relation for the POVM. Now, this is equal, only if
+\[
+    \lambda_j = \frac{\sum_la_ll}{\sum_la_l},\forall j; a_j >0.
+\]
+So all eigenvalues of $\rho$ corresponding to $\bra{j}\Pi_{\mathbf{i}^N}\ket{j}>0$ must be equal. But this is still for the finite history steps.\\
+Ok, so lets plug in our POVM elements into the obsen. We get 
+\[
+    S_{\mathrm{obs}}^{(N)}(\rho)=-\sum_{\mathbf{i}^N}\beta^{2n}\alpha^{2r}\Tr(\rho V_{\mathbf{j}_r}^\dagger D^{2n}V_{\mathbf{j}_r})\ln\left(\frac{\Tr(\rho V_{\mathbf{j}_r}^\dagger D^{2n}V_{\mathbf{j}_r})}{\Tr(D^{2n})}\right).
+\]
+Now our limit is $N = n+r \to \infty$. This does not mean that both $n, r$ have to fulfill the same limit. Focusing only on histories that fulfill $n\to\infty$, we get $D^n \to P$, so
+\[
+    S_{\mathrm{obs}}^{(N), n\to \infty}(\rho)=-\sum_{\mathbf{i}^N, n\to \infty}\beta^{2n}\alpha^{2r}\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r})\ln\left(\frac{\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r})}{\Tr(P)}\right).
+\]
+Now in our proof $P$ is a rank-one projector. This then simplifies to 
+\[
+    S_{\mathrm{obs}}^{(N), n\to \infty}(\rho)=-\sum_{\mathbf{i}^N, n\to \infty}\beta^{2n}\alpha^{2r}\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r})\ln\left(\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r})\right).
+\]
+Now, if we also take the limit $r\to\infty$, the term $V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r}$ approximates arbitrarily close any rank one projector. Thus, taking the $r$ limit as well, we have
+\[
+    S_{\mathrm{obs}}^{(N), n, r\to \infty}(\rho)=-\sum_{\mathbf{i}^N, n,r\to \infty}\beta^{2n}\alpha^{2r}\Tr(\rho Q_{\mathbf{i}_N})\ln\left(\Tr(\rho Q_{\mathbf{i}_N})\right),
+\]
+where $Q_{\mathbf{i}_N}$ is a rank one projector dependent on the trajectory. Now, we can change the sum to be over all of these projectors accessible by those trajectories (but since this is also $r\to\infty$ limit, these are all rank one projectors). We can write 
+\[
+    S_{\mathrm{obs}}^{(N), n, r\to \infty}(\rho)=-\sum_Qp(Q)^{(N)}\Tr(\rho Q)\ln\left(\Tr(\rho Q)\right),
+\]
+where $p(Q)^{(N)} = \sum_{\mathbf{i}^N, n,r\to \infty}\beta^{2n}\alpha^{2r}$.\\
+Now the motivation why we assumed only the limits $n,r\to\infty$. Taking the limit of $n\to\infty$ and $r$ finite, fixed, we have $0\leq\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r}) \leq 1$, since the term $V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r}$ is still a rank one projector. So we have 
+\[
+    0\leq-x\ln x\leq 1/e, x\in [0,1], 
+\]
+which means
+\[
+    -\sum_{\mathbf{i}^N, n\to \infty, r\not\to \infty}\beta^{2n}\alpha^{2r}\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r})\ln\left(\Tr(\rho V_{\mathbf{j}_r}^\dagger PV_{\mathbf{j}_r})\right)\leq\sum_{\mathbf{i}^N, n\to \infty, r\not\to \infty}\beta^{2n}\alpha^{2r}\frac{1}{e} 
+\]
+Now we need to get rid of the sum. If we count all the possible trajectories, we can choose $r$ steps from $N$. As per the proof, we have $l$ unitary generators. That means $l^r$ possible ways of choosing the trajectory in $r$. So we have the factor
+\[
+    \sum_{\mathbf{i}^N, n\to \infty, r\not\to \infty} 1= \binom{N}{r}l^r,
+\]
+thus we have 
+\[
+     \binom{N}{r}l^r\beta^{2n}\alpha^{2r}\frac{1}{e} \propto \binom{N}{r}\beta^{2n} \to 0.
+\]
+So this whole sum goes to zero. \\
+Now, if we fix $n$ and send $r\to\infty$, we have 
+\[
+    - \sum_{\mathbf{i}^N, r\to \infty, n\not\to \infty}\beta^{2n}\alpha^{2r}\Tr(\rho V_{\mathbf{j}_r}^\dagger D^{2n}V_{\mathbf{j}_r})\ln\left(\frac{\Tr(\rho V_{\mathbf{j}_r}^\dagger D^{2n}V_{\mathbf{j}_r})}{\Tr(D^{2n})}\right),
+\]
+however $\Tr(D^{2n}) = 1 + a^{2n}(d-1)$ means $1\leq \Tr(D^{2n}) \leq d$. For the numerator, $a^{2n}1\leq V_{\mathbf{j}_r}^\dagger D^{2n}V_{\mathbf{j}_r}\leq 1$. Thus we can bound the function $-x\ln x $ using the same bounds and the counting argument just substitutes $r\leftrightarrow n$ with the factor $l^r$. The number of trajectories is then 
+\[
+    \sum_{\mathbf{i}^N, r\to \infty, n\not\to \infty} 1= \binom{N}{n}l^r,
+\]
+which means that the sum can be bounded by 
+\[
+    \binom{N}{n}l^r\beta^{2n}\alpha^{2r}\frac{1}{e} \to 0 \iff l\alpha^2 <1.
+\]
+However in our proof, we had $l\alpha^2 + \beta <1$, so this condition holds always. So we can truly write the infinite limit of obsen as 
+\[
+    S_{\mathrm{obs}}^{(N), n, r\to \infty}(\rho)=-\sum_Qp(Q)^{(N)}\Tr(\rho Q)\ln\left(\Tr(\rho Q)\right) \to 0,
+\]
+where $p(Q)^{(N)} = \sum_{\mathbf{i}^N, n,r\to \infty}\beta^{2n}\alpha^{2r}$. This is the reduced part of obsen if we consider the trajectories that were used in the proof. Nevertheless this is still zero, by the same argument as we had used before. However this does not imply that the obsen is zero, since we have not used the last observable $A_{l+2}$, which we needed for those operators to form a POVM. In our proof, we had constructed the operator $A_{l+2}$ and not used it, as we had focused on one specific trajectory. Now we are summing over every trajectory, so we need to consider cases where we use these operators. However still the form of the sum we have ended up with might be useful. Also interesting is to note, that the \textbf{trajectories which we defined as generating contribute exactly zero to the asymptotic part of the obsen}. Maybe interesting would be to study those subsets of trajectories, which contribute zero to obsen asymptotically. \\
+If we were to sum over all the possible trajectories, it does not seem that it would simplify to anything specific. Since we cannot use the for of the POVMs we assumed previously, we cannot write a generic expression for them. 
+\begin{itemize}
+    \item We can prove that if obsen goes asymptotically to VN for some fixed density matrix, then the generating condition holds for that fixed density matrix. Thus obsen going to VN is strictly stronger. 
+\end{itemize}
+\subsection{Another way with obsen}
+
+Okay, if we motivate ourselves with the obsen going to VN, and impose a strong condition, such that it must hold for each trajectory, not for their sum, we get for pure states, 
+\[
+    \lim_{N\to\infty}\frac{\operatorname{Tr}(\Pi_{i^N})}{\langle\psi|\Pi_{i^N}|\psi\rangle}=1\iff\lim_{N\to\infty}\frac{\Pi_{i^N}}{\operatorname{Tr}(\Pi_{i^N})}=|\psi\rangle\langle\psi|
+\]
+This can be generalized for mixed states, such that these POVM elements go to eigenspaces of rho
+\[
+    \lim_{N\to\infty}\frac{\Pi_{i^N}}{\operatorname{Tr}(\Pi_{i^N})}=\frac{P_j}{\operatorname{Tr}(P_j)},\quad P_\rho\text{-almost surely},\quad \rho=\sum_j\lambda_jP_j.
+\]
+These conditions are strictly stronger than the convex cone. Proposed statement is 
+\[
+    \forall U\in U(d),\ \forall\rho=\sum_j\lambda_jP_j,\ \exists\text{ a nonprojective POVM }\{X_i\}:\ \lim_{N\to\infty}\frac{\Pi_{i^N}}{\operatorname{Tr}(\Pi_{i^N})}=\frac{P_j}{\operatorname{Tr}(P_j)}\quad P_\rho\text{-a.s.}
+\]
+I think that this would be a generating POVM, but its dependent on the $\rho$ and the dynamics. However it does still generate the positive cone. \\
+The proposed hard condition is
+\[
+    \forall U;   \exists\,\{\Pi_{i^N}\}_{N\geq1}:\ \forall\rho,\ \lim_{N\to\infty}S_{\mathrm{obs}}^{(N)}(\rho)=S_{\mathrm{VN}}(\rho)
+\]
+It seems that we can prove that if obsen goes to VN for some POVMs, then those POVMs are generating. Since if the obsen goes asymptotically to VN, then 
+\[
+    \lim_{N\to\infty}\sum_{\mathbf i}\left[\operatorname{Tr}\Pi_{\mathbf i}^{(N)}-\frac{\sum_j\left(\operatorname{Tr}(P_j\Pi_{\mathbf i}^{(N)})\right)^2}{\operatorname{Tr}\Pi_{\mathbf i}^{(N)}}\right]=0
+\]
+is a sufficient condition for their difference to vanish.\\
+
+\subsection{Helstrom bound}
+The probability of correctly distinguishing two states (with an optimal POVM) is given by
+\[
+    P_{\mathrm{Helstrom}}(\rho,\sigma)=\frac{1}{2}\left(1+\frac{1}{2}\|\rho-\sigma\|_1\right).
+\]
+That just reduces to the trace distance if we are interested in the state dependence. Helstrom measures the probability of distinguishing states, and we need the probability of not being able to distinguish them. So we can define a function based on this bound as 
+\[
+    d(\rho,\sigma) = 1 - P_{\mathrm{Helstrom}}(\rho,\sigma)=\frac{1}{2}\left(1-\frac{1}{2}\|\rho-\sigma\|_1\right) = \frac{1}{2}f(\rho,\sigma),
+\]
+where for our purposes we can omit the factor preceding the function $f(\rho,\sigma)$. Ok, so lets formalize the main approach. For a fixed state $\rho$, we fix $\epsilon>0$, such that  $f(\rho,\sigma) < \epsilon, \forall\sigma\in D(\mathcal{H})$. So we can distinguish the states in this hyperball with a probability of $p<\frac{1}{2}(1+ \epsilon)$ given any POVM. So the lowest limit of obsen could be if we approach these hyperballs?\\
+We could define a new space, such that each point in the previous space, lets call that $x\in X$, corresponds to the surrounding in the new space, $U_\epsilon(x) \to w \in W$. So each point in this new space is actually a surrounding of one point of distance epsilon.\\
+Helstrom POVM is optimal at distinguishing two specific states, however we have the whole space of states. And distinguishing the center from some point in the hyperball need not mean that we can distinguish two arbitrary states with the probability given. 
+\section{Ergodicity}
+In classical physics, the notion of ergodicity is described as follows:\\
+Let $T$ be an endomorphism of a probability space $(\Omega,\mathcal{F},\mu)$. Define the $\sigma$-algebra of invariant sets by $\mathcal{I}=\{A\in\mathcal{F}:T^{-1}A=A\}$. The system $(\Omega,\mathcal{F},\mu,T)$ is called \textit{ergodic} if
+\[
+\mu(A)\in\{0,1\}\quad\text{for all }A\in\mathcal{I}.
+\]
+
+
+\textbf{Theorem.} Let $T$ be an endomorphism of a probability space $(\Omega,\mathcal{F},\mu)$. Then $T$ is ergodic if and only if
+\[
+\lim_{n\to\infty}\frac{1}{n}\sum_{k=0}^{n-1}\mu(T^{-k}A\cap B)=\mu(A)\mu(B)
+\]
+for all $A,B\in\mathcal{F}$.\\
+Now in the $C^*$ algebra, the endomorphism is described as the unitary evolution. If we want an invariant set of operators as per the definition of ergodicity, we need them to be functions of the Hamiltonian. \\
+\subsection{Quantum K-property}
+In classical ergodic theory, the k-property implies the positivity of the dynamical entropy. This, if we have some condition on the manifold, such as compact and $C^1$, means that there are positive Lyapunov exponents, i.e. chaos. There also exists the quantum k-property, which is given by Narnhofer and Thirring (https://doi.org/10.1007/BF00398366) by 
+\[\alpha(\mathcal{M}_0)\supseteq\mathcal{M}_0,\qquad\bigvee_{n\in\mathbb{Z}}\alpha^n(\mathcal{M}_0)=\mathcal{M},\qquad\bigcap_{n\in\mathbb{Z}}\alpha^n(\mathcal{M}_0)=\mathbb{C}I.
+\]
+Here, $\mathcal{M}$ is the von Neumann algebra of observables, $\mathcal{M}_0\subseteq\mathcal{M}$ is a von Neumann subalgebra, $\alpha$ is a $*$-automorphism describing the time evolution, $n\in\mathbb{Z}$ denotes the number of time steps, $\bigvee$ denotes the generated von Neumann algebra, and $\mathbb{C}I$ is the scalar multiple of the identity.\\
+Now this is a direct generalisation of the classical version, we just replace the sigma algebras by the Von Neumann algebras. However for CNT entropy this does not hold, as shown in (Dynamical Entropy in Operator Algebras), where the authors found a counterexample. Following on that, in here (COMPARING QUANTUM DYNAMICAL ENTROPIES) by Pim Tuyls, he established, that for all systems in the first time step the ALF entropy "rate" is greater than or equal to that of CNT. That is why I have a reason to believe that the positivity of ALF could be implied by the quantum k-property. In addition, I have not found a counterexample to this relation so far. Before trying to prove this, we could at least try to compute the ALF for the system, in which CNT was zero, despite the k-property being fulfilled, i.e. for the binary shift (page 219). 
+\section{Fréchet derivative}
+We take the relative measured entropy and try to calculate the Fréchet derivative of it.\\
+There are two approaches we can take. We take the measured relative entropy optimized over all the measurements, or we take one fixed measurement and for it compute it. We consider the latter case here.\\
+So at first, we consider the relative entropy of the reference state 
+\[
+    \rho_1 = \rho,\quad \rho_2 = U_\epsilon\rho U_\epsilon^\dag,
+\]
+We denote the probabilities of these states as $p_i, q_i$ respectively. \\
+Now we take the relative measured entropy of them, as
+\[
+    D_M(\rho||U_\epsilon\rho U_\epsilon^\dag).
+\]
+Fréchet derivative gives
+\[
+ DD_M{}_{(\rho_1,\rho_2)}[A]=\sum_i\operatorname{Tr}(E_iA)\left(\log\frac{p_i}{q_i}+1\right)-\sum_i\frac{p_i}{q_i}\operatorname{Tr}(E_iU_\epsilon AU_\epsilon^\dag),
+\]
+where $A$ is the direction of perturbations. The $+1$ term can be omitted if the perturbation is traceless, which is our assumption. So we have
+\[
+ DD_M{}_{(\rho_1,\rho_2)}[A]=\sum_i\operatorname{Tr}(E_iA)\log\frac{p_i}{q_i}-\sum_i\frac{p_i}{q_i}\Tr(E_iU_\epsilon AU_\epsilon^\dag),
+\]
+And for the second derivative, we obtain 
+\[
+    D^2D_M{}_{(\rho_1,\rho_2)}[A,A]=\sum_i \left(\frac{\Tr(E_iA)^2}{p_i}-\frac{2\Tr(E_iA)\Tr(E_iU_\epsilon AU_\epsilon^\dag)}{q_i}+\frac{p_i\Tr(E_iU_\epsilon AU_\epsilon^\dag)^2}{q_i^2}\right).
+\]
+Next, we time evolve both states. We have the reference state and the perturbed states as
+\[
+    \rho_1 = U_t\rho U_t^\dag,\quad \rho_2 = U_tU_\epsilon\rho U_\epsilon^\dag U_t^\dag
+\]
+Again, we denote the probabilities in the same manner, i.e. $p_i, q_i$ respectively. \\
+The relative measured entropy of them is 
+\[
+    D_M(U_t\rho U_t^\dag||U_tU_\epsilon\rho U_\epsilon^\dag U_t^\dag).
+\]
+If we take the Fréchet derivative of these states (or rather the specific maps), we get
+\[
+    \nabla_\rho[A] U_t\rho U_t^\dag = U_tA U_t^\dag, \quad \nabla_\rho[A] U_tU_\epsilon\rho U_\epsilon^\dag U_t^\dag = U_tU_\epsilon A U_\epsilon^\dag U_t^\dag.
+\]
+However due to the data processing inequality, we have the upper bound that is independent of time
+\[
+    D_M(\rho_t\Vert\sigma_t)\leq D(\rho_t\Vert\sigma_t)=D(\rho\Vert\sigma).
+\]
+This has been without the backaction of the measurement, so for multiple copies of the same system. 
+\subsection{Frechet with backaction}
+We start with the same system and notation. The only thing we need to modify are the probabilities, since now they are time dependent. So our POVM decomposes into Kraus operators $K_i$ and the density matrix after one time-step changes via
+\[
+    \rho_{t+1} = \sum_i K_i U\rho_t U^\dag K_i^\dag \equiv \Phi(\rho_t) = \Phi^{t+1}(\rho_0),
+\]
+so the probabilites are now
+\[
+    p_i(t) = \Tr(E_iU\Phi^{t-1}(\rho_0)U^\dag),\qquad
+    q_i(t) = \Tr(E_iU\Phi^{t-1}(U_\epsilon\rho_0U_\epsilon^\dag)U^\dag).
+\]
+And their Frechet derivatives are
+\[
+    Dp_i(t)[A] = \Tr(E_iU\Phi^{t-1}(A)U^\dag),\qquad
+    Dq_i(t)[A] = \Tr(E_iU\Phi^{t-1}(U_\epsilon AU_\epsilon^\dag)U^\dag)
+\]
+thus the Frechet derivative of the measured relative entropy with backaction becomes
+\[
+ DD_M{}_{(\rho_1,\rho_2)}[A]=\sum_iDp_i(t)[A]\log\frac{p_i(t)}{q_i(t)}-\sum_i\frac{p_i(t)}{q_i(t)}Dq_i(t)[A],
+\]
+where again we imposed the tracelesss A condition. The second derivative is
+\[
+    D^2D_M{}_{(\rho_1,\rho_2)}[A,A]=\sum_i \left(\frac{(Dp_i(t)[A])^2}{p_i(t)}-\frac{2Dp_i(t)[A]Dq_i(t)[A]}{q_i(t)}+\frac{p_i(Dq_i(t)[A])^2}{q_i(t)^2}\right).
+\]
+These are the derivatives wrt the initial state. 
+\section{Obsen rate}
+In the literature, there has been tested the rate of the obsen for the kicked top model (https://arxiv.org/pdf/2212.01585) using projective POVMs and averaging over many states. \\
+Also for the kicked rotors (https://arxiv.org/pdf/2605.23585) up to the ehrenfest time, it seems that obsen displays linear growth for the chaotic regimes. The authors of this paper\\
+Now, since these are finite dimensional models, we can study the growth only up to the saturation period, which should coincide with the Ehrenfest time. So if we fix the POVM $E_i$ beforehand, we have
+\[
+    S_{\mathrm{obs}}(\rho(t))= -\sum_i \operatorname{Tr}(E_i\rho(t))\ln\left(\frac{\operatorname{Tr}(E_i\rho(t))}{\operatorname{Tr}(E_i)}\right).
+\]
+And for the time derivative, we have 
+\[
+    \odv{S_{\mathrm{obs}}(\rho(t))}{t}= i\sum_i \operatorname{Tr}(E_i[H,\rho(t)])\ln\left(\frac{\operatorname{Tr}(E_i\rho(t))}{\operatorname{Tr}(E_i)}\right).
+\]
+For the kicked rotor, they showed that PGM approximately estimates it, whereas other POVMs underestimate it. We should try some numerical calculations for other models and then decide if taking the sup has this motivation. 
+\section{Another thing to try - Dominik}
+Motivation:
+\begin{itemize}
+    \item the classical version is on the phase space, given by $x$ and $p$. The update and stretching of volumes are done by the generator of translations in $x$ and $p$. It is really the volume in this space that is conserved
+    \item on the other hand, in quantum physics the volume is invariant under unitary translations, as the measure is the unitary Haar measure that keeps the volumes of type $\Tr[\Pi_i]$ invariant.
+    \item Thus, a correct ``variation'' is therefore not done with respect to density matrix like $\rho+\delta \rho$. Instead, the variation should be done with some unitaries, such as
+    \[
+    U(\lambda)\rho U(\lambda)^\dag.
+    \]
+    For $U(\lambda)=\exp[i \hat A \lambda]$, we have, up to the first order,
+    \[
+    U(\lambda)\rho U(\lambda)^\dag=(1+i \hat A \lambda)\rho (1-i \hat A \lambda)+\cdots=\rho +i\lambda [\hat A, \rho]+\cdots.
+    \]
+    \item Here, it appears we can model the variation of the density matrices and evolve it, similar to what was done for the classical Lyapunov exponent. There seems to be arising non-linearity, simply coming from the fact that if $\rho$ is evolved through the Schr\"odinger equation, but $U(\lambda)$ stays the same, then due to general non-commutativity of $U(\lambda)$ and the Hamiltonian $\hat H$, the correction / variation of $\rho$ will not evolve linearly.
+    \item To illustrate this, the next time step up to the first order (we may need the second as well though...) is \footnote{\textcolor{blue}{This reduces to $U(t)\rho U(t)^\dag +i\lambda [\hat A, U(t)\rho U(t)^\dag].$\\ The perturbation is then $\delta \rho  = i\lambda ([\hat A, U(t)\rho U(t)^\dag]- [\hat A, \rho])$, still the same. 
+    }}
+    \[
+    U(\lambda)U(t)\rho U(t)^\dag U(\lambda)^\dag=(1+i \hat A \lambda)U(t)\rho U(t)^\dag (1-i \hat A \lambda)+\cdots=\rho +i\lambda [\hat A, U(t)\rho U(t)^\dag]+\cdots.
+    \]
+    which seems to me that
+    \[
+    \delta \rho = i\lambda ([\hat A, U(t)\rho U(t)^\dag]- [\hat A, \rho])
+    \]
+    implying
+    \[
+    \begin{split}
+      \dot{\delta \rho}&=\lim_{t\rightarrow 0} \frac{\delta \rho}{t}=i\lambda ([\hat A, -i[\hat H,\rho]])=\lambda ([\hat A, [\hat H,\rho]])=\lambda ([\hat H, [\hat A,\rho]]+[[\hat A,\hat{H}], \rho])\\
+      &=\lambda ([\hat H, [\hat A,\rho]]+[[\hat A,\hat{H}], \rho]),  
+    \end{split}
+    \]
+    (check if this is correct, the last is by Jacobi identity). We should probably cook up $\delta \rho$ on the right hand side as well somehow.
+    \item Do not take these equations as set in stone. We need to cook up something the exactly analogously resembles the construction of evolution of the classical point and variation,
+    \begin{align}
+    \dot{z} &= X_H(z) = \mathbf{J} \nabla_z H(z),\\
+\dot{\delta z}_i(t) &= \mathbf{J} D^2 H(z(t))_{ij} \cdot \delta z_j(t),
+    \end{align}
+    for $z=(q_1,\dots,q_n,p_1,\dots, p_n)$.
+    \item Also, similar to the classical case, we should probably take a limit $\lambda\rightarrow 0$ at some point.
+    \item Alternatively, we might have something like
+    \[
+    \delta \rho (0)= U(\lambda)\rho U(\lambda)^\dag- \rho,
+    \]
+    and
+    \[
+    \delta \rho (t)= U(\lambda) U(t)\rho U(t)^\dag U(\lambda)^\dag- U(t)\rho U(t)^\dag,
+    \]
+    so
+    \[
+    \dot{\delta \rho}=\lim_{t\rightarrow 0}\frac{\delta \rho (t)-\delta \rho (0)}{t}=-i  \big(U(\lambda)[\hat H, \rho]U(\lambda)^\dag-[\hat H, \rho]\big).
+    \]
+    Then, using $\rho= U(\lambda)^\dag(\rho+\delta \rho) U(\lambda)$, we have
+    \[
+    \dot{\delta \rho}=-i  \big([U(\lambda)\hat H U(\lambda)^\dag, \rho+\delta \rho]-[\hat H, U(\lambda)^\dag(\rho+\delta \rho) U(\lambda)]\big).
+    \]
+    \item Alternatively, perhaps
+    \[
+    \delta \rho (t)= U(t)U(\lambda) \rho  U(\lambda)^\dag U(t)^\dag- U(t)\rho U(t)^\dag,
+    \]
+    i.e., first vary, then evolve. This leads to,
+    \[
+    \dot{\delta \rho}= -i[\hat H, U(\lambda)\rho U(\lambda)^\dag]+i[\hat H, \rho].
+    \]
+    where, using $\delta \rho (0)= U(\lambda) \rho  U(\lambda)^\dag - \rho$, from which follows $\rho= U(\lambda) \rho  U(\lambda)^\dag - \delta \rho (0)$, leads to,
+    \[
+    \dot{\delta \rho}= -i[\hat H, \delta \rho],
+    \]
+    so we are back to the beginning.
+    \item Perhaps, the Hamiltonian could be first expressed in the (possibly non-orthogonal) Hermitian matrix basis, and then a Hessian with respect to its factors should be taken.
+    \item Perhaps, since the $\delta \rho (t)$ is a tangent vector at point $\rho(t)$, to compare tangent vectors from different times, we should use parallel transport along the trajectory. \href{https://chatgpt.com/share/6aabf625-f280-83eb-bc14-9179c04a1d8d}{ChatGPT} says that (classically) is not necessary: ``Only if you want to compare their directions as vectors. Parallel transport is not needed to define Lyapunov exponents, because Lyapunov exponents compare only their lengths.'' but that might not be true in quantum physics. This is because we do not have flat phase-space but instead our tangent vectors are traceless Hermitian operators, at different times, where the variation and evolution are both given by a unitary operator.
+    \item Note: $\dot{\delta z}_i(t)=\cdots$ is really an equation that says how to evolve tangent vectors from time $t$ to $t+dt$. $\delta z$ is a tangent vector.
+    \item if we take the analogy that a translation is analogous to a unitary all the way, and we evolve the center plus (times) the variation, then we have
+    \[
+    \rho(t)=U_t \rho U_t^\dag
+    \]
+    and varied one as,
+    \[
+    \rho'(t)=U_t U\rho U^\dag U_t^\dag
+    \]
+    then the center is independently evolved as
+    \[
+    \rho(t)=U_t \rho U_t^\dag
+    \]
+    which means that the variation must be evolved as
+    \[
+    U'_t=U_t U U_t^\dag
+    \]
+    since then
+    \[
+    \rho'(t)=U_t' \rho_t U_t'^\dag
+    \]
+    Perhaps the parallel transport would come in when linearizing the equation for the variation (similar to the classical case), because linearizing will mean that we take a tangent vector to $U$, and then a tangent vector to $U_t'$, and these two tangent vectors are in different spaces. Perhaps, to compare them, or, maybe just to find an evolution that transforms one into the other, would be given by a parallel transport of one vector at time $t=0$ into the other vector at time $t$, and the time evolution is really equivalent to the parallel transport. Perhaps the non-linearity comes from the linearization of the unitary evolution. So it is really a coarse-graining effect, somewhat. Because its precision would depend on how small we want to make the steps.
+
+    The $U_t'$ also seem to be related the evolution of the quantum KS entropy. This is because
+    \[
+    U'_{N t}=U_t^N U U_t^{N\dag}=U_{N t}U  U_{N t}^{\dag}
+    \]
+    and if
+    \[
+    U=\exp(\sum_i \lambda_i A_i)
+    \]
+    and $A_i$ is an orthogonal basis generating the space of Hermitian matrices, then the tangent vector (I think) is
+    \[
+    \nabla_i U=\partial_{\lambda_i} U=A_i
+    \]
+    leading to its time evolved version
+    \[
+    A_{i,N t}'=U_{N t} A_i U_{N t}^\dag
+    \]
+    and the quantum KS entropy is
+    \[
+    \lim_{N\rightarrow \infty}\frac{1}{N}S\big(\Tr[A_{i_N,N t}'\cdots A_{i_2,2 t}'A_{1,t}'\omega(A_{i_N,N t}'\cdots A_{i_2,2 t}'A_{1,t}')^\dag]\big)
+    \]
+    Funnily enough, those $A_i$ are not projectors, because they wouldn't be generating a basis of the Hermitian matrices and be orthogonal at the same time. Hmm, perhaps such $A_i$ generating and yet be positive definite don't exist, but that's a different point to investigate. Maybe orthogonality is too much and not needed.
+    \item Maybe, the volume that is being preserved is actually not on the space of density matrices. Instead, it is in the space of parameters. Think about it: if one get a general coordinates, general $q$ and $p$, these coordinates change and so does the way how we measure these overlaps. 
+    
+    Also, there is no real difference between quantum and classical physics: the quantum example of a unitary evolution shows that the overlap is always exactly the same. But that is the same in classical physics. If you imagine points in phase-space as equivalent to the wave function vectors, then two points have either overlap zero or one, if they are not the same or if they are, respectively. And this overlap is preserved during the evolution. If they are the same, they are always the same, and if the overlap is zero, it is always zero. What actually changes when evolving them is the distance, as measured by the coordinate parameters, so it is a distance in the parameter space! In classical physics, we should think about one parameter groups of translations in space, where the lie algebras / exponents are given by $\hat{x}=x\cdot$ and $\hat{p}=-i\partial/\partial x$.
+
+    It seems to me that the thing that is actually doing the coarse-graining is the \emph{linearization}. Because applying unitary $U_\lambda$ is not losing any information. In classical physics perhaps neither. But what is interesting, if one moves in direction $x$ at some moment ($t=0$), and if one moves by the same $x$ a moment later ($t$), then thanks to the divergence due to the lyapunov exponents, these two things are not the same.
+
+    Perhaps that is what we should study, is a difference between states
+    \[
+    U\rho U^\dag\quad\text{ and }\quad U U_t\rho U_t U^\dag.
+    \]
+    And measure the distance $\lambda$, or perhaps the overlap between parallelograms at times $t=0$ and $t$.
+
+    Can we somehow prove that the volume given in the parallelogram in the space of parameters $\lambda$ does not change? This would be, I think, somewhat equivalent to the volume in $x$ and $p$.
+
+    Then this would make sense: it is not that in quantum physics overlaps of wave functions change, but neither in the classical! What really changes is the relative distance in having to apply larger or different lambdas, to reach the same disturbance, after a time evolution has been applied. The question would be, if it takes $\lambda$ to reach 
+    $U_\lambda \rho U_\lambda^\dag$ from $\rho$, what $\lambda'$ does it take to reach $U_t U_\lambda \rho U_\lambda^\dag U_t^\dag$ from $U_t \rho U_t^\dag$? In other words, what $\lambda'$ does it take to reach
+    \[
+    U_{\lambda'}U_t \rho U_t^\dag U_{\lambda'}^\dag=U_t U_\lambda \rho U_\lambda^\dag U_t^\dag ?
+    \]
+    This seems like the real divergence, but it is not in the density matrix space, it is in the parameter space. Imagining, that the experimenter / observer / agent has only some Lie algebra generators (Hermitian matrix basis) to work with, it will take more effort to generate some states, i.e., needs to be evolved for different times, after the state has evolved.
+
+    The volume is probably something like on the surface of the Bloch sphere / Haar measure (i.e. surface of a hyperball, although the balls have smaller radiuses in each eigenvalue which is not one), given by the following corners:
+    \[
+    \begin{split}
+    &0\rightarrow \lambda \rightarrow \lambda + \lambda_t\\
+    &0\rightarrow \lambda_t \rightarrow \lambda_t + \lambda'
+    \end{split}
+    \]
+    with four corners:
+    \[
+    0,\ \lambda,\ \lambda_t,\ \lambda+\lambda_t=\lambda_t+\lambda',
+    \]
+    where $\lambda_t$ is a parameter change induced by the time evolution $0\rightarrow t$.
+\end{itemize}
+
+
+\end{document}

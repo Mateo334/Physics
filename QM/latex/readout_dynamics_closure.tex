@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\newcommand{\Tr}{\operatorname{Tr}}
+\begin{document}
+\title{Exact closure of quantum expectation-value dynamics}
+\author{}
+\date{}
+\maketitle
+Consider a finite-dimensional closed system with fixed Hermitian Hamiltonian $H$, fixed Hermitian readouts $A_1,\ldots,A_m$, and $\hbar>0$. States evolve by $\dot\rho=-i[H,\rho]/\hbar$. Set $x_a=\Tr(\rho A_a)$ and define the real vector space $S=\operatorname{span}_{\mathbb R}\{I,A_1,\ldots,A_m\}$. Closure below means one evolution law for all density matrices, not merely a fitted law along one trajectory.
+\paragraph{Criterion.}
+There exists a function $F$ on the attainable readout set such that $\dot x=F(x)$ for every density matrix if and only if
+\[\frac{i}{\hbar}[H,A_a]\in S\quad\text{for every }a.\]
+Consequently, whenever such exact universal closure exists, its vector field on the attainable set is affine.
+\paragraph{Sufficiency.}
+Write $B_a=i[H,A_a]/\hbar=c_aI+\sum_bL_{ab}A_b$, with real coefficients. Cyclicity of trace and $\Tr\rho=1$ give
+\[\dot x_a=\Tr(\rho B_a)=c_a+\sum_bL_{ab}x_b.\]
+For any differentiable family of initial preparations, differentiating its evolution with respect to the preparation parameter yields
+\[\dot x=c+Lx,\qquad\dot{\delta x}=L\delta x.\]
+Linear dependence among the readouts can make the coefficients nonunique; the dynamics on the attainable set is nevertheless well defined.
+\paragraph{Necessity.}
+Equip the real space of Hermitian matrices with inner product $\langle V,W\rangle=\Tr(VW)$. Let $V\in S^\perp$. Then $\Tr V=0$ and $\Tr(VA_b)=0$ for every $b$. For sufficiently small $\epsilon>0$, both $\rho_\pm=I/d\pm\epsilon V$ are density matrices. They have identical readouts. If $\dot x$ depends only on $x$, their readout derivatives must agree, hence
+\[0=\dot x_a(\rho_+)-\dot x_a(\rho_-)=2\epsilon\Tr(VB_a).\]
+Thus $B_a$ is orthogonal to every element of $S^\perp$. Finite dimensionality gives $(S^\perp)^\perp=S$, so $B_a\in S$.
+\paragraph{Explicit witness of failure.}
+If $B_a\notin S$, let $V=B_a-P_SB_a$, where $P_S$ is the Hilbert--Schmidt orthogonal projection onto $S$. The same states $\rho_\pm$ have equal readouts but
+\[\dot x_a(\rho_+)-\dot x_a(\rho_-)=2\epsilon\Tr(V^2)>0.\]
+The failure of closure is therefore directly witnessed by two allowed preparations.
+\paragraph{Example and scope.}
+For $H=\hbar\omega\sigma_x/2$ and the sole readout $A=\sigma_z$, with $\omega\ne0$, one has $\dot x=\omega\Tr(\rho\sigma_y)$. The states $(I\pm\sigma_y)/2$ both have $x=0$ but opposite derivatives $\pm\omega$. Adding $\sigma_y$ closes this example, producing an oscillator rather than instability.
+The criterion is universal over all density matrices. A restricted invariant preparation manifold can have a different closure criterion and nonlinear coordinates. A response Jacobian along one chosen family does not establish universal closure, nor does closure by itself establish positive finite-time instability or an entropy relation.
+\end{document}

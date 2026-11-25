@@ -1,0 +1,3742 @@
+=== PDF PAGE 1 ===
+1 
+ 
+A common structure in recurrent networks supports neural sequence generation 1 
+locally and in downstream neurons 2 
+Lea Marie Braun 1*, Mathias Karsrud Nordal 1*, Silje-Neneva Hanssen Rambø 1, Claudia 3 
+Clopath2†, Soledad Gonzalo Cogno1† 4 
+1 Kavli Institute for Systems Neuroscience and Centre for Algorithms in the Cortex, 5 
+Norwegian University of Science and Technology, Trondheim, Norway 6 
+2 Department of Bioengineering, Imperial College London, London, UK 7 
+* and †: equal contribution 8 
+Corresponding author: Soledad Gonzalo Cogno (soledad.g.cogno@ntnu.no) 9 
+Lead contact: Soledad Gonzalo Cogno (soledad.g.cogno@ntnu.no) 10 
+ 11 
+ABSTRACT 12 
+Neural sequences, characterized by neurons or groups of neurons that ﬁre one after the 13 
+other, have been observed in multiple brain regions, across species, and are known to 14 
+underlie a diversity of brain functions. To ﬂexibly support behaviour and cognition, neural 15 
+sequences exhibit much variability in properties like their temporal width, baseline, and 16 
+peak ﬁring rate. Despite this variability  and the central role that sequences play in 17 
+supporting brain function , a framework that explains how ﬂexible sequences are 18 
+generated and dynamically maintained within a circuit is still missing. Here we go beyond 19 
+traditional approaches that investigate a one-to-one relationship between  network 20 
+connectivity and speciﬁc sequential dynamics . I nstead, we train recurrent neural 21 
+network models  to generate a repertoire of sequential dynamics and characterize the 22 
+obtained connectivity matrices . We found that diberent connectivity matrices can 23 
+generate the same neural sequence, yet all connectivity matrices that generate a speciﬁc 24 
+sequence share a common  connectivity proﬁle , deﬁned here as the average weight 25 
+between pairs of neurons as a function of their distance in the sequence ordering . It is 26 
+the connectivity proﬁle, as opposed to the connectivity matrix, that serves as a ﬁngerprint 27 
+of the sequential dynamics  and shapes the network response to perturbations of the 28 
+neural activity . Our model predictions were consistent with results obtained from 29 
+experimental data recorded across brain regions and across species. Finally, w e 30 
+demonstrated that neural sequences can facilitate and constrain the formation of a large 31 
+repertoire of sequences in downstream brain regions , with  the potential of acting as 32 
+scabolds for a wide range of computations. Altogether, our results explain how network 33 
+connectivity can generate a diversity of neural sequences across circuits and how those 34 
+sequences can be ﬂexibly adapted. Our framework reveals sequences as a common  35 
+algorithm to support brain function across brain regions and species. 36 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 2 ===
+2 
+ 
+INTRODUCTION 37 
+Sequences of neural activity are characterized by neurons or groups of neurons that ﬁre 38 
+one after the other. Neural sequences have been reported in many brain regions [1] such 39 
+as the hippocampus  [2-7] and the visual cortex [8-10], and also across species , for 40 
+example in rodents [3, 11, 12], bats [13], zebraﬁsh [14], turtle [15] and humans [16, 17]. 41 
+Moreover, neural sequences are known to underlie multiple brain functions , including 42 
+working memory [7, 18], songbird learning [19, 20], and the representation of time [5, 7, 43 
+11, 13] . The ubiquity of sequential activity across brain regions, species , and brain 44 
+functions suggests that neural sequences constitute a universal pattern of neural activity 45 
+that can be dynamically adapted to support ﬂexible computations. 46 
+Decades of theoretical work have demonstrated that neural sequences can be generated 47 
+in a neural network with predeﬁned connectivity, such as feed-forward networks [21-23], 48 
+synﬁre chains [24-26], or continuous attractor network s [27-30]. Sequences can also 49 
+emerge in the absence of prewired connectivity, due to plasticity mechanisms [31, 32] or 50 
+training algorithms [33]. These existing models have primarily focused on how a given 51 
+network architecture supports one speciﬁc neural sequence . However, a theoretical 52 
+framework that explains how a diversity of sequences can be generated , ﬂexibly 53 
+modiﬁed, and dynamically maintained in neural circuits is still missing. 54 
+In this study,  we constructed recurrent neural network models that were trained to 55 
+generate sequences of activity  with a wide range of properties. We characterized the 56 
+connectivity matrices that gave rise to those sequences, and their associated 57 
+connectivity proﬁle s, deﬁned  as the average weight between pairs of neurons as a 58 
+function of their distance in the sequence ordering . The model  predictions were  59 
+consistent with connectivity inferred from experimental data [12, 13] . By pushing the 60 
+dynamics out of the sequential regime through local and global perturbations of the  61 
+network activity, we investigated how the network response was controlled by features of 62 
+the connectivity proﬁle . Finally, we found that neural sequences can facilitate the 63 
+formation of a large repertoire of sequences in downstream brain regions . We 64 
+demonstrate that those sequences are constrained by the properties of the upstream 65 
+sequence and its corresponding connectivity proﬁle. 66 
+ 67 
+RESULTS 68 
+The multiplicity of connectivity matrices that generate the same neural sequences 69 
+share a common connectivity proﬁle. 70 
+We started by characterizing  the repertoire of connectivity matrices that give rise to  71 
+sequences of neural activity. To do this, we trained the weights of rate-based recurrent 72 
+neural networks (RNNs) to generate sequences  with diberent properties  and periodic 73 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 3 ===
+3 
+ 
+boundary conditions [33]. We ﬁrst simulated the target ﬁring rate of each unit in the RNN 74 
+as a Gaussian kernel that repeated over time and was speciﬁed by three parameters: (i) 75 
+its amplitude, corresponding to the diberence between the cell’s peak ﬁring rate and its 76 
+baseline ﬁring rate ; (ii) its o+set, corresponding its baseline ﬁring rate; and (iii) its 77 
+standard deviation, or width, corresponding to the time interval during which it exhibits 78 
+sustained activity (Figure 1A). In each simulation, these three parameters were ﬁxed at 79 
+the same  value for all network units. To generate sequential activity at the population 80 
+level in this network of homogeneous neurons, we shifted the activity of each unit in time 81 
+such that the time points at which the units’ activity peaked uniformly covered the 82 
+interval from 0 to 8.5 s.  Because we established periodic boundary conditions  in the 83 
+temporal domain, the ‘target sequences’ were periodic (Figure 1B , Supp. 1A –D). To 84 
+reduce the computational time , we used  randomly chosen snippets of the target 85 
+sequences as target s to FORCE train the weights of the  RNN [33-36] (Figure 1C). We 86 
+repeated the training procedure 50 times. In each of the 50 ‘training realisations’ we: (a) 87 
+randomly initialized the connectivity matrix , ( b) used as target s to FORCE train the 88 
+weights a randomly chosen snippet of the target sequences (Figure 1B) – note that each 89 
+snippet, of 17 s of duration, contained identical sequences up to a shift in their phase , 90 
+and ( c) quantiﬁed the training performance by computing the Pearson correlation 91 
+between the targets ( snippet of the target sequences) and the activity of the trained 92 
+network. If the training was successful, the Pearson correlation was close to one and the 93 
+network generated the desired sequential dynamics. Finally, we computed the mean 94 
+connectivity matrix over the connectivity matrices obtained across training realisations. 95 
+We also calculated the corresponding ‘connectivity proﬁle’ , deﬁned here as the average 96 
+weight between pairs of neurons as a function of their distance in the sequence ordering 97 
+(Figure 1C bottom). 98 
+The training was successful for a wide range of amplitude, obset and width values (Supp. 99 
+1E, F). For each combination of those three parameters, which deﬁned sequences with 100 
+those speciﬁc properties (Supp . 1A-D), the 50 training realisations produced diberent 101 
+connectivity matrices (Figure 1D left, E left, Supp. 1G). However, despite the diberences 102 
+in connectivity matrices, the corresponding connectivity proﬁles were remarkably similar 103 
+(Figure 1D right, E right ). Moreover, t hey closely matched the connectivity  proﬁle 104 
+computed on the mean connectivity matrix  across training realisations (Figure 1F). 105 
+Furthermore, the connectivity proﬁles remained similar when the RNNs had sparse 106 
+connectivity (Supp. 2). These results show that while a  multiplicity of connectivity 107 
+matrices can generate the same target sequences, those matrices share a unique 108 
+connectivity proﬁle whose features are constrained by  the sequential dynamics . We 109 
+demonstrate this result analytically by showing that each connectivity matrix can be 110 
+decomposed into a structured and an unstructured component. The former is the same 111 
+across matrices, contains information about the target sequences, is represented in the 112 
+connectivity proﬁle , and its rank is determined by the number of dominant Fourier 113 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 4 ===
+4 
+ 
+components of the target sequences . The latter varies across training realisations (see 114 
+Supp. Material). 115 
+ 116 
+Changes in the connectivity proﬁle map changes in the properties of the neural 117 
+sequences 118 
+We next investigated the relationship between features of the connectivity proﬁle and 119 
+properties of the target sequences.  First, we observed that sequences emerged from an 120 
+asymmetric connectivity proﬁle (Figure 2A left ). This asymmetry supports the temporal 121 
+progression of the sequence by enabling the propagation of localized activity, or ‘bump 122 
+of activity ’, throughout the network.  The asymmetry increased with increasing obset  123 
+values (Figure 2A, Supp . 3A). Furthermore, when we increased the width of the 124 
+sequences the range of the connectivity proﬁle, deﬁned as the diberence between its 125 
+maximum and its minimum, decreased (Figure 2B, Supp . 3B). Finally, increasing the 126 
+sequence amplitude preserved the asymmetry in the connectivity proﬁle while it 127 
+increased its range  (Figure 2C). Interestingly, an oscillation  of increasing frequency 128 
+appeared (Figure 2C, Supp. 3C). These results predict which features the connectivity 129 
+proﬁle should have in order to support speciﬁc target sequences. Moreover, they show 130 
+that smooth changes in the neural sequences are supported by gradual changes in the 131 
+connectivity proﬁle (Supp. 4, Supp. Material). 132 
+Previous work has shown that RNN dynamics are shaped not only by global features of 133 
+the connectivity matrix, but also by higher order statistics [37-42]. We next quantiﬁed the 134 
+presence of connectivity motifs in the connectivity matrices that emerge from  training 135 
+(Supp. 5A). We found that increasing the target sequences’ obset, width, or amplitude led 136 
+to a higher abundance of reciprocal connectivity motifs  (Supp. 5B). Interestingly, we did 137 
+not ﬁnd any divergent, convergent nor chain connectivity  motif, suggesting that these 138 
+motifs, and in particular chain motifs, are not strictly necessary for supporting sequences 139 
+of activity (Supp. 5B). These results extend the connection between connectivity proﬁles 140 
+and target sequences by demonstrating that changes in the target sequences are 141 
+accompanied by gradual changes in the connectivity motifs. 142 
+ 143 
+Connectivity proﬁles inferred from experimental data match model predictions 144 
+For target sequence s with speciﬁc value s of amplitude, wi dth, and obset , our model 145 
+predicts its associated connectivity proﬁle . We next tested the model  predictions on 146 
+experimental data.  We focused on two diberent and compl ementary datasets. In one 147 
+dataset two bats, a demonstrator bat and an observer bat, were in a room with three 148 
+landing balls, ‘start’ , ‘A’ , and ‘B’ [13]. Electrophysiological recordings from the 149 
+hippocampal CA1 showed that time cells exhibit sequential activity when both bats were 150 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 5 ===
+5 
+ 
+hanging motionlessly from one of the landing balls (Figure 3A). In the other dataset, head-151 
+ﬁxed mice run at their own pace on a wheel  [12]. Calcium imaging recordings from the 152 
+medial entorhinal cortex (MEC) showed that neural activity was organized into ultraslow 153 
+periodic sequences of activity (Figure 3B). 154 
+To infer connectivity from the experimental data we trained two RNNs: one using data 155 
+from a single mouse recording session, and the other using data pooled across multiple 156 
+bat recording sessions (see Methods) . Each network had as many units as cells in its 157 
+corresponding dataset (484 in the mouse session, and 168 in the bat dataset). Similarly 158 
+to what we did for simulated data, we trained the weights of each RNN using the recorded 159 
+activity of individual neurons  as targets , obtained the corresponding connectivity 160 
+matrices and calculated the connectivity proﬁles. To compare the connectivity between 161 
+experimental and simulated data , we ﬁrst ﬁt a Gaussian kernel to each experimental 162 
+dataset (Supp. 6) and used the ﬁtted parameters to generate synthetic sequences. Next, 163 
+we trained a new set of RNNs on these synthetic data and calculated the corresponding 164 
+connectivity proﬁles. The RNNs learned all sets of experimental (Figure 3C top, E top) and 165 
+simulated (Figure 3C bottom, E bottom) targets. Even though the synthetic data was 166 
+constructed to best approximate the experimental data,  the resulting connectivity 167 
+matrices dibered (Fig 3D left, F left). While we did not enforce the Dale’s law while 168 
+training, the connectivity matrices obtained from experimental data exhibited a band-like 169 
+structure, indicative of synaptic weights that arise from distinct excitatory and inhibitory 170 
+neural populations (Figure 3D left top, F left top). We did not ﬁnd such structure in the 171 
+connectivity matrices obtained from simulated data  (Figure 3D left bottom, F left 172 
+bottom). Moreover, since the connectivity matrices between experimental and simulated 173 
+data dibered, so did the connectivity motifs (Supp. 7). Diberences between the 174 
+experimental and simulated data may underlie the diberences we observed in the 175 
+connectivity matrices . Yet,  the dissimilarity across matrices aligns with our previous 176 
+ﬁndings showing that diberent architectures can generate  the same sequential 177 
+dynamics. As expected, however, the connectivity proﬁles were very similar (Figure 3 D 178 
+right, F right). All together, these results demonstrate that the connectivity proﬁles  179 
+obtained from experimental data match those of simulated data. In addition, we further 180 
+show that a multiplicity of connectivity matrices is consistent with one given connectivity 181 
+proﬁle. We conclude that it is the average connectivity across neurons that needs to hold 182 
+in order to support speciﬁc dynamics. 183 
+ 184 
+Sequences of activity reset in the presence of perturbations , and those resets are 185 
+controlled by the connectivity proﬁle 186 
+Animals can sense stimuli or engage in behaviours that could disrupt the progression of 187 
+ongoing neural sequences. To investigate the robustness of sequential dynamics and the 188 
+link between this robustness and network connectivity, we incorporated perturbations 189 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 6 ===
+6 
+ 
+into our simulations. We studied two diberent types of perturbations: (i) ‘structured’ , in 190 
+which the activity of an ensemble of neighbouring neurons in the sequence is perturbed, 191 
+and (ii) ‘unstructured’ , in which the activity of randomly selected neurons is perturbed. 192 
+We begin by describing the ebects of structured perturbations. First, we divided neurons 193 
+into non-overlapping ensembles such that neighbouring cells in the sequence  ordering 194 
+belonged to the same ensemble. Second, we perturbed the activity of a single ensemble 195 
+during a speciﬁc time window (Figure 4A). Third, we quantiﬁed the network response by 196 
+correlating the post-perturbation network activity with that of the unperturbed network . 197 
+We ﬁrst investigated the ebects of silencing the activity of one ensemble (Figure 4B). In a 198 
+biological context this perturbation  could represent a sudden lack of stimulation 199 
+abecting a subset of cells. For a wide range of properties of the target sequences, and 200 
+therefore for diberent connectivity proﬁles, we found that silencing an ensemble that 201 
+would have been active in the sequence reset s the ongoing sequence to  another 202 
+ensemble (Figure 4C left, C middle left ). As the sequence obset or width increases, the 203 
+ensemble to which the sequence resets is further away from the perturbed ensemble  204 
+(Supp. 8A, B). Furthermore, as the sequence amplitude increases, the reset coexists with 205 
+the emergence of transient parallel sequences that vanish quickly over time (Supp. 8C). 206 
+These observations can be explained in terms of the connectivity proﬁle. The sequence 207 
+resets to the ensemble composed of the units receiv ing the largest total input current , 208 
+which are those  with the weakest inhibition. These units may receive negative weights 209 
+from the silenced neurons, such that w hen the presynaptic units are silenced , their 210 
+contribution to the input current of the postsynaptic units is zero and therefore the net 211 
+postsynaptic input current  increases. These postsynaptic units may therefore be the 212 
+ones located at the minimum of the connectivity proﬁle relative to the units that were 213 
+silenced (Supp. 8). In the case of increasing amplitude values, the various sequences 214 
+that are activated after silencing are enabled by the multiple minima in the connectivity 215 
+proﬁle (Supp. 8C bottom), which gave rise to the formation of multiple bumps of activity. 216 
+Finally, and a s expected, if the silenced ensemble was not engaging in the sequence 217 
+during the time of the perturbation, the sequence continued uninterruptedly (Supp. 9A). 218 
+Our results hold for diberent ensemble sizes (Supp. 9A). 219 
+We next considered the case in which an ensemble of neurons suddenly receives 220 
+additional input current . In a biological context , this perturbation may mimic the 221 
+response of a subset of cells to the onset of a stimulus or environmental feature (Figure 222 
+4D, E). We found that the original sequence stops and a new sequence starts from  the 223 
+perturbed ensemble (Figure 4C middle right). The new sequence has the same properties 224 
+as the original sequence  because the connectivity proﬁle remained unchanged. While 225 
+our ﬁndings are independent from the ensemble size, the ebect was only present for high 226 
+enough values of injected current (Supp . 9B, C). Finally, we focused on unstructured 227 
+perturbations by injecting additional noise into a subset of randomly selected neurons 228 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 7 ===
+7 
+ 
+(Figure 4F). We found that the sequential dynamics persisted for a wide range of 229 
+percentages of perturbed neurons and noise gains (Figure 4C right, Supp. 9D, E). 230 
+Finally, we tested the predictions of the model on experimental data. We applied the 231 
+same perturbations as above to the response of RNNs that were trained to generate 232 
+experimental recordings from  the bat CA1 , or mouse MEC  (Figure 4G, H ). When the 233 
+network was trained on bat  data, it exhibited responses to the perturbations that were 234 
+consistent with those predicted by the model  (Figure 4G, Supp. 9F-H). The response of 235 
+the network trained on mouse data also exhibited a reset of the sequential activity  236 
+following structured perturbations , as predicted by the model, yet the dynamics 237 
+eventually converged to an attractor state  (Figure 4H middle, Supp. 9I -K). The attractor 238 
+state remained present when we applied unstructured perturbations (Figure 4H right).  239 
+ 240 
+Network connectivity supports, and constrains, ﬂexible sequences in downstream 241 
+brain regions 242 
+Sequences of neural activity can act as scabolds that facilitate computations [7, 11, 13, 243 
+18, 19] or the formation of new patterns of activity in downstream regions [9, 12, 43]. This 244 
+is especially relevant given that sequential activity has been reported in multiple brain 245 
+areas [1, 5, 12, 19, 44]. We next investigated how sequences of activity shape sequential 246 
+dynamics in d ownstream region s. First, w e simulated an ‘upstream network ’ that 247 
+consisted of 501 units and that exhibited sequential activity  (Figure 5A). Next, we used 248 
+the activity in the upstream network as input to a ‘downstream network’, which was 249 
+composed of 10 units. All upstream neurons were connected to all downstream neurons 250 
+(Figure 5A). We trained those weights to enforce sequential activity in the downstream 251 
+network. Finally, we considered one speciﬁc sequence in the upstream network 252 
+(obtained after FORCE training as we did in previous sections - parameters: amplitude = 253 
+0.5, width = 1 s, obset = 0.3) and asked whether the downstream circuit could learn 254 
+sequences with varying properties using the predeﬁned upstream sequence as input  255 
+(Supp. 10A, Figure 5B). 256 
+We found that the training was successful as long as the sequence in the downstream 257 
+region was as wide as, or wider than, the sequence in the upstream region (Figure 5C-E). 258 
+In addition, we found that the same upstream sequence could generate a downstream 259 
+sequence with a wide range of amplitude and obset values (Figure 5F, G, Supp. 10B, C). 260 
+Next, we investigated the impact of perturbations in the upstream sequence  on the 261 
+generation of sequences in downstream areas. As expected, w e found  that if the 262 
+perturbation is such that the activity in the upstream layer is disrupted, then  the activity 263 
+in the downstream layer is disrupted too (Supp. 10D, E). This result suggests that  the 264 
+scabolding role is constrained to sequences unfolding in an uninterrupted manner. Our 265 
+results can be understood analytically (Supp. Material): since the downstream network 266 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 8 ===
+8 
+ 
+generates a linear readout of the activity in the upstream layer, the downstream sequence 267 
+will be shaped by the upstream sequence, and therefore by the connectivity proﬁle in the 268 
+upstream layer. Altogether, these ﬁndings indicate that the connectivity proﬁle in a brain 269 
+region not only determines which sequences can be generated locally but also supports 270 
+ﬂexible sequence generation in downstream regions. 271 
+ 272 
+DISCUSSION 273 
+The brain is known to generate a big repertoire of sequences of neural activity across 274 
+multiple brain regions, ranging from visual, auditory, and somatosensory areas, to 275 
+subcortical regions such as the striatum and the hippocampal formation  [1, 7, 9, 11-14, 276 
+19, 45, 46]. To understand how a variety of sequences can be generated and dynamically 277 
+modiﬁed within and across circuits, we went beyond traditional approaches that focused 278 
+on the one -to-one mapping between a predeﬁned connectivity matrix and neural 279 
+sequences with ﬁxed properties [24, 27, 31, 33] . Instead, we trained RNNs to generate 280 
+neural sequences with a wide range of properties and investigated the connectivity 281 
+matrices that support those sequences. We found that diberent connectivity matrices 282 
+can support the same sequence, yet all  those connectivity matrices share a common 283 
+connectivity proﬁle. In addition, the connectivity proﬁle changes smoothly as properties 284 
+of the sequences vary. We showed that sequences reset upon perturbations, and that 285 
+these resets are controlled by the connectivity proﬁle. Finally, we quantiﬁed how the 286 
+connectivity proﬁle can facilitate, and constrain, the formation of a big repertoire of 287 
+sequences in a downstream area. 288 
+In this work, we found that multiple recurrent connectivity matrices can generate the 289 
+same sequential dynamics. More speciﬁcally, we found that the connectivity matrix can 290 
+be decomposed into a structured component, and an unstructured residual. Importantly, 291 
+only the structured component is constrained by the target sequences, while the residual 292 
+can vary without abecting the sequential activity of the network. These ﬁndings reveal a 293 
+many-to-one relationship between recurrent connectivity and sequential dynamics. This 294 
+degeneracy is not speciﬁc to our study but a general feature of recurrent networks [47, 295 
+48]. For example, in low -rank RNNs the structured low-dimensional component of the 296 
+connectivity matrix determines the dynamics, while the unstructured component is  297 
+unconstrained [49, 50]. Additionally, recent studies show that the structured component 298 
+can be implemented in diberent ways and still give rise to equivalent dynamics  [51-53]. 299 
+Together, these results suggest that even though the many-to-one relationship between 300 
+connectivity and dynamics is a robust feature of RNNs, networks that implement the 301 
+same dynamics share a common underlying structure. In the case of sequential activity 302 
+considered here, this shared structure is the connectivity proﬁle, a circulant component 303 
+embedded within the recurrent connectivity. 304 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 9 ===
+9 
+ 
+Our ﬁndings show that the peak ﬁring rate, width, and baseline activity of the sequences 305 
+can be dynamically modiﬁed by adjusting properties of the connectivity proﬁle such as 306 
+its degree of asymmetry, its oscillatory frequency and its maximum and minimum values. 307 
+These speciﬁc modiﬁcations may enable the formation of new sequences on the ﬂy 308 
+without the need for substantial circuit rewiring. This ﬂexibility may extend to other 309 
+properties of the sequences too. For example, it has been shown that increasing the 310 
+weights between excitatory assemblies shortens the duration of a sequence, and  311 
+increasing the weights from excitatory to inhibitory assemblies extends it [23]. While 312 
+network connectivity plays a key role in shaping sequential dynamics, other mechanisms 313 
+in the brain may also contribute to adjusting the properties of sequential activity, such as 314 
+the magnitude and temporal structure of external input [54] or the brain’s temperature 315 
+[55]. 316 
+The degeneracy of the connectivity matrix, together with the generation of ﬂexible 317 
+sequences that are enabled by gradual changes in the connectivity proﬁle, may facilitate 318 
+the brain’s ability to adapt the sequential  neural dynamics to varying behaviours and 319 
+cognitive demands. They may also support the coexistence of diberent dynamics and 320 
+codes within the same network. For example, sequences may need to quickly change 321 
+according to the context or choices in a decision-making task [3, 18], or based on external 322 
+stimuli [7]. Furthermore, much of the information encoded in a network, such as  323 
+contextual cues or memory traces of past events, should remain stable regardless of 324 
+ongoing computations supported by the sequences. The degeneracy of the connectivity 325 
+matrices may have the computational advantage of preserving stable information 326 
+representations while enabling ﬂexible and behaviour-dependent sequences. 327 
+Our results provide testable predictions for connectome datasets. The degeneracy of the 328 
+connectivity matrix suggests that simply comparing  network connectivity with 329 
+connectome data may be misleading . Instead, it is the structured component of the 330 
+connectivity matrix, which in this work is captured by the connectivity proﬁle, that should 331 
+be compared to experimental data. Because our ﬁndings are not restricted to any speciﬁc 332 
+brain region or species, our model predictions could potentially be  tested on 333 
+connectome data collected from diberent animal models, such as rodent [56], ﬂy [57-59] 334 
+and zebraﬁsh [60]. All these species are known to exhibit sequences of neural activity.  335 
+The many-to-one relationship between recurrent connectivity and sequential dynamics  336 
+may pose challenges when trying to infer connectivity from neural activity data [61-64]. 337 
+Such inference is generally dibicult even with sophisticated methods, because as we 338 
+show here, the dynamics constrain the underlying connectivity only weakly  [63, 64] . 339 
+However, knowing that the connectivity must contain a low -rank circulant component 340 
+provides prior information for the inference. Furthermore, a previous work shows that the 341 
+inference may be facilitated in the presence of perturbations [63]. Along this line of work, 342 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 10 ===
+10 
+ 
+our model showed that silencing the activity of a neural ensemble shifts the sequence to 343 
+another ensemble, and the shift is controlled by the connectivity proﬁle.  344 
+Previous studies have shown that sequences of activity might serve as a scabold for local 345 
+and downstream computations. For example, activity sequences in the mouse striatum 346 
+enabled a read out of time in a downstream area [11], sequences in the mouse CA1 347 
+enabled the readout of cues and cue -speciﬁc elapsed time [7], and a recurrent network 348 
+that encodes time through sequential activity can drive the representation of spatial 349 
+information in a downstream network [65]. Since our ﬁndings demonstrate that neural 350 
+sequences can generate a diversity of sequential dynamics in downstream regions, our 351 
+results have the potential of unmasking the mechanisms underlying computations that 352 
+are mediated by ﬂexible and compositional sequences across circuits. 353 
+ 354 
+ACKNOWLEDGMENTS 355 
+We thank Sara Solla for valuable discussions and for her helpful feedback  about the 356 
+manuscript. We also thank Martina Acevedo for  discussions about connectivity motifs. 357 
+This work was supported by the Norwegian University of Science and Technology (SGC), 358 
+by the Research Council of Norway through its Centres of Excellence scheme, project 359 
+number 332640 (SGC), through a Researcher Project for Early Career Scientists, project 360 
+number 102744100 ( SGC), by the Kavli Foundation  (SGC), and by two exchange grants 361 
+awarded to SGC: IBRO Exchange Fellowship awarded and EMBO Scientiﬁc Exchange 362 
+Grant.  363 
+ 364 
+AUTHOR CONTRIBUTIONS 365 
+Visualizations: LMB; Simulations  and a nalytical derivations: LMB, MKN, SNHR, SGC;  366 
+Manuscript writing: LMB and SGC with input from all authors; Conceptualization and 367 
+supervision of the project: CC and SGC; Funding acquisition: SGC. 368 
+ 369 
+DECLARATION OF INTERESTS 370 
+The authors declare no competing interests.  371 
+ 372 
+DECLARATION OF AI TECHNOLOGIES IN THE WRITING PROCESS 373 
+The authors used ChatGPT for improving the readability of the manuscript and for 374 
+checking the grammar. The authors take full responsibility for the content of the article.  375 
+ 376 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 11 ===
+11 
+ 
+RESOURCE AVAILABILITY 377 
+Requests for further information and resources should be directed to and will be fulﬁlled 378 
+by the lead contact, Soledad Gonzalo Cogno (soledad.g.cogno@ntnu.no). 379 
+Materials availability  380 
+This study did not generate new unique reagents 381 
+Data and code availability  382 
+All codes will be made publicly available upon publication. No new data were collected 383 
+for this study. 384 
+ 385 
+ 386 
+ 387 
+ 388 
+ 389 
+ 390 
+ 391 
+ 392 
+ 393 
+ 394 
+ 395 
+ 396 
+ 397 
+ 398 
+ 399 
+ 400 
+ 401 
+ 402 
+ 403 
+ 404 
+ 405 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 12 ===
+12 
+ 
+FIGURE TITLES AND LEGENDS 406 
+Figure 1: DiVerent connectivity matrices can generate the same sequential 407 
+dynamics, and all those matrices share the same connectivity proﬁle. A, Schematics 408 
+of simulated target activity for one example unit in the network.  We built a Gaussian 409 
+kernel that repeated over time and which was  characterized by three parameters: its 410 
+amplitude (blue), width (green), and obset (red). B, Example target sequences obtained 411 
+by shifting the units’ target activity in time. Each row indicates the target activity of one of 412 
+the 501 units in the network. Cold colours indicate low ﬁring rate, warm colours high ﬁring 413 
+rate. The ﬁring rate, by construction, is bounded between 0 and 1. Snippets of the 414 
+sequential activity, marked in red, were randomly chosen. Each sequence was 8.5 s long. 415 
+Throughout this ﬁgure we used: Amplitude = 0.5, Width = 1.7 s, Obset = 0. C, Flow diagram 416 
+of the procedure for calculating the mean connectivity matrix and its corresponding 417 
+connectivity proﬁle. From top to bottom: First, we built 50 RNNs  that were fully and 418 
+randomly connected. Next, we trained each RNN separately, yielding a total of 50 training 419 
+realisations, depicted in the diagram from left to right . In each of the 50 training 420 
+realisations, we chose a random 17  s snippet from the target sequences (see panel B) 421 
+and used it to FORCE train the recurrent weights of the RNN.  Each training realisation 422 
+yielded a connectivity matrix, depicted as a heat map in shades of red. Dark red indicates 423 
+negative weights, yellow indicates positive weights. Presynaptic neurons are shown along 424 
+the x axis, and postsynaptic neurons along the y axis. We next applied a circular shift to 425 
+each row of the resulting  connectivity matrix such that the weights of the self -426 
+connections were centered in the middle column. To compute the connectivity proﬁle, 427 
+we calculated the mean across rows. The red dashed line in the bottom panel is 428 
+positioned at zero weights. D, Left: Connectivity matrices obtained from training 429 
+realisation 1 (top) and training realisation 50 (bottom). Correlation  value between both 430 
+matrices: 0.07. Right: Connectivity proﬁles calculated on the connectivity matrices on 431 
+the left. Correlation value between both connectivity proﬁles: 0.98. Symbols and colours 432 
+as in panel C.  E, Left: Distribution of correlation values  calculated between pairs of 433 
+connectivity matrices from the  total of 50 training realisations. Right: Distribution of 434 
+correlation values calculated between pairs of connectivity proﬁles obtained in the 50 435 
+training realisations. The connectivity matrices diber across training realisations, but the 436 
+connectivity proﬁles are very similar. F,  Left: Mean connectivity matrix calculated across 437 
+all 50 training realisations. Middle: C onnectivity proﬁle calculated on the mean 438 
+connectivity matrix.  Right: Network d ynamics generated with the mean connectivity , 439 
+which resembles the target sequences (right). Symbols and colours as in panel B, C.  440 
+Figure 2: Changes in the connectivity proﬁle smoothly track changes in the 441 
+properties of the target sequences.  A, From left to right: Connectivity proﬁles for 442 
+increasing obset values. The proﬁle becomes increasingly asymmetric. Amplitude = 0.5, 443 
+Width = 1 .0 s. B, Same as panel A, but for increasing width values. The ‘range’ of the 444 
+proﬁle, deﬁned as its maximum minus its minimum, decreases. Amplitude = 0.5, Obset 445 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 13 ===
+13 
+ 
+= 0. C, Same as panel A, but for increasing amplitude values. An oscillation of increasing 446 
+frequency appears. Width = 1.0 s, Obset = 0. Symbols and colours as in Figure 1C. 447 
+Figure 3: Model predictions agree with connectivity inferred from experimental data. 448 
+A, Schematics of experimental  protocol in which e lectrophysiological recordings from 449 
+the CA1 of ﬂying bats  revealed that neural activity was organized into sequences . Two 450 
+bats were placed in a room with three landing balls. One bat, the demonstrator, was 451 
+trained to ﬂy from the start ball to either ball A or B and back. The second bat, the 452 
+observer, was trained to imitate the behaviour of the demonstrator. We analysed data 453 
+from the observer bat. We used the neural data collected while  the observer bat was 454 
+hanging still from either ball A or B. Adapted  from Omer, Las, and Ulanovsky 2023. 455 
+Created in BioRender. Gonzalo Cogno, S. (2026) https://BioRender.com/q9qr76c.  B, 456 
+Schematics of experimental protocol in which calcium imaging recordings from the 457 
+medial entorhinal cortex (MEC) of mice revealed that neural activity was organized into 458 
+sequences. The mice were head ﬁxed and placed on a running wheel in sensory 459 
+minimized conditions, and without any landmark s or rewards. Adapted from  Gonzalo 460 
+Cogno et al., 2024 . C, Left: Targets generated with CA1 bat experimental data (top) or 461 
+simulated data constructed to best approximate the experimental data (bottom).  We 462 
+show the target and the RNN response corresponding to training reali sation 1.  463 
+Parameters of the simulated targets: Amplitude = 0. 83, Width = 1.72  s, Obset = 0. 05. 464 
+Right: Response of the RNN after training on the targets depicted on the left. Pearson 465 
+correlation between target and RNN response: 0. 90 (experimental target) and 0. 90 466 
+(simulated target). Symbols and colours as in Figure 1B.  Bat schematics: Created in 467 
+BioRender. Gonzalo Cogno, S. (2026) https://BioRender.com/481uxqh.  D, Left: Mean 468 
+connectivity matrix calculated on networks trained on CA1 bat experimental (top) and 469 
+simulated (bottom) data. Correlation between the top and bottom connectivity matrices: 470 
+0.13. Right: Connectivity proﬁles corresponding to the matrices on the left. Correlation 471 
+between connectivity proﬁles: 0.83. Symbols and colours as in Figure 1C. E, Similar to C 472 
+but for MEC mouse experimental data. Parameters of the simulated targets: Amplitude = 473 
+0.29, Width = 1. 68 s , Obset = 0.15. Pearson correlation between target and  RNN 474 
+response: 0.95 (experimental target) and 0.69 (simulated target).  Mouse schematics: 475 
+Created in BioRender. Gonzalo Cogno, S. (2026) https://BioRender.com/pdgc94o.  F,  476 
+Similar to D but for the RNNs in panel E. Correlation between connectivity matrices: -477 
+0.09. Correlation between connectivity proﬁles: 0.95. 478 
+Figure 4: Sequences reset upon structured perturbations, and the reset is controlled 479 
+by the connectivity proﬁle . A, Schematics of the ensemble -time window grid that we 480 
+used for perturbing the network activity in a structured manner. We split the neurons into 481 
+𝑒 equal-sized ensembles of neighboring neurons (E 1, …, Ee), and the duration of the ﬁrst 482 
+sequence into ﬁve equal-sized time windows (T1, ..., T5). The grid is depicted in magenta. 483 
+The perturbation was applied to one given ensemble, at one speciﬁc time window. No 484 
+perturbations were applied during the second sequence.  Properties of the depicted 485 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 14 ===
+14 
+ 
+sequence: Amplitude = 0.6, Width = 1 s, Obset = 0. B, Impact of the silencing perturbation 486 
+on the ﬁring rate (black) of an example neuron. The time window during which the 487 
+perturbation took place is indicated in magenta. The ﬁring rate decreases to 0 during the 488 
+perturbation. C, Left: Unperturbed response of a network consisting of 501 neurons that 489 
+was trained on synthetic data. Amplitude = 0.6, Width = 1  s, Obset = 0. Duration of a 490 
+sequence = 8.5 s. Duration of the simulation = 17 s. Middle left: Response of the network 491 
+on the left following a silencing perturbation  applied to the ensemble and time window 492 
+indicated in magenta. Ensemble size = 100 neurons. Duration of p erturbation t ime 493 
+window = 1.7 s. Middle Right: Response of the network on the left  panel following the 494 
+injection of additional current into the ensemble, and at the time window, indicated in 495 
+magenta. Magnitude of the step current = 3. Ensemble size = 100 neurons. Duration of 496 
+the perturbation time window = 1.7 s. Right: Response of the network on the left  panel 497 
+following the injection of noise into  50% of randomly selected neurons, during the time 498 
+window of 8.5  s indicated in magenta. Noise gain = 15. D, Composition of the total 499 
+incoming current into one example neuron when additional current was injected. The 500 
+recurrent term is shown in black, the noise term in green, the injected current in magenta, 501 
+the sum of all terms in cyan. E, Same as B, but in the case of adding additional current. 502 
+Magnitude of the step current = 3. F,  Same as E but in the case of adding noise during the 503 
+ﬁrst sequence (8.5 s). Noise gain = 15. G, Same as in C, but for a network trained on CA1 504 
+bat experimental data. The heat maps show the normalized z -scored ﬁring rates of 168 505 
+neurons. Middle: Ensemble size = 33 neurons. Duration of the perturbation time window 506 
+= 0.6 s.  Middle right: Magnitude of step current = 3. Right:  Percentage of perturbed 507 
+neurons = 50%, Noise gain = 20. Duration of the perturbation time window = 3 s. H, Same 508 
+as in C, but for a network trained on MEC mouse experimental data. The heat maps show 509 
+the normalized deconvolved activity of 484 neurons. Middle: Ensemble size = 96 neurons. 510 
+Duration of the perturbation time window = 32.3 s. Middle right: Magnitude of step current 511 
+= 3. Right: Percentage of perturbed neurons = 50%, Noise gain = 3. Duration of the 512 
+perturbation time window = 161.3 s. The sequence resets yet eventually settles into an 513 
+attractor state. Symbols and colours as in Figure 1B. 514 
+Figure 5: Neural sequences in an upstream area support a diversity of sequences in 515 
+downstream regions. A, Schematics of the two -layers neural network. The ‘upstream 516 
+network’ is fully connected and composed of 501 neurons. The ‘downstream network’ 517 
+contains 10 neurons that are not connected to each other. All neurons in the upstream 518 
+network are connected to all neurons in the downstream network. The upstream network 519 
+generates sequential activity that serves as input to the downstream network. The 520 
+weights between the upstream and the downstream neurons are trained so that the 521 
+downstream network generates sequences with speciﬁc properties. B, Left: Example 522 
+upstream network activity that is used as input to the downstream network. Amplitude = 523 
+0.5, Width = 1  s, Obset = 0.3. Sequence duration = 8.5 s. Colours as in Figure 1B. Right: 524 
+Response of the downstream network receiving as input the sequence on the left, and 525 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 15 ===
+15 
+ 
+after training. Parameters of the downstream target: Amplitude = 0.5, Width = 1 s, Obset 526 
+= 0.3. Sequence duration = 8.5  s. Cyan indicates low ﬁring rate and magenta indicates 527 
+high ﬁring rate. C, Left: Downstream target parameters: Amplitude = 0.5, Width = 2 s, 528 
+Obset = 0.3. The downstream target is wider than the upstream sequence, depicted in B, 529 
+left. Right: Activity of the downstream network after training. Correlation between 530 
+downstream target and response: 0.99. Colours as in Figure 5B. D, Same as in C but with 531 
+these downstream target parameters: Amplitude = 0.5, Width = 2 s, Obset = 0.3. The 532 
+downstream target is narrower than the upstream sequence , depicted in B, left.  533 
+Correlation between downstream target and response: 0.87. Colours as in Figure 5B. E, 534 
+Correlation between downstream target and network response as a function of diberent 535 
+downstream target width values. Amplitude = 0.5, Obset = 0.3.  The upstream sequence 536 
+was kept ﬁxed with parameters: Amplitude = 0.5, Width = 1  s, Obset = 0.3 . The width of 537 
+the upstream sequence is indicated with a green dashed line. The downstream network 538 
+could not learn targets that had a smaller width than  that of the upstream sequence. F, 539 
+Same as E but over diberent amplitude values of the downstream target. Width = 1 s, 540 
+Obset = 0.3.  The amplitude of the downstream sequence could be diberent from the 541 
+amplitude of the upstream sequence and the training was still successful. G, Same as E 542 
+but over diberent obset values of the downstream target. Amplitude = 0.5, Width  = 1 s. 543 
+The obset of the downstream sequence could be diberent from the obset of the upstream 544 
+sequence and the training was still successful.  545 
+Supplementary Figure 1: A recurrent neural network is successfully trained to 546 
+generate sequences with diVerent properties.  A, Reference target sequences  for an 547 
+RNN of 501 units.  Amplitude = 0.5, Width = 1.7  s, Obset = 0. Symbols and colours as in 548 
+Figure 1B. B-D, Target sequences with the same parameters as in A except for Obset = 0.4 549 
+(B), Width = 1 s (C), Amplitude = 1 (D). E, Left: Mean correlation (black) between the target 550 
+sequences and the RNN response calculated over 50 ‘training realisations’ and depicted 551 
+as a function of the ‘training iterations’ (300 in total) . The error bars (blue) indicate the 552 
+standard deviation across training realisations. The end of training is marked with a red 553 
+dashed line. We froze the weights from the last training iteration, that is training iteration 554 
+300, and let the network run for ten  additional ‘test iterations’ . We show the correlation 555 
+values for the test iterations right next to the training iterations. Right: Mean absolute 556 
+diberence between weights of the connectivity matrix in successive training iterations. 557 
+The mean was calculated over 50 training realisations. Symbols as in the left panel. Same 558 
+sequence parameters as in panel A. F,  Pearson correlation between the target sequences 559 
+and the RNN response as a function of parameters of the target sequences. Each boxplot 560 
+shows the correlation values across 50 training realisations. The horizontal line indicates 561 
+the median, the bottom (top) extreme of the box indicates the 25 th (75th) percentile, the 562 
+vertical lines indicate the maxima and minima, and the crosses outliers. Left: Width = 1  563 
+s, Obset = 0, 0.2 ≤ Amplitude ≤ 0.8. The training performance increases with increasing 564 
+amplitude values. Middle: 1  s ≤ Width ≤ 1.9  s, Obset = 0, Amplitude = 0.5. The training 565 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 16 ===
+16 
+ 
+performance remains approximately the same across width values. Right: Width = 1 s, 0 566 
+≤ Obset ≤ 0.3, Amplitude = 0.5. The training performance decreases with increasing 567 
+obset values. G, Left: Initialization of weights  corresponding to training realisation 1 vs 568 
+training realisation 50. These are the weights before training. Right: Same as left but after 569 
+training. The values deviate from the diagonal (black line), indicating diberences between 570 
+the two connectivity matrices obtained after training.  571 
+Supplementary Figure 2: The similarity across connectivity proﬁles holds for sparse 572 
+connectivity. A, Left: Mean correlation (black) between the target sequences and the 573 
+RNN response calculated over 10 test iterations and depicted as a function of the fraction 574 
+of presynaptic neurons from which the outgoing c onnections were set to 0  before 575 
+training. The presynaptic neurons were randomly chosen , and those weights were not 576 
+trained. The error bars (blue) indicate the standard deviation across test iterations  577 
+grouped from 50 training realisations . Amplitude = 0.5, Width = 1.7  s, Obset = 0. The 578 
+outgoing synapses of  up to 95% of randomly selected neurons can be set to 0 and the 579 
+network will still learn the target sequences. Middle: Same as the left panel, but now the 580 
+presynaptic neurons are located consecutively in the sequence ordering. The outgoing 581 
+weights of up to 35% of consecutive presynaptic neurons can be set to 0 and the network 582 
+will still learn the target. Right: Similar to  the left panel, but now randomly chosen 583 
+synapses are set to 0.  Unlike in the other two panels, now a single neuron can have 584 
+outgoing synapses that are set to 0 and  other outgoing synapses whose weights are 585 
+trained. Up to 95% of the synapses can be set to zero and the network will still learn the 586 
+target sequences. B, Similar to A, but for the correlation between the connectivity proﬁle 587 
+calculated on  the mean connectivity matrix after training when the RNN is  fully 588 
+connected, and the connectivity proﬁle computed on the connectivity matrices after 50 589 
+training realisations when the connectivity was sparse. The black line indicates the mean 590 
+correlation across training realisations and the blue error bars the standard deviation.  If 591 
+the training was successful (see A), the correlation between the connectivity proﬁles of 592 
+the sparse and the fully connected  network was high. C, Left: Connectivity matrix 593 
+corresponding to the target sequences in Figure 1B, Amplitude = 0.5, Width = 1.7 s, Obset 594 
+= 0. The RNN was fully connected. Right: Connectivity proﬁle (black) corresponding  to 595 
+the matrix on the left. Symbols and colours as in Figure 1C. D, Similar to C , but the 596 
+outgoing connections of 25% of randomly chosen presynaptic neurons was set to 0 . 597 
+Correlation between the connectivity proﬁle in C, and the connectivity proﬁles obtained 598 
+from 50 training realisations when the network had this degree and type of sparseness: 599 
+mean ± STD =  0.930 ± 0.004. E, Similar to C, but the outgoing connections of the last 600 
+25% of presynaptic neurons in the sequence ordering was set to 0. Correlation between 601 
+the connectivity proﬁle in C, and the connectivity proﬁles obtained from 50 training 602 
+realisations when the network had this degree and type of sparseness: mean ± STD = 603 
+0.910 ± 0.005. F, Left: Similar to C, but 85% of all synapses were randomly chosen and 604 
+set to 0. Correlation between the connectivity proﬁle in C, and the connectivity proﬁles 605 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 17 ===
+17 
+ 
+obtained from 50 training realisations when the network had this degree and type of 606 
+sparseness: mean ± STD = 0.940 ± 0.003. 607 
+Supplementary Figure 3: The connectivity proﬁle changes smoothly with changes in 608 
+the parameters of the target sequences. A, Position of the maximum in the connectivity 609 
+proﬁle, measured in distance between neurons, as a function of obset values. Amplitude 610 
+= 0.5, Width = 1 s. We used the position of the maximum as a quantiﬁcation of the degree 611 
+of asymmetry of the connectivity proﬁle. B, Range of the connectivity proﬁle, deﬁned as 612 
+the diberence between its maximum and minimum, as a function of width values. 613 
+Amplitude = 0.5, Obset = 0. C, Mean width of the peaks in the connectivity proﬁle  as a 614 
+function of amplitude values. Width = 1 s, Obset = 0. We calculated the width of the peaks 615 
+as a proxy for the quantiﬁcation of the frequency of oscillation in the connectivity proﬁle, 616 
+under the assumption that the wider the peaks, the smaller the frequency and vice versa.  617 
+Supplementary Figure 4: The connectivity proﬁle smoothly maps changes in pairs of 618 
+properties of the target sequences.  A, Connectivity proﬁles corresponding to the 619 
+connectivity matrices that generate sequences with varying amplitude and width values. 620 
+Obset = 0. Symbols and colours as in Figure 1C. B, Heat map of the average peak width 621 
+calculated on the connectivity proﬁles  shown in A . Yellow indicates broad peaks, dark 622 
+green indicates narrow peaks. The peaks are narrower, and therefore the oscillatory 623 
+frequency higher, in connectivity proﬁles with high amplitude  values. Obset = 0.  C, 624 
+Heatmap of the range of the connectivity proﬁles shown in A. The range is deﬁned as the  625 
+diberence between the maximum and minimum. Yellow indicates high range, dark green 626 
+indicates low range. The range decreases with increasing width  values except when the 627 
+amplitude is close to 1 , when the range remains approximately the same. Obset = 0. D, 628 
+Similar to A , but for diberent combinations of obset and amplitude values. Width = 1  s. 629 
+E, Heatmap showing the asymmetry of the connectivity proﬁles  in D, quantiﬁed through 630 
+the position of the maximum. Yellow indicates high asymmetry, dark green indicates low 631 
+asymmetry. The asymmetry increases in connectivity proﬁles with high obset and 632 
+amplitude values. Width = 1  s.  F, Similar to B, but for the connectivity proﬁles in D . The 633 
+average peak width decreases with increasing amplitude values of the target sequences. 634 
+Width = 1 s. 635 
+Supplementary Figure 5: Second order statistics of the connectivity matrix map 636 
+changes in the parameters of the target sequences.  A, Schematics of connectivity 637 
+motifs. We focused on: reciprocal motifs (top left), in which two neurons are mutually 638 
+connected, divergent motifs (bottom left), in which one neuron connects to two other 639 
+neurons, convergent motifs (top right), in which two neurons connect to the same 640 
+neuron, and chain motifs (bottom right), in which one neuron is connected to a second 641 
+neuron, which is connected to a third neuron B, Abundance of motifs as a function of the 642 
+target sequences  parameters: obset (left), width (middle), and amplitude (right) . The 643 
+abundance of the reciprocal motif is indicated in blue, the divergent motif in orange, the 644 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 18 ===
+18 
+ 
+chain motif in yellow, and the convergent motif in purple. Left: The abundance of the 645 
+reciprocal motif increases with increasing obset values. Amplitude  = 0.5, Width = 1 s. 646 
+Middle: The abundance of the reciprocal motif increases with increasing width values. 647 
+Amplitude = 0.5, Obset = 0. Right: The abundance of the reciprocal motif increases with 648 
+increasing amplitude values up to 0.7, after that value it decreases. Width = 1 s, Obset = 649 
+0. The chain, divergent and convergent motifs are not present in any of the connectivity 650 
+matrices. 651 
+Supplementary Figure 6: Procedure for ﬁtting experimental data. A, Mean sequence 652 
+of activity calculated over 24 periodic sequences available in experimental data session 653 
+7 from mouse #60584, published in Gonzalo Cogno et al., 2024. For computing the mean 654 
+sequence, we ﬁrst scaled the duration of each individual sequence so that they would all 655 
+have the same duration: 177,7 s. We next calculated the mean activity of each neuron 656 
+across sequences. Symbols and colours as in Figure 1B. B, We circularly shifted the 657 
+activity of each neuron in panel A so that the activity of all neurons peaked at the same 658 
+time bin. Symbols and colours as in Figure 1B. C, We ﬁrst rescaled the  centered mean 659 
+sequence, depicted in panel B, so that  the activity of each unit was 8.5 s long, which is 660 
+the duration of the sequences in the simulated data. Then, we calculated the  mean 661 
+activity across neurons  (blue). Finally, we ﬁt a Gaussian  (red) to the rescaled mean 662 
+activity. Obtained ﬁtted parameters: Amplitude  = 0.29, Width  = 1.68 s, Obset  = 0.15. 663 
+Goodness of ﬁt (R2): 0.99. D, Sequential activity of time cells recorded from the bat CA1. 664 
+Symbols and colours as in Figure 1B. E, Similar to B, we centered the sequence by 665 
+circularly shifting each neuron’s activity from D. F, Same as C but for the centered 666 
+sequence of time cells depicted in E. Obtained ﬁtted parameters: Amplitude = 0. 83, 667 
+Width = 1.72 s, Obset = 0.05. Goodness of ﬁt (R2): 0.99. 668 
+Supplementary Figure 7: Comparison of connectivity motifs between experimental 669 
+and synthetic data. Abundance of connectivity motifs obtained after training the RNNs 670 
+on experimental data, as a function the same motifs obtained after training the RNNs on 671 
+synthetic targets that best approximate the experimental data. The abundance of motifs 672 
+corresponding to mouse (bat) data are indicated with full circles (triangles). Reciprocal 673 
+motifs are indicated in blue, divergent motifs in orange, chain motifs in yellow, and 674 
+convergent motifs in purple. The black line indicates the identity line. Chain and 675 
+convergence motifs are absent in all connectivity matrices. There is a mismatch between 676 
+motifs calculated on experimental data and on synthetic data. 677 
+Supplementary Figure 8: After silencing perturbations the sequences reset, and the 678 
+ensemble to which they reset is controlled by the connectivity proﬁle.  A, Top: RNN 679 
+response as a function of obset values. The perturbation time window, and the ensemble 680 
+of neurons whose activity was set to zero,  is indicated with a magenta rectangle.  The 681 
+perturbation induces a reset of the sequence for all obset values of the target sequences. 682 
+Amplitude = 0.6, Width = 1 s. Bottom: Connectivity proﬁles calculated on the connectivity 683 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 19 ===
+19 
+ 
+matrix that generates the unperturbed sequential dynamics corresponding to the top 684 
+panels. The ensemble to which the sequence resets is as far away from the silenced 685 
+ensemble as the position, measured in distance between neurons, of the minimum in the 686 
+connectivity proﬁle. In the right panel, the blue arrow indicates the reset in the response 687 
+(top) and in the connectivity proﬁle (bottom).  Symbols and colours as in Figure 1B,C. B, 688 
+Similar to A, but for increasing width values of the target sequences. Amplitude = 0.6, 689 
+Obset = 0. C, Similar to A, but for increasing amplitude values of the target sequences. 690 
+Width = 1 s, Obset = 0. For amplitude = 1 (right) parallel and transient sequences emerge 691 
+due to the perturbation. This is due to the presence of oscillations, and therefore multiple 692 
+minima, in the connectivity proﬁle. Symbols and colours as in Figure 1B, C. 693 
+Supplementary Figure 9: EVect of perturbations on the RNN dynamics. A, Correlation 694 
+between the unperturbed network activity and the network activity after the perturbation 695 
+was released. The correlation is depicted  as a function of the time window in which the 696 
+perturbation was applied , measured relative to the  time in which the  unperturbed 697 
+sequential activity unfolded. If the perturbation was applied to an ensemble that was not 698 
+engaging in the sequence, the perturbation time window relative to the time of ensemble 699 
+activation was close to 2 or -2. If the perturbed ensemble was engaging in the sequence, 700 
+the perturbation time window was 0. Ensembles of size corresponding to 10% (blue), 20% 701 
+(dark green), or 30% (light green) of all neurons in the RNN (501 units) were silenced 702 
+during a time window of 1.7  s. If the perturbation was applied to an ensemble that was 703 
+not engaging in the sequence, the correlation was close to 1. If the perturbed ensemble 704 
+was engaging in the sequence, the correlation dropped close to zero. Perturbing a higher 705 
+fraction of neurons (shades of green) led to more negative correlations. Parameters of the 706 
+target sequences: Amplitude = 0.6, Width = 1  s, Obset = 0. B, Similar to A, but for the 707 
+current injection perturbation. Magnitude of the step current = 3 . Injecting current into 708 
+neurons that were not active in the sequence led to a negative correlation, corresponding 709 
+to a reset of the sequence. Injecting current into neurons engaging in the sequence led to 710 
+a correlation close to  1 corresponding to an unabected progression of the original 711 
+sequence. The ebects are independent of the fraction of neurons that were perturbed. C, 712 
+Similar to B, but each line indicates diberent magnitudes of the step current (0.5 in brown, 713 
+2 in red, 5 in pink). For very low magnitudes of injected current the correlation was close 714 
+to 1, and hence the perturbation did not have any ebect on the progression of the 715 
+sequences. For higher magnitude values, the ebect of the perturbation depended on the 716 
+time window of current injection, similar to B.  Ensemble size = 20%  D, Diberent 717 
+percentages of randomly selected neurons (indicated on the x axis , N = 5 01) were 718 
+perturbed by injecting noise of diberent gains (indicated on the y axis). The time window 719 
+of perturbation is 8.5 s long, equal to the duration of the ﬁrst sequence, and is marked in 720 
+magenta. The sequences always continue uninterruptedly after the perturbation was 721 
+released. Amplitude = 0.5, Width = 1 s, Obset = 0. Symbols and colours as in Figure 1B. 722 
+E, Combinations of noise gain (y axis) and percentage of perturbed neurons (x axis). The 723 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 20 ===
+20 
+ 
+correlation between the unperturbed network response and the network response after 724 
+the perturbation was released is indicated in shades of green. F-H, Same as A-C but for 725 
+a network trained on bat experimental data. For  a current injection of small magnitude 726 
+the correlation value was always close to 1, and hence the sequential dynamics was not 727 
+abected by the perturbation independently of the time window at which the current was 728 
+injected. The correlation value s decreased with increasing magnitudes of injected 729 
+current. I-K, Same as A -C but for a network trained on mouse experimental data. The 730 
+correlation was close to 0 due to an attractor state that the network settled into after the 731 
+perturbation was released. For some training realisations, however, the network did not 732 
+converge to the attractor state and instead the sequence unfolded uninterruptedly after 733 
+the perturbation was released (not shown). 734 
+Supplementary Figure 10: Downstream sequences are constrained by the properties 735 
+of the upstream sequences.  A, Left: Upstream sequential dynamics (501 neurons). 736 
+Symbols and colours as in Figure 1B. Right: Response of the downstream network  (10 737 
+neurons) when all upstream neurons are randomly connected to all downstream 738 
+neurons. When the weights are random the downstream network does not generate 739 
+sequential dynamics despite receiving sequential input from the upstream network . 740 
+Colours as in Figure 5B.  B, Left: Downstream target sequence . Parameters of 741 
+downstream target sequence: Amplitude = 0.3, Width = 1 s, Obset = 0.3. Parameters of 742 
+upstream sequence: Amplitude = 0.5, Width = 1  s, Obset = 0.3 . The amplitude of the 743 
+downstream target is lower than the amplitude of the upstream sequence (Figure 5B left). 744 
+The upstream sequence and the downstream target are both 8.5 s long. Right: Response 745 
+of downstream network after training using the target on the right  panel. The target and 746 
+the response are similar (Correlation: 0.99). Colours as in Figure 5B. C, Similar to B, but 747 
+now the obset of the downstream target is lower than the obset of the upstream 748 
+sequence. Parameters of downstream target: Amplitude = 0.5, Width = 1 s, Obset = 0.05. 749 
+Parameters of the upstream sequence as in panel B. The upstream sequence and the 750 
+downstream target are both 8.5 s long. The target and the response are similar 751 
+(Correlation: 0.99). D, Left: Upstream sequential activity (501 neurons). We perturbed the 752 
+upstream sequence by silencing the activity of 100 neurons, in a time window of duration 753 
+= 1.7 s, indicated in magenta. Symbols and colours as in Figure 1B. Right: Response of 754 
+the downstream network receiving as input the activity on the left . The weights between 755 
+the upstream and the downstream network were trained using as input the unperturbed 756 
+response shown in panel A, left. The downstream neurons showed a similar reset in their 757 
+activity as  observed in the upstream neurons. Parameters of upstream sequence:  758 
+Amplitude = 0.6, Width = 1 s, Obset = 0.3. The upstream sequence and the downstream 759 
+target are both 8.5 s long. Colours as in Figure 1B, 5B. E, Same as D but instead of 760 
+silencing, additional current was injected into the ensemble of neurons, and at the time 761 
+window, indicated in magenta. Magnitude of step current: 3.  The downstream neurons 762 
+showed a similar reset in their activity as the upstream neurons.  763 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 21 ===
+21 
+ 
+METHODS: 764 
+Recurrent neural network model 765 
+To characterize the set of connectivity matrices that generate sequential dynamics, we 766 
+constructed rate -based recurrent neural network (RNN) models, and we trained the 767 
+weights in the RNNs so that the entire network would generate sequential activity. Our 768 
+approaches for designing and training the RNNs are similar to those in Rajan et al., 2016. 769 
+We worked with RNNs that were trained on simulated sequences of activity, or on neural 770 
+sequences that were experimentally recorded. When we considered simulated 771 
+sequences the network consisted of 𝑁 = 501 units, as we show in ﬁgure 1, 2, 4, and 5.  772 
+When we considered sequences of activity that were experimentally recorded, as we 773 
+show in ﬁgure 3, the network consisted of 𝑁 = 170 neurons to match the experimental 774 
+data recorded from the bat hippocampal CA1 [13], or of 𝑁 = 484 neurons to match the 775 
+experimental data recorded from the mouse medial entorhinal cortex [12] (MEC).  776 
+Each neuron is represented by an activation variable ℎ!, 𝑖 = 1, . . , 𝑁. To obtain the ﬁring 777 
+rate 𝑟! for each neuron 𝑖, we passed the activation variable through a sigmoid activation 778 
+function: 𝑟! = 𝜙(ℎ!) =
+"
+"#$!"#. Because we used a sigmoid as the non -linearity  0 ≤ 𝑟! ≤779 
+1		∀𝑖, i.e., the rates were bounded between 0 and 1. 780 
+The network connectivity is represented by a connectivity matrix 𝑊 ∈ ℝ%×%. Each entry 781 
+𝑤!' represents the weight from presynaptic neuron 𝑗	to postsynaptic neuron 𝑖 with 𝑖, 𝑗 =782 
+1, . . , 𝑁.  783 
+The temporal progression of the activation variable ℎ! of each neuron is determined by 784 
+𝜏
+()#
+(* = −ℎ! + ∑ 𝑊!'𝜙?ℎ'@%
+'+" + 𝜁!,        (1) 785 
+with 𝜏 = 0.3224𝑠.  786 
+The noise 𝜁! was generated as 787 
+𝜁! = gain ⋅ JK
+,
+(*L ⋅ 𝑣!,	 𝑣! ∼ 𝒩(0,1) i.i.d.       (2) 788 
+with gain = 0.5 and time step 𝑑𝑡 = 0.0081s. The results of the paper remain unchanged 789 
+for 𝑑𝑡 = 0.1	s and  𝑑𝑡 = 0.2	s (not shown). 790 
+Let 𝑅(𝑡) = (𝑟"(𝑡), … , 𝑟%(𝑡))- be the vector of ﬁring rates at time 𝑡, and 𝐻(𝑡) =791 
+(ℎ"(𝑡), … , ℎ%(𝑡))- the vector of activation variables at time 𝑡, both of size 𝑁. To integrate 792 
+the network activity, we used the Euler method with an integration step 𝑑𝑡 = 0.0081𝑠 as 793 
+follows 794 
+𝐻(𝑡) = 𝐻(𝑡 − 1) + 𝑑𝑡 ⋅
+./(*.")#2(*.")
+3 ,       (3) 795 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 22 ===
+22 
+ 
+with 𝑆(𝑡) = 𝑊𝑅(𝑡) + 𝜁(𝑡)  796 
+and 𝜁(𝑡) deﬁned as the vector 𝜁(𝑡) 	 = (𝜁"(𝑡), . . . , 𝜁%(𝑡)), of size 𝑁. 797 
+We explain how we initialized and how we trained the components of 𝑊 below, in the 798 
+section ‘FORCE-training of the RNNs’ . 799 
+ 800 
+Design of simulated target sequences 801 
+To train the RNNs we ﬁrst constructed a target activity for each neuron such that, after 802 
+training, each neuron would generate activity resembling its target. The target ﬁring rate 803 
+of each individual neuron 𝑖 = 1, … , 𝑁, is given by  804 
+𝑟!
+*456$*(𝑡, 𝑎, 𝑏, 𝜎) = 𝑎 ⋅ 𝑔7,-(𝑡 − 𝜇!) + 𝑏.       (4) 805 
+Let 𝑇	be the duration of the neural sequence, with 𝑇 = 8.5	𝑠 in the case of synthetic 806 
+sequences that we describe here, then 𝜇! = 𝑖
+-
+% , and 𝑔9,- is a wrapped Gaussian given by: 807 
+𝑔7,-(𝑡) = ∑ 𝑒
+!(%!&'))
+)*) 	.:∈ℤ          (5) 808 
+We simulated 18 periodic sequences by evaluating the target activity over a time interval 809 
+of length 18𝑇 (note that the Gaussian repeats over time) in a population of 𝑁 = 501 810 
+neurons. The period of the sequences was 𝑇. The ordering of the cells in the sequence is 811 
+given by 𝜇!, i.e., based on the time at which the ﬁring rate of the cells peaks.  We used a 812 
+bin size = 0.129  s. This choice of bin size is so that the synthetic data is generated at a 813 
+similar temporal resolution to the one we have in the experimental data (see 814 
+‘Experimental target sequences’).  815 
+We normalized the activity of each unit by 1 Hz, therefore the obset and the amplitude 816 
+are dimensionless. The width has units of time.  817 
+We deﬁned the ‘target sequences’ as the set of all target ﬁring rates: 𝑅*456$*(𝑡, 𝑎, 𝑏, 𝜎) =818 
+(𝑟"
+*456$*(𝑡, 𝑎, 𝑏, 𝜎), … , 𝑟%
+*456$*(𝑡, 𝑎, 𝑏, 𝜎))-, where 𝑅*456$*(𝑡, 𝑎, 𝑏, 𝜎) is a vector of size 𝑁, 819 
+that also depends on the parameters 𝑎, 𝑏, 𝜎. The combination of ‘amplitude’ 𝑎, ‘width’ 𝜎, 820 
+and ‘obset’ 𝑏 determines the properties of the sequence. The amplitude took values 821 
+between 0.2 and 1, the width between 1 and 1.9, and obset between 0 and 0.45. For 822 
+example, the sequences in Figure 1B correspond to the parameters 𝑎 = 0.5, 𝜎= 1.7, and 823 
+𝑏= 0. The target sequences were 153 s long, for a total 18 periodic sequences of 𝑇 = 8.5	𝑠. 824 
+We calculated the ‘target activation variables’ of each neuron, denoted as ℎ!
+*456$*(𝑡), by 825 
+applying the inverse of the sigmoid activation function 	to the target ﬁring rates of each 826 
+neuron: 827 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 23 ===
+23 
+ 
+ℎ!
+*456$*(𝑡, 𝑎, 𝑏, 𝜎) = 𝜙." K𝑟!
+*456$*(𝑡, 𝑎, 𝑏, 𝜎)L = 𝑙𝑛 a
+5#
+%+,-.%(*,4,=,7)#>
+".5#
+%+,-.%(*,4,=,7)#>
+b.   (6) 828 
+with 𝜀=0.01, to avoid dividing by 0 if 𝑟!
+*456$*(𝑡) = 1 at any time point 0 ≤ 𝑡 ≤ 18 ⋅ 𝑇. 829 
+Similarly, as we did for the target sequences, we introduced the ‘network target current’ 830 
+as  𝐻*456$*(𝑡, 𝑎, 𝑏, 𝜎) = (ℎ"
+*456$*(𝑡, 𝑎, 𝑏, 𝜎), … , ℎ%
+*456$*(𝑡, 𝑎, 𝑏, 𝜎))-. 831 
+As mentioned above, the model integration time step is 𝑑𝑡 = 0.0081	s and the target 832 
+sequences are constructed using a 𝑏𝑖𝑛	𝑠𝑖𝑧𝑒 = 0.129	s. The results of the paper remain 833 
+unchanged for other choices  and combinations  of 𝑑𝑡 and 𝑏𝑖𝑛	𝑠𝑖𝑧𝑒: with 𝑑𝑡 ∈834 
+{0.0081	s, 0.1	s, 0.2	s} and 𝑏𝑖𝑛	𝑠𝑖𝑧𝑒 ∈ {0.1	s, 0.129	s, 0.2	s} (not shown).  835 
+The mismatch between 𝑑𝑡 = 0.0081	s and 𝑏𝑖𝑛	𝑠𝑖𝑧𝑒 = 0.129	s implies that for each time 836 
+bin of the target sequences, there are approximately 16 time steps of the dynamics of the 837 
+model. This is relevant for the training procedure (‘ FORCE-training of the RNNs’ ). The 838 
+network activity was initialized with 𝑅*456$*(𝑡 = 0) and 𝐻*456$*(𝑡 = 0).  839 
+ 840 
+Experimental target sequences 841 
+Bat data : We analysed publicly available electrophysiological recordings from bat 842 
+hippocampal CA1, published in  Omer, Las, and Ulanovsky 2023 . In those experiments, 843 
+two bats, the observer and the demonstrator, were in the same room. We only analysed 844 
+neural data from the observer bat. The room was equipped with 3 landing balls, the start 845 
+ball, ball A, and ball B. We analysed data from conditions in which the demonstrator bat 846 
+was hanging motionlessly on either of the landing balls, and the observer bat landed on 847 
+ball A or B until it took ob. During the ‘hanging time intervals’ , i.e., between landing and 848 
+take ob, hippocampal time cells ﬁred in a sequential manner. The analysed data were z-849 
+scored ﬁring rates  of time cells averaged across hanging time intervals. Because the 850 
+hanging time intervals varied in duration, the number of hanging time intervals that 851 
+contribute to the calculation of the mean neural activity decreases with time after 852 
+landing. To maximize the number of analysed cells and the number of hanging time 853 
+intervals, we used only the ﬁrst 6 seconds of the data that followed the observer bat’s 854 
+landing on ball A or B. Consequently, the analysed dataset included the mean z-scored 855 
+ﬁring rates of 168 time cells over 6s after landings. To sort the time cells into a sequential 856 
+order, we ﬁrst smoothed their activity over 15 bins ( bin	size = 0.1𝑠) using the MATLAB 857 
+function “movmean” and afterwards, for each cell we identiﬁed the time point at which 858 
+its ﬁring rate peaked. We next sorted the neurons according to those time points, in an 859 
+ascending order. Next, to compare the bat data to the experimental dataset recorded in 860 
+mouse (see below), we downsampled the unsmoothed z-scored ﬁring rate to a bin size of 861 
+0.129s and set all negative values to 0. Afterwards, we smoothed the neural activity over 862 
+15 time bins using the MATLAB function “movmean” and for each neuron divided the 863 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 24 ===
+24 
+ 
+resulting signal by its maximum, leading to normalized activity with maximum value 1. 864 
+Results remain unchanged for shorter and longer smoothing windows. 865 
+We used these data as targets for training an RNN with a matching number of 168 units, 866 
+a time constant 𝜏 = 0.3224𝑠	and integration step 𝑑𝑡 = 0.0081𝑠	(same parameters as for 867 
+the RNN trained on simulated data). Each unit received as target the activity of one cell. 868 
+Similar to what we did for the synthetic sequences, from the 𝑅*456$*	computed as we 869 
+describe above, in this case of size	168	 × 	1, we calculated 𝐻*456$*. The network activity 870 
+was initialized with 𝑅*456$*(𝑡 = 0) and 𝐻*456$*(𝑡 = 0). 871 
+ 872 
+Mouse data: We analysed experimental session 7 from mouse #60584 from the dataset 873 
+reported in Gonzalo Cogno et al 2024. In that publicly available dataset, mice were head-874 
+ﬁxed, placed on a running wheel in darkness conditions and did not receive any rewards. 875 
+Calcium imaging recordings from the medial entorhinal cortex showed that the neural 876 
+activity organized into ultraslow (frequency < 0.1 Hz) periodic sequences of activity. This 877 
+session had 24 ultraslow periodic sequences. The deconvolved activity had a 𝑏𝑖𝑛	𝑠𝑖𝑧𝑒 =878 
+0.129𝑠. First, we smoothed the data over time bins with a moving mean and window of 879 
+120 bins using the MATLAB function “smoothdata” . To decrease runtime, we 880 
+downsampled the data to obtain a bin size of 1.29  s. This does not change our results 881 
+because the sequential dynamics are on a timescale of minutes. Afterwards, we 882 
+normalized the deconvolved activity by dividing each neuron’s activity by its maximum 883 
+value leading to normalized activity with maximum value 1. 884 
+Due to the periodicity of the sequences, for training the RNN we took 50 random snippets 885 
+of 250 time bins ( 𝑏𝑖𝑛	𝑠𝑖𝑧𝑒 = 1.29𝑠; duration of each snippet = 322.5s) from the 886 
+experimental data and used these snippets as targets to train 50 fully connected RNNs 887 
+with initial random connectivity (see section ‘FORCE-training of the RNNs’). The networks 888 
+consisted of 484 neurons, which is equal to the number of neurons in the experimental 889 
+data. The time constant  was 𝜏 = 0.3224𝑠	and the integration step 𝑑𝑡 = 0.0081𝑠	(same 890 
+parameters as for the RNN trained on simulated data). 891 
+Similar to what we did for the synthetic sequences, from the 𝑅*456$*	computed as we 892 
+describe above, in this case of size	484	 × 	1, we calculated 𝐻*456$*. The network activity 893 
+was initialized with 𝑅*456$*(𝑡 = 0) and 𝐻*456$*(𝑡 = 0). 894 
+ 895 
+Sequence ordering in synthetic and experimental target sequences 896 
+The sequence ordering, or the way neurons were labelled in the network, reﬂected the 897 
+ordering according to  which neural ﬁring rate peaked as a function of time. In the 898 
+synthetic data, the sequence ordering was obtained by sorting the time points at which 899 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 25 ===
+25 
+ 
+the activity of the neurons peaked in an ascending order. In the experimental data, the 900 
+ordering was obtained from the original datasets. In the CA1 bat dataset, similarly to what 901 
+we did for synthetic sequences, the ordering was obtained by sorting the times at which 902 
+the activity of each neuron peaked in an ascending manner. In the MEC mouse dataset, 903 
+the sorting was obtained from applying PCA to the neural activity, and by sorting neurons 904 
+based on PC1 and PC2 (see Gonzalo Cogno et al., 2024). 905 
+ 906 
+FORCE-training of the RNNs 907 
+We trained the recurrent weights of the RNN using the targets described above. For each 908 
+target 𝑅*456$*, we performed 50 training realisations. In each realisation we randomly 909 
+initialized the connectivity matrix 𝑊. Each weight 𝑤!' was independently sampled from a 910 
+standard Gaussian distribution and scaled by the factor 
+6
+√%, such that 𝑤!' =
+6
+√% 𝑠!', 𝑠!' ∼911 
+𝒩(0,1)	i.i.d. , with 𝑔=1.5 for the simulated sequences and 𝑔=0.05 for the experimental 912 
+sequences [33] and 𝑁 as described above. 913 
+In the case of simulated sequences, and mouse experimental data, we used snippets of 914 
+the target sequences as targets to train the network. To reduce computational time while 915 
+preserving periodicity, each snippet encompassed two sequences. The snippet had a 916 
+duration 2𝑇	(2𝑇 = 17𝑠	with bin	size = 0.129𝑠	for simulated sequences, 2𝑇 = 322.5𝑠 917 
+with bin size 𝑑𝑡 = 1.29𝑠	for mouse experimental sequences).  In each of the 50 training 918 
+realisations, the initial time bin of the snippet was randomly chosen in the range 919 
+[0,119.2]	s	for simulated sequences and [0, 2945.1]	s	for mouse experimental 920 
+sequences. Note that for the simulated sequences, because those were perfectly 921 
+periodic in time, all 50 targets were equivalent up to a shift in their sequence phase. In 922 
+the case of bat experimental sequences, as in Figure 3C, the target consisted only of 1 923 
+sequence, i.e., had duration 𝑇 (𝑇	 = 6𝑠 for bat experimental sequence with bin size dt = 924 
+0.129s). Hence, the target was the same for all 50 training realisations. 925 
+In the following we refer to the snippet of the target sequences (simulated sequences, or 926 
+experimental sequences) simply as ‘target’ . 927 
+To train the RNNs we applied a variation of the FORCE training algorithm [34] that was 928 
+introduced in Rajan et al. 2016 and which introduces a time dependent ebective learning 929 
+rate 𝑐(𝑡) =
+"
+"#@(*)'A(*)@(*). Each training iteration is as long as the target, i.e., 2086 time 930 
+bins  (= 16.9s) for simulated, 732 time bins  (= 5.9s) for bat experimental sequences, and 931 
+39655 time bins (= 321.2s) for mouse experimental sequences. The integration time step 932 
+in the model was always 𝑑𝑡 = 0.0081𝑠 leading to the set 𝒯 = {𝑡 = 𝑘 ⋅ 𝑑𝑡 ∣ 0 ≤ 𝑘 ≤933 
+𝐾},𝐾 ∈ ℤBC , with 𝐾 ≤ 2086 for simulated sequences, 𝐾 ≤ 732	for bat experimental 934 
+sequences, and 𝐾 ≤ 39655 for mouse experimental sequences. We used 300 learning 935 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 26 ===
+26 
+ 
+iterations during which the weights were adjusted according to equations 7-9 below, and 936 
+10 test iterations during which the weight matrix was held ﬁxed. 937 
+As mentioned above, the target sequences are constructed using a bin	size = 0.129𝑠 938 
+(synthetic sequences and bat experimental data ) or bin	size = 1.29𝑠 (mouse 939 
+experimental data), whereas the model is integrated with a time step 𝑑𝑡 = 0.0081𝑠. 940 
+Consequently, each target time bin corresponds approximately to 16 integration time 941 
+steps (simulated sequences and bat experimental sequences) or 160 integration time 942 
+steps (mouse experimental sequences) in the model. Hence, every time bin of the target 943 
+sequences (bin size = 0.129s) was used to train every 16 th integration time step in the 944 
+model (dt = 0.0081s). 945 
+Let 𝒯 = {𝑡 = 𝑘 ⋅ 𝑑𝑡 ∣ 0 ≤ 𝑘 ≤ 𝐾} with 𝐾 as above be the set of all model integration time 946 
+steps. The target values are available only at the subset 𝒵: ⊂ 𝒯 947 
+𝒵: = {𝑡 = 𝑘 ⋅ 𝑑𝑡 ∣ 𝑘 = 𝑚 ⋅ 𝑛, 𝑛 ∈ 	ℤ}	, 948 
+with ﬁxed 𝑚 = 16	for the simulated sequences and bat experimental sequences, 𝑚 =949 
+160	for the mouse experimental sequences and 𝑛 ∈ ℤ. Denote the elements of 𝒵: as 𝑧. 950 
+The error is evaluated only at these time points 𝑧 ∈ 𝒵:: 951 
+𝑒(𝑧) = 𝑆(𝑧) − 𝐻*456$*(𝑧)         (7) 952 
+with 𝑆(𝑧)	 and the noise term 𝜁(𝑧) as introduced in section ‘Recurrent neural network 953 
+model’. 954 
+The entries in the connectivity matrix 𝑊 were updated according to a variation of FORCE 955 
+learning  [33, 34] as follows 956 
+𝑊(𝑧) = 𝑊(𝑧 − 𝑚 ⋅ 𝑑𝑡) − 𝑐(𝑧) ⋅ 𝑒(𝑧)?𝑃(𝑧)𝑅(𝑧)@
+-
+     (8) 957 
+with 958 
+𝑐(𝑧) = 1
+1 + 𝑅(𝑧)-𝑃(𝑧)𝑅(𝑧) 960 
+and 959 
+𝑃(𝑧) = 𝑃(𝑧 − 𝑚 ⋅ 𝑑𝑡) −
+A(D.:⋅(*)@(D)FA(D.:⋅(*)@(D)G'
+"#@(D)'A(D.:⋅(*)@(D) .     (9) 961 
+We used the correlation matrix 𝑃 ∈ ℝ%×%which we initialized as 𝑃(0) = 𝑝 ⋅ 𝐼, with 𝑝=0.08 962 
+a regularization term and 𝐼 the identity matrix of size 𝑁 × 𝑁. 963 
+For the time points 𝑡 ∈ 𝒯 ∖ 𝒵: as well as for every time point during the test iterations, 964 
+the dynamics of the network were simulated without adjusting the connectivity matrix 965 
+following equations 1-3. 966 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 27 ===
+27 
+ 
+Each of the 50 training realisations consisted of 300 training iterations, and in each 967 
+training iteration the weights were updated at every time point 𝑧 ∈ 	 𝒵:. The initial weight 968 
+matrix for iteration 𝑞 was set equal to the ﬁnal weight matrix from iteration 𝑞 − 1, for 𝑞 =969 
+2, … , 300. 970 
+To evaluate the training performance within training realisations, we calculated the 971 
+Pearson correlation between the dynamics of the RNN 𝑅(𝑧) and the target. Additionally, 972 
+we veriﬁed that the change of weights converged towards zero by calculating the mean 973 
+absolute change of weights for each training iteration 𝑞 = 1, … , 300, as follows 974 
+𝛿H(𝑞) =
+"
+%) ∑ ~𝑤!,'(𝑞) − 𝑤!,'(𝑞 − 1)~!,'        (10) 975 
+with 𝑤!,'(𝑞) being the entry 𝑖, 𝑗 with 𝑖, 𝑗 = 1, … , 𝑁 in weight matrix 𝑊 after training iteration 976 
+𝑞. 977 
+ 978 
+Quantiﬁcation of the connectivity proﬁle 979 
+After 50 training realisations, we obtained 50 independently trained connectivity 980 
+matrices. Next, we computed the average connectivity matrix across the 50 resulting 981 
+matrices. We tested that the average connectivity matrix generated sequences by 982 
+examining its dynamics and conﬁrming that it was sequential (Figure 1 F right). In the 983 
+following, we refer to the average connectivity matrix simply as ‘mean connectivity 984 
+matrix’ . To quantify the structure of the connectivity matrices, we calculated their 985 
+connectivity proﬁles as illustrated schematically in Figure 1C, denoted as 𝑐𝑝H(𝑑)	with 𝑑 986 
+being the distance between two neurons in the sequence ordering. 987 
+𝑐𝑝H(𝑑) = 𝑤!'	∀ 𝑖, 𝑗 ∶ 𝑗 − 𝑖 = 𝑑 𝑚𝑜𝑑(𝑁)        (11) 988 
+with 𝑤!' being the weight between neuron 𝑗 and 𝑖,  and 𝑁 the number of neurons in the 989 
+network. We denote by 𝑐𝑝H the vector of the connectivity proﬁle , i.e. , 𝑐𝑝H =990 
+	K𝑐𝑝H K−
+%
+IL , … , 𝑐𝑝H(0), … , 𝑐𝑝H K
+%
+ILL
+-
+. 991 
+To quantify how features of the connectivity proﬁle were linked to properties of the 992 
+sequential dynamics, we ﬁrst preprocessed the connectivity proﬁle by linearly 993 
+interpolating the value of the self -connections based on the values of the connectivity 994 
+proﬁle at distance 1 and -1. To mitigate the ebects of local minima, we smoothed the 995 
+connectivity proﬁle with a gaussian weighted moving average ﬁlter with a window size of 996 
+50 bins. To do this, we used the MATLAB function “smoothdata” with the method 997 
+“gaussian” and window “50” . Whenever calculating extreme points, we used the MATLAB 998 
+function “ﬁndpeaks” with minimum prominence 0.001. 999 
+- Quantiﬁcation of the oscillations in the connectivity proﬁle: We quantiﬁed the 1000 
+oscillations in the connectivity proﬁle by calculating the width of the peaks, under the 1001 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 28 ===
+28 
+ 
+assumption that the more oscillations in the proﬁle, the narrower the peaks would be. 1002 
+First, we identiﬁed all maxima in the connectivity proﬁle. At each maximum, we set a 1003 
+reference line at height equal to half of their prominence and calculated their width at 1004 
+this reference line. Finally, we computed the mean width across all maxima. 1005 
+- Quantiﬁcation of the range of the connectivity proﬁle : We deﬁned the range of the 1006 
+connectivity proﬁle as its maximum minus its minimum value: 1007 
+𝑟𝑎𝑛𝑔𝑒 = 𝑚𝑎𝑥(𝑐𝑝H) − 𝑚𝑖𝑛(𝑐𝑝H).        (12) 1008 
+- Quantiﬁcation of the degree of asymmetry of the connectivity proﬁle:  We deﬁned the 1009 
+degree of asymmetry as the smallest absolute distance in the connectivity proﬁle at 1010 
+which a local maximum occurs: 1011 
+𝐷𝑒𝑔𝑟𝑒𝑒 𝑜𝑓 𝑎𝑠𝑦𝑚𝑚𝑒𝑡𝑟𝑦 = 𝑚𝑖𝑛(|argmax((𝑐𝑝H(𝑑))|).     (13) 1012 
+ 1013 
+Quantiﬁcation of connectivity motifs 1014 
+We calculated second order statistics of the connectivity matrix by computing the 1015 
+connectivity motifs [41]. First, we centered the connectivity matrix 𝑊 1016 
+𝑋 = 𝑊 −
+"
+%) ∑ 𝑤!'!,' .          (14) 1017 
+Next, we calculated the abundance of the following motifs: (i) the reciprocal motif, 1018 
+denoted as τrec, where two neurons connect to each other, (ii) the divergent motif, 1019 
+denoted as τdiv, where one neuron projects onto two diberent neurons, (iii) the convergent 1020 
+motif, denoted as τcon, where two neurons project onto the same third neuron, (iv) the 1021 
+chain motif, denoted as τchn, where one neuron projects onto another neuron, which itself 1022 
+projects onto a third neuron (Supp. 5A). 1023 
+𝜎I =
+*5FJJ'G
+%            (15) 1024 
+𝜏5$K =
+*5(JJ)
+7)⋅%   1025 
+𝜏(!L =
+∑ (𝑋𝑋-)!,'!,' − 𝑡𝑟(𝑋𝑋-)
+𝜎I ⋅ 𝑁 ⋅ (𝑁 − 1)  1026 
+𝜏KMN =
+∑ (𝑋-𝑋)!,'!,' − 𝑡𝑟(𝑋-𝑋)
+𝜎I ⋅ 𝑁 ⋅ (𝑁 − 1)  1027 
+𝜏K)N =
+2 ⋅ K∑ (𝑋𝑋)!,'!,' − 𝑡𝑟(𝑋𝑋)L
+𝜎I ⋅ 𝑁 ⋅ (𝑁 − 1)  1028 
+With 𝑡𝑟(𝑋)	denoting the trace of matrix 𝑋. 1029 
+ 1030 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 29 ===
+29 
+ 
+Incorporation of sparseness into the connectivity matrix. 1031 
+To investigate the robustness of the obtained connectivity proﬁles, we introduced 1032 
+sparseness into the connectivity matrix by setting up to 95% of all weights to 0.  1033 
+a. Setting the outgoing weights of randomly selected neurons to 0 1034 
+First, we set the outgoing connections of a random set of neurons, which included 1035 
+between 0 and 95% of all neurons, to 0, and we did not train these connections. Let 𝐿 be 1036 
+the set of neurons whose outgoing connections are not set to 0, i.e., whose outgoing 1037 
+connections undergo training. We now deﬁne 𝑅O(𝑧) as the rates of neurons in 𝐿 at time 𝑧, 1038 
+i.e., 𝑅O	(𝑧) is a vector of size 𝑁O	, where 𝑁Q	 is the cardinality of 𝐿 and 𝑊O	(𝑧) is a matrix of 1039 
+size 𝑁	 × 𝑁O	, which contains the outgoing weights of neurons in 𝐿 at time 	 𝑧	 within	 a	1040 
+training	iteration, and 	𝑃O	is	the	𝑁O × 𝑁O	correlation	matrix	between	neurons	in	set	𝐿. 1041 
+To train the RNN, the same procedure as described in equations 7 -9 is followed. After 1042 
+calculating the error 	𝑒(𝑧) = 𝑆(𝑧) − 𝐻*456$*(𝑧) , the weights are adjusted as follows. 1043 
+𝑊O(𝑧) = 𝑊O(𝑧 − 𝑚 ⋅ 𝑑𝑡) − 𝑐(𝑧) ⋅ 𝑒(𝑧)?𝑃O(𝑧)𝑅O(𝑧)@
+-
+      (16) 1044 
+with 1045 
+𝑐(𝑧) = 1
+1 + 𝑅O(𝑧)-𝑃O(𝑧)𝑅O(𝑧) 1047 
+and 1046 
+𝑃O(𝑧) = 𝑃O(𝑧 − 𝑚 ⋅ 𝑑𝑡) −
+A/(D.:⋅(*)@/(D)FA/(D.:⋅(*)@/(D)G'
+"#@/(D)'A/(D.:⋅(*)@/(D) .    (17) 1048 
+b. Setting the outgoing weights of neighbouring neurons in the sequence ordering to 1049 
+0 1050 
+In a diberent set of 50 training realisations, we proceeded as in the previous subsection 1051 
+‘Setting the outgoing weights of randomly selected neurons to 0’ , but now the cells in the 1052 
+set 𝐿 were adjacent in the sequence ordering, instead of chosen in a random manner. 1053 
+c. Setting randomly selected synapses to 0 1054 
+Instead of setting all the outgoing weights from speciﬁc neurons to 0, we next set 1055 
+randomly chosen synapses to 0. Throughout our analyses we set between 0 and 95% of 1056 
+all synapses to 0 and did not train those weights. 1057 
+The training procedure was similar to the learning rule as in the fully connected network 1058 
+(equations 7-9). Let 𝐽! be the set of presynaptic neurons whose weights to neuron 𝑖 =1059 
+1, … , 𝑁, undergo training, i.e., are not set to 0. In other words, 𝑤!' ≠ 0	∀𝑗	𝜖𝐽!. Let 𝑁R#be the 1060 
+cardinality of 𝐽!. The weights between the neurons in 𝐽! to neuron 𝑖 are denoted as 𝑤!,R#, 1061 
+which is a vector of size 1 × 𝑁R#.	The rates of the neurons in 𝐽! are denoted as 𝑅R#(𝑡), a 1062 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 30 ===
+30 
+ 
+vector of size 𝑁R# × 1. The weights in the RNN were updated according to the following 1063 
+equations. 1064 
+𝑤!,R#(𝑧) = 𝑤!,R#(𝑧 − 𝑚 ⋅ 𝑑𝑡) − 𝑐(𝑧) ⋅ 𝑒!(𝑧) K𝑃!(𝑧)𝑅R#(𝑧)L
+-
+     (18) 1065 
+with 1066 
+𝑐(𝑧) = 1
+1 + 𝑅R#(𝑧)-𝑃!(𝑧)𝑅R#(𝑧) 1068 
+and 1067 
+𝑃!(𝑧) = 𝑃!(𝑧 − 𝑣 ⋅ 𝑑𝑡) −
+A#(D.L⋅(*)@0#(D)SA#(D.L⋅(*)@0#(D)T
+'
+"#@0#(D)'A#(D.L⋅(*)@0#(D) ,     (19) 1069 
+with 𝑃!,	𝑖 = 1, … , 𝑁, now being a matrix of 𝑁R# × 𝑁R# and	𝑒!(𝑧) = 𝑤!,R# ⋅ 𝑅R#(𝑧) + 𝜁!(𝑧) −1070 
+ℎ!
+*456$*(𝑧)  a scalar. 1071 
+Note that the connectivity matrix 𝑊 is initialized only once but the updates are applied 1072 
+per row 𝑖 in columns 𝐽! at each time point 𝑧 and for each training iteration, and note that 1073 
+𝑃! is initialized independently for each neuron 𝑖 (see ‘FORCE-training of the RNNs’). 1074 
+ 1075 
+Generation of synthetic data that approximates experimental data 1076 
+To generate simulated targets that match the experimental data as closely as possible, 1077 
+we ﬁrst calculated for each dataset a ‘centered sequence’ (Supp. 6 B, E).  We did it by 1078 
+taking the sequential activity and circularly shifting the activity of each individual neuron 1079 
+such that the sequence would now be centered, with the activity of all neurons peaking 1080 
+at the same time point. Next, we calculated the mean activity across neurons, which 1081 
+resulted in a signal that resembled a bump of activity, or ‘activity bump’ , and ﬁtted a 1082 
+Gaussian to it. Using the ﬁtted parameters we generated synthetic sequences. 1083 
+Calculation of activity bump in bat data : After preprocessing the data as in the section 1084 
+‘Experimental target sequences’, we obtained the z-scored ﬁring rates from 168 neurons 1085 
+over 6  s with bin	size = 0.129	s (Supp. 6 D) . We next circularly shifted each neuron’s 1086 
+activity, such that the activity of all neurons peaked at the same time bin (time bin 24) 1087 
+(Supp. 6 E). We refer to this as the centered sequence. Next, we rescaled the duration of 1088 
+the centered sequence (see subsection below), computed the mean across neurons, 1089 
+and obtained the activity bump in the bat data. 1090 
+Calculation of activity bump in mouse data : We used the deconvolved activity from 1091 
+experimental data session 7 from mouse 60584 published in [12]. We identiﬁed all 24 1092 
+sequences that were present that session. For further calculations, we excluded the ﬁrst 1093 
+4 sequences as those were interleaved with temporal epochs without sequential activity. 1094 
+From the remaining 20 sequences, we identiﬁed the one with the longest duration, which 1095 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 31 ===
+31 
+ 
+was 177.8 s, equivalent to 1378 time bins (bin size = 0.129 s). Next, we rescaled all other 1096 
+19 sequences to this longest duration by linearly interpolating them so that each of them 1097 
+would also be 177.8 s long, and therefore would also encompass 1378 bins. Then, we 1098 
+calculated the mean across those 20 sequences (Supp. 6 A). We normalized the resulting 1099 
+sequence by dividing each neuron’s mean deconvolved activity by its maximum value. To 1100 
+denoise the neural activity, we deﬁned a threshold for every neuron as the mean of its 1101 
+normalized deconvolved activity plus one standard deviation and set the activity of every 1102 
+time bin below the threshold to 0. Next, w e calculated the centered sequence by 1103 
+circularly shifting the activity of each neuron so that the deconvolved activity of each 1104 
+neuron was centered at bin 689 (Supp . 6 B). Finally, after rescaling the duration for the 1105 
+sequence (see next subsection) we computed the mean across neurons to obtain the 1106 
+activity bump in the rodent data. 1107 
+Procedure for ﬁtting a Gaussian to the bump of activity calculated on experimental data: 1108 
+Because all synthetically generated sequences were 8.5 s long, we ﬁrst rescaled the 1109 
+duration of the centered sequence to 8.5  s. Afterwards, we calculated the mean 1110 
+population activity at every time bin of the centered mean sequence. We next sought to 1111 
+ﬁt a Gaussian to the bump of activity of each dataset separately using the MATLAB 1112 
+function “ﬁt” .: 1113 
+𝑔(𝑡) = 𝑎 ⋅ 𝑒𝑥𝑝 K
+.(U.*))
+I7) L + 𝑏 .        (20) 1114 
+To obtain the obset 𝑏 we identiﬁed the minimum value of the bump of activity. Then, we 1115 
+subtracted the obset value from the bump and ﬁt the values 𝑎 and 𝜎 of 𝑔(𝑡) using the 1116 
+MATLAB function “ﬁt” . The goodness of ﬁt was R2= 0.99 for the bat data, and R2=0.99 for 1117 
+the mouse data. The parameters a, b, and σ match the amplitude, obset, and width in 1118 
+equation 4, which deﬁned the rate target for each RNN unit. 1119 
+Generation of synthetic sequences from ﬁtted parameters: After ﬁtting the parameters of 1120 
+𝑔(𝑡) (equation 20) for each dataset separately, we generated synthetic sequences that 1121 
+resembled the respective experimental data by using equation 4 with the respective 1122 
+number of neurons, amplitude, width, and obset, and following the procedure described 1123 
+in the section ‘Design of simulated target sequences’ . 1124 
+To compare the obtained connectivity proﬁles between RNNs that learned the 1125 
+experimental sequences and those that learned the synthetic sequences generated with 1126 
+the ﬁtted parameters (Figure 3 D,  F), we interpolated the connectivity proﬁles between 1127 
+distances -3 and 3 before calculating their Pearson correlation. 1128 
+ 1129 
+Perturbation analyses 1130 
+To investigate the robustness of the sequential dynamics to perturbations, and how the 1131 
+network activity upon perturbations was related to the connectivity proﬁle, we perturbed 1132 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 32 ===
+32 
+ 
+the RNN activity in two diberent ways: through structured and unstructured 1133 
+perturbations, explained below. 1134 
+The procedure for both types of perturbations is as follows: after training the RNNs either 1135 
+on synthetic or experimentally recorded sequences, we froze the weights and let the 1136 
+dynamics run according to equations 1 -3. The obtained ‘unperturbed activity’ was 17s 1137 
+long for the simulated sequences (bin size = 0.0081s), 6s long for the bat sequences (bin 1138 
+size = 0.0081s), and 322.5s long for the rodent sequences (bin size = 0.0081s). Next, we 1139 
+perturbed the generated dynamics locally in time and compared the ebects of the 1140 
+perturbations on the network activity, with the unperturbed network response.  1141 
+ 1142 
+Structured perturbations  1143 
+We split all neurons into non -overlapping ensembles of neighbouring neurons in the 1144 
+sequence ordering. All ensembles had the same number of neurons, i.e., the same ‘size’ . 1145 
+We varied the size of the ensembles such that each ensemble would have ⌊𝑁 ⋅ 𝑝V⌋ 1146 
+adjacent units, with 𝑝V ∈ {0.1,0.2,0.3} and 𝑁 the total number of units in the RNN . We 1147 
+denoted the ensembles E", … , EW, where 𝑒 = 
+"
+X1
+ is the total number of ensembles. Next, 1148 
+we took the unperturbed activity and split it into two halves in the time domain. For the 1149 
+synthetic and rodent data, this approximately corresponded to having one sequence in 1150 
+the ﬁrst half, and a second sequence in the second half (Figure 4A). For the bat data, this 1151 
+corresponded to half of the sequence in the ﬁrst half, and the remaining half of the 1152 
+sequence in the second half. We further divided the ﬁrst half of the unperturbed activity 1153 
+into 5 consecutive ‘time windows’ , each of the same duration, denoted as T1 to T5.  1154 
+As a result, we obtained a grid structure of neuronal ensembles by temporal windows. 1155 
+The temporal windows were 1.7s long (= 209 time bins, 𝑑𝑡 = 0.0081𝑠) for the simulated 1156 
+sequences, 0.6s long (= 74 time bins, 𝑑𝑡 = 0.0081𝑠) for the bat sequences, and 32.3s 1157 
+long (= 3987 time bins, 𝑑𝑡 = 0.0081𝑠) for the mouse sequences. The size of the grid was 1158 
+𝑒 × 5. The structured perturbations consisted of perturbing the activity of one speciﬁc 1159 
+ensemble at one speciﬁc temporal window as described below. Outside the ensemble -1160 
+temporal window pair in which the perturbation was applied, the dynamics followed 1161 
+equations 1-3.  1162 
+Let 𝐸 ∈ {𝐸", … , 𝐸$} be the ensemble of neurons that receives the perturbation at the 1163 
+temporal window 𝑇𝑃.  1164 
+(i) Silencing the activity of one ensemble 1165 
+We silenced the activity of neurons in ensemble 𝐸 at the temporal window	𝑇𝑃 as follows 1166 
+𝑟!(𝑡) = 0, 	 for 𝑖 ∈  E  and 𝑡 ∈  𝑇𝑃       (21) 1167 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 33 ===
+33 
+ 
+𝑟!(𝑡) = 1
+1 + 𝑒𝑥𝑝?−ℎ!(𝑡)@ , 	 otherwise. 1168 
+ 1169 
+(ii) Injection of a step current into one ensemble 1170 
+We injected additional current to the neurons that belong to 𝐸 as follows 1171 
+𝐼!
+*M*4Y(𝑡) = 𝑆!(𝑡) + 𝐼,	for 𝑖 ∈  E  and 𝑡 ∈  𝑇𝑃	1172 
+𝐼!
+*M*4Y(𝑡) = 𝑆!(𝑡), otherwise	1173 
+with	1174 
+𝑆!(𝑡) = ∑ 𝑊!'𝜙 K𝑟'(𝑡)L + 𝜁!
+%
+'+" (𝑡),	1175 
+where	 𝜁!(𝑡)	is the noise term as above (see ‘ Recurrent neural network model’ ), and 1176 
+𝐼	taking a value from the set {0.5, 2, 5}. In Figure 4D we show an example of the breakdown 1177 
+of current components that add up to 𝐼*M*4Y.	1178 
+ 1179 
+Unstructured perturbations 1180 
+Unlike in the structured perturbations, in which we perturbed the activity of an ensemble 1181 
+of adjacent cells in the sequence ordering, in the unstructured perturbations we 1182 
+perturbed the activity of randomly selected units. We injected noise into a subset of 1183 
+randomly selected neurons, denoted as 𝑄, during the ﬁrst half of the total simulation 1184 
+time. We denote this as 𝑇𝐻, with 𝑇𝐻 being equal to the time window spanned by T1 to T5 1185 
+(see Figure 4A). 1186 
+𝐼!
+*M*4Y(𝑡) = 𝑆!(𝑡) + 𝜂!(𝑡), 	for 𝑖 ∈  Q  and 𝑡 ∈  𝑇𝐻	 	 	 	 	 	 (22)	1187 
+𝐼!
+*M*4Y(𝑡) = 𝑆!(𝑡), 	otherwise	1188 
+with	𝑆!(𝑡)	and		𝜁!(𝑡)	as	above,	 and 𝜂!(𝑡) is calculated as  gain	 × 	𝜁!(𝑡)	 with 	𝜁!(𝑡)	 as in 1189 
+equation (2), and with gain=0.1 in Figure 4 D, gain=0.1 in Figure 4 I, gain=0.0015 in Figure 1190 
+4 K, and 5, 10, 15, 20 in Supp. 9 D, E. The percentage of neurons that belonged to Q was 1191 
+50% in Figure 4 C, G, H, and 10%, 25%, 50%, 75% in Supp. 9 D, E. 1192 
+ 1193 
+Quantiﬁcation of the e+ect of the perturbation on the network activity 1194 
+To quantify the ebect of the perturbation on the network activity, we calculated the 1195 
+Pearson correlation between the unperturbed response and the RNN activity after the 1196 
+perturbation was released. More speciﬁcally, we deﬁned a time window starting right 1197 
+after the perturbation was released until the end of the simulation. We correlated the 1198 
+network activity in that time window, with the unperturbed response in the analogous 1199 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 34 ===
+34 
+ 
+time window. For unstructured perturbations this entails the correlation between the 1200 
+unperturbed activity during the second half of the simulation, with the activity after the 1201 
+perturbation was released, which corresponds to the second half of the simulation with 1202 
+the perturbation. For structured perturbations, we obtain a correlation value for every 1203 
+possible combination of perturbed neural ensemble 𝐸 ∈ {𝐸", … , 𝐸$} ,  and time window 1204 
+𝑇𝑃 ∈ {𝑇", … , 𝑇Z}. Hence, we obtain 𝑒 × 5 correlation values that we store in a matrix 1205 
+𝐶𝑉	of	size	𝑒 × 5	with	the entry 𝑐𝑣[,6 being the correlation value after perturbing 1206 
+ensemble 𝑓 = 1, … , 𝑒, in time window 𝑔 = 1, … ,5. 1207 
+Next, we quantiﬁed how the perturbation abects the dynamics as a function of how far 1208 
+away the perturbed ensemble was from the ensemble engaging in a sequence  (see 1209 
+Suppl. 9). For each combination of 𝐸 and 𝑇𝑃 we perturbed the activity and calculated the 1210 
+Pearson correlation between the perturbed and unperturbed response . Next, for each 1211 
+ensemble we plotted the correlation values as a function of how many time windows 1212 
+away 𝑇𝑃 was from the time window where the ensemble was engaged in the sequence. 1213 
+For this calculation we used periodic boundary conditions in the time windows (see for 1214 
+example Suppl. 9 A). 1215 
+From a code perspective, each row 𝑓 of the matrix 𝐶𝑉 is circularly shifted such that the 1216 
+entries of the diagonal in 𝐶𝑉 are aligned in the middle column. These entries correspond 1217 
+to perturbations in ensembles that were engaging during sequential activity. We 1218 
+calculated the mean across rows to obtain the correlation values between the 1219 
+unperturbed response and responses after the perturbations were released, as a 1220 
+function of how far away the perturbed ensemble was from the ensemble engaging in the 1221 
+sequence.  1222 
+ 1223 
+Construction of upstream and downstream networks 1224 
+To investigate how sequential activity in an upstream brain region generates, and 1225 
+constrains, sequential activity in a downstream brain region, we built two networks: an 1226 
+‘upstream network’ and a ‘downstream network’ . 1227 
+First, we set up the upstream network as an RNN consisting of 501 neurons that was 1228 
+trained to generate target sequences with the speciﬁc parameters amplitude=0.5, 1229 
+width=1 s, obset=0.3 (bin	size = 0.129	s,  see ‘Recurrent neural network model’ , ‘FORCE-1230 
+training RNNs’ , and ‘Design of simulated sequences’). We run the RNN dynamics for a 1231 
+total of 8.5s, which resulted in one sequence (see Figure 5B). The integration time step 1232 
+during training and while running the dynamics was 𝑑𝑡 = 0.0081	s. We used 𝜏 =1233 
+0.3224	s	and noise 	𝑔𝑎𝑖𝑛 = 0.5	(equations 1-3, 7 -9). These parameters were kept ﬁxed 1234 
+throughout all analyses in this section. 1235 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 35 ===
+35 
+ 
+The downstream network consisted of 10 neurons that were not connected among 1236 
+themselves. Every neuron in the upstream network was connected to every downstream 1237 
+neuron. The sequential activity in the upstream network, i.e., the sequential dynamics 1238 
+after training the RNN, served as an input to the downstream network, such that 𝑖𝑛𝑝𝑢𝑡(𝑡) 1239 
+is a column vector of size 501 × 1 that entails the response of the network at each time 1240 
+point 𝑡 (bin	size = 0.0081	s). The connectivity between both layers was represented by a 1241 
+weight matrix 𝐴	 ∈ 	 ℝ"C×ZC", where each entry 𝑎!', 𝑖 = 1, … ,10, 𝑗 = 1, . . ,501 represents 1242 
+the weight from presynaptic upstream neuron 𝑗 to postsynaptic downstream neuron 𝑖. 1243 
+The response of the downstream network at time 𝑡, i.e., the ‘output’ , is denoted by the 1244 
+10 × 1 vector 𝑜𝑢𝑡𝑝𝑢𝑡(𝑡) and was calculated as the following linear readout: 1245 
+𝑜𝑢𝑡𝑝𝑢𝑡(𝑡) = 𝐴 ⋅ 𝑖𝑛𝑝𝑢𝑡(𝑡).         (23) 1246 
+ 1247 
+Design of downstream target sequences 1248 
+We constructed a target activity for each downstream cell, denoted as 𝑡𝑎𝑟𝑔𝑒𝑡!(t), as a 1249 
+Gaussian that repeats over time (Equation 3, bin size = 0.0001s). Once again, we varied 1250 
+the triad of parameters: amplitude (a), width ( σ) and obset ( b), indicated below (Figure 1251 
+1a). The sequence duration was 8.5 s. 1252 
+Figure 5C: a=0.5, σ=2, b=0.3, 1253 
+Figure 5D: a=0.5, σ=0.5, b=0.3, 1254 
+Figure 5E: a=0.5, b=0.3, 1255 
+Figure 5F: σ=1, b=0.3, 1256 
+Figure 5G: a=0.5, σ=1, 1257 
+Supp. 10 A: a=0.3, σ=0.4, b=0.3, 1258 
+Supp. 10 B: a=0.5, σ=0.4, b=0.05, 1259 
+Supp. 10 C: a=0.5, σ=0.4, b=0.3, 1260 
+Supp. 10 D, E: a=0.5, σ=1, b=0.3. 1261 
+We deﬁne 𝑡𝑎𝑟𝑔𝑒𝑡(𝑡) = 	 (𝑡𝑎𝑟𝑔𝑒𝑡"(𝑡), … , 𝑡𝑎𝑟𝑔𝑒𝑡"C(𝑡))- as the vector of size 10 of the 1262 
+downstream population target activity at time 𝑡. 1263 
+ 1264 
+Training of the weights to enforce sequential activity in the downstream network 1265 
+Initially, every entry in the matrix 𝐴 was initialized at 1:  𝑎!,' = 1, 𝑖 = 1, … ,10, 𝑗 = 1, … ,501. 1266 
+There was only one training realisation, and in that training realisation the weights in 𝐴 1267 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 36 ===
+36 
+ 
+were updated according to 1000 training iterations. In each training iteration 𝑞, 𝑞 =1268 
+1, … ,1000, the weights were updated once. Let 1269 
+𝑒𝑟𝑟𝑜𝑟!(𝑡) = 𝑡𝑎𝑟𝑔𝑒𝑡!(𝑡) − 𝑜𝑢𝑡𝑝𝑢𝑡!(𝑡),        (1) 1270 
+be the error of each downstream neuron’s activity over time 𝑡 with 𝑑𝑡 = 0.0081, 0 ≤ 𝑡 ≤1271 
+8.4𝑠 , and 𝑖 = 1, … ,10. The weights 𝑎!,' in 𝐴 were updated as follows: 1272 
+𝑎!,'(𝑞) = 𝑎!,'(𝑞 − 1) + 𝛼 ⋅ 𝑒𝑟𝑟𝑜𝑟!(𝑡) ⋅ 𝑖𝑛𝑝𝑢𝑡'(𝑡),      (2) 1273 
+with 𝑒𝑟𝑟𝑜𝑟!(𝑡) ⋅ 𝑖𝑛𝑝𝑢𝑡'(𝑡) denoting the mean across time 𝑡, of the scalar 𝑒𝑟𝑟𝑜𝑟!(𝑡) ⋅1274 
+𝑖𝑛𝑝𝑢𝑡'(𝑡). We used 𝛼 = 0.015 as a learning rate. 1275 
+We quantiﬁed the training performance of the downstream network by calculating the 1276 
+Pearson correlation between the matrices corresponding to the downstream population 1277 
+target, 𝑡𝑎𝑟𝑔𝑒𝑡(𝑡) (see section ‘Design of downstream target sequences’) , and the 1278 
+population output, 𝑜𝑢𝑡𝑝𝑢𝑡(𝑡) (see section ‘Construction of upstream and downstream 1279 
+network’), 0 ≤ 𝑡 ≤ 8.4	s. 1280 
+ 1281 
+Perturbations in the upstream sequential activity 1282 
+We investigated the impact of perturbations to the activity in the upstream network, on 1283 
+the downstream dynamics. For this analysis, the upstream and the downstream 1284 
+sequences both had the following properties: amplitude =0.5, width=1, and obset=0.3. 1285 
+After training the weights between the upstream and the downstream neurons (matrix 𝐴), 1286 
+we kept them ﬁxed. We next introduced structured perturbations into the dynamics of 1287 
+the upstream network, either in the form of silencing or by additional current injection 1288 
+(see section ‘Perturbation analyses’). We applied the perturbation into 20% of all neurons 1289 
+(=100 neurons). For the injected current we used 𝐼 = 3. Results remain unchanged when 1290 
+considering perturbations in 30% of all neurons. Finally, we quantiﬁed the ebect of the 1291 
+perturbations on the downstream dynamics by calculating the correlation between the 1292 
+two matrices of the downstream population target, 𝑡𝑎𝑟𝑔𝑒𝑡(𝑡) (see section ‘Design of 1293 
+downstream target sequences’) , and the population output, 𝑜𝑢𝑡𝑝𝑢𝑡(𝑡) (see section 1294 
+‘Construction of upstream and downstream network’) during the entire simulation time 1295 
+0 ≤ 𝑡 ≤ 8.4	s. 1296 
+ 1297 
+Software 1298 
+To implement custom code, we used MATLAB (2023a). 1299 
+ 1300 
+ 1301 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 37 ===
+37 
+ 
+REFERENCES 1302 
+ 1303 
+1. Bimbard, C., K.D. Harris, and M. Carandini, Invariant activity sequences across the 1304 
+mouse brain. bioRxiv preprint, 2026. 1305 
+2. Diba, K. and G. Buzsáki, Forward and reverse hippocampal place-cell sequences 1306 
+during ripples. Nature Neuroscience, 2007. 10(10): p. 1241–1242. 1307 
+3. Eva Pastalkova, V .I., Asohan Amarasingham, and György Buzsáki, Internally 1308 
+Generated Cell Assembly Sequences in the Rat Hippocampus.  Science, 2008. 1309 
+321. 1310 
+4. Dragoi, G. and S. Tonegawa, Preplay of future place cell sequences by 1311 
+hippocampal cellular assemblies. Nature, 2011. 469(7330): p. 397–401. 1312 
+5. MacDonald, C.J., et al., Hippocampal "time cells" bridge the gap in memory for 1313 
+discontiguous events. Neuron, 2011. 71(4): p. 737–49. 1314 
+6. Villette, V ., et al., Internally Recurring Hippocampal Sequences as a Population 1315 
+Template of Spatiotemporal Information. Neuron, 2015. 88(2): p. 357–66. 1316 
+7. Dorian, C.C., et al., Hippocampal sequences represent working memory and 1317 
+implicit timing. Cell Reports, 2025. 44(10). 1318 
+8. Xu, S., et al., Activity recall in a visual cortical ensemble.  Nat Neurosci, 2012. 1319 
+15(3): p. 449–55, s1–2. 1320 
+9. Carrillo-Reid, L., et al., Endogenous sequential cortical activity evoked by visual 1321 
+stimuli. J Neurosci, 2015. 35(23): p. 8813–28. 1322 
+10. Parker, P .R.L., et al., A dynamic sequence of visual processing initiated by gaze 1323 
+shifts. Nature Neuroscience, 2023. 26(12): p. 2192–2202. 1324 
+11. Zhou, S., S.C. Masmanidis, and D.V . Buonomano, Neural Sequences as an 1325 
+Optimal Dynamical Regime for the Readout of Time. Neuron, 2020. 108(4): p. 651–1326 
+658 e5. 1327 
+12. Gonzalo Cogno, S., et al., Minute-scale oscillatory sequences in medial entorhinal 1328 
+cortex. Nature, 2024. 625(7994): p. 338–344. 1329 
+13. Omer, D.B., L. Las, and N. Ulanovsky, Contextual and pure time coding for self and 1330 
+other in the hippocampus. Nat Neurosci, 2023. 26(2): p. 285–294. 1331 
+14. Petrucco, L., et al., Neural dynamics and architecture of the heading direction 1332 
+circuit in zebraﬁsh. Nat Neurosci, 2023. 26(5): p. 765–773. 1333 
+15. Hemberger, M., et al., Reliable Sequential Activation of Neural Assemblies by 1334 
+Single Pyramidal Cells in a Three -Layered Cortex. Neuron, 2019. 104(2): p. 353 –1335 
+369.e5. 1336 
+16. Vaz, A.P ., et al., Replay of cortical spiking sequences during human memory 1337 
+retrieval. Science, 2020. 367(6482): p. 1131–1134. 1338 
+17. Xie, W., et al., Neuronal sequences in population bursts encode information in 1339 
+human cortex. Nature, 2024. 635(8040): p. 935–942. 1340 
+18. Harvey, C.D., P . Coen, and D.W. Tank, Choice-speciﬁc sequences in parietal 1341 
+cortex during a virtual-navigation decision task. Nature, 2012. 484(7392): p. 62–8. 1342 
+19. Hahnloser, R., Kozhevnikov, A. & Fee, M., An ultra -sparse code underlies the 1343 
+generation of neural sequences in a songbird. Nature, 2002. 1344 
+20. Long, M.A., D.Z. Jin, and M.S. Fee, Support for a synaptic chain model of neuronal 1345 
+sequence generation. Nature, 2010. 468(7322): p. 394–399. 1346 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 38 ===
+38 
+ 
+21. Kumar, A., S. Rotter, and A. Aertsen, Conditions for propagating synchronous 1347 
+spiking and asynchronous ﬁring rates in a cortical network model.  J Neurosci, 1348 
+2008. 28(20): p. 5268–80. 1349 
+22. Kumar, A., Rotter, S., Aertsen, A., Spiking activity propagation in neuronal 1350 
+networks: reconciling di+erent perspectives on neural coding.  Nat Rev Neurosci, 1351 
+2010. 11(9): p. 615–27. 1352 
+23. Setareh, H., M. Deger, and W. Gerstner, Excitable neuronal assemblies with 1353 
+adaptation as a building block of brain circuits for velocity -controlled signal 1354 
+propagation. PLoS Comput Biol, 2018. 14(7): p. e1006216. 1355 
+24. Abeles, M., Local Cortical Circuits : an Electrophysiological Study. 1982, Springer 1356 
+Berlin Heidelberg: Berlin, Heidelberg :. 1357 
+25. Abeles, M., Corticonics: Neural circuits of the cerebral cortex . 1991: Cambridge 1358 
+University Press. 1359 
+26. John Hertz, A.P .-B., Learning synﬁre chains: Turning noise into signal. International 1360 
+Journal of Neural Systems, 1996. 07. 1361 
+27. R. Ben -Yishai, R.L.B. -O., H. Sompolinsky, Theory of orientation tuning in visual 1362 
+cortex. Neurobiology, 1995. 1363 
+28. William E. Skaggs, J.J.K., Hemant S. Kudrimoti, Bruce L. McNaughton, A Model of 1364 
+the Neural Basis of the Rat's Sense of Direction. Adv Neural Inf Process Syst, 1995. 1365 
+29. A David Redish, A.N.E., David S Touretzky, A coupled attractor model of the rodent 1366 
+head direction system_. Network: Computation in Neural Systems, 1996. 1367 
+30. Zhang, Representation of Spatial Orientation by the Intrinsic Dynamics of the 1368 
+Head-Direction Cell Ensemble: A Theory. J. Neurosci., 1996. 1369 
+31. Fiete, I.R., et al., Spike-time-dependent plasticity and heterosynaptic competition 1370 
+organize networks to produce long scale -free sequences of neural activity.  1371 
+Neuron, 2010. 65(4): p. 563–76. 1372 
+32. Shao, S., J.L. Riquelme, and J. Gjorgjieva, Spontaneous emergence and evolution 1373 
+of neuronal sequences in recurrent networks. 2026, eLife Sciences Publications, 1374 
+Ltd. 1375 
+33. Rajan, K., C.D. Harvey, and D.W. Tank, Recurrent Network Models of Sequence 1376 
+Generation and Memory. Neuron, 2016. 90(1): p. 128–42. 1377 
+34. Sussillo, D. and L.F . Abbott, Generating coherent patterns of activity from chaotic 1378 
+neural networks. Neuron, 2009. 63(4): p. 544–57. 1379 
+35. DePasquale, B., et al., full-FORCE: A target -based method for training recurrent 1380 
+networks. PLoS One, 2018. 13(2): p. e0191527. 1381 
+36. Kim, C.M. and C.C. Chow, Learning recurrent dynamics in spiking networks. Elife, 1382 
+2018. 7. 1383 
+37. Perin, R., T.K. Berger, and H. Markram, A synaptic organizing principle for cortical 1384 
+neuronal groups.  Proceedings of the National Academy of Sciences, 2011. 1385 
+108(13): p. 5419–5424. 1386 
+38. Ocker, G.K., et al., From the statistics of connectivity to the statistics of spike times 1387 
+in neuronal networks. Curr Opin Neurobiol, 2017. 46: p. 109–119. 1388 
+39. Recanatesi, S., et al., Dimensionality in recurrent spiking networks: Global trends 1389 
+in activity and local origins in connectivity.  PLOS Computational Biology, 2019. 1390 
+15(7): p. e1006446. 1391 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 39 ===
+39 
+ 
+40. Hu, Y . and H. Sompolinsky, The spectrum of covariance matrices of randomly 1392 
+connected recurrent neuronal networks with linear dynamics.  PLOS 1393 
+Computational Biology, 2022. 18(7): p. e1010327. 1394 
+41. Dahmen, D., et al., Strong and localized recurrence controls the dimensionality of 1395 
+neural activity across brain areas. Nature Neuroscience, 2026. 1396 
+42. Shao, Y . and S. Ostojic, Relating local connectivity and global dynamics in 1397 
+recurrent excitatory -inhibitory networks.  PLOS Computational Biology, 2023. 1398 
+19(1): p. e1010855. 1399 
+43. Nicola, W. and C. Clopath, Supervised learning in spiking neural networks with 1400 
+FORCE training. Nature Communications, 2017. 8(1): p. 2208. 1401 
+44. Buonomano, D.V ., et al., Time for Memories.  J Neurosci, 2023. 43(45): p. 7565 –1402 
+7574. 1403 
+45. Luczak, A., et al., Sequential structure of neocortical spontaneous activity in vivo. 1404 
+Proceedings of the National Academy of Sciences, 2007. 104(1): p. 347–352. 1405 
+46. Luczak, A., P . Barthó, and K.D. Harris, Spontaneous events outline the realm of 1406 
+possible sensory responses in neocortical populations.  Neuron, 2009. 62(3): p. 1407 
+413–25. 1408 
+47. Turner, E., K.V . Dabholkar, and O. Barak, Charting and Navigating the Space of 1409 
+Solutions for Recurrent Neural Networks , M. Ranzato, et al., Editors. 2021. p. 1410 
+25320––25333. 1411 
+48. Huang, A., et al., Measuring and Controlling Solution Degeneracy across Task -1412 
+Trained Recurrent Neural Networks. arXiv preprint arXiv:2410.03972, 2025. 1413 
+49. Mastrogiuseppe, F . and S. Ostojic, Linking Connectivity, Dynamics, and 1414 
+Computations in Low -Rank Recurrent Neural Networks.  Neuron, 2018. 99(3): p. 1415 
+609–623 e29. 1416 
+50. Beiran, M., et al., Shaping Dynamics With Multiple Populations in Low -Rank 1417 
+Recurrent Networks. Neural Comput, 2021. 33(6): p. 1572–1615. 1418 
+51. Clark, D.G., L.F . Abbott, and H. Sompolinsky, Symmetries and Continuous 1419 
+Attractors in Disordered Neural Circuits. bioRxiv, 2025: p. 2025.01.26.634933. 1420 
+52. Pezon, L., V . Schmutz, and W. Gerstner, Linking neural manifolds to circuit 1421 
+structure in recurrent networks. Neuron, 2026. 114(9): p. 1682–1694 e21. 1422 
+53. Hulse, B.K., et al., Hidden symmetries in network connectivity support ring 1423 
+attractor dynamics in the ﬂy’s neural compass. bioRxiv preprint, 2026. 1424 
+54. Murray, J.M. and G.S. Escola, Learning multiple variable -speed sequences in 1425 
+striatum via cortical tutoring. Elife, 2017. 6. 1426 
+55. Long, M.A. and M.S. Fee, Using temperature to analyse temporal dynamics in the 1427 
+songbird motor pathway. Nature, 2008. 456(7219): p. 189–94. 1428 
+56. Bae, J.A., et al., Functional connectomics spanning multiple areas of mouse visual 1429 
+cortex. Nature, 2025. 640(8058): p. 435–447. 1430 
+57. Scheber, L.K., et al., A connectome and analysis of the adult Drosophila central 1431 
+brain. Elife, 2020. 9. 1432 
+58. Dorkenwald, S., et al., Neuronal wiring diagram of an adult brain.  Nature, 2024. 1433 
+634(8032): p. 124–138. 1434 
+59. Berg, S., et al., Sexual dimorphism in the complete connectome of the Drosophila 1435 
+male central nervous system. bioRxiv, 2025. 1436 
+60. Svara, F ., et al., Automated synapse-level reconstruction of neural circuits in the 1437 
+larval zebraﬁsh brain. Nature Methods, 2022. 19(11): p. 1357–1366. 1438 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 40 ===
+40 
+ 
+61. Dunn, B., M. Morreaunet, and Y . Roudi, Correlations and functional connections 1439 
+in a population of grid cells. PLoS Comput Biol, 2015. 11(2): p. e1004052. 1440 
+62. Ladenbauer, J., et al., Inferring and validating mechanistic models of neural 1441 
+microcircuits based on spike-train data. Nat Commun, 2019. 10(1): p. 4933. 1442 
+63. Das, A. and I.R. Fiete, Systematic errors in connectivity inferred from activity in 1443 
+strongly recurrent networks. Nat Neurosci, 2020. 23(10): p. 1286–1296. 1444 
+64. Kim, T.D., et al., Identifying Connectivity Distributions from Neural Dynamics 1445 
+Using Flows, in Forty-third International Conference on Machine Learning. 2026. 1446 
+65. Maes, A., M. Barahona, and C. Clopath, Learning spatiotemporal signals using a 1447 
+recurrent spiking network that discretizes time. PLoS Comput Biol, 2020. 16(1): p. 1448 
+e1007606. 1449 
+ 1450 
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 41 ===
+B
+amplitude
+width
+offset
+Time
+Firing rate
+Example target activity for one unit
+Example target sequences
+CA
+Figure 1
+60 
+120
+Time (s)
+1
+500
+Neuron#
+0
+0.5
+1
+Snippet 1 Snippet 2
+FORCE training
+Snippet 1
+Firing
+rate Snippet 50
+FORCE training
+Connectivity matrix 1 Connectivity matrix 50
+Random initial network  1 Random initial network  50
+W1 W50
+0
+Neuron distance
+0
+<W>
+N
+Connectivity profile
+Mean
+across
+rows
+<W>
+Mean connectivity matrix
+Circular
+shift
+0
+Neuron distance
+-250
+250
+-250
+250
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.3
+0
+Weights
+-250
+0
+250
+Neuron distance
+-0.1
+0
+<W>
+N
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.3
+0
+0.3
+Weights
+Neuron distance
+-0.1
+0
+0.1
+<W>
+N
+Dynamics from mean
+connectivity matrix
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+Mean connectivity
+matrix
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.3
+0
+0.3
+Weights
+Neuron distance
+-0.1
+0
+0.1
+<W>
+N
+-250
+0
+250
+-250
+0
+250
+Connectivity profile
+from mean connectivity
+matrix
+D
+E
+F
+Training realization 1
+Training realization 50
+Correlation between
+connectivity profiles
+Count realizations
+Correlation between
+connectivity matrices
+Count realizations
+0.3
+0.1
+0
+0.04
+0.08
+0.12
+0
+200
+400
+0.96
+0.98
+1
+0
+200
+400
+600
+0
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 42 ===
+Figure 2
+0.5 0.9 1.3
+width (s)
+0.6 0.8 1 amplitude
+0.25 0.35 0.45
+oﬀset
+B
+C
+A
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.4
+0
+0.4
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.4
+0
+0.4
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.4
+0
+0.4
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 43 ===
+B
+C D
+E F
+A
+Figure 3
+Experimental dataSimulated data
+Target in
+training realisation 1
+Response in
+training realisation 1
+Mean
+connectivity
+matrix
+Connectivity
+pro/f_ile
+Experimental dataSimulated data
+Target in
+training realisation 1
+Response in
+training realisation 1
+Mean
+connectivity
+matrix
+Connectivity
+pro/f_ile
+Adapted from 
+Gonzalo Cogno et al. 2024
+Adapted from 
+Omer et al. 2022
+3
+6
+Time (s)
+1
+84
+168
+Neuron#
+0
+0.5
+1
+Normalised z-scored
+firing rate
+3
+Time (s)
+1
+84
+168
+Neuron#
+0
+0.5
+1
+100
+Presynaptic neuron
+100
+Postsynaptic neuron
+-0.3
+0
+0.3
+Weights
+-84
+0
+84
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+4
+8
+Time (s)
+1
+84
+168
+Neuron#
+0
+0.5
+1
+Firing rate
+4
+8
+Time (s)
+1
+84
+168
+Neuron#
+0
+0.5
+1
+Firing rate
+100
+Presynaptic neuron
+100
+Postsynaptic neuron
+-0.3
+0
+0.3
+Weights
+-84
+0
+84
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+90
+180
+270
+Time (s)
+1
+242
+484
+Neuron#
+0
+0.5
+1
+90
+180
+270
+Time (s)
+1
+242
+484
+Neuron#
+0
+0.5
+1
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.3
+0
+0.3
+Weights
+-242
+0
+242
+Neuron distance
+-0.1
+0
+0.1
+<W>
+N
+8
+16
+Time (s)
+1
+242
+484
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+1
+242
+484
+Neuron#
+0
+0.5
+1
+Firing rate
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.3
+0
+0.3
+Weights
+-242
+0
+242
+Neuron distance
+-0.1
+0
+0.1
+<W>
+N
+6
+Normalised z-scored
+firing rate
+Normalised deconvolved
+activity
+Normalised deconvolved
+activity
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 44 ===
+Figure 4
+Current injection
+Silencing
+Noise injection
+8
+16
+Time (s)
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+-0.5
+0
+0.5
+1
+Firing rate
+of example
+neuron
+Time window
+of silencing
+8
+16
+Time (s)
+-0.5
+0
+0.5
+1
+8
+16
+Time (s)
+-0.5
+0
+0.5
+1
+A
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+E1
+Ee ...
+T1 T5
+...
+Ensemble-time window grid
+Structured 
+perturbations
+Unstructured
+perturbation
+Firing rate
+of example
+neuron
+Time window
+of noise
+injection
+Firing rate
+of example
+neuron
+Time window
+of current
+injection
+Unperturbed response
+8
+16
+Time (s)
+100
+400
+Neuron#
+8
+16
+Time (s)
+Simulated data
+8
+16
+Time (s)
+Noise injection
+Current injection
+Silencing
+-4
+-2
+0
+Recurrent term
+-2
+0
+2
+Noise
+8
+16
+Time (s)
+0
+1
+2
+3
+Perturbation
+8
+16
+Time (s)
+-5
+0
+5
+Total incoming current
+D
+B E F
+C
+G
+0
+3
+6
+Time (s)
+1
+168
+Neuron#
+0
+3
+6
+Time (s)
+0
+3
+6
+Time (s)
+0
+3
+6
+Time (s)
+0
+0.5
+1
+Normalised z-scored
+firing rate
+Firing rate
+Firing rate
+Firing rate
+Gain
+Current
+Current
+Current
+120
+240
+Time (s)
+0
+0.5
+1
+Normalised deconvolved
+activity
+120
+240
+Time (s)
+100
+400
+Neuron#
+120
+240
+Time (s)
+120
+240
+Time (s)
+H
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 45 ===
+A
+Figure 5
+...
+Upstream network
+(N = 501)
+Downstream network
+(N = 10)
+Weights
+(all upstream 
+to all downstream)
+Downstream target
+width (s)
+Correlation between
+downstream target
+and response
+Downstream target
+amplitude
+Downstream target
+offset
+Downstream target
+with width = 2s 
+Downstream response
+(Correlation = 0.99)
+Downstream target
+with width = 0.5s
+B
+C D
+E F G
+Downstream response
+(Correlation = 0.87)
+Upstream activity
+2 
+4 
+6 
+8 
+Time (s)
+100
+400
+Upstream neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+Downstream response
+2 
+4 
+6 
+8 
+Time (s)
+2
+4
+6
+8
+10
+Downstream neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+2
+4
+6
+8
+10
+Downstream neuron#
+2 
+4 
+6 
+8 
+Time (s)
+2 
+4 
+6 
+8 
+Time (s)
+2 
+4 
+6 
+8 
+Time (s)
+2 
+4 
+6 
+8 
+Time (s)
+2
+4
+6
+8
+10
+Downstream neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+0.4
+0.8
+1.2
+1.6
+2
+0
+0.5
+1
+Upstream sequence
+width
+0.85
+2.55
+4.25
+5.95
+7.65
+0
+0.5
+1
+Upstream sequence
+amplitude
+0
+0.85
+1.7
+2.55
+3.4
+0
+0.5
+1
+Upstream sequence
+offset
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 46 ===
+0
+100
+200
+300
+Training iteration
+0
+0.2
+0.4
+0.6
+0.8
+1
+Correlation between
+target and response
+A DB C
+End of training
+Mean absolute weight
+differences
+End of training
+0
+100
+200
+300
+Traning iteration
+0
+0.02
+0.04
+0.06
+0.08
+0.1
+Supplementary Figure 1
+G
+8
+16
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.5
+1
+Firing rate
+Increased amplitude
+Decreased width
+Reference targetE
+F
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+Amplitude
+0
+0.5
+1
+Correlation between
+target and response
+1
+1.15
+1.3
+1.45
+1.6
+1.75
+1.9
+Width (s)
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+Offset
+Increased offset
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 47 ===
+C
+Supplementary Figure 2
+D
+E F
+A
+Fraction of randomly chosen 
+connections set to 0
+Fraction of randomly chosen 
+connections set to 0
+B
+Connectivity matrix
+(fully connected)
+Connectivity matrix
+(consecutive presynaptic neurons)
+Connectivity matrix
+(random connections)
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.5
+0
+0.5
+Weights
+-250
+0
+250
+Neuron distance
+-0.1
+-0.05
+0
+0.05
+0.1
+<W>
+N
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.5
+0
+0.5
+Weights
+-250
+0
+250
+Neuron distance
+-0.1
+-0.05
+0
+0.05
+0.1
+<W>
+N
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.5
+0
+0.5
+Weights
+Connectivity matrix
+(random presynaptic neurons)
+-250
+0
+250
+Neuron distance
+-0.1
+-0.05
+0
+0.05
+0.1
+<W>
+N
+100
+400
+Presynaptic neuron
+100
+400
+Postsynaptic neuron
+-0.5
+0
+0.5
+Weights
+-250
+0
+250
+Neuron distance
+-0.1
+-0.05
+0
+0.05
+0.1
+<W>
+N
+Fraction of randomly chosen 
+presynaptic neurons 
+with connections set to 0
+Fraction of consecutive 
+presynaptic neurons 
+with connections set to 0
+Correlation between target
+and response after training
+Correlation with connectivity profile
+of fully connected network
+Fraction of randomly chosen 
+presynaptic neurons 
+with connections set to 0
+Fraction of consecutive 
+presynaptic neurons 
+with connections set to 0
+0
+0.5
+1
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.5
+1
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.5
+1
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.5
+1
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.5
+1
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.5
+1
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 48 ===
+Supplementary Figure 3
+A B C
+Width (s)
+Range 
+of the connectivity profile
+Amplitude
+Width of peaks 
+in the connectivity profile
+Offset
+Position of maximum
+in the connectivity profile
+0
+0.1
+0.2
+0.3
+0.4
+0
+20
+40
+60
+80
+1
+1.3
+1.6
+1.9
+0.07
+0.08
+0.09
+0.1
+0.2
+0.4
+0.6
+0.8
+1
+0
+50
+100
+150
+200
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 49 ===
+Supplementary Figure 4
+Amplitude
+Width (s)
+1
+0.8
+0.6
+0.4
+0.5 0.9 1.3 1.7
+A
+C
+B
+Oﬀset
+Amplitude
+0.3
+0.2
+0.1
+0
+0.4 0.5 0.6 0.7
+D
+E
+F
+-0.2
+0
+0.2
+<W>
+N
+-0.2
+0
+0.2
+<W>
+N
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-250
+0
+250
+Neuron distance
+-250
+0
+250
+Neuron distance
+0.5
+0.9
+1.3
+1.7
+Width (s)
+1
+0.8
+0.6
+0.4
+Amplitude
+50
+100
+150
+200
+250
+Average peak widths
+0.5
+0.9
+1.3
+1.7
+Width
+1
+0.8
+0.6
+0.4
+Amplitude
+0.1
+0.2
+0.3
+0.4
+0.5
+Range
+-0.2
+0
+0.2
+<W>
+N
+-0.2
+0
+0.2
+<W>
+N
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-250
+0
+250
+Neuron distance
+-250
+0
+250
+Neuron distance
+0.4
+0.5
+0.6
+0.7
+Amplitude
+0.3
+0.2
+0.1
+0
+Offset
+10
+30
+50
+70
+Asymmetry
+0.4
+0.5
+0.6
+0.7
+Amplitude
+0.3
+0.2
+0.1
+0
+Offset
+70
+90
+110
+130
+Average peak widths
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 50 ===
+Supplementary Figure 5
+A B
+Reciprocal 
+motif
+Divergent
+motif
+Convergent 
+motif
+Chain
+motif
+0
+0.1
+0.2
+0.3
+0.4
+Offset
+0
+0.2
+0.4
+0.6
+0.8
+Abundance
+1
+1.3
+1.6
+1.9
+Width (s)
+0
+0.2
+0.4
+0.6
+0.8
+Abundance
+0.1
+0.3
+0.5
+0.7
+0.9
+Amplitude
+0
+0.2
+0.4
+0.6
+0.8
+Abundance
+Rec
+Div
+Chain
+Con
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 51 ===
+A
+Supplementary Figure 6
+B C
+Mean normalized 
+deconvolved activity
+Mean sequence
+Centered mean
+sequence
+Gaussian /f_it
+Mean activity
+Mean normalized 
+z-scored firing rate
+Sequence
+Centered sequence
+D E F
+0
+89
+178
+Time (s)
+1
+242
+484
+Neuron#
+0
+0.5
+1
+Normalised deconvolved
+activity
+0
+89
+178
+Time (s)
+1
+242
+484
+Neuron#
+0
+0.5
+1
+Time (s)
+0
+3
+6
+Time (s)
+1
+84
+168
+Neuron#
+0
+0.5
+1
+Normalised z-scored
+firing rate
+0
+3
+6
+Time (s)
+1
+84
+168
+Neuron#
+0
+0.5
+1
+Time (s)
+Normalised z-scored
+firing rate
+Normalised deconvolved
+activity
+Gaussian /f_it
+Mean activity
+4
+8
+0
+0.2
+0.4
+4
+8
+0
+0.4
+0.8
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 52 ===
+Supplementary Figure 7
+0
+0.2
+0.4
+0.6
+0.8
+1
+Abundance in data
+0
+0.2
+0.4
+0.6
+0.8
+1
+Abundance in model
+Mouse
+Bat
+Rec
+Div
+Chain
+Con
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 53 ===
+A
+Supplementary Figure 8
+Amplitude0.8 10.6
+Perturbation
+window
+Oﬀset0.2 0.40
+Width (s)1.5 21
+B
+C
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+8
+16
+Time (s)
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+-250
+0
+250
+Neuron distance
+-0.2
+0
+0.2
+<W>
+N
+Reset
+Reset
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 54 ===
+A CB
+Supplementary Figure 9
+KI J
+-2
+-1
+0
+1
+2
+Perturbation time window relative 
+to time of ensemble activation
+-1
+-0.5
+0
+0.5
+1
+Correlation
+10
+20
+30
+Percentage
+-2
+-1
+0
+1
+2
+Perturbation time window relative 
+to time of ensemble activation
+-1
+-0.5
+0
+0.5
+1
+Correlation
+Current injection
+10
+20
+30
+Percentage
+Silencing
+Silencing
+Current injection
+HF G
+Percentage of 
+perturbed neurons
+Noise
+gain
+(a.u.)
+5
+10
+15
+20
+10 25 50 75
+D
+E
+Simulated data
+-2
+-1
+0
+1
+2
+-2
+-1
+0
+1
+2
+-2
+-1
+0
+1
+2
+Current injection
+-1
+-0.5
+0
+0.5
+1
+Correlation
+10
+20
+30
+Percentage
+-1
+-0.5
+0
+0.5
+1
+Correlation
+10
+20
+30
+Percentage
+-1
+-0.5
+0
+0.5
+1
+Correlation
+0.5
+2
+5
+Magnitude
+-2
+-1
+0
+1
+2
+Perturbation time window relative 
+to time of ensemble activation
+-1
+-0.5
+0
+0.5
+1
+Correlation
+Current injection
+0.5
+2
+5
+Magnitude
+100
+400
+Neuron#
+0
+0.5
+1
+Firing rate
+100
+400
+Neuron#
+100
+400
+Neuron#
+8
+16
+Time (s)
+100
+400
+Neuron#
+8
+16
+Time (s)
+8
+16
+Time (s)
+8
+16
+Time (s)
+10
+25
+50
+75
+Percentage of
+perturbed neurons
+20
+15
+10
+5
+Noise gain
+0.8
+0.9
+1
+Correlation with
+unperturbed response
+Silencing
+Current injection
+Current injection
+-2
+-1
+0
+1
+2
+-2
+-1
+0
+1
+2
+-2
+-1
+0
+1
+2
+Perturbation time window relative 
+to time of ensemble activation
+Perturbation time window relative 
+to time of ensemble activation
+Perturbation time window relative 
+to time of ensemble activation
+-1
+-0.5
+0
+0.5
+1
+Correlation
+10
+20
+30
+Percentage
+-1
+-0.5
+0
+0.5
+1
+Correlation
+10
+20
+30
+Percentage
+-1
+-0.5
+0
+0.5
+1
+Correlation
+0.5
+2
+5
+Magnitude
+Perturbation time window relative 
+to time of ensemble activation
+Perturbation time window relative 
+to time of ensemble activation
+Perturbation time window relative 
+to time of ensemble activation
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 
+=== PDF PAGE 55 ===
+Upstream activity
+0 
+8 
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Downstream response
+0 
+8 
+Time (s)
+1
+5
+10
+Downstream neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+Firing rate
+A
+B
+Supplementary Figure 10
+D
+C
+Target with
+lower amplitude
+0 
+8 
+Time (s)
+1
+5
+10
+Downstream neuron#
+Downstream
+response
+0 
+8 
+Time (s)
+0
+0.5
+1
+Firing rate
+Target with
+lower offset
+0 
+8 
+Time (s)
+1
+5
+10
+Downstream neuron#
+Downstream
+response
+0 
+8 
+Time (s)
+0
+0.5
+1
+Firing rate
+Upstream activity
+0 
+8 
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+Downstream response
+0 
+8 
+Time (s)
+1
+5
+10
+Downstream neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+Perturbation site for silencing
+Perturbation site for current injection
+Downstream response
+with random weights
+0 
+8 
+Time (s)
+E
+Upstream activity
+0 
+8 
+Time (s)
+1
+250
+501
+Neuron#
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+0
+0.2
+0.4
+0.6
+0.8
+1
+Firing rate
+1
+5
+10
+Downstream neuron#
+.CC-BY-NC-ND 4.0 International licenseperpetuity. It is made available under a 
+preprint (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in 
+The copyright holder for thisthis version posted September 8, 2026. ; https://doi.org/10.64898/2026.09.02.748960doi: bioRxiv preprint 

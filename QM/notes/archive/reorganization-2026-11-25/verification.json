@@ -1,0 +1,30 @@
+{
+  "baseline_files": 295,
+  "unchanged_files": 282,
+  "changed_files": [
+    "AGENTS.md",
+    "README.md",
+    "calculations/README.md",
+    "notes/INDEX.md",
+    "notes/RESEARCH_CONTEXT.md"
+  ],
+  "removed_verified_caches": [
+    "calculations/code/__pycache__/canonical_instantaneous_obsen_coefficient.cpython-311.pyc",
+    "calculations/code/__pycache__/four_model_setup.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_models_d256_m10_compare.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_rotor_K10_postkick_instantaneous.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_instantaneous_povm_pga.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_physical_time_qfi_100_states.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_time_translation_qfi_100_states.cpython-311.pyc",
+    "calculations/code/__pycache__/kicked_top_time_translation_qfi_j10.cpython-311.pyc"
+  ],
+  "backup_files_verified": 6,
+  "active_markdown_file_links_checked": 135,
+  "missing_links": [],
+  "preserved_command_lines": 32,
+  "startup_characters_before": 23622,
+  "startup_characters_after": 5112,
+  "startup_reduction_percent": 78.4,
+  "calculation_guide_characters_before": 9283,
+  "calculation_guide_characters_after": 1611
+}

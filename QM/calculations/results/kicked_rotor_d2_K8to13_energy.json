@@ -1,0 +1,61 @@
+{
+  "d": 2,
+  "hbar": 0.09817477042468103,
+  "evaluation_time": "1+",
+  "preparation": "Previous periodized Gaussian q0=pi/2, p0=0, sigma_q=sqrt(hbar/2), sampled at q=0,pi",
+  "protocol": "Free evolution for one unit, then exp(-i K cos(q)/hbar); FFT momentum indices 0,-1",
+  "energy": "H_phys=p^2/2; evaluate after kick, not during delta impulse",
+  "caveat": "Severely truncated two-state grid model, not a converged rotor or chaos diagnostic",
+  "python": "3.11.9",
+  "numpy": "2.2.3",
+  "results": [
+    {
+      "K": 8,
+      "energy_mean": 0.00017925173639431058,
+      "physical_energy_uncertainty": 0.0009119805508703224,
+      "generator_uncertainty": 0.009289357611179617,
+      "momentum_minus_hbar_probability": 0.03719577211169969,
+      "analytic_check_absolute_error": 1.0842021724855044e-19
+    },
+    {
+      "K": 9,
+      "energy_mean": 0.00139049247945846,
+      "physical_energy_uncertainty": 0.0021834634068860674,
+      "generator_uncertainty": 0.022240575633036032,
+      "momentum_minus_hbar_probability": 0.28853523223449645,
+      "analytic_check_absolute_error": 8.673617379884035e-19
+    },
+    {
+      "K": 10,
+      "energy_mean": 0.004541039368931989,
+      "physical_energy_uncertainty": 0.0011237786752332376,
+      "generator_uncertainty": 0.011446715590696413,
+      "momentum_minus_hbar_probability": 0.9422919348769664,
+      "analytic_check_absolute_error": 2.168404344971009e-19
+    },
+    {
+      "K": 11,
+      "energy_mean": 0.0036354048108872337,
+      "physical_energy_uncertainty": 0.0020744557565344234,
+      "generator_uncertainty": 0.021130232824185014,
+      "momentum_minus_hbar_probability": 0.7543675258022782,
+      "analytic_check_absolute_error": 4.336808689942018e-19
+    },
+    {
+      "K": 12,
+      "energy_mean": 0.0003970104676175398,
+      "physical_energy_uncertainty": 0.0013250029489821472,
+      "generator_uncertainty": 0.013496369212278217,
+      "momentum_minus_hbar_probability": 0.08238196837868983,
+      "analytic_check_absolute_error": 2.168404344971009e-19
+    },
+    {
+      "K": 13,
+      "energy_mean": 0.0009885175501620949,
+      "physical_energy_uncertainty": 0.001945929151286638,
+      "generator_uncertainty": 0.019821071573368647,
+      "momentum_minus_hbar_probability": 0.20512310934251,
+      "analytic_check_absolute_error": 4.336808689942018e-19
+    }
+  ]
+}

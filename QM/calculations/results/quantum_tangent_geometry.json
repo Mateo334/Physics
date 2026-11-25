@@ -1,0 +1,28 @@
+{
+  "python": "3.11.9",
+  "numpy": "2.2.3",
+  "scipy": "1.15.1",
+  "matplotlib": "3.10.0",
+  "gaussian": {
+    "hbar": 1,
+    "mass": 1,
+    "lambda": 1,
+    "time_max": 3,
+    "samples": 121,
+    "covariance_initial": "I/2",
+    "initial_direction": "(1,1)/sqrt(2)",
+    "overlap_displacement": 0.1,
+    "max_qfi_error": 8.881784197001252e-16,
+    "max_symplectic_error": 1.20570220474292e-13,
+    "max_covariance_determinant_error": 2.4074631177484207e-12
+  },
+  "polynomial": {
+    "dimension": 5,
+    "seed": 20261124,
+    "fd_step": 1e-05,
+    "relative_leibniz_error": 1.7504978144145525e-16,
+    "relative_fd_error": 1.8174911685875526e-09,
+    "relative_naive_error": 1.9870929214019206
+  },
+  "scope": "Gaussian result exact analytically; matrix test checks Leibniz rule, not finite-dimensional CCR. No chaos or asymptotic inference."
+}
