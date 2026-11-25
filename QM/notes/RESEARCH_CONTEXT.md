@@ -21,4 +21,4 @@ Original notebook: `latex/Matejs_notes.tex`, containing two concatenated documen
 ## Retrieval and operations
 Start with [INDEX](INDEX.md), then only the relevant note. Full inventories: `notes/CATALOG.md`, `calculations/CATALOG.md`. Preserve original paths for papers, code, data and manuscripts. Read archives only for historical specifics.
 No pdflatex/tectonic was found on 2026-11-25; generated TeX must not be called compile-tested. Do not restore deliberately removed material to `latex/fixed_povm_relative_entropy_derivative.tex`.
-GitHub: `Mateo334/Physics`, branch `main`, workspace maps to `QM/`; no local `.git`. **Before any pull, read [sync checkpoints](workspace-operations.md).**
+GitHub: `Mateo334/Physics`, branch `main`, workspace maps to `QM/`; use `github-sync` for bulk push/pull. No research-context or checkpoint-note loading required.

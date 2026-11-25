@@ -1,6 +1,6 @@
 ---
 name: github-sync
-description: Synchronize this research workspace with its GitHub repository when the user requests a pull or sync.
+description: Push or pull the whole research workspace on GitHub when requested.
 ---
 
 # GitHub synchronization
@@ -10,25 +10,22 @@ Branch: main
 Remote directory: QM/
 The local workspace root maps directly to QM/.
 
-## Procedure
+## Bulk sync
 
-All workspace paths below are relative to the workspace root, not this skill directory.
-
-1. Read the sync checkpoint in notes/workspace-operations.md.
-2. Inspect local modifications and repository status.
-3. Fetch remote changes without overwriting local files.
-   If no local .git exists, use a temporary clone.
-4. Compare local and remote changes against the checkpoint.
-5. Apply nonconflicting remote updates.
-6. Preserve local edits and report conflicts.
-7. Update the checkpoint after successful synchronization.
-8. Report added, updated, skipped and conflicting files.
-
-## Restrictions
-
-- Synchronize only when explicitly requested.
-- Never automatically delete or overwrite conflicting files.
-- Never push, commit or reset without authorization.
-- If the checkpoint is missing or invalid, do not assume
-  that differing local files are safe to overwrite.
-- Clean up only temporary files created during synchronization.
+- “Push” authorizes staging and committing the whole workspace to QM/, then
+  pushing main. “Pull” authorizes fetching QM/ into the whole workspace.
+  No per-topic selection, content review, scientific tests or file-by-file reports.
+- Use Git directly when configured for this mapping; otherwise reuse a clean
+  temporary clone or create one. Keep repository content outside QM/ untouched.
+- Transfer in bulk, including .opencode/. Exclude .git/, secrets (.env files,
+  credentials/private keys), caches, temporary files and ignored build output.
+  Do not force-add ignored files.
+- Retain only mechanical safety checks: correct remote/branch/mapping, command
+  exit codes, conflict detection and push/pull success. Use Git or an automated
+  baseline comparison, not model inspection of individual files.
+- Stop on conflicts or ambiguous overwrites; never force-push, reset, blindly
+  mirror deletions or discard uncommitted work. If a copy-based pull has no valid
+  baseline, ask before replacing differing local files.
+- No research-note/checkpoint reading or bookkeeping commits on the normal path.
+  Keep any needed sync baseline machine-readable outside the research notes.
+- Reply with success and commit hash, or the blocking error; no inventory.

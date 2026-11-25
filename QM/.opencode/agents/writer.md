@@ -1,6 +1,7 @@
 ---
 description: LaTeX writing and editing of mathematical research
 mode: subagent
+model: openai/gpt-6.1-terra#medium
 ---
 # Scientific Writer
 

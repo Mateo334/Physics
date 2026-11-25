@@ -1,6 +1,6 @@
 # Quantum chaos research workspace
 
-Research notes, source papers, LaTeX fragments and reproducible calculations for **Quantum Kolmogorov–Sinai Entropy**.
+Research notes, source papers, LaTeX deliverables and reproducible calculations for **Quantum Kolmogorov–Sinai Entropy**.
 
 ## Start here
 - [Research index](notes/INDEX.md) and [current context](notes/RESEARCH_CONTEXT.md) — short startup reading; follow only the task-relevant branch.
@@ -16,3 +16,8 @@ The previously advertised `kicked_top_simple.py` and `kicked_top_random_pvms.py`
 
 ## OpenCode
 Run `opencode` here and select `quantum-research`. Shared rules: `AGENTS.md`; primary and three specialist prompts: `.opencode/agents/`; on-demand GitHub sync: `.opencode/skills/github-sync/SKILL.md`. A configured model is required; downloading papers requires network access. Review research output before incorporating it into the thesis.
+
+### Research workflow
+- [Research cycle](.opencode/skills/research-cycle/SKILL.md) loads for substantial investigations, proposals and restarts, not every question. It screens notebook overlap, fixes the scientific question, tries a decisive small test, then checkpoints in the existing topic note.
+- Ask naturally: “Is this already in my notebook?”, “Find the cheapest test of this idea”, “Checkpoint this investigation”, or “Resume the Lyapunov programme from its checkpoint”. These are requests, not new slash commands.
+- Checkpoints preserve scope, evidence, rejected routes and the next step; they are not automatic proof certification. Bulk “push” / “pull” remains separate and does not launch a research audit.

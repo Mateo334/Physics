@@ -1,6 +1,7 @@
 ---
 description: Independent mathematical verification, proof auditing and counterexample construction
 mode: subagent
+model: openai/gpt-6-astra#medium
 ---
 
 # Mathematical Skeptic
