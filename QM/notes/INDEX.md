@@ -19,5 +19,5 @@ Select the task-relevant note below; consult [current context](RESEARCH_CONTEXT.
 
 ## Sources, deliverables and workspace
 - [Papers](../papers/README.md) — source annotations; [LaTeX](../latex/README.md) — originals versus generated deliverables and compile status.
-- [Workspace operations](workspace-operations.md) — GitHub sync and technical history.
+- [Workspace operations](workspace-operations.md) — GitHub sync and technical history; pre-move root paths are historical.
 - [Reorganization record](archive/reorganization-2026-11-25/README.md) — preserved originals, integrity baseline and cleanup checks.

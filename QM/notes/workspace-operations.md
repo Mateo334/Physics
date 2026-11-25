@@ -1,5 +1,10 @@
 # Workspace operations — read only when needed
 
+Project separation: chaos research moved under `projects/chaos/`; workspace
+configuration remains at the root. The user specified that only the contents of
+the chaos project map to `QM/`, preserving the remote's existing research paths;
+neuroscience is excluded. Shared configuration is not included unless requested.
+
 ## GitHub synchronization
 - Current policy (user request, 2026-11-25): whole-workspace bulk push/pull via `github-sync`, without file-by-file review, research-note loading or bookkeeping commits. The skill supersedes the historical procedures below; retain mechanical conflict/secret/deletion safeguards. Older hashes remain historical recovery references, not mandatory startup reading.
 - 2026-11-25 workflow update published to `main` in `c285540794a37472d2d56650624dbf98a8a58be4` (13 files under `QM/`); remote hash verified. Compared against remote `b2097dc`; no conflicts, deletions or unrelated changes. This is the latest comparison checkpoint for published workflow files; other files retain the prior checkpoint. The following bookkeeping commit records this update. Scientific tests and TeX compilation were not rerun.
